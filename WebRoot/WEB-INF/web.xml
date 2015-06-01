@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>hibernateAspringmvc</display-name>
+	<!-- web.xml 的加载顺序是：context-param -> listener -> filter -> servlet ，
+	而同个类型之间的实际程序调用的时候的顺序是根据对应的 mapping 的顺序进行调用的。 
+	-->
+
+	
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/spring/ApplicationContext.xml</param-value>
+	</context-param>
+	<!--
+		配置项目后台（如D:\tomcat7\webapps\JZBSNMS\）的根路径的绝对路径
+		默认情况下webAppRootKey属性的值为webapp.root
+		（就是说系统会把“web目录的路径”压入一个叫webapp.root的系统变量，也就是说我们可以在以后的properties文件设置中，使用${webapp.root}来代替“web目录的路径”
+		在tomcat下部署两个或多个项目时，web.xml文件中最好定义webAppRootKey的value.
+		如果不定义，将会缺省为“webapp.root”，这样项目会冲突 配置文件中获取后台绝对路径：${webapp.root.jzbsnms}
+		JAVA中获取：System.getProperty("webapp.root.jzbsnms")
+	-->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/webservice/*</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>webapp.root.member_service</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 给webAppRootKey的param-value赋值 -->
+	<listener>
+		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+	</listener>
+	<servlet>
+		<!-- this is 'spring' name for your spring-servlet.xml -->
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/spring/spring_mvc.xml</param-value>
+		</init-param>
+	</servlet>
+	<!-- 不要配置成全部拦截，否则会影响js文件的加载 /*表示全拦截。如果需要配置全部拦截，需要在mvc配置中配置对静态资源的过滤 -->
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>pushlet</servlet-name>
+		<servlet-class>nl.justobjects.pushlet.servlet.Pushlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>pushlet</servlet-name>
+		<url-pattern>/pushlet.srv</url-pattern>
+	</servlet-mapping>
+	<!-- session 超时时间 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<!-- 自定义 servlet或listener -->
+	<listener>
+		<listener-class>com.member.service.frame.core.sys.FrameSessionManager</listener-class>
+	</listener>
+    <servlet>
+		<servlet-name>FrameInitServlet</servlet-name>
+		<servlet-class>com.member.service.frame.core.sys.FrameInitServlet</servlet-class>
+		<init-param>
+			<param-name>frameInit</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+        <servlet-name>ImageCodeMakerServlet</servlet-name>
+         <servlet-class>com.member.service.frame.core.sys.ImageCodeMakerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>ImageCodeMakerServlet</servlet-name>
+       <url-pattern>/servlet/ImageCodeMakerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>uu</servlet-name>
+         <servlet-class>com.member.service.frame.core.sys.uu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>uu</servlet-name>
+       <url-pattern>/servlet/uu</url-pattern>
+    </servlet-mapping>
+	<!--
+	<filter>
+		<filter-name>responseFilter</filter-name>
+		<filter-class>com.web.jz.bs.nms.module.frame.core.sys.FrameServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>responseFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	-->
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>  
