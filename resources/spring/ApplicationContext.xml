@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	<!-- 自动搜索@Component , @Service , @Repository等标注的类 不搜索@Controller的类 -->
+	<!--
+		自动扫描组件，这里要把web下面的
+		controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。
+	-->
+	<context:component-scan base-package="com.member.service"
+		annotation-config="true">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+    <aop:aspectj-autoproxy/>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		lazy-init="false">
+		<property name="locations">
+			<list>
+				<!--
+					Spring在加载类路径资源时除了提供前缀“classpath:”的来支持加载一个Resource，还提供一个前缀“classpath*:”来支持加载所有匹配的类路径Resource。
+				-->
+				<value>classpath*:/config/dbconfig/database.properties</value>
+			</list>
+		</property>
+	</bean>
+<!--
+改用java C3P0数据源
+<bean id="log4jDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>${log4j.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${log4j.url}</value>
+		</property>
+		<property name="user">
+			<value>${log4j.username}</value>
+		</property>
+		<property name="password">
+			<value>${log4j.password}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${log4j.minPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${log4j.maxPoolSize}</value>
+		</property>
+			定义在从数据库获取新连接失败后重复尝试的次数。Default: 30
+		<property name="acquireRetryAttempts">
+			<value>${log4j.acquireRetryAttempts}</value>
+		</property>
+			<property name="maxIdleTime">
+			<value>${log4j.maxIdleTime}</value>
+		</property>
+		<property name="preferredTestQuery">
+			<value>${log4j.preferredTestQuery}</value>
+		</property>
+</bean>
+	-->
+	<bean id="frameDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize}</value>
+		</property>
+
+		<property name="initialPoolSize">
+			<value>${jdbc.initialPoolSize}</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${jdbc.maxIdleTime}</value>
+		</property>
+
+		<property name="acquireIncrement">
+			<value>${jdbc.acquireIncrement}</value>
+		</property>
+		<property name="maxStatements">
+			<value>${jdbc.maxStatements}</value>
+		</property>
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0-->
+		<property name="idleConnectionTestPeriod">
+			<value>${jdbc.idleConnectionTestPeriod}</value>
+		</property>
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30-->
+		<property name="acquireRetryAttempts">
+			<value>${jdbc.acquireRetryAttempts}</value>
+		</property>
+		<property name="acquireRetryDelay">
+			<value>${jdbc.acquireRetryDelay}</value>
+		</property>
+		<property name="breakAfterAcquireFailure">
+			<value>${jdbc.breakAfterAcquireFailure}</value>
+		</property>
+		<!--测试连接的有效性消耗很大-->
+		<property name="testConnectionOnCheckout">
+			<value>${jdbc.testConnectionOnCheckout}</value>
+		</property>
+		<!--测试连接的有效性消耗很大 自动检测连接状况-->
+		<property name="testConnectionOnCheckin">
+			<value>${jdbc.testConnectionOnCheckin}</value>
+		</property>
+		<property name="automaticTestTable">
+			<value>${jdbc.automaticTestTable}</value>
+		</property>
+		<property name="checkoutTimeout">
+			<value>${jdbc.checkoutTimeout}</value>
+		</property>
+
+	</bean>
+	<!-- 配置sessionfactory  ${hibernate.hbm2ddl.auto}-->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="frameDataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.connection.release_mode">${hibernate.connection.release_mode}</prop>
+				<prop key="hibernate.connection.SetBigStringTryClob">${hibernate.connection.SetBigStringTryClob}</prop>
+				<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+			</props>
+		</property>
+		<!-- 自动扫描指定位置下的实体文件进行映射 -->
+		<property name="packagesToScan" value="com.member.service" />
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!--
+		以下两种事务管理都可以 第一种tx:annotation需要使用@Transaction注解来进行事务管理。第二中aop
+		直接在服务接口处进行事务拦截，所有服务接口下的方法都会被配置的事务管理起来
+	-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+		<!-- cxf 相关配置，这个照搬就行了，cxf框架里面自带的配置 -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<!-- 引入其他模块的spring配置文件 -->
+	<import resource="classpath:/spring/module/spring_userRole.xml" />
+
+	
+	
+	<!-- 如果你需要一个线程 去完成某一件事且 这件事不会一直进行 ，则选择此线程。如：初始化用户 -->
+	<bean id="FrameHandlePool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数，默认为1 -->
+		<property name="corePoolSize" value="25" />
+		<!-- 最大线程数，默认为Integer.MAX_VALUE -->
+		<property name="maxPoolSize" value="70" />
+		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE 
+		<property name="queueCapacity" value="1000" /> -->
+		<!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+		<property name="keepAliveSeconds" value="300" />
+	</bean>
+	<!-- 如果你需要一个线程  一直做一件事  则使用此线程池。如：程序启动后 开一个状态监测线程，该线程需要一直执行-->
+	<bean id="FrameKeepPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数，默认为1 -->
+		<property name="corePoolSize" value="10" />
+		<!-- 最大线程数，默认为Integer.MAX_VALUE -->
+		<property name="maxPoolSize" value="50" />
+		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE 
+		 -->
+		<property name="queueCapacity" value="0" />
+		<!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+		<property name="keepAliveSeconds" value="300" />
+	</bean>
+</beans> 
