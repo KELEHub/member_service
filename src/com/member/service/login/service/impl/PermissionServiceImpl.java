@@ -30,7 +30,7 @@ public class PermissionServiceImpl implements PermissionService {
 	
 	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(readOnly=true)
 	public List<NmsRolePermission> getPermissionsByRoleId(Integer roleId) {
 		return (List<NmsRolePermission>) nmsUserDao.queryByHql(
 				HqlUserRole.getPermissionByRoleId, roleId);
