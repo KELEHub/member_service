@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.member.service.frame.database.dao.impl.BaseDaoImpl;
-import com.member.service.login.HqlUserRole;
-import com.member.service.login.dao.NmsUserDao;
+import com.member.service.managementService.login.HqlUserRole;
+import com.member.service.managementService.login.dao.NmsUserDao;
 
 @Component("NmsUserDaoImpl")
  public class NmsUserDaoImpl extends BaseDaoImpl implements NmsUserDao {

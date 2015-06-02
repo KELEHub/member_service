@@ -19,11 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.member.service.common.config.FrameConfig;
 import com.member.service.frame.core.controller.BaseController;
-import com.member.service.login.HqlUserRole;
-import com.member.service.login.dao.NmsUserDao;
-import com.member.service.login.po.NmsRolePermission;
-import com.member.service.login.po.NmsUser;
-import com.member.service.login.service.PermissionService;
+import com.member.service.managementService.login.HqlUserRole;
+import com.member.service.managementService.login.dao.NmsUserDao;
+import com.member.service.managementService.login.po.NmsRolePermission;
+import com.member.service.managementService.login.po.NmsUser;
+import com.member.service.managementService.login.service.PermissionService;
 import com.member.service.util.FrameObjectUtil;
 
  @Controller

@@ -2,7 +2,7 @@ package com.member.service.managementService.login.service;
 
 import java.util.List;
 
-import com.member.service.login.po.NmsRolePermission;
+import com.member.service.managementService.login.po.NmsRolePermission;
 
  public interface PermissionService {
 	 

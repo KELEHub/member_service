@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.service.login.HqlUserRole;
-import com.member.service.login.dao.NmsUserDao;
-import com.member.service.login.po.NmsRolePermission;
-import com.member.service.login.po.NmsUser;
-import com.member.service.login.service.PermissionService;
+import com.member.service.managementService.login.HqlUserRole;
+import com.member.service.managementService.login.dao.NmsUserDao;
+import com.member.service.managementService.login.po.NmsRolePermission;
+import com.member.service.managementService.login.po.NmsUser;
+import com.member.service.managementService.login.service.PermissionService;
 
 /**
  * 角色服务类
