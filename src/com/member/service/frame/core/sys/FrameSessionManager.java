@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.member.service.common.config.FrameConfig;
-import com.member.service.login.po.NmsUser;
+import com.member.service.managementService.login.po.NmsUser;
 import com.member.service.util.FrameDatabaseUtil;
 
  @SuppressWarnings("unchecked") 
