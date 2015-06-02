@@ -7,12 +7,9 @@
 	<!-- web.xml 的加载顺序是：context-param -> listener -> filter -> servlet ，
 	而同个类型之间的实际程序调用的时候的顺序是根据对应的 mapping 的顺序进行调用的。 
 	-->
-
-	
-	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/spring/ApplicationContext.xml</param-value>
+		<param-value>classpath:spring/ApplicationContext.xml</param-value>
 	</context-param>
 	<!--
 		配置项目后台（如D:\tomcat7\webapps\JZBSNMS\）的根路径的绝对路径
@@ -68,34 +65,34 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<!-- 自定义 servlet或listener -->
-	<listener>
-		<listener-class>com.member.service.frame.core.sys.FrameSessionManager</listener-class>
-	</listener>
-    <servlet>
-		<servlet-name>FrameInitServlet</servlet-name>
-		<servlet-class>com.member.service.frame.core.sys.FrameInitServlet</servlet-class>
-		<init-param>
-			<param-name>frameInit</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-        <servlet-name>ImageCodeMakerServlet</servlet-name>
-         <servlet-class>com.member.service.frame.core.sys.ImageCodeMakerServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-       <servlet-name>ImageCodeMakerServlet</servlet-name>
-       <url-pattern>/servlet/ImageCodeMakerServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>uu</servlet-name>
-         <servlet-class>com.member.service.frame.core.sys.uu</servlet-class>
-    </servlet>
-    <servlet-mapping>
-       <servlet-name>uu</servlet-name>
-       <url-pattern>/servlet/uu</url-pattern>
-    </servlet-mapping>
+<!-- 	<listener> -->
+<!-- 		<listener-class>com.member.helper.sys.FrameSessionManager</listener-class> -->
+<!-- 	</listener> -->
+<!--     <servlet> -->
+<!-- 		<servlet-name>FrameInitServlet</servlet-name> -->
+<!-- 		<servlet-class>com.member.helper.sys.FrameInitServlet</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>frameInit</param-name> -->
+<!-- 			<param-value>true</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet> -->
+<!--         <servlet-name>ImageCodeMakerServlet</servlet-name> -->
+<!--          <servlet-class>com.member.helper.sys.ImageCodeMakerServlet</servlet-class> -->
+<!--     </servlet> -->
+<!--     <servlet-mapping> -->
+<!--        <servlet-name>ImageCodeMakerServlet</servlet-name> -->
+<!--        <url-pattern>/servlet/ImageCodeMakerServlet</url-pattern> -->
+<!--     </servlet-mapping> -->
+<!--     <servlet> -->
+<!--         <servlet-name>uu</servlet-name> -->
+<!--          <servlet-class>com.member.helper.sys.uu</servlet-class> -->
+<!--     </servlet> -->
+<!--     <servlet-mapping> -->
+<!--        <servlet-name>uu</servlet-name> -->
+<!--        <url-pattern>/servlet/uu</url-pattern> -->
+<!--     </servlet-mapping> -->
 	<!--
 	<filter>
 		<filter-name>responseFilter</filter-name>
