@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.controller;
+package com.member.service.managementService.systemmanager.parameter.controller;
 
 import java.io.IOException;
 import java.util.Date;

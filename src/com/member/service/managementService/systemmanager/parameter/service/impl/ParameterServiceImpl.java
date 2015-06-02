@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.service.impl;
+package com.member.service.managementService.systemmanager.parameter.service.impl;
 
 import java.util.List;
 

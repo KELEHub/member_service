@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.po;
+package com.member.service.managementService.systemmanager.parameter.po;
 
 import java.util.Date;
 

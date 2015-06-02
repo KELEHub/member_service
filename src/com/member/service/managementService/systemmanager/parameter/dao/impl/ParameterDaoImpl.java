@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.dao.impl;
+package com.member.service.managementService.systemmanager.parameter.dao.impl;
 
 import org.springframework.stereotype.Component;
 

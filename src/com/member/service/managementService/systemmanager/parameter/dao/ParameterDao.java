@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.dao;
+package com.member.service.managementService.systemmanager.parameter.dao;
 
 import com.member.service.frame.database.dao.BaseDao;
 

@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter;
+package com.member.service.managementService.systemmanager.parameter;
 
 public class HqlParameter {
 

@@ -1,4 +1,4 @@
-package com.member.service.systemmanager.parameter.bean;
+package com.member.service.managementService.systemmanager.parameter.bean;
 
 public class ParameterBean {
 
