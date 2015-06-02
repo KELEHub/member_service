@@ -20,12 +20,15 @@
 		自动扫描组件，这里要把web下面的
 		controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。
 	-->
-	<context:component-scan base-package="com.member.service"
+	<context:component-scan base-package="com.member.services,com.member.dao"
 		annotation-config="true">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-    <aop:aspectj-autoproxy/>
+	<!-- 	切面配置 -->
+<!--     <aop:aspectj-autoproxy/> -->
+    
+	<!--     数据库配置properties -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		lazy-init="false">
@@ -155,7 +158,7 @@
 			</props>
 		</property>
 		<!-- 自动扫描指定位置下的实体文件进行映射 -->
-		<property name="packagesToScan" value="com.member.service" />
+		<property name="packagesToScan" value="com.member.entity" />
 	</bean>
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
@@ -173,30 +176,28 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<!-- 引入其他模块的spring配置文件 -->
 	<import resource="classpath:/spring/module/spring_userRole.xml" />
-
-	
 	
 	<!-- 如果你需要一个线程 去完成某一件事且 这件事不会一直进行 ，则选择此线程。如：初始化用户 -->
-	<bean id="FrameHandlePool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+<!-- 	<bean id="FrameHandlePool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"> -->
 		<!-- 核心线程数，默认为1 -->
-		<property name="corePoolSize" value="25" />
+<!-- 		<property name="corePoolSize" value="25" /> -->
 		<!-- 最大线程数，默认为Integer.MAX_VALUE -->
-		<property name="maxPoolSize" value="70" />
+<!-- 		<property name="maxPoolSize" value="70" /> -->
 		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE 
 		<property name="queueCapacity" value="1000" /> -->
 		<!-- 线程池维护线程所允许的空闲时间，默认为60s -->
-		<property name="keepAliveSeconds" value="300" />
-	</bean>
+<!-- 		<property name="keepAliveSeconds" value="300" /> -->
+<!-- 	</bean> -->
 	<!-- 如果你需要一个线程  一直做一件事  则使用此线程池。如：程序启动后 开一个状态监测线程，该线程需要一直执行-->
-	<bean id="FrameKeepPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+<!-- 	<bean id="FrameKeepPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"> -->
 		<!-- 核心线程数，默认为1 -->
-		<property name="corePoolSize" value="10" />
+<!-- 		<property name="corePoolSize" value="10" /> -->
 		<!-- 最大线程数，默认为Integer.MAX_VALUE -->
-		<property name="maxPoolSize" value="50" />
+<!-- 		<property name="maxPoolSize" value="50" /> -->
 		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE 
 		 -->
-		<property name="queueCapacity" value="0" />
+<!-- 		<property name="queueCapacity" value="0" /> -->
 		<!-- 线程池维护线程所允许的空闲时间，默认为60s -->
-		<property name="keepAliveSeconds" value="300" />
-	</bean>
+<!-- 		<property name="keepAliveSeconds" value="300" /> -->
+<!-- 	</bean> -->
 </beans> 

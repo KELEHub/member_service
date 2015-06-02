@@ -13,13 +13,13 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-4.0.xsd"> 
 	<!--  只能让MVC扫描Controller  若扫描了其他的 就会找成事务不会被spring托管的问题 -->
-	<context:component-scan base-package="com.member.service"
+	<context:component-scan base-package="com.member.controller"
 		annotation-config="true" use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	<context:component-scan base-package="com.member.service.frame.core.aop" />
-	<aop:aspectj-autoproxy proxy-target-class="true"/> 
+<!-- 	<context:component-scan base-package="com.member.service.frame.core.aop" /> -->
+<!-- 	<aop:aspectj-autoproxy proxy-target-class="true"/>  -->
 
 	<!--启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<mvc:annotation-driven>  
@@ -42,29 +42,30 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 对静态资源的支持，此项配置是为了防止静态资源被MVC servlet拦截 -->
 	<mvc:default-servlet-handler />
 	<!-- 下面这种方式也可以访问静态资源。两种方式 都必须在spring版本大于3.0.4时使用 -->
-	<!--
-		<mvc:resources mapping="/images/**" location="/images/"
-		cache-period="31556926" /> <mvc:resources mapping="/js/**"
-		location="/js/" cache-period="31556926" /> <mvc:resources
-		mapping="/css/**" location="/css/" cache-period="31556926" />
-	-->
-<mvc:interceptors> 
-    <mvc:interceptor>
-            <mvc:mapping path="/*/*.do" /> 
+	<mvc:resources mapping="/resources/front/images/**" location="/front/images/" />
+	<mvc:resources mapping="/resources/front/js/**" location="/front/js/" /> 
+	<mvc:resources mapping="/resources/front/css/**" location="/front/css/"/>
+	
+	<mvc:resources mapping="/resources/back/images/**" location="/back/images/" />
+	<mvc:resources mapping="/resources/back/js/**" location="/back/js/" /> 
+	<mvc:resources mapping="/resources/back/css/**" location="/back/css/"/>
+<!-- 	<mvc:interceptors>  -->
+<!--     	<mvc:interceptor> -->
+<!--             <mvc:mapping path="/*/*.do" />  -->
             <!-- 需排除拦截的地址,登陆的相关操作不拦截 --> 
-            <mvc:exclude-mapping path="/LoginController/login.do"/> 
-            <mvc:exclude-mapping path="/LoginController/getSystemLanguage.do"/> 
-            <mvc:exclude-mapping path="/LoginController/changeLoginLanguage.do"/> 
-		<bean id="FrameRequestInterceptor"
-			class="com.member.service.frame.core.sys.FrameRequestInterceptor">
-		</bean>
-    </mvc:interceptor>
-  </mvc:interceptors>
+<!--             <mvc:exclude-mapping path="/LoginController/login.do"/>  -->
+<!--             <mvc:exclude-mapping path="/LoginController/getSystemLanguage.do"/>  -->
+<!--             <mvc:exclude-mapping path="/LoginController/changeLoginLanguage.do"/>  -->
+<!-- 		<bean id="FrameRequestInterceptor" -->
+<!-- 			class="com.member.service.frame.core.sys.FrameRequestInterceptor"> -->
+<!-- 		</bean> -->
+<!--     	</mvc:interceptor> -->
+<!--   	</mvc:interceptors> -->
 
 </beans>    
