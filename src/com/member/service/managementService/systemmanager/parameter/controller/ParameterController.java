@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.member.service.systemmanager.parameter.bean.ParameterBean;
-import com.member.service.systemmanager.parameter.po.SystemParameter;
-import com.member.service.systemmanager.parameter.service.ParameterService;
+import com.member.service.managementService.systemmanager.parameter.bean.ParameterBean;
+import com.member.service.managementService.systemmanager.parameter.po.SystemParameter;
+import com.member.service.managementService.systemmanager.parameter.service.ParameterService;
 
 @Controller
 @RequestMapping(value = "/ParameterController")

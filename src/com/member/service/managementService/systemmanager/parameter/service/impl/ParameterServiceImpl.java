@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.service.systemmanager.parameter.HqlParameter;
-import com.member.service.systemmanager.parameter.bean.ParameterBean;
-import com.member.service.systemmanager.parameter.dao.ParameterDao;
-import com.member.service.systemmanager.parameter.po.SystemParameter;
-import com.member.service.systemmanager.parameter.service.ParameterService;
+import com.member.service.managementService.systemmanager.parameter.HqlParameter;
+import com.member.service.managementService.systemmanager.parameter.bean.ParameterBean;
+import com.member.service.managementService.systemmanager.parameter.dao.ParameterDao;
+import com.member.service.managementService.systemmanager.parameter.po.SystemParameter;
+import com.member.service.managementService.systemmanager.parameter.service.ParameterService;
 @Service("ParameterServiceImpl")
 public class ParameterServiceImpl implements ParameterService{
 	
