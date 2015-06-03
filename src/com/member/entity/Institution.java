@@ -73,6 +73,9 @@ public class Institution {
 	/**10份礼包第10期*/
 	@Column(name="prebTen")
 	private Integer prebTen;
+	/**	系统数据 */
+	@Column(name="systemData")
+	private String systemData;
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
 	private Date createTime;
@@ -189,6 +192,12 @@ public class Institution {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getSystemData() {
+		return systemData;
+	}
+	public void setSystemData(String systemData) {
+		this.systemData = systemData;
 	}
 	
 	
