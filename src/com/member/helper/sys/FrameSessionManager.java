@@ -11,8 +11,6 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.member.common.config.FrameConfig;
-import com.member.entity.NmsUser;
-import com.member.util.FrameDatabaseUtil;
 
  @SuppressWarnings("unchecked") 
  public class FrameSessionManager implements HttpSessionListener {
@@ -56,18 +54,6 @@ import com.member.util.FrameDatabaseUtil;
 	       }
 	         
 		}
-	      //修改用户登录状�?
-		Object logonUserO = session.getAttribute("logonUser");
-		if (logonUserO != null) {
-			
-			Map<String,Object> logonUser = (Map) logonUserO;
-			int userId = Integer.parseInt(logonUser.get("id").toString());
-			NmsUser nmsUser = (NmsUser) FrameDatabaseUtil.getBaseDaoImpl().getEntityById(NmsUser.class,
-					userId);
-			nmsUser.setUserStatus(FrameConfig.userStatus_Offline);
-			FrameDatabaseUtil.getBaseDaoImpl().saveOrUpdate(nmsUser);
-			//登出日志记录
-		}
 
 	}
      /**
@@ -107,33 +93,6 @@ import com.member.util.FrameDatabaseUtil;
 			return null;
 		}
 		return (Map) logonUserO;
-
-	}
-	/**
-	 * 获取当前登录的用户Id
-	 * @return
-	 */
-	
-	public static  Integer getCurrentUserId( ) {
-		Map<String, Object> currentUser = getCurrentUser();
-		 if(currentUser==null)
-		  {
-			  return null;
-		  }
-	  Object userIdO=	currentUser.get("id");
-	  if(userIdO==null)
-	  {
-		  return null;
-	  }
-		try {
-			Integer userId=Integer.parseInt(userIdO.toString());
-			return userId;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			return null;
-			
-		}
-		
 
 	}
 	public  static void  checkSession()

@@ -28,18 +28,6 @@ public class FrameInitServlet extends HttpServlet {
     }
 	
 	
-//	private void snmpInit() {
-//		try {
-//			FrameSnmpTrapListener frameSnmpTrapListener = (FrameSnmpTrapListener) FrameSpringContextUtil
-//					.getBean("frameSnmpTrapListener");
-//			frameSnmpTrapListener.init();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			LogUtil.logError("启动告警 监听异常",log, e);
-//		}
-//
-//		
-//	}
 	/**
 	 * 通过�?��用户session的心跳时间，来判断用户是否异常�?出�?如果异常�?�� �?��session
 	 */
