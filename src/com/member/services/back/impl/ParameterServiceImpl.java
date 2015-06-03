@@ -34,7 +34,7 @@ public class ParameterServiceImpl implements ParameterService{
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean setSystemParameter(SystemParameter systemParameter,ParameterBean pb) {
-		
+		try {
 			systemParameter.setDayCount(Integer.valueOf(pb.getDayCount()));
 			systemParameter.setGoldFlg(pb.getGoldFlg());
 			systemParameter.setGoldMax(Integer.valueOf(pb.getGoldMax()));
@@ -51,6 +51,11 @@ public class ParameterServiceImpl implements ParameterService{
 	       	parameterDao.saveOrUpdate(systemParameter);
 		
              return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+			
 		
 	}
 

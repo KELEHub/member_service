@@ -8,12 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.beans.back.InstitutionBean;
-import com.member.beans.back.ParameterBean;
 import com.member.dao.HqlInstitution;
 import com.member.dao.InstitutionDao;
 import com.member.entity.Institution;
-import com.member.entity.SystemParameter;
 import com.member.services.back.InstitutionService;
 @Service("InstitutionServiceImpl")
 public class InstitutionServiceImpl implements InstitutionService{
@@ -36,9 +33,16 @@ public class InstitutionServiceImpl implements InstitutionService{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public boolean setInstitution(Institution institution, InstitutionBean bean) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean setInstitution(Institution institution) {
+		
+		try {
+			institutionDao.saveOrUpdate(institution);
+			
+	        return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
 	}
 
 }
