@@ -14,7 +14,7 @@ import com.member.services.back.FormCenterManagerService;
 
 @Controller
 @RequestMapping(value = "/FormCenterManagerController")
-public class FormCenterManagerController {
+public class ServiceManagerController {
 
 	@Resource(name = "FormCenterManagerServiceImpl")
 	public FormCenterManagerService formCenterManagerService;
