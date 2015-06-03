@@ -73,6 +73,9 @@ public class Institution {
 	/**10份礼包第10期*/
 	@Column(name="prebTen")
 	private Integer prebTen;
+	/**服务费*/
+	@Column(name="serviceCash")
+	private Integer serviceCash;
 	/**	系统数据 */
 	@Column(name="systemData")
 	private String systemData;
@@ -198,6 +201,12 @@ public class Institution {
 	}
 	public void setSystemData(String systemData) {
 		this.systemData = systemData;
+	}
+	public Integer getServiceCash() {
+		return serviceCash;
+	}
+	public void setServiceCash(Integer serviceCash) {
+		this.serviceCash = serviceCash;
 	}
 	
 	
