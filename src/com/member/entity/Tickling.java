@@ -14,44 +14,52 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity@DynamicUpdate(true)@DynamicInsert(true)
 //@org.hibernate.annotations.Entity(dynamicInsert=true,dynamicUpdate=true,optimisticLock=org.hibernate.annotations.OptimisticLockType.VERSION)
-@Table(name="Notice")
-@org.hibernate.annotations.Table(comment="公告",appliesTo="Notice")
-public class Notice {
-
+@Table(name="Tickling")
+@org.hibernate.annotations.Table(comment="会员留言",appliesTo="Tickling")
+public class Tickling {
+	
 	@Column(name="id")
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	/**管理员用户ID */
-	@Column(name="userId")
-	private Integer userId;
+	/**会员表对应ID */
+	@Column(name="memberId")
+	private Integer memberId;
 	
-	/**公告标题 */
+	/**会员登录ID */
+	@Column(name="memberNumber")
+	private String memberNumber;
+	
+	/**留言标题 */
 	@Column(name="title")
 	private String title;
 	
-	/**公告内容 */
+	/**留言内容 */
 	@Column(name="content")
 	private String content;
 
-	/**工程（意义不明确） */
-	@Column(name="project")
-	private String project;
-	
-	/**主题类型 ，包含公告、服务协议、常见问题*/
-	@Column(name="category")
-	private Integer category;
-	
-	/**数据状态 */
-	@Column(name="state")
-	private Integer state;
-	
-	/**公告日期 */
+	/**留言时间 */
 	@Column(name="date")
 	private Date date;
 	
-	/**公告描述 */
+	/**回复内容 */
+	@Column(name="replyContent")
+	private String replyContent;
+	
+	/**回复时间 */
+	@Column(name="replyDate")
+	private Date replyDate;
+	
+	/**主题类型 */
+	@Column(name="category")
+	private Integer category;
+	
+	/**留言回复状态，0未回复，1已回复 */
+	@Column(name="state")
+	private Integer state;
+	
+	/**留言描述 */
 	@Column(name="desc")
 	private String desc;
 
@@ -63,12 +71,20 @@ public class Notice {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getMemberNumber() {
+		return memberNumber;
+	}
+
+	public void setMemberNumber(String memberNumber) {
+		this.memberNumber = memberNumber;
 	}
 
 	public String getTitle() {
@@ -87,12 +103,28 @@ public class Notice {
 		this.content = content;
 	}
 
-	public String getProject() {
-		return project;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setProject(String project) {
-		this.project = project;
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+
+	public Date getReplyDate() {
+		return replyDate;
+	}
+
+	public void setReplyDate(Date replyDate) {
+		this.replyDate = replyDate;
 	}
 
 	public Integer getCategory() {
@@ -111,14 +143,6 @@ public class Notice {
 		this.state = state;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public String getDesc() {
 		return desc;
 	}
@@ -126,5 +150,5 @@ public class Notice {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
+
 }

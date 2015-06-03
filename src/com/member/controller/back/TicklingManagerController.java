@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.member.services.back.NoticeManagerService;
+import com.member.services.back.TicklingManagerService;
 
 @Controller
-@RequestMapping(value = "/NoticeManagerController")
-public class NoticeManagerController {
+@RequestMapping(value = "/TicklingManagerController")
+public class TicklingManagerController {
 
-	@Resource(name = "NoticeManagerServiceImpl")
-	public NoticeManagerService noticeManagerService;
+	@Resource(name = "TicklingManagerServiceImpl")
+	public TicklingManagerService ticklingManagerService;
 
 	@RequestMapping(value = "/show")
 	public ModelAndView show(HttpServletRequest request,
