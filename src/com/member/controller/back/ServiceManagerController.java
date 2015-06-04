@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.member.services.back.impl.ServiceManagerServiceImpl;
+import com.member.services.back.ServiceManagerService;
 
 @Controller
 @RequestMapping(value = "/ServiceManagerController")
 public class ServiceManagerController {
 
 	@Resource(name = "ServiceManagerServiceImpl")
-	public ServiceManagerServiceImpl serviceManagerServiceImpl;
+	public ServiceManagerService serviceManagerServiceImpl;
 
 	@RequestMapping(value = "/show")
 	public ModelAndView show(HttpServletRequest request,
