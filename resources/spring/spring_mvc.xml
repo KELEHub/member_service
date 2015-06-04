@@ -46,15 +46,15 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 对静态资源的支持，此项配置是为了防止静态资源被MVC servlet拦截 -->
-	<mvc:default-servlet-handler />
+<!-- 	<mvc:default-servlet-handler /> -->
 	<!-- 下面这种方式也可以访问静态资源。两种方式 都必须在spring版本大于3.0.4时使用 -->
-	<mvc:resources mapping="/resources/front/images/**" location="/front/images/" />
-	<mvc:resources mapping="/resources/front/js/**" location="/front/js/" /> 
-	<mvc:resources mapping="/resources/front/css/**" location="/front/css/"/>
+<!-- 	<mvc:resources mapping="/resources/front/**" location="/front/" /> -->
+<!-- 	<mvc:resources mapping="/resources/front/js/**" location="/front/js/" />  -->
+<!-- 	<mvc:resources mapping="/resources/front/css/**" location="/front/css/"/> -->
 	
-	<mvc:resources mapping="/resources/back/images/**" location="/back/images/" />
-	<mvc:resources mapping="/resources/back/js/**" location="/back/js/" /> 
-	<mvc:resources mapping="/resources/back/css/**" location="/back/css/"/>
+<!-- 	<mvc:resources mapping="/resources/back/**" location="/back/" /> -->
+<!-- 	<mvc:resources mapping="/resources/back/js/**" location="/back/js/" />  -->
+<!-- 	<mvc:resources mapping="/resources/back/css/**" location="/back/css/"/> -->
 <!-- 	<mvc:interceptors>  -->
 <!--     	<mvc:interceptor> -->
 <!--             <mvc:mapping path="/*/*.do" />  -->
