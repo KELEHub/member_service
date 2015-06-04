@@ -64,8 +64,16 @@ public class ApplyService {
 	private Integer target;
 	
 	/**描述 */
-	@Column(name="desc")
-	private String desc;
+	@Column(name="description")
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public Integer getId() {
 		return id;
@@ -155,11 +163,4 @@ public class ApplyService {
 		this.target = target;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 }

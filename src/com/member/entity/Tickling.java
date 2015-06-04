@@ -40,8 +40,8 @@ public class Tickling {
 	private String content;
 
 	/**留言时间 */
-	@Column(name="date")
-	private Date date;
+	@Column(name="ticklingDate")
+	private Date ticklingDate;
 	
 	/**回复内容 */
 	@Column(name="replyContent")
@@ -60,8 +60,16 @@ public class Tickling {
 	private Integer state;
 	
 	/**留言描述 */
-	@Column(name="desc")
-	private String desc;
+	@Column(name="description")
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public Integer getId() {
 		return id;
@@ -69,6 +77,14 @@ public class Tickling {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Date getTicklingDate() {
+		return ticklingDate;
+	}
+
+	public void setTicklingDate(Date ticklingDate) {
+		this.ticklingDate = ticklingDate;
 	}
 
 	public Integer getMemberId() {
@@ -103,14 +119,6 @@ public class Tickling {
 		this.content = content;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public String getReplyContent() {
 		return replyContent;
 	}
@@ -141,14 +149,6 @@ public class Tickling {
 
 	public void setState(Integer state) {
 		this.state = state;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 }
