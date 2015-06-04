@@ -4,9 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <h1> <p>
-              <button class="btn btn-large">添加新角色</button>
-            </p></h1>
+    <h1><a href="#myModal" data-toggle="modal" class="btn btn-large">添加新角色</a></h1>
+    <form action="/rolemanage/showRoleManage.do" method="POST" id="searchRoleForm">
+	</form>
   </div>
 <div class="container-fluid">
 	<div class="row-fluid">
@@ -38,5 +38,28 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div id="myModal" class="modal hide">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">×</button>
+		<h3>添加角色</h3>
+	</div>
+	<div class="modal-body">
+		<form action="/rolemanage/insertRole.do" method="POST" id="saveRoleForm">
+			<div class="control-group">
+				<label class="control-label">角色名称</label>
+				<div class="controls">
+					<input type="text"  placeholder="角色名称" name="roleNm" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">角色描述</label>
+				<div class="controls">
+					<input type="text" placeholder="角色描述" name="roleDsc"/>
+				</div>
+			</div>
+		</form>
+		<button class="btn btn-large" onclick="saveRole('saveRoleForm')">保存</button>
 	</div>
 </div>

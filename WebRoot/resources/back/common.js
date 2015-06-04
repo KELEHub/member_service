@@ -27,6 +27,97 @@ function menuClick(url){
 	var result = ajaxRequestForMenu(url, reqDate);
 	$("#content").empty();
 	$("#content").html(result);
+	resetTable();
+}
+
+function ajaxRequestForFormGetJson(sFormId){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+				returnData=data;
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+	return returnData;
+}
+
+function ajaxRequestForFormGetJsp(sFormId){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'text',
+		success : function(data) {
+				$("#content").empty();
+				$("#content").html(data);
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
+$.fn.serializeJson=function(){  
+    var serializeObj={};  
+    var disabled = $(this).find(':disabled');
+    disabled.removeAttr('disabled');
+    var array=this.serializeArray();  
+    disabled.attr('disabled','disabled');
+    var str=this.serialize();  
+    $(array).each(function(){  
+        if(serializeObj[this.name]!=undefined){  
+            if($.isArray(serializeObj[this.name])){  
+                serializeObj[this.name].push(this.value);  
+            }else{  
+                serializeObj[this.name]=[serializeObj[this.name],this.value];  
+            }  
+        }else{  
+            serializeObj[this.name]=this.value;   
+        }  
+    });  
+    return serializeObj;  
+};
+
+function saveRole(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+function resetTable(){
 	$('#testexample1').dataTable({
 		"bLengthChange": false,
 		"bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示  
@@ -53,8 +144,4 @@ function menuClick(url){
             }  
 		}
 	});
-}
-
-function ajaxRequestForForm(reqUrl,sFormId){
-	
 }
