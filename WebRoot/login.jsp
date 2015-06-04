@@ -76,7 +76,7 @@ $(document).ready(
                   <div class="control-group">
                     <div class="controls">
                         <div class="main_input_box">
-                           <span> <i><img src="<%=basePath%>servlet/ImageCodeMakerServlet" width="100px"  height="30px" onclick="refresh(this);"/></i></span><input type="text" name="code" width="10px"/>
+                           <span><li><img src="<%=basePath%>servlet/ImageCodeMakerServlet" width="100px"  height="30px" onclick="refresh(this);"/></li><li><input type="text" name="code" width="10px"/></li></span>
                         </div>
                     </div>
                 </div>
