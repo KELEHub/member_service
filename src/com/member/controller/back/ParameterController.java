@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.member.beans.back.ParameterBean;
@@ -23,38 +25,21 @@ public class ParameterController {
 	public ParameterService parameterService;
 	
 	
-	@RequestMapping(value = "/show")
-	public ModelAndView show(HttpServletRequest request,
-			HttpServletResponse response)
+	@RequestMapping(value = "/show",method = RequestMethod.POST)
+	public String show(Model model)
 			 {
-		// 带参数重定向  view.setViewName("redirect:/index{id}");
-		String basePath="/";
-		//System.out.println(a);
-		ModelAndView mv=new ModelAndView();
 		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			 basePath = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
-					+ path + "/";
 			 SystemParameter systemParameter = parameterService.getSystemParameter();
 			 if(systemParameter!=null){
-				 mv.setViewName("redirect:/systemParameter.jsp");
+				 return "back/parameter/systemParameter";
 			}else{
-				 mv.setViewName("redirect:/systemParameter.jsp");
+				return "back/parameter/systemParameter";
 			}
 		
-			    return mv;
 		} catch (Exception e) {
 			  e.printStackTrace();
-			  try {
-					response.sendRedirect(basePath+"login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			  return "back/parameter/systemParameter";
 		}
-		return null;
 
 	}
 	
