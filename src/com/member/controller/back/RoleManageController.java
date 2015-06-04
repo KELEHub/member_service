@@ -6,11 +6,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.ManageRole;
 import com.member.form.back.RoleForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.RoleManageService;
 
 @Controller
@@ -27,8 +30,13 @@ public class RoleManageController {
 	}
 	
 	@RequestMapping(value = "/insertRole",method = RequestMethod.POST)
-	public void insertRole(RoleForm form){
+	@ResponseBody
+	public BaseResult<Void> insertRole(@RequestBody RoleForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
 		roleManageService.insertRole(form);
+		result.setMsg("添加角色成功.");
+		result.setSuccess(true);
+		return result;
 	}
 	
 }
