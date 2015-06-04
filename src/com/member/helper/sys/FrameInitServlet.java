@@ -21,9 +21,9 @@ public class FrameInitServlet extends HttpServlet {
     */
 	 @Override
 	   public void init(ServletConfig config) throws ServletException {
-		 frameKeepPool = (ThreadPoolTaskExecutor) FrameSpringContextUtil.getBean("FrameKeepPool");
-		 baseDao=FrameDatabaseUtil.getBaseDaoImpl();
-		 checkSession();
+//		 frameKeepPool = (ThreadPoolTaskExecutor) FrameSpringContextUtil.getBean("FrameKeepPool");
+//		 baseDao=FrameDatabaseUtil.getBaseDaoImpl();
+//		 checkSession();
 		 //glossaryInit();
     }
 	
