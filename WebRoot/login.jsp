@@ -22,11 +22,10 @@
         <link rel="stylesheet" href="resources/back/css/matrix-login.css" />
         <link href="resources/back/font-awesome/css/font-awesome.css" rel="stylesheet" />
 		<link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
-		<script type="text/javascript" src="<%=basePath%>/resources/back/js/jquery/jquery.js"></script>
-		<script type="text/javascript"
-			src="<%=basePath%>/resources/back/js/jquery/jquery.md5.js">
+		<script type="text/javascript" src="<%=basePath%>resources/back/js/jquery/jquery.js"></script>
+
 </script>
-<script type="text/javascript" src="<%=basePath%>app/login.js">
+<script type="text/javascript" src="<%=basePath%>resources/back/login.js">
 </script>
 <script type="text/javascript">
 basePath = "<%=basePath%>";
@@ -59,7 +58,7 @@ $(document).ready(
     <body>
         <div id="loginbox">            
             <form id="loginForm" method="post" class="form-vertical" action="LoginController/login.do">
-				 <div class="control-group normal_text"> <h3><img src="img/logo.png" alt="Logo" /></h3></div>
+				 <div class="control-group normal_text"> <h3><img src="resources/back/img/logo.png" alt="Logo" /></h3></div>
                 <div class="control-group">
                     <div class="controls">
                         <div class="main_input_box">
@@ -84,7 +83,6 @@ $(document).ready(
                 <div class="form-actions">
                     <span class="pull-right"><a type="submit"  id='btnLogin'class="btn btn-success" /> 登陆</a></span>
                 </div>
-                <input type="submit">
             </form>
             <br>
 			<p id="loginInfo" style="color:#FF3399;" ></p>

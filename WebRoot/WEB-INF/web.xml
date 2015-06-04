@@ -77,22 +77,22 @@
 <!-- 		</init-param> -->
 <!-- 		<load-on-startup>1</load-on-startup> -->
 <!-- 	</servlet> -->
-<!-- 	<servlet> -->
-<!--         <servlet-name>ImageCodeMakerServlet</servlet-name> -->
-<!--          <servlet-class>com.member.helper.sys.ImageCodeMakerServlet</servlet-class> -->
-<!--     </servlet> -->
-<!--     <servlet-mapping> -->
-<!--        <servlet-name>ImageCodeMakerServlet</servlet-name> -->
-<!--        <url-pattern>/servlet/ImageCodeMakerServlet</url-pattern> -->
-<!--     </servlet-mapping> -->
-<!--     <servlet> -->
-<!--         <servlet-name>uu</servlet-name> -->
-<!--          <servlet-class>com.member.helper.sys.uu</servlet-class> -->
-<!--     </servlet> -->
-<!--     <servlet-mapping> -->
-<!--        <servlet-name>uu</servlet-name> -->
-<!--        <url-pattern>/servlet/uu</url-pattern> -->
-<!--     </servlet-mapping> -->
+ 	<servlet> 
+         <servlet-name>ImageCodeMakerServlet</servlet-name> 
+          <servlet-class>com.member.helper.sys.ImageCodeMakerServlet</servlet-class> 
+     </servlet> 
+     <servlet-mapping> 
+        <servlet-name>ImageCodeMakerServlet</servlet-name> 
+        <url-pattern>/servlet/ImageCodeMakerServlet</url-pattern> 
+     </servlet-mapping> 
+     <servlet> 
+         <servlet-name>uu</servlet-name> 
+          <servlet-class>com.member.helper.sys.uu</servlet-class> 
+     </servlet> 
+     <servlet-mapping> 
+        <servlet-name>uu</servlet-name>
+        <url-pattern>/servlet/uu</url-pattern> 
+     </servlet-mapping> 
 	<!--
 	<filter>
 		<filter-name>responseFilter</filter-name>
