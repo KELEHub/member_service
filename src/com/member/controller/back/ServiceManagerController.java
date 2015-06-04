@@ -16,7 +16,7 @@ import com.member.services.back.FormCenterManagerService;
 @RequestMapping(value = "/FormCenterManagerController")
 public class ServiceManagerController {
 
-	@Resource(name = "FormCenterManagerServiceImpl")
+//	@Resource(name = "FormCenterManagerServiceImpl")
 	public FormCenterManagerService formCenterManagerService;
 
 	@RequestMapping(value = "/show")

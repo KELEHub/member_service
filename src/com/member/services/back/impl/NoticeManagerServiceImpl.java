@@ -13,7 +13,7 @@ import com.member.dao.NoticeManagerDao;
 import com.member.entity.Notice;
 import com.member.services.back.NoticeManagerService;
 
-@Service("ReleaseNoticeServiceImpl")
+@Service("NoticeManagerServiceImpl")
 public class NoticeManagerServiceImpl implements NoticeManagerService {
 
 	@Resource(name = "NoticeManagerDaoImpl")
