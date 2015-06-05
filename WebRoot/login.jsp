@@ -13,25 +13,33 @@
 %>
 <!DOCTYPE html>
 <html lang="cn">
-    
-<head>
-        <title>登陆</title><meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="resources/back/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="resources/back/css/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" href="resources/back/css/matrix-login.css" />
-        <link href="resources/back/font-awesome/css/font-awesome.css" rel="stylesheet" />
-		<link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
-		<script type="text/javascript" src="<%=basePath%>resources/back/js/jquery/jquery.js"></script>
 
+	<head>
+		<title>登陆</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="resources/back/css/bootstrap.min.css" />
+		<link rel="stylesheet"
+			href="resources/back/css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="resources/back/css/matrix-login.css" />
+		<link href="resources/back/font-awesome/css/font-awesome.css"
+			rel="stylesheet" />
+		<link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800'
+			rel='stylesheet' type='text/css'>
+		<script type="text/javascript"
+			src="<%=basePath%>resources/back/js/jquery/jquery.js">
 </script>
-<script type="text/javascript" src="<%=basePath%>resources/back/login.js">
+
+		
 </script>
-<script type="text/javascript">
+		<script type="text/javascript"
+			src="<%=basePath%>resources/back/login.js">
+</script>
+		<script type="text/javascript">
 basePath = "<%=basePath%>";
-function refresh(obj) {        
-	    obj.src = "<%=basePath%>servlet/ImageCodeMakerServlet?"+Math.random();    
-	 }  
+function refresh(obj) {
+	obj.src = "<%=basePath%>servlet/ImageCodeMakerServlet?" + Math.random();
+}
 
 $(document).ready(
 		function() {
@@ -54,47 +62,65 @@ $(document).ready(
 
 		})
 </script>
-    </head>
-    <body>
-        <div id="loginbox">            
-            <form id="loginForm" method="post" class="form-vertical" action="LoginController/login.do">
-				 <div class="control-group normal_text"> <h3><img src="resources/back/img/logo.png" alt="Logo" /></h3></div>
-                <div class="control-group">
-                    <div class="controls">
-                        <div class="main_input_box">
-                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" name="userName" id="txtUserName"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <div class="main_input_box">
-                            <span class="add-on bg_lg"><i class="icon-lock"></i></span><input type="password" name="password" id="txtPwd"/>
-                        </div>
-                    </div>
-                </div>
-                  <div class="control-group">
-                    <div class="controls">
-                        <div class="main_input_box">
-                           <span><li><img src="<%=basePath%>servlet/ImageCodeMakerServlet" width="100px"  height="30px" onclick="refresh(this);"/></li><li><input type="text" name="code" width="10px"/></li></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <span class="pull-right"><a type="submit"  id='btnLogin'class="btn btn-success" /> 登陆</a></span>
-                </div>
-            </form>
-            <br>
-			<p id="loginInfo" style="color:#FF3399;" ></p>
+	</head>
+	<body>
+		<div id="loginbox">
+			<form id="loginForm" method="post" class="form-vertical"
+				action="LoginController/login.do">
+				<div class="control-group normal_text">
+					<h3>
+						<img src="resources/back/img/logo.png" alt="Logo" />
+					</h3>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="main_input_box">
+							<span class="add-on bg_lg"><i class="icon-user"></i>
+							</span>
+							<input type="text" name="userName" id="txtUserName" />
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="main_input_box">
+							<span class="add-on bg_lg"><i class="icon-lock"></i>
+							</span>
+							<input type="password" name="password" id="txtPwd" />
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="main_input_box">
+							<span><li>
+									<img src="<%=basePath%>servlet/ImageCodeMakerServlet"
+										width="100px" height="30px" onclick="refresh(this);" />
+								</li>
+								<li>
+									<input type="text" name="code" width="10px" />
+								</li>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<span class="pull-right"><a type="submit" id='btnLogin'
+						class="btn btn-success" /> 登陆</a>
+					</span>
+				</div>
+			</form>
+			<br>
+			<p id="loginInfo" style="color: #FF3399;"></p>
 			<table align=center style="padding-top: 10px">
 				<tr>
 					<td style="text-align: center">
 					</td>
 				</tr>
 			</table>
-          
-        </div>
-        
-    </body>
+
+		</div>
+
+	</body>
 
 </html>
