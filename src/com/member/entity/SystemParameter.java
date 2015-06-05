@@ -46,9 +46,6 @@ public class SystemParameter {
 	/**	积分转账手续费 */
 	@Column(name="scoreTake")
 	private Integer scoreTake;
-	/**	葛粮币转换最大金额 */
-	@Column(name="glbMax")
-	private Integer glbMax;
 	/**	葛粮币转换最小金额 */
 	@Column(name="glbMin")
 	private Integer glbMin;
@@ -120,12 +117,6 @@ public class SystemParameter {
 	}
 	public void setScoreTake(Integer scoreTake) {
 		this.scoreTake = scoreTake;
-	}
-	public Integer getGlbMax() {
-		return glbMax;
-	}
-	public void setGlbMax(Integer glbMax) {
-		this.glbMax = glbMax;
 	}
 	public Integer getGlbMin() {
 		return glbMin;
