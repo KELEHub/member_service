@@ -30,34 +30,34 @@ public class SystemParameter {
 	private String goldFlg;
 	/**提现最高限额 */
 	@Column(name="goldMax")
-	private Integer goldMax;
+	private Long goldMax;
 	/**提现最小限额 */
 	@Column(name="goldMin")
-	private Integer goldMin;
+	private Long goldMin;
 	/**提现手续费 */
 	@Column(name="goldTake")
-	private Integer goldTake;
+	private Long goldTake;
 	/**	积分转账最大金额 */
 	@Column(name="scoreMax")
-	private Integer scoreMax;
+	private Long scoreMax;
 	/**	积分转账最小金额 */
 	@Column(name="scoreMin")
-	private Integer scoreMin;
+	private Long scoreMin;
 	/**	积分转账手续费 */
 	@Column(name="scoreTake")
-	private Integer scoreTake;
+	private Long scoreTake;
 	/**	葛粮币转换最小金额 */
 	@Column(name="glbMin")
-	private Integer glbMin;
+	private Long glbMin;
 	/**	将葛粮币转换手续费: */
 	@Column(name="glbTake")
-	private Integer glbTake;
+	private Long glbTake;
 	/**	积分充值最小金额: */
 	@Column(name="scoreInMin")
-	private Integer scoreInMin;
+	private Long scoreInMin;
 	/**	积分充值手续费: */
 	@Column(name="scoreInTake")
-	private Integer scoreInTake;
+	private Long scoreInTake;
 	/**	系统数据 */
 	@Column(name="systemData")
 	private String systemData;
@@ -82,64 +82,64 @@ public class SystemParameter {
 	public void setGoldFlg(String goldFlg) {
 		this.goldFlg = goldFlg;
 	}
-	public Integer getGoldMax() {
+	public Long getGoldMax() {
 		return goldMax;
 	}
-	public void setGoldMax(Integer goldMax) {
+	public void setGoldMax(Long goldMax) {
 		this.goldMax = goldMax;
 	}
-	public Integer getGoldMin() {
+	public Long getGoldMin() {
 		return goldMin;
 	}
-	public void setGoldMin(Integer goldMin) {
+	public void setGoldMin(Long goldMin) {
 		this.goldMin = goldMin;
 	}
-	public Integer getGoldTake() {
+	public Long getGoldTake() {
 		return goldTake;
 	}
-	public void setGoldTake(Integer goldTake) {
+	public void setGoldTake(Long goldTake) {
 		this.goldTake = goldTake;
 	}
-	public Integer getScoreMax() {
+	public Long getScoreMax() {
 		return scoreMax;
 	}
-	public void setScoreMax(Integer scoreMax) {
+	public void setScoreMax(Long scoreMax) {
 		this.scoreMax = scoreMax;
 	}
-	public Integer getScoreMin() {
+	public Long getScoreMin() {
 		return scoreMin;
 	}
-	public void setScoreMin(Integer scoreMin) {
+	public void setScoreMin(Long scoreMin) {
 		this.scoreMin = scoreMin;
 	}
-	public Integer getScoreTake() {
+	public Long getScoreTake() {
 		return scoreTake;
 	}
-	public void setScoreTake(Integer scoreTake) {
+	public void setScoreTake(Long scoreTake) {
 		this.scoreTake = scoreTake;
 	}
-	public Integer getGlbMin() {
+	public Long getGlbMin() {
 		return glbMin;
 	}
-	public void setGlbMin(Integer glbMin) {
+	public void setGlbMin(Long glbMin) {
 		this.glbMin = glbMin;
 	}
-	public Integer getGlbTake() {
+	public Long getGlbTake() {
 		return glbTake;
 	}
-	public void setGlbTake(Integer glbTake) {
+	public void setGlbTake(Long glbTake) {
 		this.glbTake = glbTake;
 	}
-	public Integer getScoreInMin() {
+	public Long getScoreInMin() {
 		return scoreInMin;
 	}
-	public void setScoreInMin(Integer scoreInMin) {
+	public void setScoreInMin(Long scoreInMin) {
 		this.scoreInMin = scoreInMin;
 	}
-	public Integer getScoreInTake() {
+	public Long getScoreInTake() {
 		return scoreInTake;
 	}
-	public void setScoreInTake(Integer scoreInTake) {
+	public void setScoreInTake(Long scoreInTake) {
 		this.scoreInTake = scoreInTake;
 	}
 	public String getSystemData() {
@@ -154,6 +154,7 @@ public class SystemParameter {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
 	
 
 }
