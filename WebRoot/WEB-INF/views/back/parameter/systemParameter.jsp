@@ -106,10 +106,10 @@
                   <span class="add-on">$</span> </div>
               </div>
             </div>
-            <div class="form-actions">
-                <input type="submit" value="设定" onclick="saveParameter('parameterSetForm')" class="btn btn-success">
-             </div>
           </form>
+          <div class="form-actions">
+                <input type="submit" value="设定" onclick="saveParameter('parameterSetForm')" class="btn btn-success">
+          </div>
         </div>
       </div>
       </div>
