@@ -8,8 +8,6 @@
             <div class="widget-box">
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5><a>系统参数设置</a></h5>
-          <form action="/ParameterController/show.do" method="POST" id="searchParameterForm">
-	      </form>
         </div>
         <div class="widget-content nopadding">
           <form class="form-horizontal" action="/ParameterController/set.do" method="POST" id="parameterSetForm">
