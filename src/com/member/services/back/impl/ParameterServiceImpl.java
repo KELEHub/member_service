@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.beans.back.ParameterBean;
 import com.member.dao.HqlParameter;
 import com.member.dao.ParameterDao;
 import com.member.entity.SystemParameter;
@@ -33,24 +32,10 @@ public class ParameterServiceImpl implements ParameterService{
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public boolean setSystemParameter(SystemParameter systemParameter,ParameterBean pb) {
+	public boolean setSystemParameter(SystemParameter systemParameter) {
 		try {
-			systemParameter.setDayCount(Integer.valueOf(pb.getDayCount()));
-			systemParameter.setGoldFlg(pb.getGoldFlg());
-			systemParameter.setGoldMax(Integer.valueOf(pb.getGoldMax()));
-			systemParameter.setGoldMin(Integer.valueOf(pb.getGoldMin()));
-			systemParameter.setGoldTake(Integer.valueOf(pb.getGoldTake()));
-			systemParameter.setScoreMax(Integer.valueOf(pb.getScoreMax()));
-			systemParameter.setScoreMin(Integer.valueOf(pb.getScoreMin()));
-			systemParameter.setScoreTake(Integer.valueOf(pb.getScoreTake()));
-			systemParameter.setGlbMin(Integer.valueOf(pb.getGlbMin()));
-			systemParameter.setGlbTake(Integer.valueOf(pb.getGlbTake()));
-			systemParameter.setGlbMax(Integer.valueOf(pb.getGlbMax()));
-			systemParameter.setScoreInTake(Integer.valueOf(pb.getScoreInTake()));
-			systemParameter.setScoreInMin(Integer.valueOf(pb.getScoreInMin()));
 	       	parameterDao.saveOrUpdate(systemParameter);
-		
-             return true;
+            return true;
 		} catch (Exception e) {
 			return false;
 		}
