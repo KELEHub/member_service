@@ -11,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.member.beans.back.ParameterBean;
 import com.member.entity.Institution;
-import com.member.entity.SystemParameter;
 import com.member.services.back.InstitutionService;
 
 @Controller

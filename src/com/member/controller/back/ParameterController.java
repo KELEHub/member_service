@@ -1,20 +1,19 @@
 package com.member.controller.back;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.member.beans.back.ParameterBean;
 import com.member.entity.SystemParameter;
+import com.member.form.back.ParameterForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.ParameterService;
 
 @Controller
@@ -31,6 +30,7 @@ public class ParameterController {
 		try {
 			 SystemParameter systemParameter = parameterService.getSystemParameter();
 			 if(systemParameter!=null){
+				 model.addAttribute("bean", systemParameter);
 				 return "back/parameter/systemParameter";
 			}else{
 				return "back/parameter/systemParameter";
@@ -43,22 +43,11 @@ public class ParameterController {
 
 	}
 	
-	@RequestMapping(value = "/set")
-	public ModelAndView set(HttpServletRequest request,
-			HttpServletResponse response, String dayCount, String goldFlg,
-			String goldMax, String goldMin, String goldTake, String scoreMax,
-			String scoreMin, String scoreTake, String glbMax, String glbMin,
-			String glbTake, String scoreInMin, String scoreInTake) {
-		// 带参数重定向 view.setViewName("redirect:/index{id}");
-		String basePath = "/";
-		// System.out.println(a);
-		ModelAndView mv = new ModelAndView();
+	@RequestMapping(value = "/set",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> set(@RequestBody ParameterForm form,Model model) {
+		BaseResult<Void> result = new BaseResult<Void>();
 		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			basePath = request.getScheme() + "://" + request.getServerName()
-					+ ":" + request.getServerPort() + path + "/";
 			SystemParameter systemParameter = parameterService
 					.getSystemParameter();
 			if(systemParameter == null){
@@ -66,31 +55,29 @@ public class ParameterController {
 				systemParameter.setSystemData("system");
 				systemParameter.setCreateTime(new Date());
 			}
-			ParameterBean pb = new ParameterBean();
-			pb.setDayCount(dayCount);
-			pb.setGoldFlg(goldFlg);
-			pb.setGoldMax(goldMax);
-			pb.setGoldMin(goldMin);
-			pb.setGoldTake(goldTake);
-			pb.setScoreMax(scoreMax);
-			pb.setScoreMin(scoreMin);
-			pb.setScoreTake(scoreTake);
-			pb.setGlbMin(glbMin);
-			pb.setGlbTake(glbTake);
-			pb.setGlbMax(glbMax);
-			pb.setScoreInTake(scoreInTake);
-			pb.setScoreInMin(scoreInMin);
-			parameterService.setSystemParameter(systemParameter, pb);
-			return mv;
+			systemParameter.setDayCount(Integer.valueOf(form.getDayCount()));
+			systemParameter.setGoldFlg(form.getGoldFlg());
+			systemParameter.setGoldMax(Integer.valueOf(form.getGoldMax()));
+			systemParameter.setGoldMin(Integer.valueOf(form.getGoldMin()));
+			systemParameter.setGoldTake(Integer.valueOf(form.getGoldTake()));
+			systemParameter.setScoreMax(Integer.valueOf(form.getScoreMax()));
+			systemParameter.setScoreMin(Integer.valueOf(form.getScoreMin()));
+			systemParameter.setScoreTake(Integer.valueOf(form.getScoreTake()));
+			systemParameter.setGlbMin(Integer.valueOf(form.getGlbMin()));
+			systemParameter.setGlbTake(Integer.valueOf(form.getGlbTake()));
+			systemParameter.setScoreInTake(Integer.valueOf(form.getScoreInTake()));
+			systemParameter.setScoreInMin(Integer.valueOf(form.getScoreInMin()));
+			
+			parameterService.setSystemParameter(systemParameter);
+			result.setMsg("设置成功");
+			result.setSuccess(true);
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
-			try {
-				response.sendRedirect(basePath + "login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			result.setMsg("设置失败");
+			result.setSuccess(false);
+			return result;
 		}
-		return null;
 
 	}
 	

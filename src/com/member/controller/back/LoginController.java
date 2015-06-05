@@ -68,7 +68,7 @@ import com.member.util.FrameObjectUtil;
 			 basePath = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
 					+ path + "/";
-			if(!randCode.equals(code)){// 验证码输入不正确
+			if(randCode == null || !randCode.equals(code)){// 验证码输入不正确
 					request.getSession().setAttribute("loginReturnWarnMsg", "验证码输入错误");
 					   mv.setViewName("redirect:/login.jsp");
 					return mv;
