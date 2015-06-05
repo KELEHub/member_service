@@ -1,5 +1,6 @@
 package com.member.controller.back;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -56,16 +57,16 @@ public class ParameterController {
 			}
 			systemParameter.setDayCount(Integer.valueOf(form.getDayCount()));
 			systemParameter.setGoldFlg(form.getGoldFlg());
-			systemParameter.setGoldMax(Long.valueOf(form.getGoldMax()));
-			systemParameter.setGoldMin(Long.valueOf(form.getGoldMin()));
-			systemParameter.setGoldTake(Long.valueOf(form.getGoldTake()));
-			systemParameter.setScoreMax(Long.valueOf(form.getScoreMax()));
-			systemParameter.setScoreMin(Long.valueOf(form.getScoreMin()));
-			systemParameter.setScoreTake(Long.valueOf(form.getScoreTake()));
-			systemParameter.setGlbMin(Long.valueOf(form.getGlbMin()));
-			systemParameter.setGlbTake(Long.valueOf(form.getGlbTake()));
-			systemParameter.setScoreInTake(Long.valueOf(form.getScoreInTake()));
-			systemParameter.setScoreInMin(Long.valueOf(form.getScoreInMin()));
+			systemParameter.setGoldMax(getValue(form.getGoldMax()));
+			systemParameter.setGoldMin(getValue(form.getGoldMin()));
+			systemParameter.setGoldTake(getValue(form.getGoldTake()));
+			systemParameter.setScoreMax(getValue(form.getScoreMax()));
+			systemParameter.setScoreMin(getValue(form.getScoreMin()));
+			systemParameter.setScoreTake(getValue(form.getScoreTake()));
+			systemParameter.setGlbMin(getValue(form.getGlbMin()));
+			systemParameter.setGlbTake(getValue(form.getGlbTake()));
+			systemParameter.setScoreInTake(getValue(form.getScoreInTake()));
+			systemParameter.setScoreInMin(getValue(form.getScoreInMin()));
 
 			parameterService.setSystemParameter(systemParameter);
 			result.setMsg("设置成功");
@@ -78,6 +79,11 @@ public class ParameterController {
 			return result;
 		}
 
+	}
+	
+	private BigDecimal getValue(String s){
+		 	BigDecimal b = new BigDecimal(s); 
+		 	return b.setScale(2, BigDecimal.ROUND_DOWN);
 	}
 
 }
