@@ -117,6 +117,19 @@ function saveRole(sFormId){
 	}
 }
 
+function saveParameter(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='searchParameterForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+		});
+	}
+}
+
+
+
 function resetTable(){
 	$('#testexample1').dataTable({
 		"bLengthChange": false,
