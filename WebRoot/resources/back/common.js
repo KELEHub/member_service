@@ -57,6 +57,31 @@ function ajaxRequestForFormGetJson(sFormId){
 	return returnData;
 }
 
+function ajaxRequestForJsonGetJson(reqUrl,reqObj){
+	var bathPath=$("#basePath").val();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+				returnData=data;
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+	return returnData;
+}
+
 function ajaxRequestForFormGetJsp(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
@@ -83,6 +108,7 @@ function ajaxRequestForFormGetJsp(sFormId){
        }
 	});
 }
+
 $.fn.serializeJson=function(){  
     var serializeObj={};  
     var disabled = $(this).find(':disabled');
@@ -124,7 +150,30 @@ function saveParameter(sFormId){
 	}
 }
 
-
+function showDynamicDialog(reqUrl,reqObj,dialogId){
+	var bathPath=$("#basePath").val();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'text',
+		success : function(data) {
+				$("#showDialogDiv").append(data);
+				$('#'+dialogId).modal('show');
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
 
 function resetTable(){
 	$('#testexample1').dataTable({
@@ -153,4 +202,61 @@ function resetTable(){
             }  
 		}
 	});
+}
+
+//权限菜单书的定义
+var authTreeSetting = {
+		check: {
+			enable: true
+		},
+		data: {
+			key:{
+				name:"menuNm"
+			},
+			simpleData: {
+				enable:true,
+				idKey: "id",
+				pIdKey: "parentMenuId",
+				rootPId: "0"
+			}
+		},
+		callback: {
+			onCheck: authTreeOnCheck
+		}
+	};
+
+function allocationAuth(roleId,roleDsc){
+	var reqObj={};
+	reqObj["id"]=roleId;
+	reqObj["roleDsc"]=roleDsc;
+	showDynamicDialog("/rolemanage/showAllocationAuth.do", reqObj, "showAllocationAuth")
+	
+	var result = ajaxRequestForJsonGetJson("/rolemanage/getMenuInfo.do", {});
+	var zNodes = result.result;
+	$.fn.zTree.init($("#showAllocationAuthTree"), authTreeSetting, zNodes);
+}
+
+function authTreeOnCheck(event, treeId, treeNode){
+	var treeObj = $.fn.zTree.getZTreeObj(treeId);
+	var nodes = treeObj.getCheckedNodes(true);
+//	var roleNm = $("#editRoleNm").val();
+	var selectNodeArr = [];
+	for(var i=0;i<nodes.length;i++){
+		var node = nodes[i];
+		var selectedNodeObj={};
+//		selectedNodeObj["roleNm"] = roleNm;
+		if(node.isParent){
+			selectedNodeObj["menuId"] = node.menuId;
+			selectedNodeObj["authCode"] = "";
+		}else{
+			selectedNodeObj["menuId"] = node.parMenuId;
+			selectedNodeObj["authCode"] = node.menuId;;
+		}
+		selectNodeArr.push(selectedNodeObj);
+	}
+	if(treeId.indexOf("newAuth") >=0){
+		$("#newAuthMenuIds").val(JSON.stringify(selectNodeArr));
+	}else{
+		$("#editAuthMenuIds").val(JSON.stringify(selectNodeArr));
+	}
 }

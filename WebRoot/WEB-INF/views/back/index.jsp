@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/fullcalendar.css" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/matrix-style.css" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/matrix-media.css" />
+<link rel="stylesheet" href="<%=basePath%>/resources/back/js/ztree/css/zTreeStyle/zTreeStyle.css">
 <link href="<%=basePath%>/resources/back/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 <script src="<%=basePath%>/resources/back/js/excanvas.min.js"></script> 
@@ -40,6 +41,7 @@
 <script src="<%=basePath%>/resources/back/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath%>/resources/back/js/matrix.tables.js"></script> 
 <script src="<%=basePath%>/resources/back/js/matrix.interface.js"></script>
+<script src="<%=basePath%>/resources/back/js/ztree/jquery.ztree.all-3.5.min.js"></script>
 <script src="<%=basePath%>/resources/back/common.js"></script>
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to
@@ -249,7 +251,6 @@ function resetMenu() {
         </div>
       </div>
     </div>
-    <hr>
 <!--     <div class="row-fluid"> -->
 <!--       <div class="span12"> -->
 <!--         <div class="widget-box widget-calendar"> -->
@@ -293,6 +294,8 @@ function resetMenu() {
 <!--     </div> -->
   </div>
 </div>
+ <div id="showDialogDiv">
+ </div>
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. More Templates <a href="http://www.mycodes.net/" target="_blank">源码之家</a></div>

@@ -23,6 +23,7 @@
 								<th>角色编号</th>
 								<th>角色名称</th>
 								<th>角色描述</th>
+								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -31,6 +32,9 @@
 									<td>${item.id }</td>
 									<td>${item.roleNm }</td>
 									<td>${item.roleDes }</td>
+									<td>
+									<button class="btn btn-large" onclick="allocationAuth('${item.id}','${item.roleDes }')">分配菜单</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
