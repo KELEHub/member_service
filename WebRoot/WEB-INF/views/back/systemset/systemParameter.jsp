@@ -22,13 +22,22 @@
             <div class="control-group">
               <label class="control-label">是否提现:</label>
               <div class="controls">
-               <div class="btn-group">
-              <button data-toggle="dropdown" class="btn dropdown-toggle"> <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a >Action</a></li>
-                <li><a >Another action</a></li>
-              </ul>
-              </div>
+                 <div class="input-prepend"> 
+                 <c:choose>
+                    <c:when  test="${bean.goldFlg=='open'}">
+                       <select name="goldFlg">
+                            <option value="open" selected="selected">是</option>
+                            <option value="close">否</option>
+                       </select>
+                    </c:when>
+                    <c:otherwise>
+                        <select name="goldFlg">
+                            <option value="open">是</option>
+                            <option value="close" selected="selected">否</option>
+                        </select>
+                    </c:otherwise>
+                 </c:choose>
+                 </div>
               </div>
             </div>
             <div class="control-group">
