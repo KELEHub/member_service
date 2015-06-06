@@ -31,7 +31,7 @@ public class ManageMenu {
 	private String menuUrl;
 	
 	@Column(name="p_menu_id")
-	private String parentMenuId;
+	private Integer parentMenuId;
 	
 	@Column(name="menu_status")
 	private String menuStatus;
@@ -68,11 +68,11 @@ public class ManageMenu {
 		this.menuUrl = menuUrl;
 	}
 
-	public String getParentMenuId() {
+	public Integer getParentMenuId() {
 		return parentMenuId;
 	}
 
-	public void setParentMenuId(String parentMenuId) {
+	public void setParentMenuId(Integer parentMenuId) {
 		this.parentMenuId = parentMenuId;
 	}
 
