@@ -1,17 +1,19 @@
 package com.member.controller.back;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.Institution;
+import com.member.form.back.InstitutionForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.InstitutionService;
 
 @Controller
@@ -22,71 +24,55 @@ public class InstitutionController {
 	public InstitutionService institutionService;
 	
 	@RequestMapping(value = "/show")
-	public ModelAndView show(HttpServletRequest request,
-			HttpServletResponse response)
+	public String show(Model model)
 			 {
-		// 带参数重定向  view.setViewName("redirect:/index{id}");
-		String basePath="/";
-		//System.out.println(a);
-		ModelAndView mv=new ModelAndView();
 		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			 basePath = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
-					+ path + "/";
 			 Institution institution = institutionService.getInstitutionInfo();
-			 if(institution!=null){
-				 mv.setViewName("redirect:/institution.jsp");
-			}else{
-				 mv.setViewName("redirect:/institution.jsp");
-			}
-		
-			    return mv;
+			 if (institution != null) {
+					model.addAttribute("bean", institution);
+					return "back/systemset/institution";
+				} else {
+					return "back/systemset/institution";
+				}
+
 		} catch (Exception e) {
 			  e.printStackTrace();
-			  try {
-					response.sendRedirect(basePath+"login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+				return "back/systemset/institution";
 		}
-		return null;
 
 	}
 	
 	
-	@RequestMapping(value = "/set")
-	public ModelAndView set(HttpServletRequest request,
-			HttpServletResponse response) {
-		// 带参数重定向 view.setViewName("redirect:/index{id}");
-		String basePath = "/";
-		// System.out.println(a);
-		ModelAndView mv = new ModelAndView();
+	@RequestMapping(value = "/set", method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> set(@RequestBody InstitutionForm form, Model model) {
+		BaseResult<Void> result = new BaseResult<Void>();
 		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			basePath = request.getScheme() + "://" + request.getServerName()
-					+ ":" + request.getServerPort() + path + "/";
-			Institution institution = institutionService.getInstitutionInfo();
-			if(institution == null){
+			Institution institution = institutionService
+					.getInstitutionInfo();
+			if (institution == null) {
 				institution = new Institution();
 				institution.setSystemData("system");
 				institution.setCreateTime(new Date());
 			}
+			institution.setPreaFirst(Integer.valueOf(form.getPreaFirst()));
+			institution.setPreaSecond(Integer.valueOf(form.getPreaSecond()));
+			institution.setPreaThree(Integer.valueOf(form.getPreaThree()));
+			institution.setPreaFour(Integer.valueOf(form.getPreaFour()));
+			institution.setPreaFive(Integer.valueOf(form.getPreaFive()));
+			institution.setRegisterGold(Integer.valueOf(form.getRegisterGold()));
+			institution.setPreCount(Integer.valueOf(form.getPreCount()));
+			institution.setServiceCash(Integer.valueOf(form.getServiceCash()));
 			institutionService.setInstitution(institution);
-			return mv;
+			result.setMsg("设置成功");
+			result.setSuccess(true);
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
-			try {
-				response.sendRedirect(basePath + "login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			result.setMsg("设置失败,数值设置不正确");
+			result.setSuccess(true);
+			return result;
 		}
-		return null;
 
 	}
 	
