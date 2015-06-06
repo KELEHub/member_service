@@ -43,7 +43,7 @@ public class SystemParameter {
 	private BigDecimal scoreMax;
 	/**	积分转账最小金额 */
 	@Column(name="scoreMin")
-	private BigDecimal scoreMin;
+	private Integer scoreMin;
 	/**	积分转账手续费 */
 	@Column(name="scoreTake")
 	private BigDecimal scoreTake;
@@ -107,10 +107,11 @@ public class SystemParameter {
 	public void setScoreMax(BigDecimal scoreMax) {
 		this.scoreMax = scoreMax;
 	}
-	public BigDecimal getScoreMin() {
+
+	public Integer getScoreMin() {
 		return scoreMin;
 	}
-	public void setScoreMin(BigDecimal scoreMin) {
+	public void setScoreMin(Integer scoreMin) {
 		this.scoreMin = scoreMin;
 	}
 	public BigDecimal getScoreTake() {
