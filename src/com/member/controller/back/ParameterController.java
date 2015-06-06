@@ -61,7 +61,7 @@ public class ParameterController {
 			systemParameter.setGoldMin(getValue(form.getGoldMin()));
 			systemParameter.setGoldTake(getValue(form.getGoldTake()));
 			systemParameter.setScoreMax(getValue(form.getScoreMax()));
-			systemParameter.setScoreMin(getValue(form.getScoreMin()));
+			systemParameter.setScoreMin(Integer.valueOf(form.getScoreMin()));
 			systemParameter.setScoreTake(getValue(form.getScoreTake()));
 			systemParameter.setGlbMin(getValue(form.getGlbMin()));
 			systemParameter.setGlbTake(getValue(form.getGlbTake()));
