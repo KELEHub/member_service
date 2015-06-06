@@ -31,14 +31,14 @@ public class ParameterController {
 					.getSystemParameter();
 			if (systemParameter != null) {
 				model.addAttribute("bean", systemParameter);
-				return "back/parameter/systemParameter";
+				return "back/systemset/systemParameter";
 			} else {
-				return "back/parameter/systemParameter";
+				return "back/systemset/systemParameter";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "back/parameter/systemParameter";
+			return "back/systemset/systemParameter";
 		}
 
 	}
