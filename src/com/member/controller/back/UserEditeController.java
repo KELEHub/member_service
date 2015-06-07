@@ -46,7 +46,6 @@ public class UserEditeController {
 
 
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
-	@ResponseBody
 	public String serch(@RequestBody UserEditeForm form, Model model) {
 		try {
 //			List<NmsUser> users = (List<NmsUser>)nmsUserDao.queryByHql(
