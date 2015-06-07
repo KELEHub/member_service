@@ -246,8 +246,21 @@ function saveNotice(sFormId){
 }
 
 function saveCreateUser(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='searchUserForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+function serchUser(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 }
+
 
 function deleteUser(username){
 	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
@@ -260,6 +273,7 @@ function deleteUser(username){
 		$("#content-header").find("form[id='searchUserForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 		});
 	}
 	 }
