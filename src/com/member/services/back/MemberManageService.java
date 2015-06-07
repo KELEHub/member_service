@@ -13,4 +13,5 @@ public interface MemberManageService {
 	public void updateMemberPassword(Integer id);
 	public Information getMemberById(Integer id);
 	public void updateMemberDetails(MemberSaveForm form);
+	public void deleteMember(MemberSaveForm form);
 }

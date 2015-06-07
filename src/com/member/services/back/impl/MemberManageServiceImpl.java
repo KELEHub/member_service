@@ -90,6 +90,12 @@ public class MemberManageServiceImpl implements MemberManageService {
 	}
 
 	@Override
+	public void deleteMember(MemberSaveForm form) {
+		Information member = getMemberById(form.getId());
+		informationDao.delete(member);
+	}
+	
+	@Override
 	public void updateMemberDetails(MemberSaveForm form) {
 		Information member = getMemberById(form.getId());
 		member.setNumber(form.getNumber());
