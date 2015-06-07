@@ -6,4 +6,5 @@ public interface ParameterService {
 	public SystemParameter getSystemParameter();
 	
 	public boolean setSystemParameter(SystemParameter systemParameter);
+	
 }
