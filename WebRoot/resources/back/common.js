@@ -240,14 +240,7 @@ function saveNotice(sFormId){
 }
 
 function saveCreateUser(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchUserForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-		});
-	}
+	var result = ajaxRequestForFormGetJsp(sFormId);
 }
 
 function deleteUser(username){
