@@ -135,6 +135,13 @@ public class CreateUserController {
 				NmsUser deUser = users.get(0);
 				ManageUserRoleHub mb = roleManageService
 						.getManageUserRoleHubById(deUser.getId());
+				ManageRole role = roleManageService.getRoleById(deUser
+						.getId());
+				if(role.getSuperAdmin()!=null&&role.getSuperAdmin()==1){
+					result.setMsg("超级管理员不能被删除");
+					result.setSuccess(true);
+					return result;
+				}
 				limitDeclarationService.deleteData(mb);
 				limitDeclarationService.deleteData(deUser);
 			}
