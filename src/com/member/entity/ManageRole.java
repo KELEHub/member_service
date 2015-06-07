@@ -28,6 +28,10 @@ public class ManageRole {
 	@Column(name="role_des")
 	private String roleDes;
 	
+	//是否是超级管理员
+	@Column(name="superAdmin")
+	private Integer superAdmin;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -51,4 +55,14 @@ public class ManageRole {
 	public void setRoleDes(String roleDes) {
 		this.roleDes = roleDes;
 	}
+
+	public Integer getSuperAdmin() {
+		return superAdmin;
+	}
+
+	public void setSuperAdmin(Integer superAdmin) {
+		this.superAdmin = superAdmin;
+	}
+	
+	
 }

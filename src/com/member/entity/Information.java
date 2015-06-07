@@ -223,11 +223,11 @@ public class Information {
 	@Column(name="repeatedAccumulative")
 	private Long repeatedAccumulative;
 	
-	/**意义不明 */
+	/**积分 */
 	@Column(name="shoppingMoney")
 	private Long shoppingMoney;
 	
-	/**意义不明 */
+	/**积分累计 */
 	@Column(name="shoppingAccumulative")
 	private Long shoppingAccumulative;
 	
