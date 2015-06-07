@@ -1,13 +1,12 @@
 package com.member.form.back;
 
-import java.util.Date;
 
 public class NoticeForm {
 
-	private Integer id;
+	private String id;
 	
 	/**管理员用户ID */
-	private Integer userId;
+	private String userId;
 	
 	/**公告标题 */
 	private String title;
@@ -16,24 +15,24 @@ public class NoticeForm {
 	private String content;
 
 	/**主题类型 ，包含公告、服务协议、常见问题*/
-	private Integer category;
+	private String category;
 	
 	/**公告日期 */
-	private Date date;
-	
-	public Integer getId() {
+	private String date;
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -53,20 +52,21 @@ public class NoticeForm {
 		this.content = content;
 	}
 
-	public Integer getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
-
+	
+	
 }
