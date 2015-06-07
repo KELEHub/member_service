@@ -432,3 +432,11 @@ function logout(reqUrl){
 	var bathPath=$("#basePath").val();
 	window.location.href=bathPath+reqUrl;
 }
+
+function editNotice(item){
+	
+}
+
+function deleteNotice(){
+	
+}
