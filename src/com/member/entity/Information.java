@@ -176,7 +176,7 @@ public class Information {
 	private Date isActivate;
 	
 	/**意义不明 */
-	@Column(name="isNull")
+	@Column(name="isNullInfo")
 	private Integer isNull;
 	
 	/**是否锁定，1表示锁定，0表示未锁定 */
