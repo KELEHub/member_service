@@ -84,6 +84,16 @@ public class MemberManageController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/deleteMember",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteMember(@RequestBody MemberSaveForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		memberManageService.deleteMember(form);
+		result.setMsg("删除会员信息成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
 	@RequestMapping(value = "/saveMemberDetail",method = RequestMethod.POST)
 	@ResponseBody
 	public BaseResult<Void> saveMemberDetail(@RequestBody MemberSaveForm form,Model model){
