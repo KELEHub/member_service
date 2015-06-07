@@ -1,5 +1,6 @@
 package com.member.services.back.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlInstitution;
 import com.member.dao.InstitutionDao;
+import com.member.entity.EditeHistory;
+import com.member.entity.Information;
 import com.member.entity.Institution;
 import com.member.services.back.InstitutionService;
 @Service("InstitutionServiceImpl")
@@ -43,6 +46,40 @@ public class InstitutionServiceImpl implements InstitutionService{
 			return false;
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<EditeHistory> getEditeHistoryListByUserId(Integer userId) {
+		String hql="select mr from EditeHistory mr where userId=?";
+		List arguments = new ArrayList();
+		arguments.add(userId);
+		List<EditeHistory> result = (List<EditeHistory>)institutionDao.queryByHql(hql,arguments);
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<EditeHistory> getEditeHistoryList() {
+		String hql="select mr from EditeHistory mr";
+		List<EditeHistory> result = (List<EditeHistory>)institutionDao.queryByHql(hql);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public Information getNnmuserByName(String number) {
+		String hql="from Information mr where mr.number=?";
+		List arguments = new ArrayList();
+		arguments.add(number);
+		List<Information> result = (List<Information>)institutionDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.get(0);
+		}
+		return null;
 	}
 
 }
