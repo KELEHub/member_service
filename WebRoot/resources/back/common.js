@@ -150,6 +150,17 @@ function saveParameter(sFormId){
 	}
 }
 
+function saveLimeteDeclaration(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='searchLimiteForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+		});
+	}
+}
+
 function showDynamicDialog(reqUrl,reqObj,dialogId){
 	var bathPath=$("#basePath").val();
 	var reqData={};
@@ -259,4 +270,12 @@ function authTreeOnCheck(event, treeId, treeNode){
 	}else{
 		$("#editAuthMenuIds").val(JSON.stringify(selectNodeArr));
 	}
+}
+
+
+
+//退出系统
+function logout(reqUrl){
+	var bathPath=$("#basePath").val();
+	window.location.href=bathPath+reqUrl;
 }
