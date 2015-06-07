@@ -14,5 +14,7 @@ public interface LimitDeclarationService {
 	public int getCountAll(ProjectEnum project);
 	
 	public boolean saveOrUpdate(Object ob);
+	
+	public boolean deleteData(Object ob);
 
 }
