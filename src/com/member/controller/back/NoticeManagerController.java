@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.Notice;
 import com.member.form.back.NoticeForm;
+import com.member.form.back.UserEditeForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.NoticeManagerService;
 
@@ -34,6 +35,7 @@ public class NoticeManagerController {
 		model.addAttribute("result", result);
 		return "back/noticeManager/noticeManager";
 	}
+	
 	
 	@RequestMapping(value = "/releaseNotice",method = RequestMethod.POST)
 	@ResponseBody
