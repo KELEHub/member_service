@@ -177,7 +177,7 @@ function showDynamicDialog(reqUrl,reqObj,dialogId){
 		contentType: "application/json",
 		dataType : 'text',
 		success : function(data) {
-				$("#showDialogDiv").append(data);
+				$("#showDialogDiv").html(data);
 				$('#'+dialogId).modal('show');
 		},
 		error : function (msg) {
@@ -244,35 +244,78 @@ function allocationAuth(roleId,roleDsc){
 	
 	var result = ajaxRequestForJsonGetJson("/rolemanage/getMenuInfo.do", {});
 	var zNodes = result.result;
-	$.fn.zTree.init($("#showAllocationAuthTree"), authTreeSetting, zNodes);
+	var treeObj = $.fn.zTree.init($("#showAllocationAuthTree"), authTreeSetting, zNodes);
+	
+//	var treeObj = $.fn.zTree.getZTreeObj("#showAllocationAuthTree");
+	//展开所有节点
+	treeObj.expandAll(true);
+	
+	//取得所有的节点
+	var nodes = treeObj.transformToArray(treeObj.getNodes());
+	//将userIds转换成数组
+	var existMenuIds = $("#existMenuIds").val();
+//	var existMenuIdArr = existMenuIds.split(",");
+	var existMenuIdArr = eval(existMenuIds);
+	//循环所有节点判断是否有选中
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		// 取得当前节点的编号
+		var menuid = node.id;
+		//获取当前菜单的子节点
+		var leafNodeArr = [];
+		getLeafNode(node,leafNodeArr);
+		for (var m = 0; m < leafNodeArr.length; m++) {
+			var leafNode = leafNodeArr[m];
+			for (var l = 0; l < existMenuIdArr.length; l++) {
+				var existMenuId = existMenuIdArr[l];
+				if (leafNode.id == existMenuId) {
+					treeObj.checkNode(leafNode, true, true);
+				} else {
+
+				}
+			}
+		}
+	}
 }
 
-function authTreeOnCheck(event, treeId, treeNode){
+function getLeafNode(treeNode,reasult){
+	if(treeNode.isParent){
+		var childrenNodes = treeNode.children;
+		for (var i = 0; i < childrenNodes.length; i++) {
+			getLeafNode(childrenNodes[i],reasult);
+		}
+	}else{
+		reasult.push(treeNode);
+	}
+}
+
+function authTreeOnCheck(event, treeId, treeNode) {
 	var treeObj = $.fn.zTree.getZTreeObj(treeId);
 	var nodes = treeObj.getCheckedNodes(true);
-//	var roleNm = $("#editRoleNm").val();
 	var selectNodeArr = [];
-	for(var i=0;i<nodes.length;i++){
+	for (var i = 0; i < nodes.length; i++) {
 		var node = nodes[i];
-		var selectedNodeObj={};
-//		selectedNodeObj["roleNm"] = roleNm;
-		if(node.isParent){
-			selectedNodeObj["menuId"] = node.menuId;
-			selectedNodeObj["authCode"] = "";
-		}else{
-			selectedNodeObj["menuId"] = node.parMenuId;
-			selectedNodeObj["authCode"] = node.menuId;;
-		}
-		selectNodeArr.push(selectedNodeObj);
+		selectNodeArr.push(node.id);
 	}
-	if(treeId.indexOf("newAuth") >=0){
-		$("#newAuthMenuIds").val(JSON.stringify(selectNodeArr));
-	}else{
-		$("#editAuthMenuIds").val(JSON.stringify(selectNodeArr));
-	}
+	$("#authMenuIds").val(JSON.stringify(selectNodeArr));
 }
 
-
+function saveAllocationAuth(){
+	var reqObj={};
+	reqObj["id"]=$("#authMenuRoleId").val();
+	var authMenuIds = $("#authMenuIds").val();
+	reqObj["menuids"]=eval(authMenuIds);
+	var result = ajaxRequestForJsonGetJson("/rolemanage/saveAllocationAuth.do", reqObj);
+	if(result.success){
+		alert(result.msg);
+//		$('#myModal').modal('hide');
+//		$("#content-header").find("form").each(function(){
+//				var formid = this.id;
+//				ajaxRequestForFormGetJsp(formid);
+//				resetTable();
+//		});
+	}
+}
 
 //退出系统
 function logout(reqUrl){

@@ -1088,7 +1088,7 @@ div.dataTables_wrapper .ui-widget-header {
 .line {
 	background: url("../img/line.png") repeat-x scroll 0 0 transparent;
 	display: block;
-	height: 8px;
+/* 	height: 8px; */
 }
 .modal {
 	z-index: 99999 !important;
