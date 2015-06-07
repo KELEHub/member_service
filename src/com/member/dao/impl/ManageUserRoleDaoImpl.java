@@ -1,8 +1,11 @@
 package com.member.dao.impl;
 
-import com.member.dao.ManageRoleDao;
+import org.springframework.stereotype.Component;
+
+import com.member.dao.ManageUserRoleDao;
 import com.member.helper.dao.impl.BaseDaoImpl;
 
-public class ManageUserRoleDaoImpl extends BaseDaoImpl implements ManageRoleDao{
+@Component("ManageUserRoleDaoImpl")
+public class ManageUserRoleDaoImpl extends BaseDaoImpl implements ManageUserRoleDao{
 
 }
