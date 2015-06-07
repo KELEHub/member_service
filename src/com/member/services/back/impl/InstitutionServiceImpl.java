@@ -47,6 +47,21 @@ public class InstitutionServiceImpl implements InstitutionService{
 		}
 		
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean savaOrUpdate(Object ob) {
+		
+		try {
+			institutionDao.saveOrUpdate(ob);
+			
+	        return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override

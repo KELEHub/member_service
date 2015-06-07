@@ -17,5 +17,7 @@ public interface InstitutionService {
 	public List<EditeHistory> getEditeHistoryListByUserId(Integer userId);
 	
 	public Information getNnmuserByName(String number);
+	
+	public boolean	savaOrUpdate(Object ob);
 
 }
