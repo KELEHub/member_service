@@ -1,13 +1,9 @@
 package com.member.form.back;
 
-import java.util.Date;
-
 public class TickForm {
 	
-	private Integer id;
-	
 	/**会员表对应ID */
-	private Integer memberId;
+	private String memberId;
 	
 	/**会员登录ID */
 	private String memberNumber;
@@ -19,19 +15,16 @@ public class TickForm {
 	private String content;
 
 	/**留言时间 */
-	private Date ticklingDate;
+	private String ticklingDate;
 	
 	/**回复内容 */
 	private String replyContent;
 	
 	/**回复时间 */
-	private Date replyDate;
+	private String replyDate;
 	
 	/**主题类型 */
-	private Integer category;
-	
-	/**留言回复状态，0未回复，1已回复 */
-	private Integer state;
+	private String category;
 	
 	/**留言描述 */
 	private String description;
@@ -44,27 +37,19 @@ public class TickForm {
 		this.description = description;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	public Date getTicklingDate() {
+	public String getTicklingDate() {
 		return ticklingDate;
 	}
 
-	public void setTicklingDate(Date ticklingDate) {
+	public void setTicklingDate(String ticklingDate) {
 		this.ticklingDate = ticklingDate;
 	}
 
-	public Integer getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(Integer memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
@@ -100,28 +85,20 @@ public class TickForm {
 		this.replyContent = replyContent;
 	}
 
-	public Date getReplyDate() {
+	public String getReplyDate() {
 		return replyDate;
 	}
 
-	public void setReplyDate(Date replyDate) {
+	public void setReplyDate(String replyDate) {
 		this.replyDate = replyDate;
 	}
 
-	public Integer getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
 	}
 
 }

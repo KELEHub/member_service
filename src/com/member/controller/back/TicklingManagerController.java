@@ -23,11 +23,18 @@ public class TicklingManagerController {
 	@Resource(name = "TicklingManagerServiceImpl")
 	public TicklingManagerService ticklingManagerService;
 
-	@RequestMapping(value = "/showNotdoTicklingManage",method = RequestMethod.POST)
-	public String showNotdoTicklingManage(Model model){
+	@RequestMapping(value = "/showNotdoTicklingManager",method = RequestMethod.POST)
+	public String showNotdoTicklingManager(Model model){
 		List<Tickling> result = ticklingManagerService.getTicklingByState(0);
 		model.addAttribute("result", result);
 		return "back/ticklingManager/nodoTicklingManager";
+	}
+	
+	@RequestMapping(value = "/showDoneTicklingManager",method = RequestMethod.POST)
+	public String showDoneTicklingManager(Model model){
+		List<Tickling> result = ticklingManagerService.getTicklingByState(1);
+		model.addAttribute("result", result);
+		return "back/ticklingManager/ticklingManager";
 	}
 
 	@RequestMapping(value = "/releaseNotice",method = RequestMethod.POST)
