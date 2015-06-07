@@ -36,6 +36,9 @@ public final static String resetUserPassword=
 public final static String getUserDataPermission=
 	"select p.permissionCode from NmsUser u ,NmsRole r,NmsRolePermission np,Permission p where u.roleId=r.id and r.id=np.roleId and np.permissionCode=p.permissionCode and p.permissionType=1 and u.id=? and u.status>=0";
 
+public final static String getNmsUserAll=
+	"from NmsUser";
+
 
 
 }
