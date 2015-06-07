@@ -88,7 +88,7 @@ public class MemberManageController {
 	@ResponseBody
 	public BaseResult<Void> deleteMember(@RequestBody MemberSaveForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-//		memberManageService.deleteMember(form);
+		memberManageService.deleteMember(form);
 		result.setMsg("删除会员信息成功.");
 		result.setSuccess(true);
 		return result;
