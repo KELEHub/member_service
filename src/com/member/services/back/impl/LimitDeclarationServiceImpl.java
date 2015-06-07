@@ -92,4 +92,16 @@ public class LimitDeclarationServiceImpl implements LimitDeclarationService{
 		
 	}
 
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean deleteData(Object ob) {
+		try {
+	       	parameterDao.delete(ob);
+            return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }
