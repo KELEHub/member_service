@@ -42,7 +42,7 @@ public class RoleManageController {
 	public String showRoleManage(Model model){
 		List<ManageRole> result = roleManageService.getRoleList();
 		model.addAttribute("result", result);
-		return "back/membermanage/roleManage";
+		return "back/systemset/roleManage";
 	}
 	
 	@RequestMapping(value = "/insertRole",method = RequestMethod.POST)
@@ -68,7 +68,7 @@ public class RoleManageController {
 		//取得当前角色对应的菜单信息.
 		model.addAttribute("result", result.toString());
 
-		return "back/membermanage/showAllocationAuth";
+		return "back/systemset/showAllocationAuth";
 	}
 	
 	@RequestMapping(value = "/getMenuInfo",method = RequestMethod.POST)

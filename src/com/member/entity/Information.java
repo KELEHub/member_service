@@ -163,17 +163,29 @@ public class Information {
 	@Column(name="isServiceGrid")
 	private String isServiceGrid;
 
-	/**上级报单中心的表ID*/
+	/**报单中心的表ID*/
 	@Column(name="serviceId")
 	private Integer serviceId;
 	
-	/**上级报单中心的登录ID */
+	/**报单中心的登录ID */
 	@Column(name="serviceNumber")
 	private String serviceNumber;
 	
+	/**上级报单中心的表ID*/
+	@Column(name="leaderServiceId")
+	private Integer leaderServiceId;
+	
+	/**上级报单中心的登录ID */
+	@Column(name="leaderServiceNumber")
+	private String leaderServiceNumber;
+	
 	/**是否激活，1表示已激活，0表示未激活 */
 	@Column(name="isActivate")
-	private Date isActivate;
+	private Integer isActivate;
+	
+	/**激活时间 */
+	@Column(name="activeDate")
+	private Date activeDate;
 	
 	/**意义不明 */
 	@Column(name="isNullInfo")
@@ -226,6 +238,10 @@ public class Information {
 	/**本月新报单人数统计 */
 	@Column(name="serviceCount")
 	private Integer serviceCount;
+	
+	/**历史报单人数统计 */
+	@Column(name="serviceSum")
+	private Integer serviceSum;
 	
 	public Integer getId() {
 		return id;
@@ -531,11 +547,11 @@ public class Information {
 		this.serviceNumber = serviceNumber;
 	}
 
-	public Date getIsActivate() {
+	public Integer getIsActivate() {
 		return isActivate;
 	}
 
-	public void setIsActivate(Date isActivate) {
+	public void setIsActivate(Integer isActivate) {
 		this.isActivate = isActivate;
 	}
 
@@ -651,9 +667,29 @@ public class Information {
 		this.serviceSum = serviceSum;
 	}
 
-	/**历史报单人数统计 */
-	@Column(name="serviceSum")
-	private Integer serviceSum;
+	public Integer getLeaderServiceId() {
+		return leaderServiceId;
+	}
+
+	public void setLeaderServiceId(Integer leaderServiceId) {
+		this.leaderServiceId = leaderServiceId;
+	}
+
+	public String getLeaderServiceNumber() {
+		return leaderServiceNumber;
+	}
+
+	public void setLeaderServiceNumber(String leaderServiceNumber) {
+		this.leaderServiceNumber = leaderServiceNumber;
+	}
+
+	public Date getActiveDate() {
+		return activeDate;
+	}
+
+	public void setActiveDate(Date activeDate) {
+		this.activeDate = activeDate;
+	}
 	
 	/**推荐人表id，重复定义，可去除*/
 //	@Column(name="recommendService")
