@@ -125,6 +125,7 @@ import com.member.util.FrameObjectUtil;
 		              
 			    //根据当前用户的编号，取得用户的角色和菜单信息。
 			    model.addAttribute("menuList", getUserRoleMenu(user));
+			    model.addAttribute("username", userName);
 				//response.sendRedirect(basePath+"main.jsp");
 			    createUserLoginLog(request,user.getId(),true,true);
 			    return mv;
@@ -183,11 +184,10 @@ import com.member.util.FrameObjectUtil;
 	
 	@RequestMapping(value = "/logout")
 	@ResponseBody
-	protected Map<String,Object> logout(HttpServletRequest request,
+	protected ModelAndView logout(HttpServletRequest request,
 			HttpServletResponse response, String userName, String password)
 			 {
-		Map<String,Object> returnMap = new  HashMap<String,Object>();
-		returnMap.put("success", true);
+		ModelAndView mv=new ModelAndView();
 		try {
 		
 			 Object userO = request.getSession().getAttribute("logonUser");
@@ -201,14 +201,13 @@ import com.member.util.FrameObjectUtil;
 				}
 			 }
 			request.getSession().invalidate();
-			
+			mv.setViewName("redirect:/login.jsp");
 		
 		} catch (Exception e) {
 		     e.printStackTrace();
-		     returnMap.put("success", false);	
-		     returnMap.put("returnMsg", "session�?��异常.session为："+request.getSession());	
+		     mv.setViewName("redirect:/login.jsp");
 		}
-		return returnMap;
+		return mv;
              
 	}
 	
