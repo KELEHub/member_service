@@ -15,6 +15,8 @@ public enum ProjectEnum {
 	servicepointsformuch,
 	/** 积分转葛粮币减少*/
 	togoldmoneycut,
+	/** 积分提现*/
+	pointcash,
 	/** 礼包发放*/
 	fromgifts;
 }
