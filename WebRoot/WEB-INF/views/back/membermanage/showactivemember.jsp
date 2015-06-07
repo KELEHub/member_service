@@ -71,7 +71,7 @@
 									<td>${item.recommendCount }</td>
 									<td>${item.activeDate }</td>
 									<td>
-										<button class="btn" onclick="doShowDetail('${item.id}')">详细信息</button>
+										<button class="btn" onclick="doMemberShowDetail('${item.id}')">详细信息</button>
 										<button class="btn" onclick="doMemberLock('${item.id}')">锁定</button>
 										<button class="btn" onclick="doResetPwd('${item.id}')">密码重置</button>
 									</td>

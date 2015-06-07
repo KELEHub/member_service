@@ -71,7 +71,7 @@
 									<td>${item.registerDate }</td>
 									<td>${item.activeDate }</td>
 									<td>
-										<button class="btn" onclick="doShowDetail('${item.id}')">详细信息</button>
+										<button class="btn" onclick="doMemberShowDetail('${item.id}')">详细信息</button>
 										<button class="btn" onclick="doDeleteMember('${item.id}')">删除</button>
 									</td>
 								</tr>

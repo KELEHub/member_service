@@ -148,12 +148,18 @@ function searchMembers(sFormId){
 	resetTable();
 }
 
-function doShowDetail(memberId){
+function doMemberShowDetail(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
 	showDynamicDialog("/membermanage/showMemberDetails.do", reqObj, "showmemberdetail");
 	region_init("select_province","select_city","select_area");
 	region_init("select_province1","select_city1","select_area1");
+}
+
+function showWithDrawalsDetail(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/withdrawals/showWithDrawalsDetail.do", reqObj, "showWithDrawalsDetail");
 }
 
 function saveMemberDetail(sFormId) {
@@ -259,10 +265,6 @@ function deleteUser(username){
 	 }
 	
 }
-
-
-
-
 
 function showDynamicDialog(reqUrl,reqObj,dialogId){
 	var bathPath=$("#basePath").val();
@@ -418,6 +420,26 @@ function saveAllocationAuth(){
 //				resetTable();
 //		});
 	}
+}
+
+function agreewithdrawals(id){
+	var reqObj={};
+	reqObj["id"]=id;
+	var result = ajaxRequestForJsonGetJson("/withdrawals/agreewithdrawals.do", reqObj);
+	alert(result.msg);
+	if (result.success) {
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+}
+
+function disAgreewithdrawals(id){
+	//TODO
+	alert("留言板敬请期待。。。。");
 }
 
 //退出系统
