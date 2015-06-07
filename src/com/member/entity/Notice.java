@@ -41,7 +41,7 @@ public class Notice {
 	
 	/**主题类型 ，包含公告、服务协议、常见问题*/
 	@Column(name="category")
-	private Integer category;
+	private String category;
 	
 	/**数据状态 */
 	@Column(name="state")
@@ -103,11 +103,11 @@ public class Notice {
 		this.project = project;
 	}
 
-	public Integer getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

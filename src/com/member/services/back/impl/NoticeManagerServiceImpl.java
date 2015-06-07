@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.member.dao.HqlNoticeManager;
 import com.member.dao.NoticeManagerDao;
 import com.member.entity.Notice;
-import com.member.form.back.NoticeForm;
 import com.member.services.back.NoticeManagerService;
 
 @Service("NoticeManagerServiceImpl")
@@ -29,7 +28,7 @@ public class NoticeManagerServiceImpl implements NoticeManagerService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void setNotice(NoticeForm notice) {
+	public void setNotice(Notice notice) {
 		releaseNoticeDao.saveOrUpdate(notice);
 	}
 }
