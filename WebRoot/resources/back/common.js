@@ -161,6 +161,16 @@ function saveLimeteDeclaration(sFormId){
 	}
 }
 
+function saveNotice(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='showNoticeForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+		});
+	}
+}
 
 function saveCreateUser(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
