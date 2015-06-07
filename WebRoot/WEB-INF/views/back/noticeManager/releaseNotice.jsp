@@ -20,7 +20,7 @@
 							标题:
 						</label>
 						<div class="controls">
-							<input type="text" class="span11" placeholder="标题内容" name="title" />
+							<input type="text" class="span11" name="title" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -50,8 +50,7 @@
 								<div class="control-group">
 									<form>
 										<div class="controls">
-											<textarea class="textarea_editor span12" rows="6"
-												placeholder="请输入公告内容 ..." name="content"></textarea>
+											<textarea class="textarea_editor span12" rows="6" name="content"></textarea>
 										</div>
 									</form>
 								</div>
