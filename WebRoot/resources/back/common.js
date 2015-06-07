@@ -143,6 +143,57 @@ function saveRole(sFormId){
 	}
 }
 
+function searchMembers(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
+function doShowDetail(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/membermanage/showMemberDetails.do", reqObj, "showmemberdetail");
+	region_init("select_province","select_city","select_area");
+	region_init("select_province1","select_city1","select_area1");
+}
+
+function saveMemberDetail(sFormId) {
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if (result.success) {
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+}
+
+function doMemberLock(memberId){
+	if (window.confirm('您确定要锁定该用户么？')) {
+		var reqObj = {};
+		reqObj["id"] = memberId;
+		var result = ajaxRequestForJsonGetJson("/membermanage/doMemberLock.do",
+				reqObj);
+		if (result.success) {
+			alert(result.msg);
+		}
+	}
+}
+
+function doResetPwd(memberId){
+	if (window.confirm('您确定要重置该会员密码么？')) {
+		var reqObj = {};
+		reqObj["id"] = memberId;
+		var result = ajaxRequestForJsonGetJson("/membermanage/doResetPwd.do",
+				reqObj);
+		if (result.success) {
+			alert(result.msg);
+		}
+	}
+}
+
+
 function saveParameter(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){
