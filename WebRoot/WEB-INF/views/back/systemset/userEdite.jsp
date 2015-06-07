@@ -31,7 +31,7 @@
 					</form>
 					<div class="form-actions">
 						<input type="submit" value="检索"
-							onclick="saveCreateUser('serchUserForm')"
+							onclick="serchUser('serchUserForm')"
 							class="btn btn-success">
 					</div>
 					<div class="control-group">
@@ -40,13 +40,15 @@
 				</div>
 			  <div class="widget-content nopadding">
 					<form class="form-horizontal"
-						action="/LimitDeclarationController/set.do" method="POST"
+						action="/userEditeController/set.do" method="POST"
 						id="editeUserForm">
 						<div class="control-group">
 							<label class="control-label">会员账号：</label>
 							<div class="controls">
 								<div class="input-append">
 									<label>${bean.userNumber}</label>
+									<input type="hidden" name="userNumber" value="${bean.userNumber}"
+										class="span11">
 								</div>
 							</div>
 						</div>
