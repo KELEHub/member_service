@@ -55,44 +55,39 @@
 		</h3>
 	</div>
 	<div class="widget-content nopadding">
+	<form class="form-horizontal">
 		<div class="control-group">
 			<label class="control-label">
 				标题:
 			</label>
 			<div class="controls">
 				<input type="text" class="span11" name="title"
-					id="checkTickling_title" />
+					id="checkTickling_title" style="width:220;height:25"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">
-				内容:
-			</label>
-			<div class="controls">
-				<div class="widget-content">
-					<div class="control-group">
-						<div class="controls">
-							<textarea class="textarea_editor span12" rows="6" name="content"
-								id="checkTickling_content"></textarea>
-						</div>
+				<label class="control-label">
+					内容:
+				</label>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6" name="content"
+							id="checkTickling_content" style="width: 220;"></textarea>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">
-				回复内容:
-			</label>
-			<div class="controls">
-				<div class="widget-content">
-					<div class="control-group">
-						<div class="controls">
-							<textarea class="textarea_editor span12" rows="6"
-								name="replyContent" id="checkTickling_replyContent"></textarea>
-						</div>
+			<div class="control-group">
+				<label class="control-label">
+					回复内容:
+				</label>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6"
+							name="replyContent" id="checkTickling_replyContent"
+							style="width: 220;"></textarea>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
