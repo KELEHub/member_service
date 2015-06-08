@@ -14,7 +14,8 @@
 				<form action="/NoticeManagerController/initNoticeEdit.do"  method="post" id="showNoticeForm" ></form>
 			</div>
 			<div class="widget-content nopadding">
-				<form action="/NoticeManagerController/releaseNotice.do" method="post" id="releaseNoticeForm" class="form-horizontal">
+				<form action="/NoticeManagerController/releaseNotice.do"
+					method="post" id="releaseNoticeForm" class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label">
 							标题:
@@ -45,14 +46,11 @@
 						<label class="control-label">
 							内容:
 						</label>
-						<div class="controls">
-							<div class="widget-content">
-								<div class="control-group">
-									<form>
-										<div class="controls">
-											<textarea class="textarea_editor span12" rows="6" name="content"></textarea>
-										</div>
-									</form>
+						<div class="widget-content">
+							<div class="control-group">
+								<div class="controls">
+									<textarea class="textarea_editor span12" rows="6"
+										name="content"></textarea>
 								</div>
 							</div>
 						</div>
