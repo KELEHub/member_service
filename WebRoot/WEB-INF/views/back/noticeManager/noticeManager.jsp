@@ -60,7 +60,7 @@
 				</label>
 				<div class="controls">
 					<input type="text" class="span11" name="title"
-						id="editNotice_title" />
+						id="editNotice_title" style="width:220;"/>
 				</div>
 			</div>
 			<div class="control-group">
@@ -85,22 +85,18 @@
 				<label class="control-label">
 					内容:
 				</label>
-				<div class="controls">
-					<div class="widget-content">
-						<div class="control-group">
-							<form>
-								<div class="controls">
-									<textarea class="textarea_editor span12" rows="6"
-										name="content" id="editNotice_content"></textarea>
-								</div>
-							</form>
+<!--				<div class="widget-content">-->
+					<div class="control-group">
+						<div class="controls">
+							<textarea class="textarea_editor span12" rows="6" name="content"
+								id="editNotice_content" style="width:220;"></textarea>
 						</div>
 					</div>
-				</div>
+<!--				</div>-->
 			</div>
 		</form>
 	</div>
-			<div class="form-actions">	
+	<div class="form-actions">	
 	<button type="submit" class="btn btn-success" onclick="saveNotice('editNoticeForm')">
 		确认修改
 	</button>
