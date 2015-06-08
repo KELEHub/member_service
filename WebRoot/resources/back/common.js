@@ -239,7 +239,7 @@ function saveNotice(sFormId){
 	if(result.success){
 		alert(result.msg);
 		$('#myModal').modal('hide');
-		$("#content-header").find("form[id='showNoticeForm']").each(function(){
+		$("#content-header").find("form[id='noticeManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 				resetTable();
