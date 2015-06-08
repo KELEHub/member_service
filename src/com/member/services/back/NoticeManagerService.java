@@ -13,4 +13,6 @@ public interface NoticeManagerService {
 
 	void updateNotice(NoticeForm noticeForm);
 
+	void deleteNotice(NoticeForm form);
+
 }

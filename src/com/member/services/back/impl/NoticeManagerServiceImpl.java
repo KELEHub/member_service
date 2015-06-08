@@ -15,7 +15,6 @@ import com.member.dao.NoticeManagerDao;
 import com.member.entity.Notice;
 import com.member.form.back.NoticeForm;
 import com.member.services.back.NoticeManagerService;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Service("NoticeManagerServiceImpl")
 public class NoticeManagerServiceImpl implements NoticeManagerService {
@@ -46,6 +45,15 @@ public class NoticeManagerServiceImpl implements NoticeManagerService {
 		list.add(noticeForm.getCategory());
 		list.add(new Date());
 		list.add(Integer.parseInt(noticeForm.getNoticeId()));
+		releaseNoticeDao.executeHqlUpdate(hql, list);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteNotice(NoticeForm form) {
+		String hql = "delete from Notice where id=?";
+		List<Object> list = new ArrayList<Object>();
+		list.add(Integer.parseInt(form.getNoticeId()));
 		releaseNoticeDao.executeHqlUpdate(hql, list);
 	}
 }

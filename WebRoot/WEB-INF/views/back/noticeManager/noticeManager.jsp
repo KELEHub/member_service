@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <form action="/noticeManager/showNoticeManage.do" method="POST" id="searchRoleForm">
+    <form action="/NoticeManagerController/showNoticeManager.do" method="POST" id="noticeManagerForm">
 	</form>
   </div>
 <div class="container-fluid">
@@ -33,7 +33,7 @@
 									<td>${item.date }</td>
 									<td>
 									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
-									<a href="#" data-toggle="modal" class="btn btn-large">删除</a>
+									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>

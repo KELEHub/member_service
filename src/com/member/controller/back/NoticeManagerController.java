@@ -29,8 +29,8 @@ public class NoticeManagerController {
 		return "back/noticeManager/releaseNotice";
 	}
 	
-	@RequestMapping(value = "/showNoticeManage",method = RequestMethod.POST)
-	public String showNoticeManage(Model model){
+	@RequestMapping(value = "/showNoticeManager",method = RequestMethod.POST)
+	public String showNoticeManager(Model model){
 		List<Notice> result = noticeManagerService.getNoticeList();
 		model.addAttribute("result", result);
 		return "back/noticeManager/noticeManager";
@@ -61,4 +61,15 @@ public class NoticeManagerController {
 		result.setSuccess(true);
 		return result;
 	}
+	
+	@RequestMapping(value = "/deleteNotice",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteNotice(@RequestBody NoticeForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		noticeManagerService.deleteNotice(form);
+		result.setMsg("删除公告成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
 }

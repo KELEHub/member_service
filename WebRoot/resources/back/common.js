@@ -238,9 +238,11 @@ function saveNotice(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){
 		alert(result.msg);
-		$("#content-header").find("form[id='showNoticeForm']").each(function(){
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 		});
 	}
 }
@@ -467,4 +469,20 @@ function editNotice(arg_id,arg_title,arg_category,arg_content){
 	document.getElementById("editNotice_title").value = arg_title;
 	document.getElementById("editNotice_category").value = arg_category;
 	document.getElementById("editNotice_content").value = arg_content;
+}
+
+function doDeleteNotice(noticeId){
+	if (window.confirm('您确定要删除该公告么？')) {
+		var reqObj = {};
+		reqObj["noticeId"] = noticeId;
+		var result = ajaxRequestForJsonGetJson("/NoticeManagerController/deleteNotice.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='noticeManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
 }
