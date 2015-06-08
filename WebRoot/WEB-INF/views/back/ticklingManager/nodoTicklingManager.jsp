@@ -60,21 +60,17 @@
 				</label>
 				<div class="controls">
 					<input type="text" class="span11" name="title"
-						id="replyTickling_title" />
+						id="replyTickling_title" style="width:220;height:25"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">
 					内容:
 				</label>
-				<div class="controls">
-					<div class="widget-content">
-						<div class="control-group">
-							<div class="controls">
-								<textarea class="textarea_editor span12" rows="6" name="content"
-									id="replyTickling_content"></textarea>
-							</div>
-						</div>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6" name="content"
+							id="replyTickling_content" style="width: 220;"></textarea>
 					</div>
 				</div>
 			</div>
@@ -82,14 +78,11 @@
 				<label class="control-label">
 					回复内容:
 				</label>
-				<div class="controls">
-					<div class="widget-content">
-						<div class="control-group">
-							<div class="controls">
-								<textarea class="textarea_editor span12" rows="6"
-									name="replyContent" id="replyTickling_replyContent"></textarea>
-							</div>
-						</div>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6"
+							name="replyContent" id="replyTickling_replyContent"
+							style="width: 220;"></textarea>
 					</div>
 				</div>
 			</div>
