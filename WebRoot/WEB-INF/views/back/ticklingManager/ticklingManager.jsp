@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <form action="/TicklingManagerController/showDoneTicklingManager.do" method="POST" id="searchRoleForm">
+    <form action="/TicklingManagerController/showDoneTicklingManager.do" method="POST" id="doneTicklingManagerForm">
 	</form>
   </div>
 <div class="container-fluid">
@@ -32,13 +32,65 @@
 									<td>${item.title}</td>
 									<td>${item.ticklingDate}</td>
 									<td>
-									<button class="btn btn-large" onclick="checkTickling('${item}')">查看</button>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="checkTickling('${item.id}','${item.title}','${item.content}','${item.replyContent}')">查看</a>
 									<button class="btn btn-large" onclick="deleteDoneTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="myModal" class="modal hide">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">
+			×
+		</button>
+		<h3>
+			历史留言查看
+		</h3>
+	</div>
+	<div class="widget-content nopadding">
+		<div class="control-group">
+			<label class="control-label">
+				标题:
+			</label>
+			<div class="controls">
+				<input type="text" class="span11" name="title"
+					id="checkTickling_title" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">
+				内容:
+			</label>
+			<div class="controls">
+				<div class="widget-content">
+					<div class="control-group">
+						<div class="controls">
+							<textarea class="textarea_editor span12" rows="6" name="content"
+								id="checkTickling_content"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">
+				回复内容:
+			</label>
+			<div class="controls">
+				<div class="widget-content">
+					<div class="control-group">
+						<div class="controls">
+							<textarea class="textarea_editor span12" rows="6"
+								name="replyContent" id="checkTickling_replyContent"></textarea>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -37,13 +37,22 @@ public class TicklingManagerController {
 		return "back/ticklingManager/ticklingManager";
 	}
 
-	@RequestMapping(value = "/releaseNotice",method = RequestMethod.POST)
+	@RequestMapping(value = "/replyTickling",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> set(@RequestBody TickForm form,Model model){
+	public BaseResult<Void> replyTickling(@RequestBody TickForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		Tickling tickling = new Tickling();
-		ticklingManagerService.setTickling(tickling);
-		result.setMsg("处理留言成功.");
+		ticklingManagerService.updateTickling(form);
+		result.setMsg("回复留言成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteTickling",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteTickling(@RequestBody TickForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		ticklingManagerService.deleteTickling(form);
+		result.setMsg("删除留言成功.");
 		result.setSuccess(true);
 		return result;
 	}

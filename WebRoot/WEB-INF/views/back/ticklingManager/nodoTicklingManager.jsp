@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <form action="/TicklingManagerController/showNotdoTicklingManager.do" method="POST" id="searchRoleForm">
+    <form action="/TicklingManagerController/showNotdoTicklingManager.do" method="POST" id="notdoTicklingManagerForm">
 	</form>
   </div>
 <div class="container-fluid">
@@ -26,13 +26,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result }">
+							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
 									<td>${item.memberNumber}</td>
 									<td>${item.title}</td>
 									<td>${item.ticklingDate}</td>
 									<td>
-									<button class="btn btn-large" onclick="replyTickling('${item.id}')">回复</button>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="replyTickling('${item.id}','${item.title}','${item.content}')">回复</a>
 									<button class="btn btn-large" onclick="deleteTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
@@ -43,4 +43,61 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div id="myModal" class="modal hide">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">×</button>
+		<h3>会员留言回复</h3>
+	</div>
+	<div class="widget-content nopadding">
+		<form action="/TicklingManagerController/replyTickling.do" method="post"
+			id="replyTicklingForm" class="form-horizontal">
+			<input type="hidden" class="span11" name="id" id="replyTickling_id" />
+			<div class="control-group">
+				<label class="control-label">
+					标题:
+				</label>
+				<div class="controls">
+					<input type="text" class="span11" name="title"
+						id="replyTickling_title" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">
+					内容:
+				</label>
+				<div class="controls">
+					<div class="widget-content">
+						<div class="control-group">
+							<div class="controls">
+								<textarea class="textarea_editor span12" rows="6" name="content"
+									id="replyTickling_content"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">
+					回复内容:
+				</label>
+				<div class="controls">
+					<div class="widget-content">
+						<div class="control-group">
+							<div class="controls">
+								<textarea class="textarea_editor span12" rows="6"
+									name="replyContent" id="replyTickling_replyContent"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+			<div class="form-actions">	
+	<button type="submit" class="btn btn-success" onclick="saveTickling('replyTicklingForm')">
+		确认回复
+	</button>
+</div>
 </div>

@@ -239,7 +239,20 @@ function saveNotice(sFormId){
 	if(result.success){
 		alert(result.msg);
 		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function(){
+		$("#content-header").find("form[id='showNoticeForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+function saveTickling(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='notdoTicklingManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 				resetTable();
@@ -480,6 +493,50 @@ function doDeleteNotice(noticeId){
 			alert(result.msg);
 			$('#myModal').modal('hide');
 			$("#content-header").find("form[id='noticeManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
+
+function replyTickling(arg_id,arg_title,arg_content){
+	document.getElementById("replyTickling_id").value = arg_id;
+	document.getElementById("replyTickling_title").value = arg_title;
+	document.getElementById("replyTickling_content").value = arg_content;
+}
+
+function deleteTickling(ticklingId){
+	if (window.confirm('您确定要删除该留言么？')) {
+		var reqObj = {};
+		reqObj["id"] = ticklingId;
+		var result = ajaxRequestForJsonGetJson("/TicklingManagerController/deleteTickling.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='notdoTicklingManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
+
+function checkTickling(arg_id,arg_title,arg_content,arg_replyContent){
+	document.getElementById("checkTickling_title").value = arg_title;
+	document.getElementById("checkTickling_content").value = arg_content;
+	document.getElementById("checkTickling_replyContent").value = arg_replyContent;
+}
+
+function deleteDoneTickling(ticklingId){
+	if (window.confirm('您确定要删除该留言么？')) {
+		var reqObj = {};
+		reqObj["id"] = ticklingId;
+		var result = ajaxRequestForJsonGetJson("/TicklingManagerController/deleteTickling.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='doneTicklingManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 			});

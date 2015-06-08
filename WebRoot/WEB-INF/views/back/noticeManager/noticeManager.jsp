@@ -32,7 +32,7 @@
 									<td>${item.category }</td>
 									<td>${item.date }</td>
 									<td>
-									<a href="#myModal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
 									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">删除</button>
 									</td>
 								</tr>

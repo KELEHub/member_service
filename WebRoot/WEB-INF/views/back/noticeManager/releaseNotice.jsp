@@ -11,7 +11,7 @@
 				<h5>
 					发布最新公告
 				</h5>
-				<form action="/NoticeManagerController/show.do"  method="post" id="showNoticeForm" ></form>
+				<form action="/NoticeManagerController/initNoticeEdit.do"  method="post" id="showNoticeForm" ></form>
 			</div>
 			<div class="widget-content nopadding">
 				<form action="/NoticeManagerController/releaseNotice.do" method="post" id="releaseNoticeForm" class="form-horizontal">
