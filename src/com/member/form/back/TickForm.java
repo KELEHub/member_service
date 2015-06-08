@@ -2,6 +2,8 @@ package com.member.form.back;
 
 public class TickForm {
 	
+	private String id;
+	
 	/**会员表对应ID */
 	private String memberId;
 	
@@ -28,6 +30,14 @@ public class TickForm {
 	
 	/**留言描述 */
 	private String description;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getDescription() {
 		return description;
