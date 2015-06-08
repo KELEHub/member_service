@@ -32,7 +32,7 @@
 									<td>${item.category }</td>
 									<td>${item.date }</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="">修改</a>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
 									<a href="#" data-toggle="modal" class="btn btn-large">删除</a>
 									</td>
 								</tr>
@@ -51,53 +51,57 @@
 		<h3>修改公告</h3>
 	</div>
 	<div class="widget-content nopadding">
-				<form action="/NoticeManagerController/releaseNotice.do" method="post" id="releaseNoticeForm" class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label">
-							标题:
-						</label>
-						<div class="controls">
-							<input type="text" class="span11" name="title"/>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">
-							类型:
-						</label>
-						<div class="controls">
-							<select name="category">
-								<option>
-									公告
-								</option>
-								<option>
-									服务协议
-								</option>
-								<option>
-									常见问题
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">
-							内容:
-						</label>
-						<div class="controls">
-							<div class="widget-content">
-								<div class="control-group">
-									<form>
-										<div class="controls">
-											<textarea class="textarea_editor span12" rows="6" name="content"></textarea>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
+		<form action="/NoticeManagerController/editNotice.do" method="post"
+			id="editNoticeForm" class="form-horizontal">
+			<input type="hidden" class="span11" name="noticeId" id="noticeListId" />
+			<div class="control-group">
+				<label class="control-label">
+					标题:
+				</label>
+				<div class="controls">
+					<input type="text" class="span11" name="title"
+						id="editNotice_title" />
+				</div>
 			</div>
-			<div class="form-actions">
-	<button type="submit" class="btn btn-success" onclick="saveNotice('releaseNoticeForm')">
+			<div class="control-group">
+				<label class="control-label">
+					类型:
+				</label>
+				<div class="controls">
+					<select name="category" id="editNotice_category">
+						<option>
+							公告
+						</option>
+						<option>
+							服务协议
+						</option>
+						<option>
+							常见问题
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">
+					内容:
+				</label>
+				<div class="controls">
+					<div class="widget-content">
+						<div class="control-group">
+							<form>
+								<div class="controls">
+									<textarea class="textarea_editor span12" rows="6"
+										name="content" id="editNotice_content"></textarea>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+			<div class="form-actions">	
+	<button type="submit" class="btn btn-success" onclick="saveNotice('editNoticeForm')">
 		确认修改
 	</button>
 </div>

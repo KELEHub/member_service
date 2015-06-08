@@ -3,7 +3,7 @@ package com.member.form.back;
 
 public class NoticeForm {
 
-	private String id;
+	private String noticeId;
 	
 	/**管理员用户ID */
 	private String userId;
@@ -20,16 +20,17 @@ public class NoticeForm {
 	/**公告日期 */
 	private String date;
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getUserId() {
 		return userId;
+	}
+
+	public String getNoticeId() {
+		return noticeId;
+	}
+
+	public void setNoticeId(String noticeId) {
+		this.noticeId = noticeId;
 	}
 
 	public void setUserId(String userId) {

@@ -51,4 +51,14 @@ public class NoticeManagerController {
 		result.setSuccess(true);
 		return result;
 	}
+	
+	@RequestMapping(value = "/editNotice",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> editNotice(@RequestBody NoticeForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		noticeManagerService.updateNotice(form);
+		result.setMsg("修改公告成功.");
+		result.setSuccess(true);
+		return result;
+	}
 }
