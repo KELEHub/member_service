@@ -6,7 +6,7 @@ public enum ProjectEnum {
 	/** 充值*/
 	recharge,
 	/** 后台调整*/
-	frombank,
+	fromback,
 	/** 积分转葛粮币增加*/
 	frompointsadd,
 	/** 单个服务积分*/
