@@ -1,5 +1,6 @@
 package com.member.controller.back;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,19 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.beans.back.enumData.KindDataEnum;
+import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
+import com.member.entity.AccountDetails;
 import com.member.entity.EditeHistory;
 import com.member.entity.Information;
-import com.member.entity.LimitDeclaration;
 import com.member.entity.ManageRole;
 import com.member.entity.NmsUser;
-import com.member.form.back.DeclarationForm;
 import com.member.form.back.EditeHistoryForm;
 import com.member.form.back.UserEditeForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.InstitutionService;
 import com.member.services.back.RoleManageService;
+import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/userEditeController")
@@ -55,8 +58,15 @@ public class UserEditeController {
 
 			Information info = institutionService.getNnmuserByName(form
 					.getNumber());
+			if(info == null){
+				form.setError("该用户不存在");
+				model.addAttribute("bean", form);
+				return "back/systemset/userEdite";
+			}
 			if (info.getIsActivate() == 0) {
 				form.setError("该用户未激活");
+				model.addAttribute("bean", form);
+				return "back/systemset/userEdite";
 			}
 			UserEditeForm uform = new UserEditeForm();
 			if (info != null) {
@@ -85,26 +95,92 @@ public class UserEditeController {
 	public BaseResult<Void> set(@RequestBody UserEditeForm form, Model model,HttpSession sesison) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		try {
-			if(form.getUserNumber()==null){
+			if(form.getUserNumber()==null || "".equals(form.getUserNumber())){
 				result.setMsg("请先查询出结果再修改");
 				result.setSuccess(true);
 				return result;
 			}
-			
-			Information info =institutionService.getNnmuserByName(form.getUserNumber());
-			String remaind = "修改前的葛粮币："+info.getCrmMoney()+","+"葛粮币累计："+info.getCrmAccumulative()+","+"积分:"+info.getShoppingMoney()+","+"积分累计"+info.getShoppingAccumulative()+";"+"修改后的葛粮币："+form.getCrmMoney()+","+"葛粮币累计："+form.getCrmAccumulative()+";"+"积分："+form.getShoppingMoney()+","+"积分累计："+form.getShoppingAccumulative()+";";
-			info.setShoppingAccumulative(Long.valueOf(form.getShoppingAccumulative()));
-			info.setShoppingMoney(Long.valueOf(form.getShoppingMoney()));
-			info.setCrmMoney(Long.valueOf(form.getCrmMoney()));
-			info.setCrmAccumulative(Long.valueOf(form.getCrmAccumulative()));
-			institutionService.savaOrUpdate(info);
-			//操作记录
 			Object logonUserO = sesison.getAttribute("logonUser");
 			Map<String,Object> logonUserMap = (	Map<String,Object>) logonUserO;
 			String userNaemO =(String) logonUserMap.get("userName");
 			List<NmsUser> users = (List<NmsUser>)nmsUserDao.queryByHql(
 					HqlUserRole.getUserByName, userNaemO);
 			NmsUser user = users.get(0);
+			Information info =institutionService.getNnmuserByName(form.getUserNumber());
+			String remaind = "修改前的葛粮币："+info.getCrmMoney()+","+"葛粮币累计："+info.getCrmAccumulative()+","+"积分:"+info.getShoppingMoney()+","+"积分累计"+info.getShoppingAccumulative()+";"+"修改后的葛粮币："+form.getCrmMoney()+","+"葛粮币累计："+form.getCrmAccumulative()+";"+"积分："+form.getShoppingMoney()+","+"积分累计："+form.getShoppingAccumulative()+";";
+			BigDecimal shopingDif =  new BigDecimal(form.getShoppingMoney()).subtract(info.getShoppingMoney()) ; 
+			int r=shopingDif.compareTo(BigDecimal.ZERO);
+			if(r!=0){
+				AccountDetails shopingDetails = new AccountDetails();
+				shopingDetails.setDateNumber(form.getUserNumber());
+				shopingDetails.setCreateTime(new Date());
+				shopingDetails.setKindData(KindDataEnum.points);
+				
+				/**日期类别统计 */
+				shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+				shopingDetails.setProject(ProjectEnum.fromback);
+				/**积分余额 */
+				shopingDetails.setPointbalance(new BigDecimal(form.getShoppingMoney()));
+				/**葛粮币余额 */
+				shopingDetails.setGoldmoneybalance(info.getCrmMoney());
+				if(r==1){
+					/**收入 */
+					shopingDetails.setIncome(shopingDif);
+					/**支出 */
+					shopingDetails.setPay(new BigDecimal(0));
+				}else if(r==-1){
+					/**收入 */
+					shopingDetails.setIncome(new BigDecimal(0));
+					/**支出 */
+					shopingDetails.setPay(shopingDif);
+				}
+				
+				/**备注 */
+				shopingDetails.setRedmin("后台调整");
+				/**用户ID */
+				shopingDetails.setUserId(user.getId());
+				institutionService.savaOrUpdate(shopingDetails);
+			}
+			
+			BigDecimal crmMoneyDif =  new BigDecimal(form.getCrmMoney()).subtract(info.getCrmMoney()) ; 
+			int cr=crmMoneyDif.compareTo(BigDecimal.ZERO);
+			if(cr!=0){
+				AccountDetails crmMoneyDetails = new AccountDetails();
+				crmMoneyDetails.setDateNumber(form.getUserNumber());
+				crmMoneyDetails.setCreateTime(new Date());
+				crmMoneyDetails.setKindData(KindDataEnum.goldmoney);
+				
+				/**日期类别统计 */
+				crmMoneyDetails.setDateNumber(CommonUtil.getDateNumber());
+				crmMoneyDetails.setProject(ProjectEnum.fromback);
+				/**积分余额 */
+				crmMoneyDetails.setPointbalance(new BigDecimal(form.getShoppingMoney()));
+				/**葛粮币余额 */
+				crmMoneyDetails.setGoldmoneybalance(new BigDecimal(form.getCrmMoney()));
+				if(cr==1){
+					/**收入 */
+					crmMoneyDetails.setIncome(crmMoneyDif);
+					/**支出 */
+					crmMoneyDetails.setPay(new BigDecimal(0));
+				}else if(cr==-1){
+					/**收入 */
+					crmMoneyDetails.setIncome(new BigDecimal(0));
+					/**支出 */
+					crmMoneyDetails.setPay(crmMoneyDif);
+				}
+				
+				/**备注 */
+				crmMoneyDetails.setRedmin("后台调整");
+				/**用户ID */
+				crmMoneyDetails.setUserId(user.getId());
+				institutionService.savaOrUpdate(crmMoneyDetails);
+			}
+			info.setShoppingAccumulative(new BigDecimal(form.getShoppingAccumulative()));
+			info.setShoppingMoney(new BigDecimal(form.getShoppingMoney()));
+			info.setCrmMoney(new BigDecimal(form.getCrmMoney()));
+			info.setCrmAccumulative(new BigDecimal(form.getCrmAccumulative()));
+			institutionService.savaOrUpdate(info);
+			//操作记录
 			EditeHistory eh =new EditeHistory();
 			eh.setCreateTime(new Date());
 			eh.setUserId(user.getId());
