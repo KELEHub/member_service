@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.persistence.Column;
 
 import org.springframework.stereotype.Service;
 
@@ -134,10 +133,10 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		
 		//取得客户账户信息
 		Information ifm = getActInfo(singleResult.getMemberId());
-		Long shoppingMoney = ifm.getShoppingMoney();//普通积分
-		Long repeatedMoey = ifm.getRepeatedMoney();//服务积分
+		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
+		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
 		//可以提现的积分=积分-服务积分
-		BigDecimal catdoMoeyBd = new BigDecimal(shoppingMoney).subtract(new BigDecimal(repeatedMoey));
+		BigDecimal catdoMoeyBd = shoppingMoney.subtract(repeatedMoey);
 		//判断积分是否够提现
 		if(catdoMoeyBd.compareTo(tradeAmt)==-1){//积分小于提现金额
 			result.setSuccess(false);
@@ -147,9 +146,9 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		
 		//进行提现处理.
 		//1.扣除会员账户金额
-		BigDecimal shoppingMoneyBd = new BigDecimal(shoppingMoney);
+		BigDecimal shoppingMoneyBd = shoppingMoney;
 		BigDecimal afterShopingMoney =  shoppingMoneyBd.subtract(tradeAmt);
-		ifm.setShoppingMoney(afterShopingMoney.longValue());//普通积分
+		ifm.setShoppingMoney(afterShopingMoney);//普通积分
 		informationDao.update(ifm);
 		
 		//2.更新提现信息的手续费，状态和实际金额。
@@ -185,7 +184,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		/**积分余额 */
 		insertAccountDetails.setPointbalance(afterShopingMoney);
 		/**葛粮币余额 */
-		insertAccountDetails.setGoldmoneybalance(new BigDecimal(ifm.getCrmMoney()));
+		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
 		/**收入 */
 		insertAccountDetails.setIncome(new BigDecimal(0));
 		/**支出 */
