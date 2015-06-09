@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.dao.HqlTicklingManager;
+import com.member.dao.HqlServiceManager;
 import com.member.dao.ServiceManagerDao;
 import com.member.entity.Information;
 import com.member.services.back.ServiceManagerService;
@@ -23,7 +23,7 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Transactional(readOnly=true)
 	public List<Information> getServiceByIsService(Integer isService) {
 		return (List<Information>) serviceManagerDao.queryByHql(
-				HqlTicklingManager.getTickling, isService);
+				HqlServiceManager.getService, isService);
 	}
 	
 	@Override
