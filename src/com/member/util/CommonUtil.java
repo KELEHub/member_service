@@ -1,5 +1,6 @@
 package com.member.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,5 +22,28 @@ public class CommonUtil {
 		  int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 		  return dayOfWeek;
 	}
+	
+	
+	
+	public static String getDateNumber(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		String dateNumber="";
+		if(day<=10){
+			dateNumber="01";
+		}else if(day<=20){
+			dateNumber="02";
+		}else{
+			dateNumber="03";
+		}
+		
+		return nowDateStr.substring(0,6)+dateNumber;
+	}
+	
+	
 
 }
