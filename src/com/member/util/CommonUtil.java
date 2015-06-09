@@ -24,7 +24,10 @@ public class CommonUtil {
 	}
 	
 	
-	
+	/**
+	 * 日期类别统计
+	 * @return
+	 */
 	public static String getDateNumber(){
 		Calendar d1 = Calendar.getInstance();
 		Date nowDate = d1.getTime();
