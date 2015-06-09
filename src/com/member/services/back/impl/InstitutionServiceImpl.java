@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlInstitution;
 import com.member.dao.InstitutionDao;
+import com.member.entity.BankService;
 import com.member.entity.EditeHistory;
 import com.member.entity.Information;
 import com.member.entity.Institution;
@@ -95,6 +96,43 @@ public class InstitutionServiceImpl implements InstitutionService{
 			return result.get(0);
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<BankService> getBankServiceInfo() {
+		String hql="from BankService mr";
+		List<BankService> result = (List<BankService>)institutionDao.queryByHql(hql);
+		if(result!=null && result.size()>0){
+			return result;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public BankService getBankServiceInfoByName(String name) {
+		String hql="from BankService mr where mr.bankName=?";
+		List arguments = new ArrayList();
+		arguments.add(name);
+		List<BankService> result = (List<BankService>)institutionDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteData(Object ob) {
+		try {
+			institutionDao.delete(ob);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }
