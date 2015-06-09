@@ -1,5 +1,6 @@
 package com.member.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -201,35 +202,35 @@ public class Information {
 	
 	/**葛粮币 */
 	@Column(name="crmMoney")
-	private Long crmMoney;
+	private BigDecimal crmMoney;
 	
 	/**葛粮币累计 */
 	@Column(name="crmAccumulative")
-	private Long crmAccumulative;
+	private BigDecimal crmAccumulative;
 	
 	/**分红 */
 	@Column(name="bonusMoney")
-	private Long bonusMoney;
+	private BigDecimal bonusMoney;
 	
 	/**分红累计 */
 	@Column(name="bonusAccumulative")
-	private Long bonusAccumulative;
+	private BigDecimal bonusAccumulative;
 
 	/**服务积分 */
 	@Column(name="repeatedMoney")
-	private Long repeatedMoney;
+	private BigDecimal repeatedMoney;
 	
 	/**服务积分累计*/
 	@Column(name="repeatedAccumulative")
-	private Long repeatedAccumulative;
+	private BigDecimal repeatedAccumulative;
 	
 	/**积分 */
 	@Column(name="shoppingMoney")
-	private Long shoppingMoney;
+	private BigDecimal shoppingMoney;
 	
 	/**积分累计 */
 	@Column(name="shoppingAccumulative")
-	private Long shoppingAccumulative;
+	private BigDecimal shoppingAccumulative;
 	
 	/**推荐人数 */
 	@Column(name="recommendCount")
@@ -579,67 +580,67 @@ public class Information {
 		this.outCount = outCount;
 	}
 
-	public Long getCrmMoney() {
+	public BigDecimal getCrmMoney() {
 		return crmMoney;
 	}
 
-	public void setCrmMoney(Long crmMoney) {
+	public void setCrmMoney(BigDecimal crmMoney) {
 		this.crmMoney = crmMoney;
 	}
 
-	public Long getCrmAccumulative() {
+	public BigDecimal getCrmAccumulative() {
 		return crmAccumulative;
 	}
 
-	public void setCrmAccumulative(Long crmAccumulative) {
+	public void setCrmAccumulative(BigDecimal crmAccumulative) {
 		this.crmAccumulative = crmAccumulative;
 	}
 
-	public Long getBonusMoney() {
+	public BigDecimal getBonusMoney() {
 		return bonusMoney;
 	}
 
-	public void setBonusMoney(Long bonusMoney) {
+	public void setBonusMoney(BigDecimal bonusMoney) {
 		this.bonusMoney = bonusMoney;
 	}
 
-	public Long getBonusAccumulative() {
+	public BigDecimal getBonusAccumulative() {
 		return bonusAccumulative;
 	}
 
-	public void setBonusAccumulative(Long bonusAccumulative) {
+	public void setBonusAccumulative(BigDecimal bonusAccumulative) {
 		this.bonusAccumulative = bonusAccumulative;
 	}
 
-	public Long getRepeatedMoney() {
+	public BigDecimal getRepeatedMoney() {
 		return repeatedMoney;
 	}
 
-	public void setRepeatedMoney(Long repeatedMoney) {
+	public void setRepeatedMoney(BigDecimal repeatedMoney) {
 		this.repeatedMoney = repeatedMoney;
 	}
 
-	public Long getRepeatedAccumulative() {
+	public BigDecimal getRepeatedAccumulative() {
 		return repeatedAccumulative;
 	}
 
-	public void setRepeatedAccumulative(Long repeatedAccumulative) {
+	public void setRepeatedAccumulative(BigDecimal repeatedAccumulative) {
 		this.repeatedAccumulative = repeatedAccumulative;
 	}
 
-	public Long getShoppingMoney() {
+	public BigDecimal getShoppingMoney() {
 		return shoppingMoney;
 	}
 
-	public void setShoppingMoney(Long shoppingMoney) {
+	public void setShoppingMoney(BigDecimal shoppingMoney) {
 		this.shoppingMoney = shoppingMoney;
 	}
 
-	public Long getShoppingAccumulative() {
+	public BigDecimal getShoppingAccumulative() {
 		return shoppingAccumulative;
 	}
 
-	public void setShoppingAccumulative(Long shoppingAccumulative) {
+	public void setShoppingAccumulative(BigDecimal shoppingAccumulative) {
 		this.shoppingAccumulative = shoppingAccumulative;
 	}
 
