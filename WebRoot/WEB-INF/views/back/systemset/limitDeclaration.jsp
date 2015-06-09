@@ -19,7 +19,7 @@
 						action="/LimitDeclarationController/set.do" method="POST"
 						id="declarationForm">
 						<div class="control-group">
-							<label class="control-label">报单进度比：</label>
+							<label class="control-label">本周报单进度比：</label>
 							<div class="controls">
 								<div class="input-append">
 									<label>${bean.declarationIndex}</label>
