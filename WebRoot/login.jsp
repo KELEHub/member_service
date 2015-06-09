@@ -90,20 +90,9 @@ $(document).ready(
 						</div>
 					</div>
 				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span><li>
-									<img src="<%=basePath%>servlet/ImageCodeMakerServlet"
-										width="100px" height="30px" onclick="refresh(this);" />
-								</li>
-								<li>
-									<input type="text" name="code" width="10px" />
-								</li>
-							</span>
-						</div>
-					</div>
-				</div>
+
+
+
 				<div class="form-actions">
 					<span class="pull-right"><a type="submit" id='btnLogin'
 						class="btn btn-success" /> 登陆</a>
