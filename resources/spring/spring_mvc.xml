@@ -45,6 +45,12 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 指定所上传文件的总大小不能超过200m。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+		<property name="maxUploadSize" value="200000000" />
+	</bean>
 	<!-- 对静态资源的支持，此项配置是为了防止静态资源被MVC servlet拦截 -->
 <!-- 	<mvc:default-servlet-handler /> -->
 	<!-- 下面这种方式也可以访问静态资源。两种方式 都必须在spring版本大于3.0.4时使用 -->
