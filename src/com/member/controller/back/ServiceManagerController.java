@@ -1,15 +1,20 @@
 package com.member.controller.back;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.entity.ApplyService;
+import com.member.entity.Information;
+import com.member.form.back.TickForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.ServiceManagerService;
 
 @Controller
@@ -19,70 +24,37 @@ public class ServiceManagerController {
 	@Resource(name = "ServiceManagerServiceImpl")
 	public ServiceManagerService serviceManagerServiceImpl;
 
-	@RequestMapping(value = "/show")
-	public ModelAndView show(HttpServletRequest request,
-			HttpServletResponse response) {
-		// 带参数重定向 view.setViewName("redirect:/index{id}");
-		String basePath = "/";
-		// System.out.println(a);
-		ModelAndView mv = new ModelAndView();
-		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			basePath = request.getScheme() + "://" + request.getServerName()
-					+ ":" + request.getServerPort() + path + "/";
-			// SystemParameter systemParameter =
-			// releaseNoticeService.getSystemParameter();
-			// if(systemParameter!=null){
-			// mv.setViewName("redirect:/systemParameter.jsp");
-			// }else{
-			// mv.setViewName("redirect:/systemParameter.jsp");
-			// }
-			return mv;
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				response.sendRedirect(basePath + "login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		return null;
+	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
+	public String showServiceManager(Model model){
+		List<Information> result = serviceManagerServiceImpl.getServiceByIsService(1);
+		model.addAttribute("result", result);
+		return "back/serviceManager/serviceInfo";
+	}
+	
+	@RequestMapping(value = "/showApplyServiceManager",method = RequestMethod.POST)
+	public String showApplyServiceManager(Model model){
+		List<ApplyService> result = serviceManagerServiceImpl.getApplyService();
+		model.addAttribute("result", result);
+		return "back/serviceManager/approveService";
 	}
 
-	@RequestMapping(value = "/set")
-	public ModelAndView set(HttpServletRequest request,
-			HttpServletResponse response, int userId, String title,
-			String content, int category, String desc) {
-		// 带参数重定向 view.setViewName("redirect:/index{id}");
-		String basePath = "/";
-		// System.out.println(a);
-		ModelAndView mv = new ModelAndView();
-		try {
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			String path = request.getContextPath();
-			basePath = request.getScheme() + "://" + request.getServerName()
-					+ ":" + request.getServerPort() + path + "/";
-			// SystemParameter systemParameter = releaseNoticeService
-			// .getSystemParameter();
-			// if(systemParameter == null){
-			// systemParameter = new SystemParameter();
-			// systemParameter.setSystemData("system");
-			// systemParameter.setCreateTime(new Date());
-			// }
-			// releaseNoticeService.setSystemParameter(systemParameter, pb);
-			return mv;
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				response.sendRedirect(basePath + "login.jsp");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		return null;
-
+	@RequestMapping(value = "/replyTickling",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> replyTickling(@RequestBody TickForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+//		serviceManagerServiceImpl.updateTickling(form);
+		result.setMsg("回复留言成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteTickling",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteTickling(@RequestBody TickForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+//		serviceManagerServiceImpl.deleteTickling(form);
+		result.setMsg("删除留言成功.");
+		result.setSuccess(true);
+		return result;
 	}
 }

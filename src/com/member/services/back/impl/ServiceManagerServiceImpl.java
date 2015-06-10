@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlServiceManager;
 import com.member.dao.ServiceManagerDao;
+import com.member.entity.ApplyService;
 import com.member.entity.Information;
 import com.member.services.back.ServiceManagerService;
 
@@ -24,6 +25,13 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	public List<Information> getServiceByIsService(Integer isService) {
 		return (List<Information>) serviceManagerDao.queryByHql(
 				HqlServiceManager.getService, isService);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<ApplyService> getApplyService() {
+		return (List<ApplyService>) serviceManagerDao.queryByHql(
+				HqlServiceManager.getApproveService);
 	}
 	
 	@Override
