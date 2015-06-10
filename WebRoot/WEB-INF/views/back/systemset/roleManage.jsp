@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <h1><a href="#myModal" data-toggle="modal" class="btn btn-large">添加新角色</a></h1>
+    <h1><a href="#roleaddmyModal" data-toggle="modal" class="btn btn-large">添加新角色</a></h1>
     <form action="/rolemanage/showRoleManage.do" method="POST" id="searchRoleForm">
 	</form>
   </div>
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 </div>
-<div id="myModal" class="modal hide">
+<div id="roleaddmyModal" class="modal hide">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>添加角色</h3>

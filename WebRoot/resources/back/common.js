@@ -325,9 +325,11 @@ function resetTable(){
 		"bLengthChange": false,
 		"bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示  
 		"bJQueryUI" : true, //是否使用 jQury的UI theme  
-		"bPaginate" : true, //是否显示（应用）分页器  
+//		"bPaginate" : true, //是否显示（应用）分页器  
 		"bAutoWidth" : true, //是否自适应宽度 
 		"bScrollCollapse" : true,
+		"sPaginationType":"full_numbers",
+		"bInfo": true,//页脚信息
 		"bFilter" : false,//是否启动过滤、搜索功能
 		"oLanguage": { //国际化配置  
             "sProcessing" : "正在获取数据，请稍后...",    
@@ -471,6 +473,41 @@ function disAgreewithdrawals(id){
 	alert("留言板敬请期待。。。。");
 }
 
+function saveWithFormAddRefeshTable(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	alert(result.msg);
+	if(result.success){
+		$('#showAddProductDetail').modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+}
+
+function editProduct(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/product/getProduDetail.do", reqObj, "showProductDetail");
+}
+
+function deleteProduct(id){
+	if (window.confirm('您确定要删除当前产品么？')) {
+		var reqObj = {};
+		reqObj["id"] = id;
+		var result = ajaxRequestForJsonGetJson("/product/deleteProduct.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
 //退出系统
 function logout(reqUrl){
 	var bathPath=$("#basePath").val();
