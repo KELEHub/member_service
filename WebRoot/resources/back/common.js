@@ -27,6 +27,7 @@ function menuClick(url){
 	var result = ajaxRequestForMenu(url, reqDate);
 	$("#content").empty();
 	$("#content").html(result);
+	findJqueryFileUpload("content");
 	resetTable();
 }
 
@@ -313,6 +314,7 @@ function showDynamicDialog(reqUrl,reqObj,dialogId){
 		success : function(data) {
 				$("#showDialogDiv").html(data);
 				$('#'+dialogId).modal('show');
+				findJqueryFileUpload("showDialogDiv");
 		},
 		error : function (msg) {
 			alert(msg);
@@ -579,4 +581,27 @@ function deleteDoneTickling(ticklingId){
 			});
 		}
 	}
+}
+
+function findJqueryFileUpload(divID) {
+	$("#" + divID).find("input[name='files']").each(function(index) {
+		$(this).fileupload();
+	});
+}
+
+function uploadFileWithPar(inputObj){
+	$(inputObj).fileupload({
+		formData:  eval("(" + $(inputObj).attr("para") + ")"),
+		done:function(e,result){ 
+			var returnArr = result.result;
+			if(returnArr.success){
+				var relativePath = returnArr.result[0].relativePath;
+				var absolutePath = returnArr.result[0].absolutePath;
+				//设置隐藏域的文件名
+				$(e.target.previousElementSibling).val(relativePath);
+				$(e.target).next().children(["img"]).attr('src',absolutePath+relativePath);
+				$(e.target).next().attr('href',absolutePath+relativePath);
+			}
+		}
+	});
 }
