@@ -8,6 +8,7 @@ public class UserEditeForm {
 	private String crmAccumulative;
 	private String shoppingMoney;
 	private String shoppingAccumulative;
+	private String userName;
 	private String error;
 	public String getNumber() {
 		return number;
@@ -50,6 +51,12 @@ public class UserEditeForm {
 	}
 	public void setError(String error) {
 		this.error = error;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	
