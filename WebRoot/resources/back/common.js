@@ -163,6 +163,34 @@ function showWithDrawalsDetail(memberId){
 	showDynamicDialog("/withdrawals/showWithDrawalsDetail.do", reqObj, "showWithDrawalsDetail");
 }
 
+function showOrderListDetail(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/orderlist/getOrderListDetail.do", reqObj, "showOrderListDetail");
+}
+
+function deliveryOrder(id){
+	if (window.confirm('您去顶发货吗？')) {
+		var reqObj = {};
+		reqObj["id"] = id;
+		var result = ajaxRequestForJsonGetJson("/orderlist/deliveryOrder.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
+function searchOrderList(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
 function saveMemberDetail(sFormId) {
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if (result.success) {

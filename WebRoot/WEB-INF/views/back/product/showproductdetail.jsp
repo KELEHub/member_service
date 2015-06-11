@@ -2,6 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+%>
+<base href="<%=basePath%>">
 <div id="showProductDetail" class="modal hide" style="width: 800px;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
@@ -12,7 +19,7 @@
 			<div class="widget-content nopadding">
 				<form action="/product/updateProduct.do" method="POST"
 					id="updateProductForm">
-					<input type="text" name="id" value="${result.id }"/>
+					<input type="hidden" name="id" value="${result.id }"/>
 					<div class="control-group">
 						<label class="control-label">套餐名称</label>
 						<div class="controls">
@@ -22,19 +29,33 @@
 					<div class="control-group">
 						<label class="control-label">套餐介绍</label>
 						<div class="controls">
-							<input type="text" placeholder="套餐介绍" name="productIntroduction" value="${result.productIntroduction }"/>
+						<textarea rows="12" cols="24" name="productIntroduction" >
+						    ${result.productIntroduction }
+						</textarea>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label">图片</label>
 						<div class="controls">
-							<input type="text" placeholder="图片路径" name="productTarget" value="${result.productTarget }"/>
+						<input
+									type="file" para="{relativelyPath:'product'}" name="files"
+									multiple data-url='<%=basePath%>/upload/uploadFile.do'
+									onchange='uploadFileWithPar(this)'
+									style="width: 100%; height: 28px" /> 
+							 <a class="upfile" href="${result.productTarget }"
+									rel="lightbox" id="linkboxfileupload9"> 
+							  <img src="${result.productTarget }"
+									width="100px">		
+							</a>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label">套餐类型</label>
 						<div class="controls">
-							<input type="text" placeholder="套餐类型" name="productCategory" value="${result.productCategory }"/>
+						<select name="productCategory" >
+								<option value="1" <c:if test="${result.productCategory eq 1}">selected</c:if> >注册赠送</option>
+								<option value="2" <c:if test="${result.productCategory eq 2}">selected</c:if>>复消赠送</option>
+							</select>
 						</div>
 					</div>
 				</form>

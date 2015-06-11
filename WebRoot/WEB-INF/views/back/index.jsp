@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/matrix-style.css" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/matrix-media.css" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/js/ztree/css/zTreeStyle/metro.css">
+ <link  type="text/css"  rel="stylesheet"  href="<%=basePath%>/resources/back/css/lightbox.css"/>
 <link href="<%=basePath%>/resources/back/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 <script src="<%=basePath%>/resources/back/js/excanvas.min.js"></script> 
@@ -46,6 +47,7 @@
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/vendor/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/jquery.fileupload.js"></script>
+<script type="text/javascript" src="<%=basePath%>/resources/back/js/lightbox/lightbox.min.js"></script>
 <script src="<%=basePath%>/resources/back/bankInfo.js"></script>
 <script src="<%=basePath%>/resources/back/common.js"></script>
 <script type="text/javascript">

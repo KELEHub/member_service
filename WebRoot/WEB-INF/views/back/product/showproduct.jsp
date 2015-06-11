@@ -40,7 +40,14 @@
 							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
 									<td>${item.productName}</td>
-									<td>${item.productCategory}</td>
+									<td>
+									<c:if test="${item.productCategory eq 1}">
+									注册赠送
+									</c:if>
+									<c:if test="${item.productCategory eq 2}">
+									复消赠送
+									</c:if>
+									</td>
 									<td>${item.operDate }</td>
 									<td>
 									<button class="btn" onclick="editProduct('${item.id}')">修改</button>
@@ -74,8 +81,7 @@
 					<div class="control-group">
 						<label class="control-label">套餐介绍</label>
 						<div class="controls">
-						<textarea rows="12" cols="24" placeholder="套餐介绍" name="productIntroduction" >
-						
+						<textarea name="productIntroduction" >
 						</textarea>
 						</div>
 					</div>
@@ -83,7 +89,7 @@
 						<label class="control-label">图片</label>
 						<div class="controls">
 							<div>
-								<input type="text" name="productTarget" value="" /> <input
+								<input type="hidden" name="productTarget" value="" /> <input
 									type="file" para="{relativelyPath:'product'}" name="files"
 									multiple data-url='<%=basePath%>/upload/uploadFile.do'
 									onchange='uploadFileWithPar(this)'
@@ -96,7 +102,10 @@
 					<div class="control-group">
 						<label class="control-label">套餐类型</label>
 						<div class="controls">
-							<input type="text" placeholder="套餐类型" name="productCategory" />
+							<select name="productCategory" >
+								<option value="1">注册赠送</option>
+								<option value="2">复消赠送</option>
+							</select>
 						</div>
 					</div>
 				</form>
