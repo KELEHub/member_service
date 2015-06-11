@@ -34,10 +34,10 @@ public class CommonFileUploadController {
 		List<UploadFileResultDto> uploadFileList = new ArrayList<UploadFileResultDto>();
 		
 
-		String path = request.getContextPath();
+//		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://"
-				+ request.getServerName() + ":" + request.getServerPort()
-				+ path;
+				+ request.getServerName() + ":" + request.getServerPort();
+//				+ path;
 		
 		MultipartFile[] files = form.getFiles();
 		int length = files.length;
@@ -75,16 +75,15 @@ public class CommonFileUploadController {
 
 		byte[] arr = buf.toByteArray();
 		
-		String tempServerPath = request.getRealPath("");
-		
+//		String tempServerPath = request.getRealPath("");
+		String tempServerPath = System.getProperty("catalina.home");
 		//
-		String returnPath = "/uploadFile/"+form.getRelativelyPath()+"/";
+		String returnPath = "/uploadfile/"+form.getRelativelyPath()+"/";
 		String osname = System.getProperty("os.name");
 		if(osname.indexOf("Windows")>=0){
-			
-			tempServerPath = tempServerPath+"\\uploadFile\\"+form.getRelativelyPath()+"\\";
+			tempServerPath = tempServerPath+"\\webapps\\uploadfile\\"+form.getRelativelyPath()+"\\";
 		}else {
-			tempServerPath = tempServerPath+"/uploadFile/"+form.getRelativelyPath()+"/";
+			tempServerPath = tempServerPath+"/webapps/uploadfile/"+form.getRelativelyPath()+"/";
 		}
 		String filename = System.currentTimeMillis()+file.getOriginalFilename();
 		File headPath = new File(tempServerPath);//获取文件夹路径
