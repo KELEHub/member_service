@@ -64,7 +64,7 @@
 							<label class="control-label">葛粮币：</label>
 							<div class="controls">
 								<div class="input-append">
-								<input type="text" name="crmMoney" value="${bean.crmMoney}"
+								<input type="text" name="crmMoney" value="${bean.crmMoney}" onfocusout="formatter(this)"
 										class="span11">
 								</div>
 							</div>
