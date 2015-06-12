@@ -48,9 +48,12 @@ public class BankRechargeController {
 			}
 			UserEditeForm uform = new UserEditeForm();
 			if (info != null) {
-				uform.setNumber(form.getNumber());
-				uform.setUserNumber(form.getNumber());
-				uform.setUserName(form.getUserName());
+				uform.setNumber(info.getNumber());
+				uform.setUserNumber(info.getNumber());
+				uform.setUserName(info.getName());
+				if(info.getCrmMoney()!=null&&!"".equals(info.getCrmMoney())){
+					uform.setCrmMoney(info.getCrmMoney().toString());
+				}
 				model.addAttribute("bean", uform);
 			}
 
