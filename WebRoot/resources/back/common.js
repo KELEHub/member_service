@@ -306,6 +306,39 @@ function serchUser(sFormId){
 }
 
 
+function saveBank(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='searchBankForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+
+
+function deleteBank(bankname){
+	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
+	 if(event.returnValue){
+		 var reqObj={};
+	   reqObj["bankName"]=bankname;
+      var result = ajaxRequestForJsonGetJson("/BankController/delete.do", reqObj);
+	  if(result.success){
+		alert(result.msg);
+		$("#content-header").find("form[id='searchBankForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+	 }
+	
+}
+
+
 function deleteUser(username){
 	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
 	 if(event.returnValue){
