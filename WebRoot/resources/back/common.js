@@ -666,3 +666,26 @@ function uploadFileWithPar(inputObj){
 		}
 	});
 }
+
+function serviceInfoDetail(serviceId){
+	var reqObj = {};
+	reqObj["id"] = serviceId;
+	showDynamicDialog("/ServiceManagerController/showServiceInfoDetail.do", reqObj, "showServiceDetail");
+}
+
+function rechargeService(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+function rechargeToForm(arg_id){
+	document.getElementById("serviceInfo_serviceId").value = arg_id;
+}

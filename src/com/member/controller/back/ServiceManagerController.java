@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.ApplyService;
 import com.member.entity.Information;
+import com.member.form.back.InformationForm;
+import com.member.form.back.MemberSearchForm;
 import com.member.form.back.TickForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.ServiceManagerService;
@@ -38,12 +40,20 @@ public class ServiceManagerController {
 		return "back/serviceManager/approveService";
 	}
 
-	@RequestMapping(value = "/replyTickling",method = RequestMethod.POST)
+	@RequestMapping(value = "/showServiceInfoDetail",method = RequestMethod.POST)
+	public String showServiceInfoDetail(@RequestBody MemberSearchForm form,Model model){
+		Information result = serviceManagerServiceImpl.getServiceById(form.getId());
+		model.addAttribute("form",form);
+		model.addAttribute("member", result);
+		return "back/serviceManager/serviceInfoDetail";
+	}
+	
+	@RequestMapping(value = "/serviceRecharge",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> replyTickling(@RequestBody TickForm form,Model model){
+	public BaseResult<Void> serviceRecharge(@RequestBody InformationForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-//		serviceManagerServiceImpl.updateTickling(form);
-		result.setMsg("回复留言成功.");
+		serviceManagerServiceImpl.updateInfo(form);
+		result.setMsg("修改成功.");
 		result.setSuccess(true);
 		return result;
 	}

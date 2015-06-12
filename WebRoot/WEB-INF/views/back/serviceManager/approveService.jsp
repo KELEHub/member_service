@@ -35,8 +35,8 @@
 									<td>${item.state}</td>
 									<td>${item.submitReason}</td>
 									<td>
-									<a href="#myModal1" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">详细信息</a>
-									<a href="#myModal2" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">后台充值</a>
+<!--									<a href="#myModal1" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">详细信息</a>-->
+<!--									<a href="#myModal2" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">后台充值</a>-->
 									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">禁用</button>
 									</td>
 								</tr>
