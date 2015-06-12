@@ -72,12 +72,12 @@ public class UserEditeController {
 			if (info != null) {
 				uform.setNumber(form.getNumber());
 				uform.setUserNumber(form.getNumber());
-				uform.setCrmAccumulative(String.valueOf(info
-						.getCrmAccumulative()));
-				uform.setCrmMoney(String.valueOf(info.getCrmMoney()));
-				uform.setShoppingMoney(String.valueOf(info.getShoppingMoney()));
-				uform.setShoppingAccumulative(String.valueOf(info
-						.getShoppingAccumulative()));
+				uform.setCrmAccumulative(CommonUtil.insertComma(info
+						.getCrmAccumulative().toString(),2));
+				uform.setCrmMoney(CommonUtil.insertComma(info.getCrmMoney().toString(),2));
+				uform.setShoppingMoney(CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
+				uform.setShoppingAccumulative(CommonUtil.insertComma(info
+						.getShoppingAccumulative().toString(),2));
 				model.addAttribute("bean", uform);
 			}
 
@@ -108,7 +108,7 @@ public class UserEditeController {
 			NmsUser user = users.get(0);
 			Information info =institutionService.getNnmuserByName(form.getUserNumber());
 			String remaind = "修改前的葛粮币："+info.getCrmMoney()+","+"葛粮币累计："+info.getCrmAccumulative()+","+"积分:"+info.getShoppingMoney()+","+"积分累计"+info.getShoppingAccumulative()+";"+"修改后的葛粮币："+form.getCrmMoney()+","+"葛粮币累计："+form.getCrmAccumulative()+";"+"积分："+form.getShoppingMoney()+","+"积分累计："+form.getShoppingAccumulative()+";";
-			BigDecimal shopingDif =  new BigDecimal(form.getShoppingMoney()).subtract(info.getShoppingMoney()) ; 
+			BigDecimal shopingDif =  new BigDecimal(form.getShoppingMoney().replace(",", "")).subtract(info.getShoppingMoney()) ; 
 			int r=shopingDif.compareTo(BigDecimal.ZERO);
 			if(r!=0){
 				AccountDetails shopingDetails = new AccountDetails();
@@ -120,7 +120,7 @@ public class UserEditeController {
 				shopingDetails.setDateNumber(CommonUtil.getDateNumber());
 				shopingDetails.setProject(ProjectEnum.fromback);
 				/**积分余额 */
-				shopingDetails.setPointbalance(new BigDecimal(form.getShoppingMoney()));
+				shopingDetails.setPointbalance(new BigDecimal(form.getShoppingMoney().replace(",", "")));
 				/**葛粮币余额 */
 				shopingDetails.setGoldmoneybalance(info.getCrmMoney());
 				if(r==1){
@@ -138,11 +138,11 @@ public class UserEditeController {
 				/**备注 */
 				shopingDetails.setRedmin("后台调整");
 				/**用户ID */
-				shopingDetails.setUserId(user.getId());
+				shopingDetails.setUserId(info.getId());
 				institutionService.savaOrUpdate(shopingDetails);
 			}
 			
-			BigDecimal crmMoneyDif =  new BigDecimal(form.getCrmMoney()).subtract(info.getCrmMoney()) ; 
+			BigDecimal crmMoneyDif =  new BigDecimal(form.getCrmMoney().replace(",", "")).subtract(info.getCrmMoney()) ; 
 			int cr=crmMoneyDif.compareTo(BigDecimal.ZERO);
 			if(cr!=0){
 				AccountDetails crmMoneyDetails = new AccountDetails();
@@ -154,9 +154,9 @@ public class UserEditeController {
 				crmMoneyDetails.setDateNumber(CommonUtil.getDateNumber());
 				crmMoneyDetails.setProject(ProjectEnum.fromback);
 				/**积分余额 */
-				crmMoneyDetails.setPointbalance(new BigDecimal(form.getShoppingMoney()));
+				crmMoneyDetails.setPointbalance(new BigDecimal(form.getShoppingMoney().replace(",", "")));
 				/**葛粮币余额 */
-				crmMoneyDetails.setGoldmoneybalance(new BigDecimal(form.getCrmMoney()));
+				crmMoneyDetails.setGoldmoneybalance(new BigDecimal(form.getCrmMoney().replace(",", "")));
 				if(cr==1){
 					/**收入 */
 					crmMoneyDetails.setIncome(crmMoneyDif);
@@ -172,13 +172,13 @@ public class UserEditeController {
 				/**备注 */
 				crmMoneyDetails.setRedmin("后台调整");
 				/**用户ID */
-				crmMoneyDetails.setUserId(user.getId());
+				crmMoneyDetails.setUserId(info.getId());
 				institutionService.savaOrUpdate(crmMoneyDetails);
 			}
-			info.setShoppingAccumulative(new BigDecimal(form.getShoppingAccumulative()));
-			info.setShoppingMoney(new BigDecimal(form.getShoppingMoney()));
-			info.setCrmMoney(new BigDecimal(form.getCrmMoney()));
-			info.setCrmAccumulative(new BigDecimal(form.getCrmAccumulative()));
+			info.setShoppingAccumulative(new BigDecimal(form.getShoppingAccumulative().replace(",", "")));
+			info.setShoppingMoney(new BigDecimal(form.getShoppingMoney().replace(",", "")));
+			info.setCrmMoney(new BigDecimal(form.getCrmMoney().replace(",", "")));
+			info.setCrmAccumulative(new BigDecimal(form.getCrmAccumulative().replace(",", "")));
 			institutionService.savaOrUpdate(info);
 			//操作记录
 			EditeHistory eh =new EditeHistory();
