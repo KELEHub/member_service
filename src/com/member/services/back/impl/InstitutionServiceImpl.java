@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlInstitution;
 import com.member.dao.InstitutionDao;
+import com.member.entity.BankRechargeHistory;
 import com.member.entity.BankService;
 import com.member.entity.EditeHistory;
 import com.member.entity.Information;
@@ -133,6 +134,28 @@ public class InstitutionServiceImpl implements InstitutionService{
 			
 		}
 		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<BankRechargeHistory> getBankRechargeHistoryList() {
+		String hql="select mr from BankRechargeHistory mr";
+		List<BankRechargeHistory> result = (List<BankRechargeHistory>)institutionDao.queryByHql(hql);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<BankRechargeHistory> getBankRechargeHistoryListByUserId(
+			Integer userId) {
+		String hql="select mr from BankRechargeHistory mr where userId=?";
+		List arguments = new ArrayList();
+		arguments.add(userId);
+		List<BankRechargeHistory> result = (List<BankRechargeHistory>)institutionDao.queryByHql(hql,arguments);
+		return result;
 	}
 
 }
