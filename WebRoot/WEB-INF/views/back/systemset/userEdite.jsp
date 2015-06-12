@@ -56,7 +56,7 @@
 							<label class="control-label">葛粮币：</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="crmMoney" value="${bean.crmMoney}"
+									<input type="text" name="crmMoney" value="${bean.crmMoney}" onfocusout="formatter(this)"
 										class="span11">
 								</div>
 							</div>
@@ -65,7 +65,7 @@
 							<label class="control-label">葛粮币累计：</label>
 							<div class="controls">
 								<div class="input-append">
-								<input type="text" name="crmAccumulative" value="${bean.crmAccumulative}"
+								<input type="text" name="crmAccumulative" value="${bean.crmAccumulative}" onfocusout="formatter(this)"
 										class="span11">
 								</div>
 							</div>
@@ -74,7 +74,7 @@
 							<label class="control-label">积分：</label>
 							<div class="controls">
 								<div class="input-append">
-								<input type="text" name="shoppingMoney" value="${bean.shoppingMoney}"
+								<input type="text" name="shoppingMoney" value="${bean.shoppingMoney}" onfocusout="formatter(this)"
 										class="span11">
 								</div>
 							</div>
@@ -83,7 +83,7 @@
 							<label class="control-label">积分累计：</label>
 							<div class="controls">
 								<div class="input-append">
-										<input type="text" name="shoppingAccumulative" value="${bean.shoppingAccumulative}"
+										<input type="text" name="shoppingAccumulative" value="${bean.shoppingAccumulative}" onfocusout="formatter(this)"
 										class="span11">
 								</div>
 							</div>
