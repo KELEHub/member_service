@@ -23,25 +23,25 @@ import com.member.services.back.ServiceManagerService;
 public class ServiceManagerController {
 
 	@Resource(name = "ServiceManagerServiceImpl")
-	public ServiceManagerService serviceManagerServiceImpl;
+	public ServiceManagerService serviceManagerService;
 
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
-		List<Information> result = serviceManagerServiceImpl.getServiceByIsService(1);
+		List<Information> result = serviceManagerService.getServiceByIsService(1);
 		model.addAttribute("result", result);
 		return "back/serviceManager/serviceInfo";
 	}
 	
 	@RequestMapping(value = "/showApplyServiceManager",method = RequestMethod.POST)
 	public String showApplyServiceManager(Model model){
-		List<ApplyService> result = serviceManagerServiceImpl.getApplyService();
+		List<ApplyService> result = serviceManagerService.getApplyService();
 		model.addAttribute("result", result);
 		return "back/serviceManager/approveService";
 	}
 
 	@RequestMapping(value = "/showServiceInfoDetail",method = RequestMethod.POST)
 	public String showServiceInfoDetail(@RequestBody MemberSearchForm form,Model model){
-		Information result = serviceManagerServiceImpl.getServiceById(form.getId());
+		Information result = serviceManagerService.getServiceById(form.getId());
 		model.addAttribute("form",form);
 		model.addAttribute("member", result);
 		return "back/serviceManager/serviceInfoDetail";
@@ -51,7 +51,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> serviceRecharge(@RequestBody InformationForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerServiceImpl.updateInfo(form);
+		serviceManagerService.updateInfo(form);
 		result.setMsg("修改成功.");
 		result.setSuccess(true);
 		return result;
@@ -61,7 +61,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> forbiddenService(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerServiceImpl.forbiddenService(1,form.getId());
+		serviceManagerService.forbiddenService(1,form.getId());
 		result.setMsg("禁用成功.");
 		result.setSuccess(true);
 		return result;
@@ -71,7 +71,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> applyCheckFailure(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerServiceImpl.updateApplyState(1,form.getId());
+		serviceManagerService.updateApplyState(1,form.getId());
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;
@@ -81,7 +81,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> applyCheckSuccess(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerServiceImpl.updateApplyState(1,form.getId());
+		serviceManagerService.updateApplyState(1,form.getId());
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;
