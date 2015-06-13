@@ -192,7 +192,7 @@ public class Information {
 	@Column(name="isNullInfo")
 	private Integer isNull;
 	
-	/**是否锁定，1表示锁定，0表示未锁定 */
+	/**是否锁定(禁用)，1表示锁定，0表示未锁定 */
 	@Column(name="isLock")
 	private Integer isLock;
 	

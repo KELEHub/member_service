@@ -15,7 +15,6 @@ import com.member.entity.ApplyService;
 import com.member.entity.Information;
 import com.member.form.back.InformationForm;
 import com.member.form.back.MemberSearchForm;
-import com.member.form.back.TickForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.ServiceManagerService;
 
@@ -58,12 +57,32 @@ public class ServiceManagerController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/deleteTickling",method = RequestMethod.POST)
+	@RequestMapping(value = "/forbiddenService",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> deleteTickling(@RequestBody TickForm form,Model model){
+	public BaseResult<Void> forbiddenService(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-//		serviceManagerServiceImpl.deleteTickling(form);
-		result.setMsg("删除留言成功.");
+		serviceManagerServiceImpl.forbiddenService(1,form.getId());
+		result.setMsg("禁用成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/applyCheckFailure",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> applyCheckFailure(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		serviceManagerServiceImpl.updateApplyState(1,form.getId());
+		result.setMsg("操作成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/applyCheckSuccess",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> applyCheckSuccess(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		serviceManagerServiceImpl.updateApplyState(1,form.getId());
+		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;
 	}

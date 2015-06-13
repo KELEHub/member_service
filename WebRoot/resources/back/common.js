@@ -690,6 +690,54 @@ function rechargeToForm(arg_id){
 	document.getElementById("serviceInfo_serviceId").value = arg_id;
 }
 
+function forbiddenService(serviceId){
+	if (window.confirm('您确定要禁用该报单中心？')) {
+		var reqObj = {};
+		reqObj["id"] = serviceId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/forbiddenService.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+//			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+//				var formid = this.id;
+//				ajaxRequestForFormGetJsp(formid);
+//			});
+		}
+	}
+}
+
+function checkFailure(applyId){
+	if (window.confirm('您确定该申请失败？')) {
+		var reqObj = {};
+		reqObj["id"] = applyId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckFailure.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
+
+function checkSuccess(applyId){
+	if (window.confirm('您确定该申请通过？')) {
+		var reqObj = {};
+		reqObj["id"] = applyId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckSuccess.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
+
   //格式化金额
 //优化负数格式化问题
 function fmoney(s, n) {

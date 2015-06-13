@@ -24,6 +24,7 @@
 								<th>申请日期</th>
 								<th>状态</th>
 								<th>申请原因</th>
+								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -35,9 +36,8 @@
 									<td>${item.state}</td>
 									<td>${item.submitReason}</td>
 									<td>
-<!--									<a href="#myModal1" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">详细信息</a>-->
-<!--									<a href="#myModal2" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">后台充值</a>-->
-									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">禁用</button>
+									<button class="btn btn-large" onclick="checkFailure('${item.id}')">审核失败</button>
+									<button class="btn btn-large" onclick="checkSuccess('${item.id}')">审核通过</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -47,62 +47,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div id="myModal1" class="modal hide">
-	<div class="modal-header">
-		<button data-dismiss="modal" class="close" type="button">×</button>
-		<h3>修改公告</h3>
-	</div>
-	<div class="widget-content nopadding">
-		<form action="/NoticeManagerController/editNotice.do" method="post"
-			id="editNoticeForm" class="form-horizontal">
-			<input type="hidden" class="span11" name="noticeId" id="noticeListId" />
-			<div class="control-group">
-				<label class="control-label">
-					标题:
-				</label>
-				<div class="controls">
-					<input type="text" class="span11" name="title"
-						id="editNotice_title" style="width:220;"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">
-					类型:
-				</label>
-				<div class="controls">
-					<select name="category" id="editNotice_category">
-						<option>
-							公告
-						</option>
-						<option>
-							服务协议
-						</option>
-						<option>
-							常见问题
-						</option>
-					</select>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">
-					内容:
-				</label>
-<!--				<div class="widget-content">-->
-					<div class="control-group">
-						<div class="controls">
-							<textarea class="textarea_editor span12" rows="6" name="content"
-								id="editNotice_content" style="width:220;"></textarea>
-						</div>
-					</div>
-<!--				</div>-->
-			</div>
-		</form>
-	</div>
-	<div class="form-actions">	
-	<button type="submit" class="btn btn-success" onclick="saveNotice('editNoticeForm')">
-		确认修改
-	</button>
-</div>
 </div>

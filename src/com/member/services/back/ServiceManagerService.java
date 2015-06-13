@@ -10,12 +10,14 @@ public interface ServiceManagerService {
 
 	List<Information> getServiceByIsService(Integer isService);
 
-	void setTickling(Information information);
-
 	List<ApplyService> getApplyService();
 
 	Information getServiceById(Integer id);
 
 	void updateInfo(InformationForm msf);
+
+	void forbiddenService(Integer isLock, Integer id);
+
+	void updateApplyState(Integer state, Integer id);
 
 }
