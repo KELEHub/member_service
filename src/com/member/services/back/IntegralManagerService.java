@@ -12,5 +12,9 @@ public interface IntegralManagerService {
 	List<AccountDetails> getIntegralHistoryByUserName(String userName);
 
 	List<RepeatedMoneyStatistics> getAvailableRangeIntegral();
+	
+	List<AccountDetails> getIntegralHistoryPoints();
+	
+	List<AccountDetails> getIntegralHistoryPointsByNumber(String number);
 
 }
