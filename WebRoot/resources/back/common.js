@@ -350,6 +350,21 @@ function deleteBank(bankname){
 }
 
 
+function sendGifts(sFormId){
+	if(window.confirm('您确定要发送积分么？')){
+		var result = ajaxRequestForFormGetJsp(sFormId);
+		if(result.success){
+		     alert(result.msg);
+		     $("#content-header").find("form[id='initGiftsForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+      }
+	}
+	
+}
+
 function editeDetail(giftsId){
 	var reqObj = {};
 	reqObj["id"] = giftsId;
@@ -357,8 +372,9 @@ function editeDetail(giftsId){
 }
 
 function saveGiftsDetail(sFormId) {
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if (result.success) {
+	if(window.confirm('您确定要修改么，修改后的数据不可恢复？')){
+	  var result = ajaxRequestForFormGetJson(sFormId);
+	  if (result.success) {
 		alert(result.msg);
 		$('#myModal').modal('hide');
 		$("#content-header").find("form").each(function() {
@@ -368,6 +384,7 @@ function saveGiftsDetail(sFormId) {
 		});
 	}else{
 		alert(result.msg);
+	}
 	}
 }
 
