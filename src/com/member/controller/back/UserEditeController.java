@@ -222,12 +222,15 @@ public class UserEditeController {
 				list = institutionService.getEditeHistoryListByUserId(user
 						.getId());
 			}
-			if (list.size() > 0) {
+			if (list!= null && list.size() > 0) {
 				for (EditeHistory eh : list) {
+					List<NmsUser> oprations = (List<NmsUser>) nmsUserDao.queryByHql(
+							HqlUserRole.getUserById, eh.getUserId());
+					NmsUser opration = oprations.get(0);
 					EditeHistoryForm form = new EditeHistoryForm();
 					form.setCreateDate(String.valueOf(eh.getCreateTime()));
 					form.setNumeber(eh.getNumeber());
-					form.setOprationMan(user.getUserName());
+					form.setOprationMan(opration.getUserName());
 					form.setRemaind(eh.getRemaind());
 					formList.add(form);
 				}

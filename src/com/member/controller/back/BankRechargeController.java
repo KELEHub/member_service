@@ -22,7 +22,6 @@ import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
 import com.member.entity.AccountDetails;
 import com.member.entity.BankRechargeHistory;
-import com.member.entity.EditeHistory;
 import com.member.entity.Information;
 import com.member.entity.ManageRole;
 import com.member.entity.NmsUser;
@@ -181,12 +180,15 @@ public class BankRechargeController {
 				list = institutionService.getBankRechargeHistoryListByUserId(user
 						.getId());
 			}
-			if (list.size() > 0) {
+			if (list!= null && list.size() > 0) {
 				for (BankRechargeHistory eh : list) {
+					List<NmsUser> oprations = (List<NmsUser>) nmsUserDao.queryByHql(
+							HqlUserRole.getUserById, eh.getUserId());
+					NmsUser opration = oprations.get(0);
 					EditeHistoryForm form = new EditeHistoryForm();
 					form.setCreateDate(String.valueOf(eh.getCreateTime()));
 					form.setNumeber(eh.getNumeber());
-					form.setOprationMan(user.getUserName());
+					form.setOprationMan(opration.getUserName());
 					form.setRemaind(eh.getRemaind());
 					formList.add(form);
 				}
