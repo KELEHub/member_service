@@ -15,20 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.beans.back.enumData.BatchNoEnum;
 import com.member.beans.back.enumData.GiftEnum;
 import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
 import com.member.entity.GiftsDetails;
 import com.member.entity.GiftsHistory;
 import com.member.entity.Information;
+import com.member.entity.Institution;
 import com.member.entity.ManageRole;
 import com.member.entity.NmsUser;
+import com.member.entity.SendGiftsDetails;
 import com.member.form.back.GiftsForm;
 import com.member.form.back.GiftsHistoryForm;
 import com.member.helper.BaseResult;
+import com.member.services.back.GiftsDetailsService;
 import com.member.services.back.InformationService;
+import com.member.services.back.InstitutionService;
 import com.member.services.back.ParameterService;
 import com.member.services.back.RoleManageService;
+import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/GiftsDetailsController")
@@ -46,6 +52,12 @@ public class GiftsDetailsController {
 	@Resource(name = "RoleManageServiceImpl")
 	private RoleManageService roleManageService;
 	
+	
+	@Resource(name = "GiftsDetailsServiceImpl")
+	private GiftsDetailsService giftsDetailsService;
+	
+	@Resource(name = "InstitutionServiceImpl")
+	public InstitutionService institutionService;
 	
 	
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
@@ -175,6 +187,16 @@ public class GiftsDetailsController {
 					return result;
 				}
 			}
+			if(Integer.valueOf(form.getPointNumber())<giftsDetails.getPointNumber()){
+				result.setSuccess(false);
+				result.setMsg("期次号不能小于当前期次号");
+				return result;
+			}
+			if(Integer.valueOf(form.getPointNumber())==giftsDetails.getPointNumber()){
+				result.setSuccess(false);
+				result.setMsg("期次号未修改");
+				return result;
+			}
 			Information info =informationService.getInformationById(giftsDetails.getChildId());
 			String remaind = "修改前的期次：" + giftsDetails.getPointNumber()+";"+"修改后的期次："+form.getPointNumber();
 			giftsDetails.setPointNumber(Integer.valueOf(form.getPointNumber()));
@@ -184,7 +206,7 @@ public class GiftsDetailsController {
 			giftsHistory.setUserId(user.getId());
 			giftsHistory.setRemaind(remaind);
 			giftsHistory.setName("礼包_"+info.getNumber());
-			parameterService.saveOrUpdate(giftsDetails, giftsHistory);
+			parameterService.saveOrUpdate(giftsDetails, giftsHistory,Integer.valueOf(form.getPointNumber()));
 			result.setMsg("修改会员详细信息成功.");
 			result.setSuccess(true);
 			
@@ -239,5 +261,25 @@ public class GiftsDetailsController {
 	}
 	
 	
+	@RequestMapping(value = "/showSend", method = RequestMethod.POST)
+	public String showSend(Model model) {
+		try {
+		
+			int countNumber = CommonUtil.getCountNumber();
+			BatchNoEnum batchNo = CommonUtil.getBatchNo();
+			
+			List<SendGiftsDetails> giftsList = giftsDetailsService.getGiftsDetailsList(countNumber, batchNo);
+			if(giftsList!=null&&giftsList.size()>0){
+				model.addAttribute("result", giftsList);
+				String goldAll = giftsDetailsService.getCountGoldAll(countNumber, batchNo);
+				model.addAttribute("goldAll", goldAll);
+			}
+			return "back/systeminfo/giftsSend";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "back/systeminfo/giftsSend";
+		}
+
+	}
 
 }
