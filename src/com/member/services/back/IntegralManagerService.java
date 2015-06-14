@@ -8,4 +8,6 @@ public interface IntegralManagerService {
 
 	List<AccountDetails> getIntegralHistory();
 
+	List<AccountDetails> getIntegralHistoryByUserName(String userName);
+
 }

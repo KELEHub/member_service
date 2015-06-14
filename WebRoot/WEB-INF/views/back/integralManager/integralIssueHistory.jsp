@@ -16,13 +16,11 @@
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">会员账号:</label>
 				<div class="controls">
-					<input type="text" name="memeberNumber" value="${form.memeberNumber}">
+					<input id="userNumber_input" type="text" name="userNumber">
+					<a class="btn" onclick="searchIntegralHistory(userNumber_input.value)">查询</a>
 				</div>
 		</div>
 	</form>
-	<div class="control-group" style="float: left; margin-left: 10px;">
-		<a class="btn" onclick="searchOrderList('integralHistoryForm')">查询</a>
-	</div>
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
@@ -33,30 +31,22 @@
 						<thead>
 							<tr>
 								<th>会员账号</th>
-								<th>流水号</th>
-								<th>服务积分</th>
-								<th>积分</th>
-								<th>合计</th>
+								<th>项目</th>
+								<th>收入</th>
+								<th>支出</th>
+								<th>积分余额</th>
 								<th>日期</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
-									<td>${item.userId}</td>
-									<td>${item.tradeNo}</td>
-									<td>${item.serviceNumber }</td>
-									<td>${item.productName }</td>
-									<td>${item.orderDate }</td>
-									<td>
-									<c:if test="${item.status eq 0}">未发货</c:if> 
-									<c:if test="${item.status eq 1}">已发货</c:if>
-									</td>
-									<td><button class="btn" onclick="showOrderListDetail('${item.id}')">收货人详细</button>
-									<c:if test="${item.status eq 0}">
-									  <button class="btn" onclick="deliveryOrder('${item.id}')">发货</button>
-									</c:if> 
-									</td>
+									<td>${item.userNumber}</td>
+									<td>${item.project}</td>
+									<td>${item.income}</td>
+									<td>${item.pay}</td>
+									<td>${item.pointbalance}</td>
+									<td>${item.createTime}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

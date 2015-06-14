@@ -65,6 +65,10 @@ public class AccountDetails {
 	@Column(name="userId")
 	private Integer userId;
 	
+	/**用户登录ID */
+	@Column(name="userNumber")
+	private String userNumber;
+	
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
 	private Date createTime;
@@ -156,4 +160,13 @@ public class AccountDetails {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public String getUserNumber() {
+		return userNumber;
+	}
+
+	public void setUserNumber(String userNumber) {
+		this.userNumber = userNumber;
+	}
+	
 }

@@ -24,4 +24,11 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		return (List<AccountDetails>) integralManagerDao.queryByHql(
 				HqlIntegralManager.getIntegralHistory);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<AccountDetails> getIntegralHistoryByUserName(String userName) {
+		return (List<AccountDetails>) integralManagerDao.queryByHql(
+				HqlIntegralManager.getIntegralHistoryByUserName,userName);
+	}
 }

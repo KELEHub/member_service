@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
-import com.member.dao.ServiceManagerDao;
 import com.member.entity.AccountDetails;
 import com.member.entity.ApplyService;
 import com.member.entity.Information;
@@ -34,9 +33,6 @@ public class ServiceManagerController {
 	@Resource(name = "ServiceManagerServiceImpl")
 	public ServiceManagerService serviceManagerService;
 	
-	@Resource(name = "ServiceManagerDaoImpl")
-	private ServiceManagerDao serviceManagerDao;
-
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
 		List<Information> result = serviceManagerService.getServiceByIsService(1);
@@ -128,6 +124,8 @@ public class ServiceManagerController {
 		shopingDetails.setRedmin("审核报单中心通过");
 		/**用户ID */
 		shopingDetails.setUserId(superiorInfo.getId());
+		/**用户登录ID */
+		shopingDetails.setUserNumber(superiorInfo.getNumber());
 		shopingDetails.setCreateTime(new Date());
 		serviceManagerService.saveOrUpdate(shopingDetails);
 		
