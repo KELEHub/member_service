@@ -1,5 +1,6 @@
 package com.member.services.back.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlParameter;
 import com.member.dao.ParameterDao;
+import com.member.entity.GiftsDetails;
+import com.member.entity.GiftsHistory;
 import com.member.entity.SystemParameter;
 import com.member.services.back.ParameterService;
 @Service("ParameterServiceImpl")
@@ -41,6 +44,85 @@ public class ParameterServiceImpl implements ParameterService{
 		}
 		
 			
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<GiftsDetails>  getGiftsDetails() {
+		String hql=
+			"from GiftsDetails";
+		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql);
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes;
+        }
+        return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public GiftsDetails getGiftsDetailsById(Integer id) {
+		String hql=
+			"from GiftsDetails where id=?";
+		List arguments = new ArrayList();
+		arguments.add(id);
+		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql,arguments);
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes.get(0);
+        }
+        return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<GiftsDetails> getGiftsDetailsByNumber(String number) {
+		String hql=
+			"from GiftsDetails where number=?";
+		List arguments = new ArrayList();
+		arguments.add(number);
+		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql,arguments);
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes;
+        }
+        return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<GiftsHistory> getGiftsHistoryAll() {
+		String hql=
+			"from GiftsHistory";
+		List<GiftsHistory> dataPermissionCodes=(List<GiftsHistory>) parameterDao.queryByHql(hql);
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes;
+        }
+        return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<GiftsHistory> getGiftsHistoryByOperationId(Integer id) {
+		String hql=
+			"from GiftsHistory where userId=?";
+		List arguments = new ArrayList();
+		arguments.add(id);
+		List<GiftsHistory> dataPermissionCodes=(List<GiftsHistory>) parameterDao.queryByHql(hql,arguments);
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes;
+        }
+        return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveOrUpdate(GiftsDetails gd, GiftsHistory gh) {
+		parameterDao.saveOrUpdate(gd);
+		parameterDao.saveOrUpdate(gh);
 		
 	}
 
