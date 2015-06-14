@@ -11,5 +11,7 @@ public interface GiftsDetailsService {
 	
 	public String getCountGoldAll(Integer countNumber,BatchNoEnum batchNo);
 	
+	public void senGold(SendGiftsDetails ss);
+	
 
 }
