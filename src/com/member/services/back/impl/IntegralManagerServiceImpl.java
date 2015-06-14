@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.HqlIntegralManager;
 import com.member.dao.IntegralManagerDao;
-import com.member.entity.Bonus;
+import com.member.entity.AccountDetails;
 import com.member.services.back.IntegralManagerService;
 
 @Service("IntegralManagerServiceImpl")
@@ -20,8 +20,8 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Bonus> getBonus() {
-		return (List<Bonus>) integralManagerDao.queryByHql(
-				HqlIntegralManager.getBonus);
+	public List<AccountDetails> getIntegralHistory() {
+		return (List<AccountDetails>) integralManagerDao.queryByHql(
+				HqlIntegralManager.getIntegralHistory);
 	}
 }

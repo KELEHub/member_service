@@ -20,4 +20,6 @@ public interface ServiceManagerService {
 
 	void updateApplyState(Integer state, Integer id);
 
+	void saveOrUpdate(Object obj);
+
 }

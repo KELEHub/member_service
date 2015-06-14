@@ -1,5 +1,7 @@
 package com.member.controller.back;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.beans.back.enumData.KindDataEnum;
+import com.member.beans.back.enumData.ProjectEnum;
+import com.member.dao.ServiceManagerDao;
+import com.member.entity.AccountDetails;
 import com.member.entity.ApplyService;
 import com.member.entity.Information;
+import com.member.entity.RepeatedMoneyStatistics;
+import com.member.form.back.ApplyServiceForm;
 import com.member.form.back.InformationForm;
 import com.member.form.back.MemberSearchForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.ServiceManagerService;
+import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/ServiceManagerController")
@@ -24,6 +33,9 @@ public class ServiceManagerController {
 
 	@Resource(name = "ServiceManagerServiceImpl")
 	public ServiceManagerService serviceManagerService;
+	
+	@Resource(name = "ServiceManagerDaoImpl")
+	private ServiceManagerDao serviceManagerDao;
 
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
@@ -79,9 +91,57 @@ public class ServiceManagerController {
 	
 	@RequestMapping(value = "/applyCheckSuccess",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> applyCheckSuccess(@RequestBody MemberSearchForm form,Model model){
+	public BaseResult<Void> applyCheckSuccess(@RequestBody ApplyServiceForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
+		//更改申请表信息，更新上级报单中心的information信息
 		serviceManagerService.updateApplyState(1,form.getId());
+		Information superiorInfo = serviceManagerService.getServiceById(form.getSubmitId());
+		superiorInfo.setRepeatedMoney(superiorInfo.getRepeatedMoney().add(new BigDecimal(50)));
+		superiorInfo.setRepeatedAccumulative(superiorInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
+		superiorInfo.setShoppingMoney(superiorInfo.getShoppingMoney().add(new BigDecimal(50)));
+		superiorInfo.setShoppingAccumulative(superiorInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+		serviceManagerService.saveOrUpdate(superiorInfo);
+		
+		//更新下级报单中心information表信息
+		Information juniorInfo = serviceManagerService.getServiceById(form.getApplyId());
+		juniorInfo.setIsService(1);
+		juniorInfo.setLeaderServiceId(form.getSubmitId());
+		juniorInfo.setLeaderServiceNumber(form.getSubmitNumber());
+		serviceManagerService.saveOrUpdate(juniorInfo);
+		
+		//在AccountDetails表记录上级报单中心获得服务积分明细
+		AccountDetails shopingDetails = new AccountDetails();
+		shopingDetails.setKindData(KindDataEnum.points);
+		/**日期类别统计 */
+		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+		/**项目 */
+		shopingDetails.setProject(ProjectEnum.servicepointsforone);
+		/**积分余额 */
+		shopingDetails.setPointbalance(superiorInfo.getRepeatedMoney());
+		/**葛粮币余额 */
+		shopingDetails.setGoldmoneybalance(superiorInfo.getCrmMoney());
+		/**收入 */
+		shopingDetails.setIncome(new BigDecimal(50));
+		/**支出 */
+		shopingDetails.setPay(new BigDecimal(0));
+		/**备注 */
+		shopingDetails.setRedmin("审核报单中心通过");
+		/**用户ID */
+		shopingDetails.setUserId(superiorInfo.getId());
+		shopingDetails.setCreateTime(new Date());
+		serviceManagerService.saveOrUpdate(shopingDetails);
+		
+		//在RepeatedMoneyStatistics表中添加一条记录
+		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
+		moneyStatistics.setCreateTime(new Date());
+		moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
+		moneyStatistics.setSuperiorServiceId(superiorInfo.getId());
+		moneyStatistics.setSuperiorServiceNumber(superiorInfo.getNumber());
+		moneyStatistics.setJuniorServiceId(juniorInfo.getId());
+		moneyStatistics.setJuniorServiceNumber(juniorInfo.getNumber());
+		moneyStatistics.setScoreService(new BigDecimal(50));
+		serviceManagerService.saveOrUpdate(moneyStatistics);
+		
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;

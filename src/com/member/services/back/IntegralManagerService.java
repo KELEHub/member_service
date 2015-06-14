@@ -2,10 +2,10 @@ package com.member.services.back;
 
 import java.util.List;
 
-import com.member.entity.Bonus;
+import com.member.entity.AccountDetails;
 
 public interface IntegralManagerService {
 
-	List<Bonus> getBonus();
+	List<AccountDetails> getIntegralHistory();
 
 }

@@ -81,4 +81,10 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveOrUpdate(Object obj) {
+		serviceManagerDao.saveOrUpdate(obj);
+	}
 }

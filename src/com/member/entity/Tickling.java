@@ -56,7 +56,7 @@ public class Tickling {
 	private Integer category;
 	
 	/**留言回复状态，0未回复，1已回复 */
-	@Column(name="state")
+	@Column(name="state",columnDefinition="INT default 0")
 	private Integer state;
 	
 	/**留言描述 */

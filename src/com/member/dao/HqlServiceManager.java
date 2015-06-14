@@ -8,4 +8,6 @@ public class HqlServiceManager {
 		"from Information where id=?";
 	public final static String getApproveService=
 		"from ApplyService";
+	public final static String getUserByName=
+		"from NmsUser t where t.userName=?  and t.status>=0";
 }

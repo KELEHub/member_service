@@ -36,18 +36,6 @@ public class Information {
 	@Column(name="protectPassword")
 	private String protectPassword;
 
-	/**条件，意义不明 */
-	@Column(name="qualification")
-	private String qualification;
-	
-	/**网格，意义不明 */
-	@Column(name="grid")
-	private String grid;
-	
-	/**网格名字，意义不明 */
-	@Column(name="gridname")
-	private String gridname;
-	
 	/**会员真实姓名 */
 	@Column(name="name")
 	private String name;
@@ -140,30 +128,10 @@ public class Information {
 	@Column(name="recommendNumber")
 	private String recommendNumber;
 	
-	/**联系人表ID，目前未使用 */
-	@Column(name="contactId")
-	private String contactId;
-	
-	/**联系人的登录ID，目前未使用 */
-	@Column(name="contactNumber")
-	private String contactNumber;
-	
-	/**上级表ID，目前未使用 */
-	@Column(name="topId")
-	private Integer topId;
-	
-	/**上级的登录ID，目前未使用 */
-	@Column(name="topNumber")
-	private String topNumber;
-	
 	/**是否是报单中心，1表示是报单中心，0表示普通会员 */
-	@Column(name="isService")
+	@Column(name="isService",columnDefinition="INT default 0")
 	private Integer isService;
 	
-	/**是否是ServiceGrid，目前使用未知 */
-	@Column(name="isServiceGrid")
-	private String isServiceGrid;
-
 	/**报单中心的表ID*/
 	@Column(name="serviceId")
 	private Integer serviceId;
@@ -181,55 +149,47 @@ public class Information {
 	private String leaderServiceNumber;
 	
 	/**是否激活，1表示已激活，0表示未激活 */
-	@Column(name="isActivate")
+	@Column(name="isActivate",columnDefinition="INT default 0")
 	private Integer isActivate;
 	
 	/**激活时间 */
 	@Column(name="activeDate")
 	private Date activeDate;
 	
-	/**意义不明 */
-	@Column(name="isNullInfo")
-	private Integer isNull;
-	
 	/**是否锁定(禁用)，1表示锁定，0表示未锁定 */
 	@Column(name="isLock")
 	private Integer isLock;
 	
-	/**意义不明 */
-	@Column(name="outCount")
-	private String outCount;
-	
 	/**葛粮币 */
-	@Column(name="crmMoney")
+	@Column(name="crmMoney",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal crmMoney;
 	
 	/**葛粮币累计 */
-	@Column(name="crmAccumulative")
+	@Column(name="crmAccumulative",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal crmAccumulative;
 	
 	/**分红 */
-	@Column(name="bonusMoney")
+	@Column(name="bonusMoney",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal bonusMoney;
 	
 	/**分红累计 */
-	@Column(name="bonusAccumulative")
+	@Column(name="bonusAccumulative",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal bonusAccumulative;
 
 	/**服务积分 */
-	@Column(name="repeatedMoney")
+	@Column(name="repeatedMoney",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal repeatedMoney;
 	
 	/**服务积分累计*/
-	@Column(name="repeatedAccumulative")
+	@Column(name="repeatedAccumulative",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal repeatedAccumulative;
 	
 	/**积分 */
-	@Column(name="shoppingMoney")
+	@Column(name="shoppingMoney",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal shoppingMoney;
 	
 	/**积分累计 */
-	@Column(name="shoppingAccumulative")
+	@Column(name="shoppingAccumulative",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal shoppingAccumulative;
 	
 	/**推荐人数 */
@@ -274,30 +234,6 @@ public class Information {
 
 	public void setProtectPassword(String protectPassword) {
 		this.protectPassword = protectPassword;
-	}
-
-	public String getQualification() {
-		return qualification;
-	}
-
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
-	}
-
-	public String getGrid() {
-		return grid;
-	}
-
-	public void setGrid(String grid) {
-		this.grid = grid;
-	}
-
-	public String getGridname() {
-		return gridname;
-	}
-
-	public void setGridname(String gridname) {
-		this.gridname = gridname;
 	}
 
 	public String getName() {
@@ -484,52 +420,12 @@ public class Information {
 		this.recommendNumber = recommendNumber;
 	}
 
-	public String getContactId() {
-		return contactId;
-	}
-
-	public void setContactId(String contactId) {
-		this.contactId = contactId;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public Integer getTopId() {
-		return topId;
-	}
-
-	public void setTopId(Integer topId) {
-		this.topId = topId;
-	}
-
-	public String getTopNumber() {
-		return topNumber;
-	}
-
-	public void setTopNumber(String topNumber) {
-		this.topNumber = topNumber;
-	}
-
 	public Integer getIsService() {
 		return isService;
 	}
 
 	public void setIsService(Integer isService) {
 		this.isService = isService;
-	}
-
-	public String getIsServiceGrid() {
-		return isServiceGrid;
-	}
-
-	public void setIsServiceGrid(String isServiceGrid) {
-		this.isServiceGrid = isServiceGrid;
 	}
 
 	public Integer getServiceId() {
@@ -556,28 +452,12 @@ public class Information {
 		this.isActivate = isActivate;
 	}
 
-	public Integer getIsNull() {
-		return isNull;
-	}
-
-	public void setIsNull(Integer isNull) {
-		this.isNull = isNull;
-	}
-
 	public Integer getIsLock() {
 		return isLock;
 	}
 
 	public void setIsLock(Integer isLock) {
 		this.isLock = isLock;
-	}
-
-	public String getOutCount() {
-		return outCount;
-	}
-
-	public void setOutCount(String outCount) {
-		this.outCount = outCount;
 	}
 
 	public BigDecimal getCrmMoney() {
@@ -691,9 +571,4 @@ public class Information {
 	public void setActiveDate(Date activeDate) {
 		this.activeDate = activeDate;
 	}
-	
-	/**推荐人表id，重复定义，可去除*/
-//	@Column(name="recommendService")
-//	private Long recommendService;
-	
 }

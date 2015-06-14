@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.member.entity.Bonus;
+import com.member.entity.AccountDetails;
 import com.member.services.back.IntegralManagerService;
 
 @Controller
@@ -21,14 +21,14 @@ public class IntegralManagerController {
 
 	@RequestMapping(value = "/showIntegralHistory",method = RequestMethod.POST)
 	public String showIntegralHistory(Model model){
-		List<Bonus> result = integralManagerService.getBonus();
+		List<AccountDetails> result = integralManagerService.getIntegralHistory();
 		model.addAttribute("result", result);
 		return "back/integralManager/integralIssueHistory";
 	}
 	
 	@RequestMapping(value = "/showIntegralIssueManager",method = RequestMethod.POST)
 	public String showIntegralIssueManager(Model model){
-		List<Bonus> result = integralManagerService.getBonus();
+		List<AccountDetails> result = integralManagerService.getIntegralHistory();
 		model.addAttribute("result", result);
 		return "back/integralManager/integralIssue";
 	}

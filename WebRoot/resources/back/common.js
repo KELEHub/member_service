@@ -774,10 +774,14 @@ function checkFailure(applyId){
 	}
 }
 
-function checkSuccess(applyId){
+function checkSuccess(id,submitId,submitNumber,applyId,applyNumber){
 	if (window.confirm('您确定该申请通过？')) {
 		var reqObj = {};
-		reqObj["id"] = applyId;
+		reqObj["id"] = id;
+		reqObj["submitId"] = submitId;
+		reqObj["applyId"] = applyId;
+		reqObj["submitNumber"] = submitNumber;
+		reqObj["applyNumber"] = applyNumber;
 		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckSuccess.do",reqObj);
 		if (result.success) {
 			alert(result.msg);

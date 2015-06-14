@@ -36,8 +36,10 @@
 									<td>${item.state}</td>
 									<td>${item.submitReason}</td>
 									<td>
-									<button class="btn btn-large" onclick="checkFailure('${item.id}')">审核失败</button>
-									<button class="btn btn-large" onclick="checkSuccess('${item.id}')">审核通过</button>
+									<c:if test="${item.state eq 0}">
+										<button class="btn btn-large" onclick="checkFailure('${item.id}')">审核失败</button>
+										<button class="btn btn-large" onclick="checkSuccess('${item.id}','${item.submitId}','${item.submitNumber}','${item.applyId}','${item.applyNumber}')">审核通过</button>
+									</c:if>
 									</td>
 								</tr>
 							</c:forEach>
