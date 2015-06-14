@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.member.beans.back.enumData.BatchNoEnum;
+
 public class CommonUtil {
 	
 	/**
@@ -47,6 +49,37 @@ public class CommonUtil {
 		}
 		
 		return nowDateStr.substring(0,6)+dateNumber;
+	}
+	
+	
+	/**
+	 * 流水号获取
+	 * @return
+	 */
+	public static Integer getCountNumber(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		String no = nowDateStr.substring(0,6);
+		return Integer.valueOf(no);
+	}
+	
+	
+	/**
+	 * 批次号batchNo获取
+	 * @return
+	 */
+	public static BatchNoEnum getBatchNo(){
+		Calendar d1 = Calendar.getInstance();
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		if(day<=10){
+			return BatchNoEnum.FIRST;
+		}else if(day<=20){
+			return BatchNoEnum.SECOND;
+		}else{
+			return BatchNoEnum.THREE;
+		}
 	}
 	
 	
