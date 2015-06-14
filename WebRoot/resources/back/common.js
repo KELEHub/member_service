@@ -352,7 +352,7 @@ function deleteBank(bankname){
 
 function sendGifts(sFormId){
 	if(window.confirm('您确定要发送积分么？')){
-		var result = ajaxRequestForFormGetJsp(sFormId);
+		var result = ajaxRequestForFormGetJson(sFormId);
 		if(result.success){
 		     alert(result.msg);
 		     $("#content-header").find("form[id='initGiftsForm']").each(function(){
