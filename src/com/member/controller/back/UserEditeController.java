@@ -112,7 +112,7 @@ public class UserEditeController {
 			int r=shopingDif.compareTo(BigDecimal.ZERO);
 			if(r!=0){
 				AccountDetails shopingDetails = new AccountDetails();
-				shopingDetails.setDateNumber(form.getUserNumber());
+				shopingDetails.setUserNumber(form.getUserNumber());
 				shopingDetails.setCreateTime(new Date());
 				shopingDetails.setKindData(KindDataEnum.points);
 				
@@ -146,7 +146,7 @@ public class UserEditeController {
 			int cr=crmMoneyDif.compareTo(BigDecimal.ZERO);
 			if(cr!=0){
 				AccountDetails crmMoneyDetails = new AccountDetails();
-				crmMoneyDetails.setDateNumber(form.getUserNumber());
+				crmMoneyDetails.setUserNumber(form.getUserNumber());
 				crmMoneyDetails.setCreateTime(new Date());
 				crmMoneyDetails.setKindData(KindDataEnum.goldmoney);
 				
