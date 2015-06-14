@@ -22,7 +22,6 @@ import com.member.dao.NmsUserDao;
 import com.member.entity.GiftsDetails;
 import com.member.entity.GiftsHistory;
 import com.member.entity.Information;
-import com.member.entity.Institution;
 import com.member.entity.ManageRole;
 import com.member.entity.NmsUser;
 import com.member.entity.SendGiftsDetails;
@@ -280,6 +279,30 @@ public class GiftsDetailsController {
 			return "back/systeminfo/giftsSend";
 		}
 
+	}
+	
+	
+	@RequestMapping(value = "/send",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> send(@RequestBody GiftsForm form,Model model,HttpSession sesison){
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			int countNumber = CommonUtil.getCountNumber();
+			BatchNoEnum batchNo = CommonUtil.getBatchNo();
+			List<SendGiftsDetails> giftsList = giftsDetailsService.getGiftsDetailsList(countNumber, batchNo);
+			if(giftsList!=null&&giftsList.size()>0){
+				for(SendGiftsDetails ss:giftsList){
+					giftsDetailsService.senGold(ss);
+				}
+			}
+			result.setMsg("积分释放成功");
+			result.setSuccess(true);
+			
+		} catch (Exception e) {
+			result.setSuccess(false);
+			result.setMsg("积分释放失败，请重新释放");
+		}
+		return result;
 	}
 
 }
