@@ -11,8 +11,8 @@
 	<h1>
 		极差积分发放
 	</h1>
-<!--	<form action="/IntegralManagerController/showIntegralHistory.do" method="POST"-->
-<!--							id="integralHistoryForm">-->
+	<form action="/IntegralManagerController/showRangeIntegralIssueManager.do" method="POST"
+							id="rangeIntegralForm">
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">年:</label>
 				<input id="year_input" type="text">
@@ -20,7 +20,7 @@
 				<input id="month_input" type="text">
 				<a class="btn" onclick="rangeIntegralIssue(year_input.value,month_input.value)">极差发放</a>
 		</div>
-<!--	</form>-->
+	</form>
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
