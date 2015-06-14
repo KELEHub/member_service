@@ -846,3 +846,20 @@ function searchIntegralHistory(userNumber) {
 //				});
 	}
 }
+
+function rangeIntegralIssue(year,month){
+	if (window.confirm('您确定发放'+year+'年'+month+'月'+'？')) {
+		var reqObj = {};
+		reqObj["year"] = year;
+		reqObj["month"] = month;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckSuccess.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
