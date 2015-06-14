@@ -3,6 +3,8 @@ package com.member.dao;
 public class HqlUserRole {
 public final static String getUserByName=
 "from NmsUser t where t.userName=?  and t.status>=0";
+public final static String getUserById=
+	"from NmsUser t where t.id=?";
 public final static String getUserByNames=
 	"from NmsUser t where t.userName in (:userNames)  and t.status>=0";
 public final static String getRoleByName=
