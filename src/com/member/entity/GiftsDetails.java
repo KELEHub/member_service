@@ -59,6 +59,10 @@ public class GiftsDetails {
 	@Column(name="pointNumber")
 	private Integer pointNumber;
 	
+	/**金额 */
+	@Column(name="goldMoney")
+	private Integer goldMoney;
+	
 	/**礼包名称*/
 	@Column(name="name")
 	private String name;
@@ -154,5 +158,15 @@ public class GiftsDetails {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public Integer getGoldMoney() {
+		return goldMoney;
+	}
+
+	public void setGoldMoney(Integer goldMoney) {
+		this.goldMoney = goldMoney;
+	}
+	
+	
 	
 }
