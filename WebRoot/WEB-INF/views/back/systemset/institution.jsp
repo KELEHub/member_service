@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputInfo">第5期:</label>
+              <label class="control-label" for="inputInfo">第五期:</label>
               <div class="controls">
                 <div class="input-append">
                   <input type="text" name="preaFive" value="${bean.preaFive}" class="span11">
