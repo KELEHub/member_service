@@ -13,6 +13,7 @@ import com.member.dao.HqlParameter;
 import com.member.dao.ParameterDao;
 import com.member.entity.GiftsDetails;
 import com.member.entity.GiftsHistory;
+import com.member.entity.SendGiftsDetails;
 import com.member.entity.SystemParameter;
 import com.member.services.back.ParameterService;
 @Service("ParameterServiceImpl")
@@ -118,9 +119,22 @@ public class ParameterServiceImpl implements ParameterService{
         return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void saveOrUpdate(GiftsDetails gd, GiftsHistory gh) {
+	public void saveOrUpdate(GiftsDetails gd, GiftsHistory gh,Integer pointNumber) {
+		String hql=
+			"from SendGiftsDetails t where t.giftsDetailsId=? and t.pointNumber<?";
+		List arguments = new ArrayList();
+		arguments.add(gd.getId());
+		arguments.add(pointNumber);
+		List<SendGiftsDetails> dataPermissionCodes=(List<SendGiftsDetails>) parameterDao.queryByHql(hql,arguments);
+		if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+			for(SendGiftsDetails ss : dataPermissionCodes){
+				ss.setStauts(1);
+				parameterDao.saveOrUpdate(ss);
+			}
+		}
 		parameterDao.saveOrUpdate(gd);
 		parameterDao.saveOrUpdate(gh);
 		
