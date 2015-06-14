@@ -316,6 +316,12 @@ function serchUser(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 }
 
+function serchPointHistory(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
+
 
 function saveBank(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
@@ -407,6 +413,7 @@ function deleteUser(username){
 	 }
 	
 }
+
 
 function showDynamicDialog(reqUrl,reqObj,dialogId){
 	var bathPath=$("#basePath").val();
