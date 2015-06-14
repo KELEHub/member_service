@@ -113,7 +113,7 @@ public class BankRechargeController {
 			BigDecimal addMoney = info.getCrmMoney().add(
 					getValue(form.getCrmMoney().replace(",", "")));
 			AccountDetails shopingDetails = new AccountDetails();
-			shopingDetails.setDateNumber(form.getUserNumber());
+			shopingDetails.setUserNumber(form.getUserNumber());
 			shopingDetails.setCreateTime(new Date());
 			shopingDetails.setKindData(KindDataEnum.goldmoney);
 
