@@ -18,7 +18,7 @@
 			</div>
 			<div class="widget-content nopadding">
 			<form action="/ServiceManagerController/showServiceInfoDetail.do" id="saveServiceDetailForm">
-			    <input type="text" name="id" value="${member.id}">
+			    <input type="hidden" name="id" value="${member.id}">
 				<table class="table table-bordered table-striped">
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">会员账号:</td>
@@ -114,7 +114,7 @@
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">是否报单中心:</td>
 						<td><c:if test="${member.isService eq 0}">普通会员</c:if> <c:if
-								test="${member.isService eq 1}">保单中心</c:if></td>
+								test="${member.isService eq 1}">报单中心</c:if></td>
 						<td style="text-align: right;">推荐报单中心:</td>
 						<td class="center"></td>
 					</tr>
