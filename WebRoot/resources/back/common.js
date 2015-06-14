@@ -149,6 +149,11 @@ function searchMembers(sFormId){
 	resetTable();
 }
 
+function searchGifts(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
 function doMemberShowDetail(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
@@ -170,7 +175,7 @@ function showOrderListDetail(id){
 }
 
 function deliveryOrder(id){
-	if (window.confirm('您去顶发货吗？')) {
+	if (window.confirm('您确定发货吗？')) {
 		var reqObj = {};
 		reqObj["id"] = id;
 		var result = ajaxRequestForJsonGetJson("/orderlist/deliveryOrder.do",reqObj);
@@ -337,6 +342,29 @@ function deleteBank(bankname){
 	 }
 	
 }
+
+
+function editeDetail(giftsId){
+	var reqObj = {};
+	reqObj["id"] = giftsId;
+	showDynamicDialog("/GiftsDetailsController/showDialog.do", reqObj, "editeGiftsDetails");
+}
+
+function saveGiftsDetail(sFormId) {
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if (result.success) {
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}else{
+		alert(result.msg);
+	}
+}
+
 
 
 function deleteUser(username){
