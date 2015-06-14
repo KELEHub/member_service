@@ -31,7 +31,7 @@ public class ParameterController {
 			SystemParameter form = parameterService
 					.getSystemParameter();
 			ParameterForm systemParameter = new ParameterForm();
-			systemParameter.setDayCount(form.getDayCount().toString());
+//			systemParameter.setDayCount(form.getDayCount().toString());
 			systemParameter.setGoldFlg(form.getGoldFlg());
 			systemParameter.setGoldMax(CommonUtil.insertComma(form.getGoldMax().toString(),2));
 			systemParameter.setGoldMin(CommonUtil.insertComma(form.getGoldMin().toString(),2));
@@ -69,7 +69,7 @@ public class ParameterController {
 				systemParameter.setSystemData("system");
 				systemParameter.setCreateTime(new Date());
 			}
-			systemParameter.setDayCount(Integer.valueOf(form.getDayCount()));
+//			systemParameter.setDayCount(Integer.valueOf(form.getDayCount()));
 			systemParameter.setGoldFlg(form.getGoldFlg());
 			systemParameter.setGoldMax(getValue(form.getGoldMax().replace(",", "")));
 			systemParameter.setGoldMin(getValue(form.getGoldMin().replace(",", "")));

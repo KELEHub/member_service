@@ -1,7 +1,7 @@
 package com.member.form.back;
 
 public class ParameterForm {
-	private String dayCount;
+//	private String dayCount;
 	private String goldFlg;
 	private String goldMax;
 	private String goldMin;
@@ -13,12 +13,12 @@ public class ParameterForm {
 	private String glbTake;
 	private String scoreInMin;
 	private String scoreInTake;
-	public String getDayCount() {
-		return dayCount;
-	}
-	public void setDayCount(String dayCount) {
-		this.dayCount = dayCount;
-	}
+//	public String getDayCount() {
+//		return dayCount;
+//	}
+//	public void setDayCount(String dayCount) {
+//		this.dayCount = dayCount;
+//	}
 	public String getGoldFlg() {
 		return goldFlg;
 	}

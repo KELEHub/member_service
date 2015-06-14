@@ -11,14 +11,7 @@
         </div>
         <div class="widget-content nopadding">
           <form class="form-horizontal" action="/ParameterController/set.do" method="POST" id="parameterSetForm">
-            <div class="control-group">
-              <label class="control-label">天数:</label>
-              <div class="controls">
-                <div class="input-prepend"> <span class="add-on">#</span>
-                  <input type="text" name="dayCount" value="${bean.dayCount}" class="span11">
-                </div>
-              </div>
-            </div>
+
             <div class="control-group">
               <label class="control-label">是否提现:</label>
               <div class="controls">
