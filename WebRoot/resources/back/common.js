@@ -168,6 +168,12 @@ function showWithDrawalsDetail(memberId){
 	showDynamicDialog("/withdrawals/showWithDrawalsDetail.do", reqObj, "showWithDrawalsDetail");
 }
 
+function showChargeDetail(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/charge/showChargeDetail.do", reqObj, "showChargeDetail");
+}
+
 function showOrderListDetail(id){
 	var reqObj = {};
 	reqObj["id"] = id;
@@ -556,6 +562,24 @@ function agreewithdrawals(id){
 			ajaxRequestForFormGetJsp(formid);
 			resetTable();
 		});
+	}
+}
+
+function agreecharge(id){
+	
+	if (window.confirm('您确定充值么？')) {
+		var reqObj={};
+		reqObj["id"]=id;
+		var result = ajaxRequestForJsonGetJson("/charge/agreeCharge.do", reqObj);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
 	}
 }
 
