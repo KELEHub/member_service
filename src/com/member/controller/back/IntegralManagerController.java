@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.AccountDetails;
+import com.member.entity.RepeatedMoneyStatistics;
 import com.member.form.back.UserEditeForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.IntegralManagerService;
@@ -30,11 +31,11 @@ public class IntegralManagerController {
 		return "back/integralManager/integralIssueHistory";
 	}
 	
-	@RequestMapping(value = "/showIntegralIssueManager",method = RequestMethod.POST)
-	public String showIntegralIssueManager(Model model){
-		List<AccountDetails> result = integralManagerService.getIntegralHistory();
+	@RequestMapping(value = "/showRangeIntegralIssueManager",method = RequestMethod.POST)
+	public String showRangeIntegralIssueManager(Model model){
+		List<RepeatedMoneyStatistics> result = integralManagerService.getAvailableRangeIntegral();
 		model.addAttribute("result", result);
-		return "back/integralManager/integralIssue";
+		return "back/integralManager/rangeIssue";
 	}
 	
 //	@RequestMapping(value = "/queryStatistics",method = RequestMethod.POST)
