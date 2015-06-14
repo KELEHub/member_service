@@ -852,11 +852,11 @@ function rangeIntegralIssue(year,month){
 		var reqObj = {};
 		reqObj["year"] = year;
 		reqObj["month"] = month;
-		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckSuccess.do",reqObj);
+		var result = ajaxRequestForJsonGetJson("/IntegralManagerController/showRangeIntegralIssueManager.do",reqObj);
 		if (result.success) {
 			alert(result.msg);
 			$('#myModal').modal('hide');
-			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
+			$("#content-header").find("form[id='rangeIntegralForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 			});
