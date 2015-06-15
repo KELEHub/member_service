@@ -5,7 +5,7 @@
 <%
 	Calendar c = Calendar.getInstance();
 	int year = c.get(Calendar.YEAR);
-	int month = c.get(Calendar.MONTH)+1;
+	int month = c.get(Calendar.MONTH) + 1;
 %>
  <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
@@ -23,15 +23,25 @@
 		<form class="form-horizontal"
 			action="/IntegralManagerController/doRangeIssue.do" method="POST"
 			id="rangeIssueDateForm">
-			<div class="control-group" style="float: left; margin-left: 10px;">
+			<div class="control-group">
 				<label class="control-label">
 					年:
 				</label>
-				<input id="year_input" type="text" value="<%= year %>" name="year">
+				<div class="controls">
+					<div class="input-append">
+						<input type="text" name="year" value="<%=year%>">
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
 				<label class="control-label">
 					月:
 				</label>
-				<input id="month_input" type="text" value="<%= month %>" name="month">
+				<div class="controls">
+					<div class="input-append">
+						<input type="text" name="month" value="<%=month%>">
+					</div>
+				</div>
 			</div>
 		</form>
 		<div class="form-actions">
