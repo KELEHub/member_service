@@ -3,7 +3,7 @@ package com.member.services.back;
 import java.util.List;
 
 import com.member.entity.AccountDetails;
-import com.member.entity.RepeatedMoneyStatistics;
+import com.member.form.back.RangeIssueForm;
 
 public interface IntegralManagerService {
 
@@ -11,7 +11,7 @@ public interface IntegralManagerService {
 
 	List<AccountDetails> getIntegralHistoryByUserName(String userName);
 
-	List<RepeatedMoneyStatistics> getAvailableRangeIntegral();
+	List<RangeIssueForm> getAvailableRangeIntegral(int serialNumber);
 	
 	List<AccountDetails> getIntegralHistoryPoints();
 	

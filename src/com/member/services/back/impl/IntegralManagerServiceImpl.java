@@ -1,7 +1,9 @@
 package com.member.services.back.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,7 +14,7 @@ import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.HqlIntegralManager;
 import com.member.dao.IntegralManagerDao;
 import com.member.entity.AccountDetails;
-import com.member.entity.RepeatedMoneyStatistics;
+import com.member.form.back.RangeIssueForm;
 import com.member.services.back.IntegralManagerService;
 
 @SuppressWarnings("unchecked")
@@ -39,9 +41,21 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<RepeatedMoneyStatistics> getAvailableRangeIntegral() {
-		return (List<RepeatedMoneyStatistics>) integralManagerDao.queryByHql(
-				HqlIntegralManager.getIntegralHistoryByUserName);
+	public List<RangeIssueForm> getAvailableRangeIntegral(int serialNumber) {
+		List<Object> list = (List<Object>) integralManagerDao.queryByHql(
+				HqlIntegralManager.getRangeIssueBySerialNumber,serialNumber);
+		if (list!=null &&list.size()>0){
+			List<RangeIssueForm> rangeList = new ArrayList<RangeIssueForm>();
+			for(Object obj : list){
+				RangeIssueForm rif = new RangeIssueForm();
+				rif.setUserNumber(((Map<String, String>)obj).get("declarationBenefitNumber"));
+				long count = ((Map<String, Long>)obj).get("countNumber");
+				rif.setAvailableInt(new BigDecimal(count*20));
+				rangeList.add(rif);
+			}
+			return rangeList;
+		}
+		 return null;
 	}
 
 	@Override

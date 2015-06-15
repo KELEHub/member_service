@@ -15,7 +15,9 @@ import com.member.beans.back.enumData.ProjectEnum;
 import com.member.entity.AccountDetails;
 import com.member.entity.RepeatedMoneyStatistics;
 import com.member.form.back.IntegralHistoryForm;
+import com.member.form.back.RangeIssueForm;
 import com.member.services.back.IntegralManagerService;
+import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/IntegralManagerController")
@@ -50,7 +52,7 @@ public class IntegralManagerController {
 	
 	@RequestMapping(value = "/showRangeIntegralIssueManager",method = RequestMethod.POST)
 	public String showRangeIntegralIssueManager(Model model){
-		List<RepeatedMoneyStatistics> result = integralManagerService.getAvailableRangeIntegral();
+		List<RangeIssueForm> result = integralManagerService.getAvailableRangeIntegral(CommonUtil.getCountNumber());
 		model.addAttribute("result", result);
 		return "back/integralManager/rangeIssue";
 	}
