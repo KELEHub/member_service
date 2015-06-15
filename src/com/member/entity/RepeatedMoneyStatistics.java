@@ -1,6 +1,5 @@
 package com.member.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,29 +23,33 @@ public class RepeatedMoneyStatistics {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	/**上级报单中心表ID*/
-	@Column(name="superiorServiceId")
-	private Integer superiorServiceId;
+	/**报单人ID*/
+	@Column(name="declarationId")
+	private Integer declarationId;
 	
-	/**上级报单中心登录ID */
-	@Column(name="superiorServiceNumber")
-	private String superiorServiceNumber;
+	/**报单人登录ID */
+	@Column(name="declarationNumber")
+	private String declarationNumber;
 	
-	/**下级报单中心表ID*/
-	@Column(name="juniorServiceId")
-	private Integer juniorServiceId;
+	/**报单受益人ID*/
+	@Column(name="declarationBenefitId")
+	private Integer declarationBenefitId;
 	
-	/**下级报单中心登录ID */
-	@Column(name="juniorServiceNumber")
-	private String juniorServiceNumber;
+	/**报单受益人登录ID */
+	@Column(name="declarationBenefitNumber")
+	private String declarationBenefitNumber;
 	
-	/**服务积分数量 */
-	@Column(name="scoreService",columnDefinition="NUMERIC(20,2) default 0")
-	private BigDecimal scoreService;
+	/**流水号 */
+	@Column(name="serialNumber")
+	private Integer serialNumber;
 	
 	/**日期类别统计 */
 	@Column(name="dateNumber")
 	private String dateNumber;
+	
+	/**状态，0为未发放，1为已发放*/
+	@Column(name="state",columnDefinition="INT default 0")
+	private Integer state;
 	
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
@@ -60,44 +63,44 @@ public class RepeatedMoneyStatistics {
 		this.id = id;
 	}
 
-	public Integer getSuperiorServiceId() {
-		return superiorServiceId;
+	public Integer getDeclarationId() {
+		return declarationId;
 	}
 
-	public void setSuperiorServiceId(Integer superiorServiceId) {
-		this.superiorServiceId = superiorServiceId;
+	public void setDeclarationId(Integer declarationId) {
+		this.declarationId = declarationId;
 	}
 
-	public String getSuperiorServiceNumber() {
-		return superiorServiceNumber;
+	public String getDeclarationNumber() {
+		return declarationNumber;
 	}
 
-	public void setSuperiorServiceNumber(String superiorServiceNumber) {
-		this.superiorServiceNumber = superiorServiceNumber;
+	public void setDeclarationNumber(String declarationNumber) {
+		this.declarationNumber = declarationNumber;
 	}
 
-	public Integer getJuniorServiceId() {
-		return juniorServiceId;
+	public Integer getDeclarationBenefitId() {
+		return declarationBenefitId;
 	}
 
-	public void setJuniorServiceId(Integer juniorServiceId) {
-		this.juniorServiceId = juniorServiceId;
+	public void setDeclarationBenefitId(Integer declarationBenefitId) {
+		this.declarationBenefitId = declarationBenefitId;
 	}
 
-	public String getJuniorServiceNumber() {
-		return juniorServiceNumber;
+	public String getDeclarationBenefitNumber() {
+		return declarationBenefitNumber;
 	}
 
-	public void setJuniorServiceNumber(String juniorServiceNumber) {
-		this.juniorServiceNumber = juniorServiceNumber;
+	public void setDeclarationBenefitNumber(String declarationBenefitNumber) {
+		this.declarationBenefitNumber = declarationBenefitNumber;
 	}
 
-	public BigDecimal getScoreService() {
-		return scoreService;
+	public Integer getSerialNumber() {
+		return serialNumber;
 	}
 
-	public void setScoreService(BigDecimal scoreService) {
-		this.scoreService = scoreService;
+	public void setSerialNumber(Integer serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	public String getDateNumber() {
@@ -114,6 +117,14 @@ public class RepeatedMoneyStatistics {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 	
 }
