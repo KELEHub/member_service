@@ -24,7 +24,7 @@ public class IntegralManagerController {
 	@Resource(name = "IntegralManagerServiceImpl")
 	public IntegralManagerService integralManagerService;
 
-	@RequestMapping(value = {"/showIntegralHistory","/queryStatistics"},method = RequestMethod.POST)
+	@RequestMapping(value = {"/showIntegralHistory"},method = RequestMethod.POST)
 	public String showIntegralHistory(Model model){
 		List<AccountDetails> list = integralManagerService.getIntegralHistoryPoints();
 		List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
@@ -88,15 +88,5 @@ public class IntegralManagerController {
 		}
 
 	}
-	
-//	@RequestMapping(value = "/queryStatistics",method = RequestMethod.POST)
-//	@ResponseBody
-//	public BaseResult<Void> queryStatistics(@RequestBody UserEditeForm form,Model model){
-//		BaseResult<Void> result = new BaseResult<Void>();
-//		List<AccountDetails> detailsList = integralManagerService.getIntegralHistoryByUserName(form.getUserNumber());
-//		model.addAttribute("result", detailsList);
-//		result.setSuccess(true);
-//		return result;
-//	}
 	
 }

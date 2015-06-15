@@ -839,21 +839,6 @@ function formatter(o, blur) {
 	o.value = fmoney(o.value,2);
 }
 
-function searchIntegralHistory(userNumber) {
-	var reqObj = {};
-	reqObj["userNumber"] = userNumber;
-	var result = ajaxRequestForJsonGetJson(
-			"/IntegralManagerController/queryStatistics.do", reqObj);
-	if (result.success) {
-//		$('#myModal').modal('hide');
-//		$("#content-header").find("form[id='integralHistoryForm']").each(
-//				function() {
-//					var formid = this.id;
-//					ajaxRequestForFormGetJsp(formid);
-//				});
-	}
-}
-
 function rangeIntegralIssue(year,month){
 	if (window.confirm('您确定发放'+year+'年'+month+'月'+'？')) {
 		var reqObj = {};
