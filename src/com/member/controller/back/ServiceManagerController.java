@@ -133,11 +133,12 @@ public class ServiceManagerController {
 		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
 		moneyStatistics.setCreateTime(new Date());
 		moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
-		moneyStatistics.setSuperiorServiceId(superiorInfo.getId());
-		moneyStatistics.setSuperiorServiceNumber(superiorInfo.getNumber());
-		moneyStatistics.setJuniorServiceId(juniorInfo.getId());
-		moneyStatistics.setJuniorServiceNumber(juniorInfo.getNumber());
-		moneyStatistics.setScoreService(new BigDecimal(50));
+		moneyStatistics.setDeclarationId(superiorInfo.getId());
+		moneyStatistics.setDeclarationNumber(superiorInfo.getNumber());
+		moneyStatistics.setDeclarationBenefitId(superiorInfo.getLeaderServiceId());
+		moneyStatistics.setDeclarationBenefitNumber(superiorInfo.getLeaderServiceNumber());
+		moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
+		moneyStatistics.setState(0);
 		serviceManagerService.saveOrUpdate(moneyStatistics);
 		
 		result.setMsg("操作成功.");
