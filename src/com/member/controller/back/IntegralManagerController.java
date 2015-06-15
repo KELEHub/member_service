@@ -1,6 +1,8 @@
 package com.member.controller.back;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.entity.AccountDetails;
-import com.member.entity.RepeatedMoneyStatistics;
+import com.member.entity.Information;
 import com.member.form.back.IntegralHistoryForm;
 import com.member.form.back.RangeIssueForm;
 import com.member.services.back.IntegralManagerService;
@@ -61,7 +64,6 @@ public class IntegralManagerController {
 	@RequestMapping(value = "/serch", method = RequestMethod.POST)
 	public String serch(@RequestBody IntegralHistoryForm form, Model model) {
 		try {
-
 			List<AccountDetails> list  = integralManagerService.getIntegralHistoryPointsByNumber(form
 					.getUserNumber());
 			List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
@@ -81,14 +83,68 @@ public class IntegralManagerController {
 					result.add(ifForm);
 				}
 			}
-
 			model.addAttribute("result", result);
 			return "back/integralManager/integralIssueHistory";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "back/integralManager/integralIssueHistory";
 		}
-
+	}
+	
+	@RequestMapping(value = "/doRangeIssue", method = RequestMethod.POST)
+	public String doRangeIssue(@RequestBody RangeIssueForm form, Model model) {
+		try {
+			String year = form.getYear();
+			String month = form.getMonth();
+			int serialNumber = 0;
+			if(month.length()==1){
+				serialNumber = Integer.parseInt(year+"0"+month);
+			}else{
+				serialNumber = Integer.parseInt(year+month);
+			}
+			List<RangeIssueForm> list = integralManagerService.getAvailableRangeIntegral(serialNumber);
+			if(list!=null &&list.size()>0){
+				for (RangeIssueForm rif : list){
+					//获取，更新information表
+					Information info = integralManagerService.getInformationById(rif.getUserId());
+					info.setRepeatedMoney(info.getRepeatedMoney().add(rif.getAvailableInt()));
+					info.setRepeatedAccumulative(info.getRepeatedAccumulative().add(rif.getAvailableInt()));
+					info.setShoppingMoney(info.getShoppingMoney().add(rif.getAvailableInt()));
+					info.setShoppingAccumulative(info.getShoppingAccumulative().add(rif.getAvailableInt()));
+					
+					//在AccountDetails表中添加一条纪律
+					AccountDetails accountDetail = new AccountDetails();
+					accountDetail.setKindData(KindDataEnum.points);
+					/**日期类别统计 */
+					accountDetail.setDateNumber(CommonUtil.getDateNumber());
+					/**项目 */
+					accountDetail.setProject(ProjectEnum.servicepointsformuch);
+					/**积分余额 */
+					accountDetail.setPointbalance(info.getRepeatedMoney());
+					/**葛粮币余额 */
+					accountDetail.setGoldmoneybalance(info.getCrmMoney());
+					/**收入 */
+					accountDetail.setIncome(rif.getAvailableInt());
+					/**支出 */
+					accountDetail.setPay(new BigDecimal(0));
+					/**备注 */
+					accountDetail.setRedmin("极差积分发放");
+					/**用户ID */
+					accountDetail.setUserId(info.getId());
+					/**用户登录ID */
+					accountDetail.setUserNumber(info.getNumber());
+					accountDetail.setCreateTime(new Date());
+					
+					//更新RepeatedMoneyStatistics表
+					
+					integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserId(), serialNumber);
+				}
+			}
+			return "back/integralManager/rangeIssue";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "back/integralManager/rangeIssue";
+		}
 	}
 	
 }

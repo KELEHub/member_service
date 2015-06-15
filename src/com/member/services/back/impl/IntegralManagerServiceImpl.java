@@ -8,12 +8,15 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.HqlIntegralManager;
+import com.member.dao.HqlServiceManager;
 import com.member.dao.IntegralManagerDao;
 import com.member.entity.AccountDetails;
+import com.member.entity.Information;
 import com.member.form.back.RangeIssueForm;
 import com.member.services.back.IntegralManagerService;
 
@@ -23,7 +26,6 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 
 	@Resource(name = "IntegralManagerDaoImpl")
     IntegralManagerDao integralManagerDao;
-	
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -48,6 +50,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 			List<RangeIssueForm> rangeList = new ArrayList<RangeIssueForm>();
 			for(Object obj : list){
 				RangeIssueForm rif = new RangeIssueForm();
+				rif.setUserId(((Map<String, Integer>)obj).get("declarationBenefitId"));
 				rif.setUserNumber(((Map<String, String>)obj).get("declarationBenefitNumber"));
 				long count = ((Map<String, Long>)obj).get("countNumber");
 				rif.setAvailableInt(new BigDecimal(count*20));
@@ -59,6 +62,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<AccountDetails> getIntegralHistoryPoints() {
 		String hql = "from AccountDetails t where t.project=? or t.project=?";
 		List arguments = new ArrayList();
@@ -72,6 +76,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<AccountDetails> getIntegralHistoryPointsByNumber(String number) {
 		String hql = "from AccountDetails t where (t.project=? or t.project=?) and t.userNumber=?";
 		List arguments = new ArrayList();
@@ -83,5 +88,29 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 			return result;
 		}
 		return null;
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Information getInformationById(Integer id) {
+		List<Information> result = (List<Information>) integralManagerDao.queryByHql(
+				HqlServiceManager.getServiceById, id);
+		if(result!=null){
+			return (Information) result.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveOrUpdateRelation(Information info,AccountDetails ad,Integer BenefitId,Integer serialNumber) {
+		integralManagerDao.saveOrUpdate(info);
+		integralManagerDao.saveOrUpdate(ad);
+		String hql = "update RepeatedMoneyStatistics set state=1 where declarationBenefitId=? and serialNumber<?";
+		List<Object> list = new ArrayList<Object>();
+		list.add(BenefitId);
+		list.add(serialNumber);
+		integralManagerDao.executeHqlUpdate(hql, list);
 	}
 }
