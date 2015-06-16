@@ -10,5 +10,9 @@ import com.member.helper.dao.BaseDao;
   public List<String> getUserDataPermissonCode(Integer userId);
  
   public List<MenuBean> getMenuByUserId(Integer userId);
+  
+  public List<MenuBean> getFrontMenuAll();
+  
+  public List<MenuBean> getFrontMenuBySome();
 
 }
