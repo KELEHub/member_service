@@ -10,5 +10,9 @@ import com.member.entity.NmsUser;
 	 public List<MenuBean> getMenuByUserId(Integer userId);
 	 
 	 public List<NmsUser> getNmsUserAll();
+	 
+	 public List<MenuBean> getFrontMenuAll();
+	  
+	  public List<MenuBean> getFrontMenuBySome();
 
 }
