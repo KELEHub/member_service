@@ -33,6 +33,16 @@ public class NmUserServiceImpl implements NmUserService{
 		List<NmsUser> list = (List<NmsUser>)nmsUserDao.queryByHql(HqlUserRole.getNmsUserAll);
 		return list;
 	}
+
+	@Override
+	public List<MenuBean> getFrontMenuAll() {
+		return nmsUserDao.getFrontMenuAll();
+	}
+
+	@Override
+	public List<MenuBean> getFrontMenuBySome() {
+		return nmsUserDao.getFrontMenuBySome();
+	}
 	
 
 }
