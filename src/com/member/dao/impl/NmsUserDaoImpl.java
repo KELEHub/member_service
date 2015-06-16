@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.IntegerType;
@@ -58,5 +57,45 @@ import com.member.helper.dao.impl.BaseDaoImpl;
 		return list;
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<MenuBean> getFrontMenuAll() {
+		String sql="select "
+				+ " mm.id as id,"
+				+ " mm.menu_nm as menunm,"
+				+ " mm.menu_url as menuurl,"
+				+ " mm.p_menu_id as pid"
+				+ " from member_menu mm";
+		Session session = getCurrentSession();
+		Query q = session.createSQLQuery(sql)
+				.addScalar("id", IntegerType.INSTANCE)
+				.addScalar("menunm", org.hibernate.type.StringType.INSTANCE)
+				.addScalar("menuurl", org.hibernate.type.StringType.INSTANCE)
+				.addScalar("pid", IntegerType.INSTANCE)
+				.setResultTransformer(Transformers.aliasToBean(MenuBean.class));
+		List<MenuBean> list = q.list();
+		return list;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<MenuBean> getFrontMenuBySome() {
+		String sql="select "
+			+ " mm.id as id,"
+			+ " mm.menu_nm as menunm,"
+			+ " mm.menu_url as menuurl,"
+			+ " mm.p_menu_id as pid"
+			+ " from member_menu mm where mm.menu_status='0'";
+		Session session = getCurrentSession();
+		Query q = session.createSQLQuery(sql)
+				.addScalar("id", IntegerType.INSTANCE)
+				.addScalar("menunm", org.hibernate.type.StringType.INSTANCE)
+				.addScalar("menuurl", org.hibernate.type.StringType.INSTANCE)
+				.addScalar("pid", IntegerType.INSTANCE)
+				.setResultTransformer(Transformers.aliasToBean(MenuBean.class));
+		List<MenuBean> list = q.list();
+		return list;
+	}
+	
 	
 }
