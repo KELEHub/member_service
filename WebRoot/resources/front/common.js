@@ -843,3 +843,8 @@ function rangeIntegralIssue(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 	resetTable();
 }
+
+function viewLatestNews(arg_title,arg_content){
+	document.getElementById("viewLatestNews_title").value = arg_title;
+	document.getElementById("viewLatestNews_content").value = arg_content;
+}
