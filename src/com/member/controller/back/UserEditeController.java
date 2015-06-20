@@ -115,6 +115,7 @@ public class UserEditeController {
 				shopingDetails.setUserNumber(form.getUserNumber());
 				shopingDetails.setCreateTime(new Date());
 				shopingDetails.setKindData(KindDataEnum.points);
+				shopingDetails.setCountNumber(CommonUtil.getCountNumber());
 				
 				/**日期类别统计 */
 				shopingDetails.setDateNumber(CommonUtil.getDateNumber());
@@ -149,6 +150,7 @@ public class UserEditeController {
 				crmMoneyDetails.setUserNumber(form.getUserNumber());
 				crmMoneyDetails.setCreateTime(new Date());
 				crmMoneyDetails.setKindData(KindDataEnum.goldmoney);
+				crmMoneyDetails.setCountNumber(CommonUtil.getCountNumber());
 				
 				/**日期类别统计 */
 				crmMoneyDetails.setDateNumber(CommonUtil.getDateNumber());
