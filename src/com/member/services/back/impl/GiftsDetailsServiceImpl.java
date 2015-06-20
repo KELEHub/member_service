@@ -85,6 +85,7 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 		/** 日期类别统计 */
 		shopingDetails.setDateNumber(ss.getDateNumber());
 		shopingDetails.setProject(ProjectEnum.fromgifts);
+		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
 		/** 积分余额 */
 		shopingDetails.setPointbalance(shoppingMoney);
 		/** 葛粮币余额 */
