@@ -18,5 +18,8 @@ public enum ProjectEnum {
 	/** 积分提现*/
 	pointcash,
 	/** 礼包发放*/
-	fromgifts;
+	fromgifts,
+	/** 激活会员*/
+	activateMember;
+	
 }
