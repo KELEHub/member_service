@@ -12,4 +12,6 @@ public class HqlServiceManager {
 		"from NmsUser t where t.userName=?  and t.status>=0";
 	public final static String getRecommendRelation=
 		"from Information where recommendNumber=?";
+	public final static String getApplyQualification=
+		"from Information where leaderServiceNumber=?";
 }

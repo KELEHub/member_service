@@ -16,12 +16,12 @@ import com.member.services.front.InboxService;
 public class InboxServiceImpl implements InboxService {
 
 	@Resource(name = "InboxDaoImpl")
-    InboxDao InboxDao;
+    private InboxDao inboxDao;
 	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Tickling> getInbox(String memberNumber) {
-		return (List<Tickling>) InboxDao.queryByHql(
+		return (List<Tickling>) inboxDao.queryByHql(
 				HqlTicklingManager.getTicklingByMemberNumber,memberNumber);
 	}
 }
