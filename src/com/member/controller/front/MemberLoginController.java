@@ -3,6 +3,7 @@ package com.member.controller.front;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public class MemberLoginController {
 			    {
 			    	session.removeAttribute("loginReturnWarnMsg");
 			    }
-			    Map<String,Object> userMap= FrameObjectUtil.convertObjctToMap(info);
+			    Map<String,Object> userMap= new HashMap<String, Object>();
 			    userMap.remove("userPassword");
 			    userMap.put("username", userName);
 				userMap.put(FrameConfig.userLastHeartbeatTime, new Date());
