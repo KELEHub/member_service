@@ -134,6 +134,7 @@ public class BankRechargeController {
 			shopingDetails.setRedmin("充值");
 			/** 用户ID */
 			shopingDetails.setUserId(info.getId());
+			shopingDetails.setCountNumber(CommonUtil.getCountNumber());
 			institutionService.savaOrUpdate(shopingDetails);
 
 			info.setCrmMoney(addMoney);
