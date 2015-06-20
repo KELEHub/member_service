@@ -22,7 +22,9 @@ public class LatestNewsController {
 	@RequestMapping(value = "/showLatestNews",method = RequestMethod.POST)
 	public String showLatestNews(Model model){
 		List<Notice> result = latestNewsService.getLatestNewsList();
-		model.addAttribute("result", result);
+		if(result!=null){
+			model.addAttribute("result", result);
+		}
 		return "front/memberNews/LatestNews";
 	}
 }
