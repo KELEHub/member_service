@@ -76,6 +76,18 @@ public class AccountDetails {
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
 	private Date createTime;
+	
+	public AccountDetails(BigDecimal income, BigDecimal pay,Integer countNumber) {
+		super();
+		this.income = income;
+		this.pay = pay;
+		this.countNumber=countNumber;
+		
+	}
+	
+	public AccountDetails() {
+		
+	}
 
 	public Integer getId() {
 		return id;
