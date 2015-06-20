@@ -90,7 +90,7 @@ public class MemberLoginController {
 			    }
 			    Map<String,Object> userMap= FrameObjectUtil.convertObjctToMap(info);
 			    userMap.remove("userPassword");
-				
+			    userMap.put("username", userName);
 				userMap.put(FrameConfig.userLastHeartbeatTime, new Date());
 			    session.setAttribute("logonUser", userMap);
 			    
