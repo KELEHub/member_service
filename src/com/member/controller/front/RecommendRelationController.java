@@ -11,23 +11,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.member.entity.Tickling;
-import com.member.services.front.InboxService;
+import com.member.entity.Information;
+import com.member.services.front.RecommendRelationService;
 
 @Controller
-@RequestMapping(value = "/InboxController")
-public class InboxController {
+@RequestMapping(value = "/RecommendRelationController")
+public class RecommendRelationController {
 
-	@Resource(name = "InboxServiceImpl")
-	public InboxService inboxService;
+	@Resource(name = "RecommendRelationServiceImpl")
+	public RecommendRelationService recommendRelationService;
 
-	@RequestMapping(value = "/showInbox",method = RequestMethod.POST)
-	public String showInbox(Model model,HttpSession sesison){
+	@RequestMapping(value = "/showRecommendRelation",method = RequestMethod.POST)
+	public String showRecommendRelation(Model model,HttpSession sesison){
 		Object logonUserO = sesison.getAttribute("logonUser");
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		String userNaemO = (String) logonUserMap.get("username");
-		List<Tickling> result = inboxService.getInbox(userNaemO);
+		List<Information> result = recommendRelationService.getRecommendRelation(userNaemO);
 		model.addAttribute("result", result);
-		return "front/memberNews/Inbox";
+		return "front/salesPromotion/recommendRelation";
 	}
 }
