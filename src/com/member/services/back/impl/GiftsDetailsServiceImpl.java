@@ -95,7 +95,7 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 		shopingDetails.setPay(new BigDecimal(0));
 
 		/** 备注 */
-		shopingDetails.setRedmin("礼包释放");
+		shopingDetails.setRedmin(ss.getName()+"的第"+ss.getPointNumber()+"期次礼包释放");
 		/** 用户ID */
 		shopingDetails.setUserId(information.getId());
 		giftsDao.saveOrUpdate(information);
