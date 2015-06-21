@@ -110,6 +110,37 @@ function ajaxRequestForFormGetJsp(sFormId){
 	});
 }
 
+
+
+function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+				$("#content").empty();
+				$("#content").html(data);
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
+
+
+
 $.fn.serializeJson=function(){  
     var serializeObj={};  
     var disabled = $(this).find(':disabled');
@@ -131,288 +162,40 @@ $.fn.serializeJson=function(){
     return serializeObj;  
 };
 
-function saveRole(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
 
-function searchMembers(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
 
-function searchGifts(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
 
-function doMemberShowDetail(memberId){
-	var reqObj = {};
-	reqObj["id"] = memberId;
-	showDynamicDialog("/membermanage/showMemberDetails.do", reqObj, "showmemberdetail");
-	region_init("select_province","select_city","select_area");
-	region_init("select_province1","select_city1","select_area1");
-}
 
-function showWithDrawalsDetail(memberId){
-	var reqObj = {};
-	reqObj["id"] = memberId;
-	showDynamicDialog("/withdrawals/showWithDrawalsDetail.do", reqObj, "showWithDrawalsDetail");
-}
-
-function showChargeDetail(memberId){
-	var reqObj = {};
-	reqObj["id"] = memberId;
-	showDynamicDialog("/charge/showChargeDetail.do", reqObj, "showChargeDetail");
-}
-
-function showOrderListDetail(id){
-	var reqObj = {};
-	reqObj["id"] = id;
-	showDynamicDialog("/orderlist/getOrderListDetail.do", reqObj, "showOrderListDetail");
-}
-
-function deliveryOrder(id){
-	if (window.confirm('您确定发货吗？')) {
+function selectData(){
 		var reqObj = {};
-		reqObj["id"] = id;
-		var result = ajaxRequestForJsonGetJson("/orderlist/deliveryOrder.do",reqObj);
-		if (result.success) {
-			alert(result.msg);
-			$('#myModal').modal('hide');
-			$("#content-header").find("form").each(function() {
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-			});
-		}
-	}
-}
-
-function searchOrderList(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
-
-function saveMemberDetail(sFormId) {
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if (result.success) {
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function() {
-			var formid = this.id;
-			ajaxRequestForFormGetJsp(formid);
-			resetTable();
-		});
-	}
-}
-
-function doMemberLock(memberId){
-	if (window.confirm('您确定要锁定该用户么？')) {
-		var reqObj = {};
-		reqObj["id"] = memberId;
-		var result = ajaxRequestForJsonGetJson("/membermanage/doMemberLock.do",
+		var toUserNumber=$("#toUserNumber").attr("value");
+		reqObj["toUserNumber"] = toUserNumber;
+		var result = ajaxRequestForJsonGetJson("/TransferController/select.do",
 				reqObj);
-		if (result.success) {
-			alert(result.msg);
-		}
-	}
-}
-
-function doResetPwd(memberId){
-	if (window.confirm('您确定要重置该会员密码么？')) {
-		var reqObj = {};
-		reqObj["id"] = memberId;
-		var result = ajaxRequestForJsonGetJson("/membermanage/doResetPwd.do",
-				reqObj);
-		if (result.success) {
-			alert(result.msg);
-		}
-	}
-}
-
-function doDeleteMember(memberId){
-	if (window.confirm('您确定要删除当前用户么？')) {
-		var reqObj = {};
-		reqObj["id"] = memberId;
-		var result = ajaxRequestForJsonGetJson("/membermanage/deleteMember.do",reqObj);
-		if (result.success) {
-			alert(result.msg);
-			$('#myModal').modal('hide');
-			$("#content-header").find("form").each(function() {
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-			});
-		}
-	}
-}
-
-function saveParameter(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-	}
-}
-
-function saveLimeteDeclaration(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchLimiteForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-		});
-	}
-}
-
-function saveNotice(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form[id='noticeManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
-
-function saveTickling(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form[id='notdoTicklingManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
-
-function saveCreateUser(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchUserForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
-
-function serchUser(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-}
-
-function serchPointHistory(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
-
-
-
-function saveBank(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchBankForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
-
-
-
-function deleteBank(bankname){
-	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
-	 if(event.returnValue){
-		 var reqObj={};
-	   reqObj["bankName"]=bankname;
-      var result = ajaxRequestForJsonGetJson("/BankController/delete.do", reqObj);
-	  if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchBankForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-	 }
-	
-}
-
-
-function sendGifts(sFormId){
-	if(window.confirm('您确定要发送积分么？')){
-		var result = ajaxRequestForFormGetJson(sFormId);
 		if(result.success){
-		     alert(result.msg);
-		     $("#content-header").find("form[id='initGiftsForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-      }
-	}
-	
-}
-
-function editeDetail(giftsId){
-	var reqObj = {};
-	reqObj["id"] = giftsId;
-	showDynamicDialog("/GiftsDetailsController/showDialog.do", reqObj, "editeGiftsDetails");
-}
-
-function saveGiftsDetail(sFormId) {
-	if(window.confirm('您确定要修改么，修改后的数据不可恢复？')){
-	  var result = ajaxRequestForFormGetJson(sFormId);
-	  if (result.success) {
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function() {
-			var formid = this.id;
-			ajaxRequestForFormGetJsp(formid);
-			resetTable();
-		});
-	}else{
-		alert(result.msg);
-	}
-	}
+			var name = result.msg;
+			$("#toUserName").attr("value",name);
+		}
+		
+//		$("#content-header").find("form[id='showForm']").each(function(){
+//				var formid = this.id;
+//				ajaxRequestForFormGetJsp(formid);
+//		});
+		
 }
 
 
 
-function deleteUser(username){
-	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
-	 if(event.returnValue){
-		 var reqObj={};
-	   reqObj["username"]=username;
-      var result = ajaxRequestForJsonGetJson("/CreateUserController/delete.do", reqObj);
-	  if(result.success){
-		alert(result.msg);
-		$("#content-header").find("form[id='searchUserForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-	 }
-	
+
+
+function searchAccount(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
 }
+
+
+
+
 
 
 function showDynamicDialog(reqUrl,reqObj,dialogId){
