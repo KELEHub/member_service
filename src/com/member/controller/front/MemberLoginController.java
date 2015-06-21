@@ -71,6 +71,21 @@ public class MemberLoginController {
 				   mv.setViewName("redirect:/member_login.jsp");
 				return mv;
 			}
+			
+			if (info.getIsActivate() == 0) {
+				
+				request.getSession().setAttribute("loginReturnWarnMsg", "该账户未激活");
+				   mv.setViewName("redirect:/member_login.jsp");
+				return mv;
+			}
+            if (info.getIsLock() == 1) {
+				
+				request.getSession().setAttribute("loginReturnWarnMsg", "该账户已被锁定");
+				   mv.setViewName("redirect:/member_login.jsp");
+				return mv;
+			}
+			
+			
 			if (!info.getPassword().equals(password)) {
 				request.getSession().setAttribute("loginReturnWarnMsg",  "密码错误");
 				   mv.setViewName("redirect:/member_login.jsp");
