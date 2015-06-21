@@ -2,10 +2,12 @@ package com.member.services.front;
 
 import java.util.List;
 
-import com.member.entity.Information;
+import com.member.entity.ApplyService;
 
 public interface ApplyQualificationService {
 
-	List<Information> getApplyQualification(String leaderServiceNumber);
+	List<ApplyService> getApplyQualification(String submitNumber);
+
+	void deleteApplyQualification(Integer id);
 
 }

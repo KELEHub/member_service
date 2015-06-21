@@ -13,5 +13,5 @@ public class HqlServiceManager {
 	public final static String getRecommendRelation=
 		"from Information where recommendNumber=?";
 	public final static String getApplyQualification=
-		"from Information where leaderServiceNumber=?";
+		"from ApplyService where submitNumber=?";
 }

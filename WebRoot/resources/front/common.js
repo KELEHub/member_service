@@ -848,3 +848,19 @@ function viewLatestNews(arg_title,arg_content){
 	document.getElementById("viewLatestNews_title").value = arg_title;
 	document.getElementById("viewLatestNews_content").value = arg_content;
 }
+
+function deleteApplyQualification(applyId){
+	if (window.confirm('您确定删除该申请？')) {
+		var reqObj = {};
+		reqObj["id"] = applyId;
+		var result = ajaxRequestForJsonGetJson("/ApplyQualificationController/deleteApplyQualification.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='applyQualificationForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
