@@ -15,29 +15,35 @@
 					<span class="icon"><i class="icon-th"></i></span>
 					<h5>申请资格</h5>
 				</div>
+				<input type="hidden" class="span11" id="applyMember_applyId">
 				<div class="widget-content nopadding">
-					<form action="/NoticeManagerController/releaseNotice.do"
-						method="post" id="releaseNoticeForm" class="form-horizontal">
+					<form class="form-horizontal"
+						action="/ApplyQualificationController/queryMemberInfo.do" method="POST"
+						id="applyMemberNumberForm">
 						<div class="control-group">
-							<label class="control-label">
-								申请会员账号:
-							</label>
+							<label class="control-label">申请会员账号:</label>
 							<div class="controls">
-								<input type="text" class="span11" name="title" />
-							</div>
-							<div class="form-actions">
-								<button type="submit" class="btn btn-success"
-									onclick="saveNotice('releaseNoticeForm')">
-									查看
-								</button>
+								<div class="input-append">
+									<input type="text" name="applyNumber" class="span11" id="applyMember_applyNumber">
+								</div>
 							</div>
 						</div>
+					</form>
+					<div class="form-actions">
+						<input type="submit" value="查看"
+							onclick="queryMemberInfo('applyMemberNumberForm')"
+							class="btn btn-success">
+					</div>
+				</div>
+				<div class="widget-content nopadding">
+					<form action="/ApplyQualificationController/submitApply.do"
+						method="post" id="submitApplyForm" class="form-horizontal">
 						<div class="control-group">
 							<label class="control-label">
 								申请会员账号信息:
 							</label>
 							<div class="controls">
-								<input type="text" class="span11" name="title" />
+								<input type="text" class="span11" id="applyMember_info"/>
 							</div>
 						</div>
 						<div class="control-group">
@@ -45,7 +51,7 @@
 								推荐理由说明:
 							</label>
 							<div class="controls">
-								<textarea class="textarea_editor span12" rows="6" name="content"></textarea>
+								<textarea class="span12" rows="6" name="submitReason" id="applyMember_reason"></textarea>
 							</div>
 						</div>
 						<div class="control-group">
@@ -53,13 +59,13 @@
 								二级密码:
 							</label>
 							<div class="controls">
-								<input type="text" class="span11" name="title" />
+								<input type="password" class="span11" name="protectPassword" id="applyMember_password"/>
 							</div>
 						</div>
 					</form>
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success"
-							onclick="saveNotice('releaseNoticeForm')">
+							onclick="submitApply($('#applyMember_applyId').val(),$('#applyMember_applyNumber').val(),$('#applyMember_reason').val(),$('#applyMember_password').val())">
 							确认申请
 						</button>
 					</div>
@@ -83,7 +89,7 @@
 						<tbody>
 							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
-									<td>${item.number}</td>
+									<td>${item.applyNumber}</td>
 									<td>${item.applyDate}</td>
 									<td>${item.state}</td>
 									<td>

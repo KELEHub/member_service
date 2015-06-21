@@ -647,3 +647,33 @@ function deleteApplyQualification(applyId){
 		}
 	}
 }
+
+function queryMemberInfo(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		$("#applyMember_info").val(result.msgCode);
+		$("#applyMember_applyId").val(result.extension);
+		$("#applyMember_password").val("");
+	}else{
+		alert(result.msg);
+	}
+}
+
+function submitApply(applyId,applyNumber,submitReason,protectPassword){
+	if (window.confirm('您确定提交该申请？')) {
+		var reqObj = {};
+		reqObj["applyId"] = applyId;
+		reqObj["applyNumber"] = applyNumber;
+		reqObj["submitReason"] = submitReason;
+		reqObj["protectPassword"] = protectPassword;
+		var result = ajaxRequestForJsonGetJson("/ApplyQualificationController/submitApply.do",reqObj);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='applyQualificationForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}

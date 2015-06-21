@@ -14,4 +14,6 @@ public class HqlServiceManager {
 		"from Information where recommendNumber=?";
 	public final static String getApplyQualification=
 		"from ApplyService where submitNumber=?";
+	public final static String getServiceByNumber=
+		"from Information where number=?";
 }

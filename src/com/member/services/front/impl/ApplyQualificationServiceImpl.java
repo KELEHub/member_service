@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.member.dao.ApplyQualificationDao;
 import com.member.dao.HqlServiceManager;
 import com.member.entity.ApplyService;
+import com.member.entity.Information;
 import com.member.services.front.ApplyQualificationService;
 
 @SuppressWarnings("unchecked")
@@ -35,5 +36,18 @@ public class ApplyQualificationServiceImpl implements ApplyQualificationService 
 		List<Object> list = new ArrayList<Object>();
 		list.add(id);
 		applyQualificationDao.executeHqlUpdate(hql, list);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Information> queryMemberInfoByNumber(String number) {
+		return (List<Information>) applyQualificationDao.queryByHql(
+				HqlServiceManager.getServiceByNumber,number);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void submitApply(Object obj) {
+		applyQualificationDao.saveOrUpdate(obj);
 	}
 }

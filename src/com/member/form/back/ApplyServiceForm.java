@@ -15,6 +15,12 @@ public class ApplyServiceForm {
 	
 	/**申请会员（即普通会员）的登录ID */
 	private String applyNumber;
+	
+	/**申请原因 */
+	private String submitReason;
+	
+	/**提交会员的二级密码 */
+	private String protectPassword;
 
 	public Integer getId() {
 		return id;
@@ -54,6 +60,22 @@ public class ApplyServiceForm {
 
 	public void setApplyNumber(String applyNumber) {
 		this.applyNumber = applyNumber;
+	}
+
+	public String getSubmitReason() {
+		return submitReason;
+	}
+
+	public void setSubmitReason(String submitReason) {
+		this.submitReason = submitReason;
+	}
+
+	public String getProtectPassword() {
+		return protectPassword;
+	}
+
+	public void setProtectPassword(String protectPassword) {
+		this.protectPassword = protectPassword;
 	}
 	
 }
