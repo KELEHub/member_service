@@ -111,33 +111,31 @@ function ajaxRequestForFormGetJsp(sFormId){
 }
 
 
-
-function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
-	var bathPath=$("#basePath").val();
-	var reqUrl = $("#"+sFormId).attr('action')
-	var reqObj = $('#' + sFormId).serializeJson();
-	var reqData={};
-	if(reqObj!=null){
-		reqData = JSON.stringify(reqObj);
-	}
-	var returnData={};
-	$.ajax({
-		url : bathPath+reqUrl,
-		type : 'POST',
-		cache : false,
-		async : false,//同步 or 异步
-		data :  reqData,
-		contentType: "application/json",
-		dataType : 'json',
-		success : function(data) {
-				$("#content").empty();
-				$("#content").html(data);
-		},
-		error : function (msg) {
-			alert(msg);
-       }
-	});
-}
+//
+//function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
+//	var bathPath=$("#basePath").val();
+//	var reqData={};
+//	if(reqObj!=null){
+//		reqData = JSON.stringify(reqObj);
+//	}
+//	var returnData={};
+//	$.ajax({
+//		url : bathPath+reqUrl,
+//		type : 'POST',
+//		cache : false,
+//		async : false,//同步 or 异步
+//		data :  reqData,
+//		contentType: "application/json",
+//		dataType : 'json',
+//		success : function(data) {
+//				$("#content").empty();
+//				$("#content").html(data);
+//		},
+//		error : function (msg) {
+//			alert(msg);
+//       }
+//	});
+//}
 
 
 
@@ -183,6 +181,35 @@ function selectData(){
 //		});
 		
 }
+
+
+function savetransfer(){
+		var reqObj = {};
+		var toUserNumber=$("#toUserNumber").attr("value");
+		var toGoldMoney=$("#toGoldMoney").attr("value");
+		var payPassword=$("#payPassword").attr("value");
+		reqObj["toUserNumber"] = toUserNumber;
+		reqObj["toGoldMoney"]= toGoldMoney;
+		reqObj["payPassword"]= payPassword;
+		var result = ajaxRequestForJsonGetJson("/TransferController/transferData.do",
+				reqObj);
+		if(result.success){
+			var name = result.msg;
+			alert(name);
+			var cemoney = result.msgCode;
+			if(cemoney != null){
+				$("#goldmoneybalance").attr("value",cemoney);
+			}
+		}
+		
+//		$("#content-header").find("form[id='showForm']").each(function(){
+//				var formid = this.id;
+//				ajaxRequestForFormGetJsp(formid);
+//		});
+		
+}
+
+
 
 
 
