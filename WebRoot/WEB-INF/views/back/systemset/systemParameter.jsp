@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputError">积分转账最大金额:</label>
+              <label class="control-label" for="inputError">转账最大金额:</label>
               <div class="controls">
                 <div class="input-append">
                   <input type="text" name="scoreMax" value="${bean.scoreMax}" onfocusout="formatter(this)" class="span11">
@@ -66,7 +66,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputInfo">积分转账最小金额:</label>
+              <label class="control-label" for="inputInfo">转账最小金额:</label>
               <div class="controls">
                 <div class="input-append">
                   <input type="text" name="scoreMin" value="${bean.scoreMin}" onfocusout="formatter(this)" class="span11">
@@ -74,7 +74,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputSuccess">积分转账手续费:</label>
+              <label class="control-label" for="inputSuccess">转账手续费:</label>
                <div class="controls">
                 <div class="input-append">
                   <input type="text" name="scoreTake" value="${bean.scoreTake}" onfocusout="formatter(this)" class="span11">
