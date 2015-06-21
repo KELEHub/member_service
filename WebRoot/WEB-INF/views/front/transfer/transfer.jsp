@@ -27,9 +27,7 @@
 							</label>
 							<div class="controls">
 								<div class="input-append">
-									<label class="control-label">
-										${goldmoneybalance }
-									</label>
+									<input type="text" name="goldmoneybalance" id="goldmoneybalance" disabled="true" value="${goldmoneybalance}">
 								</div>
 							</div>
 						</div>
@@ -61,7 +59,7 @@
 							</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="toGoldMoney" value="${toGoldMoney}">
+									<input type="text" name="toGoldMoney" id="toGoldMoney" value="${toGoldMoney}">
 								</div>
 							</div>
 						</div>
@@ -71,14 +69,14 @@
 							</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="password" name="payPassword"  value="${payPassword}">
+									<input type="password" name="payPassword" id="payPassword" value="${payPassword}">
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="form-actions">
 						<input type="submit" value="确认转账"
-							onclick="saveBank('transferForm')" class="btn btn-success">
+							onclick="savetransfer()" class="btn btn-success">
 					</div>
 					<div class="controls controls-row">
 						<div class="control-group" style="float: left; margin-left: 10px;">
