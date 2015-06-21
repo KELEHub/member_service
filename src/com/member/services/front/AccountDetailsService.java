@@ -6,7 +6,7 @@ import com.member.entity.AccountDetails;
 
 public interface AccountDetailsService {
 
-	public List<AccountDetails>  getAccountDetailsByUserNumber(String userNumber);
+	public AccountDetails  getAccountDetailsByUserNumber(String userNumber);
 
 	public List<AccountDetails>  getAccountDetailsByNoservicepoints(String condition,List argumenrs);
 	
