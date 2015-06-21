@@ -100,7 +100,7 @@
 	</div>
 	</form>
 	<div class="form-actions">
-		<input type="submit" value="查询" onclick="searchMembers('acountDetailsForm')"
+		<input type="submit" value="查询" onclick="searchAccount('acountDetailsForm')"
 			class="btn btn-success">
 	</div>
 	
