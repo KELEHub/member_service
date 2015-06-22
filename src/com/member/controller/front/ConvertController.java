@@ -43,7 +43,7 @@ public class ConvertController {
 			  Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
-			  Information ad = informationService.getInformationByName(userNaemO);
+			  Information ad = informationService.getInformationByNumber(userNaemO);
 			  if(ad.getCrmMoney()==null || "".equals(ad.getCrmMoney())){
 				  model.addAttribute("shoppingMoney","0.00");
 			  }else{
@@ -70,7 +70,7 @@ public class ConvertController {
 			  String userNaemO =(String) logonUserMap.get("username");
 			  SystemParameter parameter = parameterService
 				.getSystemParameter();
-			  Information ad = informationService.getInformationByName(userNaemO);
+			  Information ad = informationService.getInformationByNumber(userNaemO);
 			  if(form.getToCmrMoney()==null || new BigDecimal(0).compareTo(getValue(form.getToCmrMoney().replace(",", "")))==0){
 				  result.setMsg("转换金额不能为空");
 				  return result;

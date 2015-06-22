@@ -1,0 +1,169 @@
+package com.member.controller.front;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.member.entity.BankService;
+import com.member.entity.Information;
+import com.member.entity.Institution;
+import com.member.form.front.RegisterForm;
+import com.member.helper.BaseResult;
+import com.member.services.back.InformationService;
+import com.member.services.back.InstitutionService;
+import com.member.services.back.ParameterService;
+
+@Controller
+@RequestMapping(value = "/RegisterController")
+public class RegisterController {
+	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
+	
+	@Resource(name = "ParameterServiceImpl")
+	public ParameterService parameterService;
+	
+	@Resource(name = "InstitutionServiceImpl")
+	public InstitutionService institutionService;
+
+	@RequestMapping(value = "/show", method = RequestMethod.POST)
+	public String show(Model model, HttpSession sesison) {
+		try {
+			Institution institution = institutionService.getInstitutionInfo();
+		    List<BankService> bankServiceList = institutionService.getBankServiceInfo();
+			String number = getNumber();
+			while (number == null) {
+				number= getNumber();
+			}
+			model.addAttribute("number",number);
+			model.addAttribute("list", bankServiceList);
+			model.addAttribute("registerMoney", "消费会员：￥"+institution.getRegisterGold());
+			return "front/register/register";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "front/register/register";
+		}
+
+	}
+	
+	
+	@RequestMapping(value = "/change",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> change(@RequestBody RegisterForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		String number = getNumber();
+		while (number == null) {
+			number= getNumber();
+		}
+		result.setMsg(number);
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/select",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> select(@RequestBody RegisterForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		Information ad = informationService.getInformationByNumber(form.getRefereeNumber());
+		if(ad != null){
+			result.setMsg(ad.getName());
+		}else{
+			result.setMsg("此用户不存在");
+		}
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/register",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> register(@RequestBody RegisterForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			Information check = informationService.getInformationByNumber(form.getNumber());
+			if(check!=null){
+				result.setMsg("注册失败，账号已存在");
+				result.setSuccess(true);
+				return result;
+			}
+			Information checkRefer = informationService.getInformationByNumber(form.getRefereeNumber());
+			if(checkRefer == null){
+				result.setMsg("注册失败，推荐人不存在");
+				result.setSuccess(true);
+				return result;
+			}
+			Information newInfo= new Information();
+			newInfo.setNumber(form.getNumber());
+			newInfo.setName(form.getUsername());
+			newInfo.setRecommendNumber(form.getRefereeNumber());
+			newInfo.setIdentity(form.getIdentity());
+			newInfo.setPhoneNumber(form.getPhoneNumber());
+			newInfo.setPassword("123");
+			newInfo.setBankName(form.getBankname());
+			newInfo.setBankProvince(form.getBankProvince());
+			newInfo.setBankCity(form.getBankCity());
+			newInfo.setBankCounty(form.getBankCounty());
+			newInfo.setBankAddress(form.getBankAddress());
+			newInfo.setBankCard(form.getBankCard());
+			newInfo.setLinkProvince(form.getBankProvince());
+			newInfo.setLinkCity(form.getBankCity());
+			newInfo.setLinkCounty(form.getBankCounty());
+			newInfo.setLinkAddress(form.getBankAddress());
+			newInfo.setRegisterDate(new Date());
+			newInfo.setIsService(0);
+			newInfo.setIsActivate(0);
+			newInfo.setIsLock(0);
+			newInfo.setCrmMoney(new BigDecimal(0));
+			newInfo.setCrmAccumulative(new BigDecimal(0));
+			newInfo.setBonusMoney(new BigDecimal(0));
+			newInfo.setBonusAccumulative(new BigDecimal(0));
+			newInfo.setRepeatedMoney(new BigDecimal(0));
+			newInfo.setRepeatedAccumulative(new BigDecimal(0));
+			newInfo.setShoppingMoney(new BigDecimal(0));
+			newInfo.setShoppingAccumulative(new BigDecimal(0));
+			institutionService.savaOrUpdate(newInfo);
+			result.setSuccess(true);
+			result.setMsg("注册成功");
+			return result;
+		} catch (Exception e) {
+			result.setMsg("注册失败，请重试");
+			result.setSuccess(true);
+			return result;
+		}
+		
+	}
+	
+	
+	
+	
+	
+
+	private String getNumber() {
+		Random r = new Random();
+		int x = r.nextInt(999999);
+		String number = null;
+		if (x > 100000) {
+			 number = String.valueOf(x);
+			 Information info = informationService.getInformationByNumber(number);
+			 if(info!=null){
+				 return null;
+			 }else{
+				 return number;
+			 }
+		}
+		
+		return null;
+	}
+
+}

@@ -41,7 +41,7 @@ public class TransferController {
 			  Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
-			  Information ad = informationService.getInformationByName(userNaemO);
+			  Information ad = informationService.getInformationByNumber(userNaemO);
 			  if(ad.getCrmMoney()==null || "".equals(ad.getCrmMoney())){
 				  model.addAttribute("goldmoneybalance","0.00");
 			  }else{
@@ -67,8 +67,8 @@ public class TransferController {
 			  String userNaemO =(String) logonUserMap.get("username");
 			  SystemParameter parameter = parameterService
 				.getSystemParameter();
-			  Information ad = informationService.getInformationByName(userNaemO);
-			  Information toInfo = informationService.getInformationByName(form.getToUserNumber());
+			  Information ad = informationService.getInformationByNumber(userNaemO);
+			  Information toInfo = informationService.getInformationByNumber(form.getToUserNumber());
 			  if(form.getToUserNumber().equals(userNaemO)){
 				  result.setMsg("自己不能给自己转账");
 				  return result;
@@ -134,7 +134,7 @@ public class TransferController {
 	public BaseResult<Void> select(@RequestBody Transform form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		
-		Information ad = informationService.getInformationByName(form.getToUserNumber());
+		Information ad = informationService.getInformationByNumber(form.getToUserNumber());
 		if(ad != null){
 			result.setMsg(ad.getName());
 		}else{
