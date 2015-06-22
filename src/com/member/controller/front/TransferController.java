@@ -73,7 +73,13 @@ public class TransferController {
 				  result.setMsg("自己不能给自己转账");
 				  return result;
 			  }
-			  if(ad.getCrmMoney().compareTo(new BigDecimal(form.getToGoldMoney()))==-1){
+			  
+			  if(form.getToGoldMoney()!=null && new BigDecimal(0).compareTo(getValue(form.getToGoldMoney().replace(",", "")))==0){
+				  result.setMsg("转账金额不能为空");
+				  return result;
+			  }
+			  
+			  if(ad.getCrmMoney().compareTo(getValue(form.getToGoldMoney().replace(",", "")))==-1){
 				  result.setMsg("葛粮币余额不足");
 				  return result;
 			  }
@@ -93,15 +99,15 @@ public class TransferController {
 				  result.setMsg("转账对象不是您的报单中心范围");
 				  return result;
 			  }
-			  if(new BigDecimal(form.getToGoldMoney()).compareTo(new BigDecimal(0))==-1){
+			  if(getValue(form.getToGoldMoney().replace(",", "")).compareTo(new BigDecimal(0))==-1){
 				  result.setMsg("转账金额必须大于0");
 				  return result;
 			  }
-			  if(new BigDecimal(form.getToGoldMoney()).compareTo(parameter.getScoreMax())==1){
+			  if(getValue(form.getToGoldMoney().replace(",", "")).compareTo(parameter.getScoreMax())==1){
 				  result.setMsg("转账金额大于最高转账金额");
 				  return result;
 			  }
-			  if(new BigDecimal(form.getToGoldMoney()).compareTo(parameter.getScoreMin())==-1){
+			  if(getValue(form.getToGoldMoney().replace(",", "")).compareTo(parameter.getScoreMin())==-1){
 				  result.setMsg("转账金额小于最低转账金额");
 				  return result;
 			  }
@@ -109,7 +115,7 @@ public class TransferController {
 				  result.setMsg("二级密码不正确");
 				  return result;
 			  }
-			  transferService.transferManager(ad, toInfo, form,parameter);
+			  transferService.transferManager(ad, toInfo,getValue(form.getToGoldMoney().replace(",", "")),parameter);
 			  result.setMsg("转账成功");
 			  result.setMsgCode(CommonUtil.insertComma(ad.getCrmMoney().toString(), 2));
 			  return result;
@@ -138,5 +144,9 @@ public class TransferController {
 		return result;
 	}
 	
+	private BigDecimal getValue(String s){
+	 	BigDecimal b = new BigDecimal(s); 
+	 	return b.setScale(2, BigDecimal.ROUND_DOWN);
+	}
 
 }
