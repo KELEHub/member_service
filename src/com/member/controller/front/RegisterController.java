@@ -132,6 +132,7 @@ public class RegisterController {
 			newInfo.setRepeatedAccumulative(new BigDecimal(0));
 			newInfo.setShoppingMoney(new BigDecimal(0));
 			newInfo.setShoppingAccumulative(new BigDecimal(0));
+			newInfo.setProtectPassword("123");
 			institutionService.savaOrUpdate(newInfo);
 			result.setSuccess(true);
 			result.setMsg("注册成功");
