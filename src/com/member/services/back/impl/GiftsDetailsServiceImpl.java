@@ -71,7 +71,7 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void senGold(SendGiftsDetails ss) {
 	
-		Information	information = informationService.getInformationByName(ss.getNumber());
+		Information	information = informationService.getInformationByNumber(ss.getNumber());
 		GiftsDetails giftsDetails = parameterService.getGiftsDetailsById(ss.getGiftsDetailsId());
 		BigDecimal shoppingMoney = information.getShoppingMoney().add(new BigDecimal(ss.getGoldMoney()));
 		BigDecimal shoppingAccumulative = information.getShoppingAccumulative().add(new BigDecimal(ss.getGoldMoney()));

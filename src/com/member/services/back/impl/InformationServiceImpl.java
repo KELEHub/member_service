@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.InstitutionDao;
@@ -38,7 +39,7 @@ public class InformationServiceImpl implements InformationService{
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public Information getInformationByName(String number) {
+	public Information getInformationByNumber(String number) {
 		String hql="from Information mr where mr.number=?";
 		List arguments = new ArrayList();
 		arguments.add(number);
