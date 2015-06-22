@@ -16,50 +16,28 @@
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i> </span>
 					<h5>
-						葛粮币转账
+						积分转换葛粮币
 					</h5>
 				</div>
 				<div class="widget-content nopadding">
 					<div class="form-horizontal">
 						<div class="control-group">
 							<label class="control-label">
-								葛粮币余额：
+								积分余额：
 							</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="goldmoneybalance" id="goldmoneybalance" disabled="true" value="${goldmoneybalance}">
+									<input type="text" name="shoppingMoney" id="shoppingMoney" disabled="true" value="${shoppingMoney}">
 								</div>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">
-								转至会员账号：
+								转换金额：
 							</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="toUserNumber" id="toUserNumber" value="${toUserNumber}">
-									<input type="submit" value="查看"
-										onclick="selectData()" class="btn btn-success">
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">
-								对方姓名：
-							</label>
-							<div class="controls">
-								<div class="input-append">
-								<input type="text" name="toUserName" id="toUserName" disabled="true" value="${toUserName}">
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">
-								转账金额：
-							</label>
-							<div class="controls">
-								<div class="input-append">
-									<input type="text" onfocusout="formatter(this)"  name="toGoldMoney" id="toGoldMoney" value="${toGoldMoney}">
+									<input type="text" name="toCmrMoney" id="toCmrMoney" value="${toCmrMoney}" onfocusout="formatter(this)">
 								</div>
 							</div>
 						</div>
@@ -75,8 +53,8 @@
 						</div>
 					</div>
 					<div class="form-actions">
-						<input type="submit" value="确认转账"
-							onclick="savetransfer()" class="btn btn-success">
+						<input type="submit" value="确认转换"
+							onclick="saveconvert()" class="btn btn-success">
 					</div>
 					<div class="controls controls-row">
 						<div class="control-group" style="float: left; margin-left: 10px;">
