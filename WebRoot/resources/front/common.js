@@ -31,6 +31,73 @@ function menuClick(url){
 	resetTable();
 }
 
+function initData(){
+	region_init("select_province","select_city","select_area");
+	 $("#select_province").find("option:selected").text();
+}
+
+function changeData(){
+	var reqObj = {};
+	var number=$("#number").attr("value");
+	reqObj["number"] = number;
+	var result = ajaxRequestForJsonGetJson("/RegisterController/change.do",
+				reqObj);
+	if(result.success){
+			var name = result.msg;
+			$("#number").attr("value",name);
+		}
+}
+
+function selectRegister(){
+	var reqObj = {};
+	var refereeNumber=$("#refereeNumber").attr("value");
+	reqObj["refereeNumber"] = refereeNumber;
+	var result = ajaxRequestForJsonGetJson("/RegisterController/select.do",
+				reqObj);
+	if(result.success){
+			var name = result.msg;
+			$("#refereename").attr("value",name);
+		}
+}
+
+
+
+
+function registerData(){
+	 var reqObj = {};
+	 var bankProvince = $("#select_province").find("option:selected").text();
+	 var bankCity = $("#select_city").find("option:selected").text();
+	 var bankCounty = $("#select_area").find("option:selected").text();
+	 var number=$("#number").attr("value");
+	 var refereeNumber=$("#refereeNumber").attr("value");
+	 var username=$("#username").attr("value");
+	 var identity=$("#identity").attr("value");
+	 var phoneNumber=$("#phoneNumber").attr("value");
+	 var bankname = $("#bankname").find("option:selected").text();
+	 var bankCard=$("#bankCard").attr("value");
+	 var bankAddress=$("#bankAddress").attr("value");
+	 reqObj["bankProvince"] = bankProvince;
+	 reqObj["bankCity"] = bankCity;
+	 reqObj["bankCounty"] = bankCounty;
+	 reqObj["number"] = number;
+	 reqObj["refereeNumber"] = refereeNumber;
+	 reqObj["username"] = username;
+	 reqObj["identity"] = identity;
+	 reqObj["phoneNumber"] = phoneNumber;
+	 reqObj["bankname"] = bankname;
+	 reqObj["bankCard"] = bankCard;
+	 reqObj["bankAddress"] = bankAddress;
+		var result = ajaxRequestForJsonGetJson("/RegisterController/register.do",
+				reqObj);
+		if(result.success){
+			var name = result.msg;
+			alert(name);
+		}
+	 
+	
+}
+
+
 function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
