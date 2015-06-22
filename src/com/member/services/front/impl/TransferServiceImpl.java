@@ -15,7 +15,6 @@ import com.member.dao.ParameterDao;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
 import com.member.entity.SystemParameter;
-import com.member.form.front.Transform;
 import com.member.services.front.TransferService;
 import com.member.util.CommonUtil;
 @Service("TransferServiceImpl")
@@ -24,15 +23,14 @@ public class TransferServiceImpl implements TransferService{
 	@Resource(name = "ParameterDaoImpl")
     ParameterDao parameterDao;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void transferManager(Information from, Information to, Transform form,SystemParameter parameter) {
-		BigDecimal xm = from.getCrmMoney().subtract(new BigDecimal(form.getToGoldMoney()));
+	public void transferManager(Information from, Information to,BigDecimal goldValue,SystemParameter parameter) {
+		BigDecimal xm = from.getCrmMoney().subtract(goldValue);
 		BigDecimal cm = xm.subtract(parameter.getScoreTake());
 		from.setCrmMoney(cm);
-		BigDecimal dm = to.getCrmMoney().add(new BigDecimal(form.getToGoldMoney()));
-		BigDecimal history = to.getCrmAccumulative().add(new BigDecimal(form.getToGoldMoney()));
+		BigDecimal dm = to.getCrmMoney().add(goldValue);
+		BigDecimal history = to.getCrmAccumulative().add(goldValue);
 		to.setCrmMoney(dm);
 		to.setCrmAccumulative(history);
 		AccountDetails acFrom = new AccountDetails();
@@ -51,7 +49,7 @@ public class TransferServiceImpl implements TransferService{
 		/**收入 */
 		acFrom.setIncome(new BigDecimal(0));
 		/**支出 */
-		acFrom.setPay(new BigDecimal(form.getToGoldMoney()));
+		acFrom.setPay(goldValue);
 		/**备注 */
 		acFrom.setRedmin("会员转账,转入账号"+to.getNumber()+",手续费" +parameter.getScoreTake());
 		/**用户ID */
@@ -70,7 +68,7 @@ public class TransferServiceImpl implements TransferService{
 		/**葛粮币余额 */
 		acTo.setGoldmoneybalance(dm);
 		/**收入 */
-		acTo.setIncome(new BigDecimal(form.getToGoldMoney()));
+		acTo.setIncome(goldValue);
 		/**支出 */
 		acTo.setPay(new BigDecimal(0));
 		/**备注 */
@@ -81,6 +79,65 @@ public class TransferServiceImpl implements TransferService{
 		parameterDao.saveOrUpdate(to);
 		parameterDao.saveOrUpdate(acFrom);
 		parameterDao.saveOrUpdate(acTo);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void convertManager(Information info, BigDecimal goldValue,
+			SystemParameter parameter) {
+		BigDecimal xm = info.getShoppingMoney().subtract(goldValue);
+		BigDecimal cm = xm.subtract(parameter.getGlbTake());
+		BigDecimal midCrm = info.getCrmMoney();
+		BigDecimal addcermoney = info.getCrmMoney().add(goldValue);
+		BigDecimal history = info.getCrmAccumulative().add(goldValue);
+		info.setShoppingMoney(cm);
+		info.setCrmAccumulative(history);
+		info.setCrmMoney(addcermoney);
+		AccountDetails acFrom = new AccountDetails();
+		acFrom.setUserNumber(info.getNumber());
+		acFrom.setCreateTime(new Date());
+		acFrom.setKindData(KindDataEnum.points);
+		acFrom.setCountNumber(CommonUtil.getCountNumber());
+		
+		/**日期类别统计 */
+		acFrom.setDateNumber(CommonUtil.getDateNumber());
+		acFrom.setProject(ProjectEnum.togoldmoneycut);
+		/**积分余额 */
+		acFrom.setPointbalance(cm);
+		/**葛粮币余额 */
+		acFrom.setGoldmoneybalance(midCrm);
+		/**收入 */
+		acFrom.setIncome(new BigDecimal(0));
+		/**支出 */
+		acFrom.setPay(goldValue);
+		/**备注 */
+		acFrom.setRedmin("积分转换葛粮币减少"+",手续费" +parameter.getGlbTake());
+		/**用户ID */
+		acFrom.setUserId(info.getId());
+		AccountDetails acTo = new AccountDetails();
+		acTo.setUserNumber(info.getNumber());
+		acTo.setCreateTime(new Date());
+		acTo.setKindData(KindDataEnum.goldmoney);
+		acTo.setCountNumber(CommonUtil.getCountNumber());
+		
+		/**日期类别统计 */
+		acTo.setDateNumber(CommonUtil.getDateNumber());
+		acTo.setProject(ProjectEnum.frompointsadd);
+		/**积分余额 */
+		acTo.setPointbalance(cm);
+		/**葛粮币余额 */
+		acTo.setGoldmoneybalance(addcermoney);
+		/**收入 */
+		acTo.setIncome(goldValue);
+		/**支出 */
+		acTo.setPay(new BigDecimal(0));
+		/**备注 */
+		acTo.setRedmin("积分转换葛粮币增加");
+		/**用户ID */
+		acTo.setUserId(info.getId());
+		parameterDao.saveOrUpdate(acFrom);
+		parameterDao.saveOrUpdate(acTo);
+		parameterDao.saveOrUpdate(info);
 	}
 
 }
