@@ -97,6 +97,46 @@ function registerData(){
 	
 }
 
+function deleteuser(number){
+	if (window.confirm('您确定要删除当前会员么？')) {
+		var reqObj = {};
+		reqObj["number"] = number;
+		var result = ajaxRequestForJsonGetJson("/RegisterController/deleteUser.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$("#content-header").find("form[id='searchActivateForm']").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+	
+	
+}
+
+
+
+
+function activityuser(number){
+	if (window.confirm('您确定要激活当前会员么？')) {
+		var reqObj = {};
+		reqObj["number"] = number;
+		var result = ajaxRequestForJsonGetJson("/RegisterController/activateUser.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$("#content-header").find("form[id='searchActivateForm']").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+	
+	
+}
+
+
 
 function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
