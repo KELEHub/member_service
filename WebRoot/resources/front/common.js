@@ -210,6 +210,27 @@ function savetransfer(){
 }
 
 
+function saveconvert(){
+	var reqObj = {};
+		var toUserNumber=$("#shoppingMoney").attr("value");
+		var toGoldMoney=$("#toCmrMoney").attr("value");
+		var payPassword=$("#payPassword").attr("value");
+		reqObj["shoppingMoney"] = toUserNumber;
+		reqObj["toCmrMoney"]= toGoldMoney;
+		reqObj["payPassword"]= payPassword;
+		var result = ajaxRequestForJsonGetJson("/ConvertController/convertData.do",
+				reqObj);
+		if(result.success){
+			var name = result.msg;
+			alert(name);
+			var cemoney = result.msgCode;
+			if(cemoney != null){
+				$("#shoppingMoney").attr("value",cemoney);
+			}
+		}
+}
+
+
 
 
 
