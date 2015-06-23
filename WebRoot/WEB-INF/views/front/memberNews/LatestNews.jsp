@@ -42,34 +42,31 @@
 	</div>
 </div>
 
-<div id="myModal" class="modal hide">
+<div id="myModal" class="modal hide" style="width: 1000; height: 500">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>查看</h3>
 	</div>
-	<div class="widget-content nopadding">
-<!--		<form action="/NoticeManagerController/editNotice.do" method="post"-->
-<!--			id="editNoticeForm" class="form-horizontal">-->
+	<div class="widget-content">
+		<div class="control-group">
+			<label class="control-label">
+				标题:
+			</label>
+			<div class="controls">
+				<input type="text" class="span11" name="title" readonly="readonly"
+					id="viewLatestNews_title" style="width: 100%; height: 25" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">
+				内容:
+			</label>
 			<div class="control-group">
-				<label class="control-label">
-					标题:
-				</label>
 				<div class="controls">
-					<input type="text" class="span11" name="title"
-						id="viewLatestNews_title" style="width:220;"/>
+					<textarea class="textarea_editor span12" rows="6" name="content" readonly="readonly"
+						id="viewLatestNews_content" style="width: 100%; height: 300;resize:none"></textarea>
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label">
-					内容:
-				</label>
-					<div class="control-group">
-						<div class="controls">
-							<textarea class="textarea_editor span12" rows="6" name="content"
-								id="viewLatestNews_content" style="width:220;"></textarea>
-						</div>
-					</div>
-			</div>
-<!--		</form>-->
+		</div>
 	</div>
 </div>
