@@ -783,8 +783,9 @@ function rangeIntegralIssue(sFormId){
 }
 
 function viewLatestNews(arg_title,arg_content){
-	document.getElementById("viewLatestNews_title").value = arg_title;
-	document.getElementById("viewLatestNews_content").value = arg_content;
+	$("#viewLatestNews_title").val(arg_title);
+	$("#viewLatestNews_content").val(arg_content);
+//	$("#latestNewsDiv").hide();
 }
 
 function deleteApplyQualification(applyId){
