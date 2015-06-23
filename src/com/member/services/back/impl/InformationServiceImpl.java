@@ -11,14 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.member.beans.back.enumData.GiftEnum;
 import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.InstitutionDao;
 import com.member.entity.AccountDetails;
+import com.member.entity.GiftsDetails;
 import com.member.entity.Information;
 import com.member.entity.Institution;
-import com.member.entity.SystemParameter;
+import com.member.entity.SendGiftsDetails;
 import com.member.services.back.InformationService;
+import com.member.services.back.InstitutionService;
 import com.member.util.CommonUtil;
 
 @Service("InformationServiceImpl")
@@ -27,6 +30,10 @@ public class InformationServiceImpl implements InformationService{
 	
 	@Resource(name = "InstitutionDaoImpl")
     InstitutionDao institutionDao;
+	
+	@Resource(name = "InstitutionServiceImpl")
+    InstitutionService institutionService;
+	
 	
 	
 	
@@ -120,8 +127,66 @@ public class InformationServiceImpl implements InformationService{
 		institutionDao.saveOrUpdate(info);
 		institutionDao.saveOrUpdate(selfInfo);
 		institutionDao.saveOrUpdate(acFrom);
+		//礼包信息
+		GiftsDetails gf = new GiftsDetails();
+		gf.setUserId(selfInfo.getId());
+		gf.setChildId(info.getId());
+		gf.setNumber(selfInfo.getNumber());
+		gf.setGiftEnum(CommonUtil.getGiftEnum());
+		gf.setCountNumber(CommonUtil.getCountNumber());
+		gf.setDateNumber(CommonUtil.getDateNumber());
+		gf.setBatchNo(CommonUtil.getBatchNo());
+		gf.setPointNumber(1);
+		gf.setName("礼包_"+info.getNumber());
+		gf.setCreateTime(new Date());
+		institutionDao.saveOrUpdate(gf);
+		//详细礼包信息
+		int countGifts = 0;
+		if(CommonUtil.getGiftEnum().equals(GiftEnum.TEN)){
+			countGifts = 10;
+		}else{
+			countGifts = 5;
+		}
+		Institution inst = institutionService.getInstitutionInfo();
+		for(int i =1;i<=countGifts;i++){
+			SendGiftsDetails sg = new SendGiftsDetails();
+			sg.setUserId(selfInfo.getId());
+			sg.setChildId(info.getId());
+			sg.setNumber(selfInfo.getNumber());
+			sg.setGiftEnum(CommonUtil.getGiftEnum());
+			sg.setCountNumber(CommonUtil.getCountNumber());
+			sg.setDateNumber(CommonUtil.getDateNumber());
+			sg.setBatchNo(CommonUtil.getBatchNo());
+			sg.setPointNumber(1);
+			sg.setName("礼包_"+info.getNumber());
+			sg.setCreateTime(new Date());
+			sg.setPointNumber(i);
+			sg.setGoldMoney(getGoldMoney(inst,i,CommonUtil.getGiftEnum()));
+			sg.setGiftsDetailsId(gf.getId());
+			sg.setCreateTime(new Date());
+			institutionDao.saveOrUpdate(sg);
+		}
 		
 		
 	}
-
+	
+	
+	private Integer getGoldMoney(Institution inst,int countNumber,GiftEnum gift){
+		if(gift.equals(GiftEnum.FIVE)){
+			if(countNumber==1){
+				return inst.getPreaFirst();
+			}else if(countNumber==2){
+				return inst.getPreaSecond();
+			}else if(countNumber==3){
+				return inst.getPreaThree();
+			}else if(countNumber==4){
+				return inst.getPreaFour();
+			}else if(countNumber==5){
+				return inst.getPreaFive();
+			}
+		}else{
+			return 1000;
+		}
+		return 1000;
+	}
 }
