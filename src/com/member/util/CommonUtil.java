@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.member.beans.back.enumData.BatchNoEnum;
+import com.member.beans.back.enumData.GiftEnum;
 
 public class CommonUtil {
 	
@@ -49,6 +50,30 @@ public class CommonUtil {
 		}
 		
 		return nowDateStr.substring(0,6)+dateNumber;
+	}
+	
+	
+	/**
+	 * 礼包类型获取
+	 * @return
+	 */
+	public static GiftEnum getGiftEnum(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		String dayStr= String.valueOf(day);
+		if(dayStr.length()<2){
+			dayStr="0"+dayStr;
+		}
+		int dayNumber = Integer.valueOf(nowDateStr.substring(3,6)+dayStr);
+		if(dayNumber>410){
+			return GiftEnum.TEN;
+		}else{
+			return GiftEnum.FIVE;
+		}
 	}
 	
 	
