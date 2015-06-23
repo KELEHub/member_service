@@ -20,8 +20,8 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="FAQ_content" style="width: 1000; height: 400">${result.content}</textarea>
+						<textarea class="textarea_editor span12" rows="6" name="content" readonly="readonly"
+							id="FAQ_content" style="width: 100%; height: 50%; resize:none;">${result.content}</textarea>
 					</div>
 				</div>
 			</div>

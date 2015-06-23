@@ -43,7 +43,7 @@
 								申请会员账号信息:
 							</label>
 							<div class="controls">
-								<input type="text" class="span11" id="applyMember_info"/>
+								<input type="text" class="span11" id="applyMember_info" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="control-group">
