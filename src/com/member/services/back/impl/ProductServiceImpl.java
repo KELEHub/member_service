@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 	public Product getProductDetailById(Integer id) {
 		String hql = "from Product p where p.productStatus=0 and p.id=?";
 		List result = productDao.queryByHql(hql,id);
-		if(result!=null){
+		if(result!=null && result.size()>0){
 			return (Product) result.get(0);
 		}else{
 			return null;
