@@ -569,6 +569,29 @@ function editProduct(id){
 	showDynamicDialog("/product/getProduDetail.do", reqObj, "showProductDetail");
 }
 
+function viewMemberOrderProduct(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/frontorderlist/viewProduDetail.do", reqObj, "showMemberOrderProductDetail");
+}
+
+function getProduct(id){
+	if (window.confirm('您确定要提货么？')) {
+		var reqObj = {};
+		reqObj["id"] = id;
+		var result = ajaxRequestForJsonGetJson("/frontorderlist/getProduct.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
 function deleteProduct(id){
 	if (window.confirm('您确定要删除当前产品么？')) {
 		var reqObj = {};
@@ -585,6 +608,7 @@ function deleteProduct(id){
 		}
 	}
 }
+
 //退出系统
 function logout(reqUrl){
 	var bathPath=$("#basePath").val();
