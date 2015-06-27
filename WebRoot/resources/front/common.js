@@ -115,9 +115,6 @@ function deleteuser(number){
 	
 }
 
-
-
-
 function activityuser(number){
 	if (window.confirm('您确定要激活当前会员么？')) {
 		var reqObj = {};
@@ -135,8 +132,6 @@ function activityuser(number){
 	
 	
 }
-
-
 
 function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
@@ -267,10 +262,6 @@ $.fn.serializeJson=function(){
     return serializeObj;  
 };
 
-
-
-
-
 function selectData(){
 		var reqObj = {};
 		var toUserNumber=$("#toUserNumber").attr("value");
@@ -288,7 +279,6 @@ function selectData(){
 //		});
 		
 }
-
 
 function savetransfer(){
 		var reqObj = {};
@@ -316,7 +306,6 @@ function savetransfer(){
 		
 }
 
-
 function saveconvert(){
 	var reqObj = {};
 		var toUserNumber=$("#shoppingMoney").attr("value");
@@ -337,21 +326,10 @@ function saveconvert(){
 		}
 }
 
-
-
-
-
-
-
 function searchAccount(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 	resetTable();
 }
-
-
-
-
-
 
 function showDynamicDialog(reqUrl,reqObj,dialogId){
 	var bathPath=$("#basePath").val();
@@ -561,6 +539,113 @@ function saveWithFormAddRefeshTable(sFormId){
 			resetTable();
 		});
 	}
+}
+
+function change1Password(sFormId){
+	var sPassword = $("input[name='onelevelpassword']").val();
+	var sPasswordconfirm = $("input[name='onelevelpasswordconfirm']").val();
+	if(sPassword==sPasswordconfirm){
+		saveWithFormAndDoNothint(sFormId);
+	}else{
+		alert("您2次输入的密码不一样");
+	}
+}
+
+function chenge2password(sFormId){
+	var sPassword = $("input[name='twolevelpassword']").val();
+	var sPasswordconfirm = $("input[name='twolevelpasswordconfirm']").val();
+	if(sPassword==sPasswordconfirm){
+		saveWithFormAndDoNothint(sFormId);
+	}else{
+		alert("您2次输入的密码不一样");
+	}
+}
+
+function initMemberInfoUpdateSelect(){
+	region_init("select_province","select_city","select_area",provinceMap.get($("#bankProvince").val()),provinceMap.get($("#bankCity").val()),provinceMap.get($("#bankCounty").val()));
+	region_init("select_province1","select_city1","select_area1",provinceMap.get($("#linkProvince").val()),provinceMap.get($("#linkCity").val()),provinceMap.get($("#linkCounty").val()));
+}
+function saveWithFormAndDoNothint(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	alert(result.msg);
+}
+
+function saveMemberInfo(sFormId){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
+	
+	//处理银行的省市区
+	reqObj["bankProvince"] = provinceMap2.get(parseInt(reqObj["bankProvince"]));
+	reqObj["bankCity"] = provinceMap2.get(parseInt(reqObj["bankCity"]));
+	reqObj["bankCounty"] = provinceMap2.get(parseInt(reqObj["bankCounty"]));
+	//处理联系地址的省市区
+	reqObj["linkProvince"] = provinceMap2.get(parseInt(reqObj["linkProvince"]));
+	reqObj["linkCity"] = provinceMap2.get(parseInt(reqObj["linkCity"]));
+	reqObj["linkCounty"] = provinceMap2.get(parseInt(reqObj["linkCounty"]));
+	
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+			alert(data.msg);
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
+
+function doAccCharge(sFormId){
+	if (window.confirm('您确定要提交充值申请么?')) {
+		var result = ajaxRequestForFormGetJson(sFormId);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
+function doAccWithdrawals(sFormId){
+	if (window.confirm('您确定要提交提现申请么?')) {
+		var result = ajaxRequestForFormGetJson(sFormId);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
+function showAccChargeDetail(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/acc/showAccChargeDetail.do", reqObj, "showAccChargeDetail");
+}
+
+function showAccWithdrawalsDetail(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/acc/showAccWithdrawalsDetail.do", reqObj, "showAccWithdrawalsDetail");
 }
 
 function editProduct(id){

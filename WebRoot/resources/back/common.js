@@ -590,7 +590,6 @@ function agreewithdrawals(id){
 }
 
 function agreecharge(id){
-	
 	if (window.confirm('您确定充值么？')) {
 		var reqObj={};
 		reqObj["id"]=id;

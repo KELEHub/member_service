@@ -5,7 +5,7 @@
 <div id="showWithDrawalsDetail" class="modal hide" style="width: 800px;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
-		<h3>${member.name}的提现账户资料.</h3>
+		<h3>提现账户资料.</h3>
 	</div>
 	<div class="modal-body">
 <!-- 		<div class="widget-box"> -->
@@ -20,7 +20,7 @@
 		<div class="widget-box">
 			<div class="widget-content nopadding">
 			<font style="color: red;font-size: 20px;">
-			提现会员信息:${member.name} » ${member.bankName} » ${member.bankCard} » ${member.bankProvince}${member.bankCity}${member.bankCounty}${member.bankAddress} » ${member.phoneNumber}
+				提现会员信息:${reslut.withdrawalsBackInfo}
 			</font>
 			</div>
 		</div>

@@ -58,7 +58,7 @@
 									<c:if test="${item.status eq 0}">未处理</c:if> 
 									<c:if test="${item.status eq 1}">已处理</c:if>
 									</td>
-									<td><button class="btn" onclick="showWithDrawalsDetail('${item.memberId}')">会员账户详情</button></td>
+									<td><button class="btn" onclick="showWithDrawalsDetail('${item.id}')">会员账户详情</button></td>
 								</tr>
 							</c:forEach>
 						</tbody>
