@@ -3,68 +3,37 @@
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Widgets</a> </div>
+    <br/>
+    <h1>最新资讯</h1>
     <form action="/LatestNewsController/showLatestNews.do" method="POST" id="latestNewsForm">
 	</form>
   </div>
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="widget-box">
-				<div class="widget-title">
-					<span class="icon"><i class="icon-th"></i></span>
-					<h5>最新资讯</h5>
-				</div>
-				<div class="widget-content nopadding">
-					<table id="testexample1" class="table table-bordered data-table">
-						<thead>
-							<tr>
-								<th>标题</th>
-								<th>日期</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="item" items="${result}">
-								<tr class="gradeX">
-									<td>${item.title}</td>
-									<td>${item.date}</td>
-									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="viewLatestNews('${item.title}','${item.content}')">查看</a>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
-<div id="myModal" class="modal hide" style="width: 1000; height: 500">
-	<div class="modal-header">
-		<button data-dismiss="modal" class="close" type="button">×</button>
-		<h3>查看</h3>
-	</div>
-	<div class="widget-content">
-		<div class="control-group">
-			<label class="control-label">
-				标题:
-			</label>
-			<div class="controls">
-				<input type="text" class="span11" name="title" readonly="readonly"
-					id="viewLatestNews_title" style="width: 100%; height: 25" />
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">
-				内容:
-			</label>
-			<div class="control-group">
-				<div class="controls">
-					<textarea class="textarea_editor span12" rows="6" name="content" readonly="readonly"
-						id="viewLatestNews_content" style="width: 100%; height: 300;resize:none"></textarea>
+<div id="content">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="accordion" id="collapse-group">
+					<c:forEach var="item" items="${result}" varStatus="status">
+						<div class="accordion-group widget-box">
+							<div class="accordion-heading">
+								<div class="widget-title">
+									<a data-parent="#collapse-group" href="#${status.count}"
+										data-toggle="collapse"> <span class="icon"><i
+											class="icon-eye-open"></i> </span>
+										<h5>
+											${item.title}
+										</h5> </a>
+								</div>
+							</div>
+							<div class="collapse accordion-body" id="${status.count}">
+								<div class="widget-content">
+									${item.content}
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
