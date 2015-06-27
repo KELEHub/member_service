@@ -16,12 +16,12 @@ import com.member.entity.BankService;
 import com.member.entity.EditeHistory;
 import com.member.entity.Information;
 import com.member.entity.Institution;
+import com.member.form.front.MemberOperForm;
+import com.member.form.front.MemberUpdateForm;
 import com.member.services.back.InstitutionService;
 @Service("InstitutionServiceImpl")
 public class InstitutionServiceImpl implements InstitutionService{
 	
-	
-
 	@Resource(name = "InstitutionDaoImpl")
     InstitutionDao institutionDao;
 	
@@ -158,4 +158,80 @@ public class InstitutionServiceImpl implements InstitutionService{
 		return result;
 	}
 
+	@Override
+	@Transactional
+	public void update1Password(MemberOperForm form) {
+		Information ifm = getInformationById(form.getUserId());
+		if(ifm!=null){
+			ifm.setPassword(form.getOnelevelpassword());
+			institutionDao.update(ifm);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void update2Password(MemberOperForm form) {
+		Information ifm = getInformationById(form.getUserId());
+		if(ifm!=null){
+			ifm.setProtectPassword(form.getTwolevelpassword());
+			institutionDao.update(ifm);
+		}
+	}
+
+	public Information getInformationById(Integer id) {
+		String hql="from Information mr where mr.id=?";
+		List<Information> listresult = (List<Information>)institutionDao.queryByHql(hql,id);
+		if(listresult!=null && listresult.size()>0){
+			return listresult.get(0);
+		}else{
+			return null;
+		}
+	}
+
+	@Override
+	public void updateMemberInfo(MemberUpdateForm form) {
+		Information ifm = getInformationById(form.getId());
+		if(ifm!=null){
+			/**邮箱 */
+			ifm.setEmail(form.getEmail());
+
+			/**电话号码 */
+			ifm.setPhoneNumber(form.getPhoneNumber());
+			
+			/**银行名称 */
+			ifm.setBankName(form.getBankName());
+			
+			/**银行省份 */
+			ifm.setBankProvince(form.getBankProvince());
+			
+			/**银行市级*/
+			ifm.setBankCity(form.getBankCity());
+			
+			/**银行区县 */
+			ifm.setBankCounty(form.getBankCounty());
+			
+			/**银行支行地址 */
+			ifm.setBankAddress(form.getBankAddress());
+			
+			/**银行卡号 */
+			ifm.setBankCard(form.getBankCard());
+			
+			/**邮编*/
+			ifm.setPostNumber(form.getPostNumber());
+			
+			/**联系人省份 */
+			ifm.setLinkProvince(form.getLinkProvince());
+			
+			/**联系人市级 */
+			ifm.setLinkCity(form.getLinkCity());
+
+			/**联系人区县 */
+			ifm.setLinkCounty(form.getLinkCounty());
+			
+			/**联系人地址 */
+			ifm.setLinkAddress(form.getLinkAddress());
+			
+			institutionDao.update(ifm);
+		}
+	}
 }

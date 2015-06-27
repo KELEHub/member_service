@@ -203,6 +203,17 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		return result;
 	}
 	
+	@Override
+	public Withdrawals getWithdrawalsDetailById(Integer id) {
+		String withdrawalsQuery = "from Withdrawals s where s.id=?";
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
+		if(withdrawalsResult!=null && withdrawalsResult.size()>0){
+			return (Withdrawals) withdrawalsResult.get(0);
+		}else{
+			return null;
+		}
+	}
+	
 	private Information getActInfo(Integer id){
 		String hqlQuery = " from Information s where s.isActivate=1 and s.isLock=0 and s.id=?";
 		List result = informationDao.queryByHql(hqlQuery, id);
@@ -222,6 +233,4 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			return null;
 		}
 	}
-	
-
 }

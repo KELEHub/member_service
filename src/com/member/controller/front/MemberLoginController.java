@@ -15,17 +15,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.member.beans.back.MenuBean;
 import com.member.common.config.FrameConfig;
 import com.member.entity.Information;
-import com.member.entity.NmsUser;
+import com.member.form.front.MemberOperForm;
+import com.member.form.front.MemberUpdateForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.InstitutionService;
 import com.member.services.back.NmUserService;
-import com.member.util.FrameObjectUtil;
 
 @Controller
 @RequestMapping(value = "/MemberLoginController")
@@ -107,6 +110,7 @@ public class MemberLoginController {
 			    Map<String,Object> userMap= new HashMap<String, Object>();
 			    userMap.remove("userPassword");
 			    userMap.put("username", userName);
+			    userMap.put("userId", info.getId());
 				userMap.put(FrameConfig.userLastHeartbeatTime, new Date());
 			    session.setAttribute("logonUser", userMap);
 			    
@@ -126,6 +130,57 @@ public class MemberLoginController {
 		}
 		return null;
 
+	}
+	
+	@RequestMapping(value = "/showmemberinfo",method = RequestMethod.POST)
+	public String showmemberinfo(HttpServletRequest request,Model model){
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userId = logonUserMap.get("userId");
+		Information result = institutionService.getInformationById((Integer)userId);
+		model.addAttribute("result", result);
+		return "front/memberinfo/showmemberinfo";
+	}
+	
+	@RequestMapping(value = "/changepassword",method = RequestMethod.POST)
+	public String showChangePassword(HttpServletRequest request,Model model){
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userId = logonUserMap.get("userId");
+		model.addAttribute("userid",userId);
+		return "front/memberinfo/showchangepasswordpage";
+	}
+	@RequestMapping(value = "/change1password",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> change1password(@RequestBody MemberOperForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		institutionService.update1Password(form);
+		result.setMsg("修改登录密码成功.");
+		result.setSuccess(true);
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/change2password",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> change2password(@RequestBody MemberOperForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		institutionService.update2Password(form);
+		result.setMsg("修改二级密码成功.");
+		result.setSuccess(true);
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/updateMemberInfo",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> updateMemberInfo(@RequestBody MemberUpdateForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		institutionService.updateMemberInfo(form);
+		result.setMsg("更新个人信息成功.");
+		result.setSuccess(true);
+		return result;
+		
 	}
 	
 	private List<MenuBean> getUserRoleMenu(Information user){

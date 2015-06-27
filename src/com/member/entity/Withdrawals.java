@@ -1,6 +1,7 @@
 package com.member.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class Withdrawals {
 	
 	/**日期 */
 	@Column(name="tradeDate")
-	private String tradeDate;
+	private Date tradeDate;
 	
 	/**提现金额 */
 	@Column(name="tradeAmt")
@@ -64,6 +65,10 @@ public class Withdrawals {
 	@Column(name="userName")
 	private String userName;
 	
+	/**提现银行信息*/
+	@Column(name="withdrawalsBackInfo")
+	private String withdrawalsBackInfo;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -88,11 +93,11 @@ public class Withdrawals {
 		this.tradeNo = tradeNo;
 	}
 
-	public String getTradeDate() {
+	public Date getTradeDate() {
 		return tradeDate;
 	}
 
-	public void setTradeDate(String tradeDate) {
+	public void setTradeDate(Date tradeDate) {
 		this.tradeDate = tradeDate;
 	}
 
@@ -150,5 +155,13 @@ public class Withdrawals {
 
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
+	}
+
+	public String getWithdrawalsBackInfo() {
+		return withdrawalsBackInfo;
+	}
+
+	public void setWithdrawalsBackInfo(String withdrawalsBackInfo) {
+		this.withdrawalsBackInfo = withdrawalsBackInfo;
 	}
 }

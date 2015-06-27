@@ -29,8 +29,8 @@ public class WithdrawalsController {
 	@Resource(name = "WithdrawalsServiceImpl")
 	private WithdrawalsService withdrawalsService;
 
-	@Resource(name="MemberManageServiceImpl")
-	private MemberManageService memberManageService;
+//	@Resource(name="MemberManageServiceImpl")
+//	private MemberManageService memberManageService;
 	
 	@RequestMapping(value = "/showWithdrawalszRecord")
 	public String showWithdrawalszRecord(HttpServletRequest request, Model model) {
@@ -89,8 +89,9 @@ public class WithdrawalsController {
 	
 	@RequestMapping(value = "/showWithDrawalsDetail",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
-		Information member = memberManageService.getMemberById(form.getId());
-		model.addAttribute("member",member);
+		Withdrawals reslut = withdrawalsService.getWithdrawalsDetailById(form.getId());
+//		Information member = memberManageService.getMemberById(form.getId());
+		model.addAttribute("reslut",reslut);
 		return "back/withdrawals/showWithDrawalsDetail";
 	}
 }
