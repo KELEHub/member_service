@@ -13,5 +13,7 @@ public interface GiftsDetailsService {
 	
 	public void senGold(SendGiftsDetails ss);
 	
+	public Boolean DeleteGifts(String number);
+	
 
 }
