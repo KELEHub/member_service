@@ -857,3 +857,16 @@ function submitApply(applyId,applyNumber,submitReason,protectPassword){
 		}
 	}
 }
+
+function releaseTickling(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='inboxForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}

@@ -8,4 +8,8 @@ public interface InboxService {
 
 	List<Tickling> getInbox(String memberNumber);
 
+	List<Object> getInformationId(String memberNumber);
+
+	void saveOrUpdate(Object entity);
+
 }
