@@ -23,16 +23,16 @@ import com.member.services.back.GiftsDetailsService;
 import com.member.services.back.InformationService;
 import com.member.services.back.ParameterService;
 import com.member.util.CommonUtil;
-@Service("GiftsDetailsServiceImpl")
-public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 
-	
+@Service("GiftsDetailsServiceImpl")
+public class GiftsDetailsServiceImpl implements GiftsDetailsService {
+
 	@Resource(name = "GiftsDaoImpl")
 	private GiftsDao giftsDao;
-	
+
 	@Resource(name = "InformationServiceImpl")
 	public InformationService informationService;
-	
+
 	@Resource(name = "ParameterServiceImpl")
 	public ParameterService parameterService;
 
@@ -40,12 +40,13 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 	@Transactional(readOnly = true)
 	public List<SendGiftsDetails> getGiftsDetailsList(Integer countNumber,
 			BatchNoEnum batchNo) {
-		String hql="from SendGiftsDetails mr where mr.countNumber<? and  mr.batchNo=? and mr.stauts=0";
+		String hql = "from SendGiftsDetails mr where mr.countNumber<? and  mr.batchNo=? and mr.stauts=0";
 		List arguments = new ArrayList();
 		arguments.add(countNumber);
 		arguments.add(batchNo);
-		List<SendGiftsDetails> result = (List<SendGiftsDetails>)giftsDao.queryByHql(hql,arguments);
-		if(result!=null && result.size()>0){
+		List<SendGiftsDetails> result = (List<SendGiftsDetails>) giftsDao
+				.queryByHql(hql, arguments);
+		if (result != null && result.size() > 0) {
 			return result;
 		}
 		return null;
@@ -55,27 +56,31 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public String getCountGoldAll(Integer countNumber, BatchNoEnum batchNo) {
-		String sql="select SUM(mr.goldMoney) from SendGiftsDetails mr where mr.countNumber<? and  mr.batchNo=? and mr.stauts=0";
+		String sql = "select SUM(mr.goldMoney) from SendGiftsDetails mr where mr.countNumber<? and  mr.batchNo=? and mr.stauts=0";
 		List arguments = new ArrayList();
 		arguments.add(countNumber);
 		arguments.add(batchNo);
-		List<?> result = giftsDao.queryByHql(sql,arguments);
-		if(result!=null && result.size()>0){
+		List<?> result = giftsDao.queryByHql(sql, arguments);
+		if (result != null && result.size() > 0) {
 			return result.get(0).toString();
 		}
-		
+
 		return null;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void senGold(SendGiftsDetails ss) {
-	
-		Information	information = informationService.getInformationByNumber(ss.getNumber());
-		GiftsDetails giftsDetails = parameterService.getGiftsDetailsById(ss.getGiftsDetailsId());
-		BigDecimal shoppingMoney = information.getShoppingMoney().add(new BigDecimal(ss.getGoldMoney()));
-		BigDecimal shoppingAccumulative = information.getShoppingAccumulative().add(new BigDecimal(ss.getGoldMoney()));
-		giftsDetails.setPointNumber(giftsDetails.getPointNumber()+1);
+
+		Information information = informationService.getInformationByNumber(ss
+				.getNumber());
+		GiftsDetails giftsDetails = parameterService.getGiftsDetailsById(ss
+				.getGiftsDetailsId());
+		BigDecimal shoppingMoney = information.getShoppingMoney().add(
+				new BigDecimal(ss.getGoldMoney()));
+		BigDecimal shoppingAccumulative = information.getShoppingAccumulative()
+				.add(new BigDecimal(ss.getGoldMoney()));
+		giftsDetails.setPointNumber(giftsDetails.getPointNumber() + 1);
 		information.setShoppingMoney(shoppingMoney);
 		information.setShoppingAccumulative(shoppingAccumulative);
 		AccountDetails shopingDetails = new AccountDetails();
@@ -96,13 +101,44 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService{
 		shopingDetails.setPay(new BigDecimal(0));
 
 		/** 备注 */
-		shopingDetails.setRedmin(ss.getName()+"的第"+ss.getPointNumber()+"期次礼包释放");
+		shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
+				+ "期次礼包释放");
 		/** 用户ID */
 		shopingDetails.setUserId(information.getId());
 		giftsDao.saveOrUpdate(information);
 		giftsDao.saveOrUpdate(giftsDetails);
 		giftsDao.saveOrUpdate(shopingDetails);
 		giftsDao.delete(ss);
-		
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Boolean DeleteGifts(String number) {
+		try {
+			String hql = "from GiftsDetails mr where mr.number=?";
+			List arguments = new ArrayList();
+			arguments.add(number);
+			List<GiftsDetails> result = (List<GiftsDetails>) giftsDao
+					.queryByHql(hql, arguments);
+			if (result != null && result.size() > 0) {
+				for (GiftsDetails gs : result) {
+					giftsDao.delete(gs);
+				}
+			}
+			String Sendhql = "from SendGiftsDetails md where md.number=?";
+			List<SendGiftsDetails> senResult = (List<SendGiftsDetails>) giftsDao
+					.queryByHql(Sendhql, arguments);
+			if (senResult != null && senResult.size() > 0) {
+				for (SendGiftsDetails sd : senResult) {
+					giftsDao.delete(sd);
+				}
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 }
