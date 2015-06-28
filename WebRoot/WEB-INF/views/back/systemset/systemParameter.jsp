@@ -82,7 +82,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputSuccess">将金币转换最小金额:</label>
+              <label class="control-label" for="inputSuccess">葛粮币转换最小金额:</label>
                <div class="controls">
                 <div class="input-append">
                   <input type="text" name="glbMin" value="${bean.glbMin}" onfocusout="formatter(this)" class="span11">
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputSuccess">将金币转换手续费:</label>
+              <label class="control-label" for="inputSuccess">葛粮币转换手续费:</label>
                <div class="controls">
                 <div class="input-append">
                   <input type="text" name="glbTake" value="${bean.glbTake}" onfocusout="formatter(this)" class="span11">
@@ -98,7 +98,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputSuccess">积分充值最小金额:</label>
+              <label class="control-label" for="inputSuccess">葛粮币充值最小金额:</label>
                <div class="controls">
                 <div class="input-append">
                   <input type="text" name="scoreInMin" value="${bean.scoreInMin}" onfocusout="formatter(this)" class="span11">
@@ -106,7 +106,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="inputSuccess">积分充值手续费:</label>
+              <label class="control-label" for="inputSuccess">葛粮币充值手续费:</label>
                <div class="controls">
                 <div class="input-append">
                   <input type="text" name="scoreInTake" value="${bean.scoreInTake}" onfocusout="formatter(this)" class="span11">
