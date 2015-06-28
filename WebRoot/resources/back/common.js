@@ -325,7 +325,25 @@ function saveLimeteDeclaration(sFormId){
 	}
 }
 
-function saveNotice(sFormId){
+function saveNotice(title,category,content){
+	var reqObj={};
+	reqObj["title"]=title;
+	reqObj["category"]=category;
+	reqObj["content"]=content;
+    var result = ajaxRequestForJsonGetJson("/NoticeManagerController/releaseNotice.do", reqObj);
+	//var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='showNoticeForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
+function editNotice(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){
 		alert(result.msg);
@@ -711,7 +729,7 @@ function logout(reqUrl){
 	window.location.href=bathPath+reqUrl;
 }
 
-function editNotice(arg_id,arg_title,arg_category,arg_content){
+function editNoticeWin(arg_id,arg_title,arg_category,arg_content){
 	document.getElementById("noticeListId").value = arg_id;
 	document.getElementById("editNotice_title").value = arg_title;
 	document.getElementById("editNotice_category").value = arg_category;
