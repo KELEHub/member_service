@@ -3,6 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+	new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('area4');
+});
+</script>
+
 <div class="row-fluid">
 	<div class="span6">
 		<div class="widget-box">
@@ -49,8 +55,9 @@
 						<div class="widget-content">
 							<div class="control-group">
 								<div class="controls">
-									<textarea class="textarea_editor span12" rows="6"
-										name="content"></textarea>
+								<textarea cols="50" id="area4" name="content"></textarea>
+<!--									<textarea class="textarea_editor span12" rows="6"-->
+<!--										name="content"></textarea>-->
 								</div>
 							</div>
 						</div>

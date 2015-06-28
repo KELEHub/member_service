@@ -43,6 +43,7 @@
 <script src="<%=basePath%>/resources/back/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath%>/resources/back/js/matrix.tables.js"></script> 
 <script src="<%=basePath%>/resources/back/js/matrix.interface.js"></script>
+<script src="<%=basePath%>/resources/back/js/nicEdit.js"></script>
 <script src="<%=basePath%>/resources/back/js/ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/vendor/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/jquery.iframe-transport.js"></script>
