@@ -211,6 +211,9 @@ public class AccountDetailsController {
 		if("activateMember".equals(project)){
 			return ProjectEnum.activateMember;
 		}
+		if("cost".equals(project)){
+			return ProjectEnum.cost;
+		}
 		return null;
 	}
 	
@@ -238,6 +241,9 @@ public class AccountDetailsController {
 		}
 		if(project.equals(ProjectEnum.activateMember)){
 			return "激活会员";
+		}
+		if(project.equals(ProjectEnum.cost)){
+			return "扣费";
 		}
 		return null;
 	}

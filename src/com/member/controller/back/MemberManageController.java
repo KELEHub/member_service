@@ -124,7 +124,7 @@ public class MemberManageController {
 		BigDecimal sum = new BigDecimal(0.00);
 		BigDecimal shoppingMoneySurplus = new BigDecimal(0.00);
 		BigDecimal repeatedMoneySurplus = new BigDecimal(0.00);
-		if (form.getIsService()==1){
+		if (form.getIsService()==1 && form.getLeaderServiceId()!= null){
 			List<Information> memberInfo = memberManageService.getMemberInfoById(form.getLeaderServiceId());
 			serviceAD.setKindData(KindDataEnum.points);
 			serviceAD.setDateNumber(CommonUtil.getDateNumber());
@@ -138,11 +138,12 @@ public class MemberManageController {
 			serviceAD.setUserNumber(form.getLeaderServiceNumber());
 			serviceAD.setCreateTime(new Date());
 		}
-		if (form.getRecommendId()!=null){
+		if (form.getRecommendNumber()!=null){
 			//查询是否需要删除礼包，如果需要，则查询账户明细表
-			Boolean ifDelete = giftsDetailsService.DeleteGifts(form.getRecommendNumber());
+			Boolean ifDelete = giftsDetailsService.DeleteGifts(form.getNumber());
 			if (ifDelete){
-				List<AccountDetails> adList = memberManageService.getAccountDetailsByProjectAndUserId(ProjectEnum.fromgifts, form.getRecommendId());
+				List<AccountDetails> adList = memberManageService.getAccountDetailsByProjectAndUserId(ProjectEnum.fromgifts,form.getId());
+				
 				for (AccountDetails ad : adList){
 					sum = sum.add(ad.getIncome());
 				}
