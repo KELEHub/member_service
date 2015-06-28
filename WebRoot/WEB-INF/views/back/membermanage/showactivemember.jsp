@@ -72,7 +72,14 @@
 									<td>${item.activeDate }</td>
 									<td>
 										<button class="btn" onclick="doMemberShowDetail('${item.id}')">详细信息</button>
-										<button class="btn" onclick="doMemberLock('${item.id}')">锁定</button>
+										<button class="btn" onclick="doMemberLock('${item.id}')">
+										<c:if test="${item.isLock eq 1 }">
+											<font color="red">解锁</font>
+										</c:if>
+										<c:if test="${item.isLock eq 0 }">
+											锁定
+										</c:if>
+										</button>
 										<button class="btn" onclick="doResetPwd('${item.id}')">密码重置</button>
 										<button class="btn" onclick="deleteActiveMember('${item.id}','${item.number}','${item.isService}','${item.recommendId}','${item.recommendNumber}','${item.leaderServiceId}','${item.leaderServiceNumber}')">删除会员</button>
 									</td>
