@@ -733,7 +733,8 @@ function editNoticeWin(arg_id,arg_title,arg_category,arg_content){
 	document.getElementById("noticeListId").value = arg_id;
 	document.getElementById("editNotice_title").value = arg_title;
 	document.getElementById("editNotice_category").value = arg_category;
-	document.getElementById("editNotice_content").value = arg_content;
+//	document.getElementById("editNotice_content").value = arg_content;
+	ndinstance.setContent(arg_content); 
 }
 
 function doDeleteNotice(noticeId){
