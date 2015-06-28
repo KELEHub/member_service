@@ -18,7 +18,7 @@ public interface ServiceManagerService {
 
 	void forbiddenService(Integer isLock, Integer id);
 
-	void updateApplyState(Integer state, Integer id);
+	void updateApplyState(Integer state, Integer id, String failureCause);
 
 	void saveOrUpdate(Object obj);
 

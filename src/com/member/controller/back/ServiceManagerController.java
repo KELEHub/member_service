@@ -77,9 +77,9 @@ public class ServiceManagerController {
 	
 	@RequestMapping(value = "/applyCheckFailure",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> applyCheckFailure(@RequestBody MemberSearchForm form,Model model){
+	public BaseResult<Void> applyCheckFailure(@RequestBody ApplyServiceForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerService.updateApplyState(1,form.getId());
+		serviceManagerService.updateApplyState(1,form.getId(),form.getFailureCause());
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;
@@ -90,7 +90,7 @@ public class ServiceManagerController {
 	public BaseResult<Void> applyCheckSuccess(@RequestBody ApplyServiceForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		//更改申请表信息，更新上级报单中心的information信息
-		serviceManagerService.updateApplyState(1,form.getId());
+		serviceManagerService.updateApplyState(1,form.getId(),"");
 		Information superiorInfo = serviceManagerService.getServiceById(form.getSubmitId());
 		superiorInfo.setRepeatedMoney(superiorInfo.getRepeatedMoney().add(new BigDecimal(50)));
 		superiorInfo.setRepeatedAccumulative(superiorInfo.getRepeatedAccumulative().add(new BigDecimal(50)));

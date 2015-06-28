@@ -21,6 +21,17 @@ public class ApplyServiceForm {
 	
 	/**提交会员的二级密码 */
 	private String protectPassword;
+	
+	/**申请失败原因 */
+	private String failureCause;
+
+	public String getFailureCause() {
+		return failureCause;
+	}
+
+	public void setFailureCause(String failureCause) {
+		this.failureCause = failureCause;
+	}
 
 	public Integer getId() {
 		return id;

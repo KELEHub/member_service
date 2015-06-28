@@ -43,10 +43,6 @@ public class ApplyService {
 	@Column(name="applyNumber")
 	private String applyNumber;
 	
-	/**申请描述 */
-	@Column(name="applyDesc")
-	private String applyDesc;
-
 	/**申请时间 */
 	@Column(name="applyDate")
 	private Date applyDate;
@@ -59,21 +55,9 @@ public class ApplyService {
 	@Column(name="state",columnDefinition="INT default 0")
 	private Integer state;
 	
-	/**目标，用途未知 */
-	@Column(name="target")
-	private Integer target;
-	
-	/**描述 */
-	@Column(name="description")
-	private String description;
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	/**申请失败原因 */
+	@Column(name="failureCause")
+	private String failureCause;
 
 	public Integer getId() {
 		return id;
@@ -123,14 +107,6 @@ public class ApplyService {
 		this.applyNumber = applyNumber;
 	}
 
-	public String getApplyDesc() {
-		return applyDesc;
-	}
-
-	public void setApplyDesc(String applyDesc) {
-		this.applyDesc = applyDesc;
-	}
-
 	public Date getApplyDate() {
 		return applyDate;
 	}
@@ -155,12 +131,12 @@ public class ApplyService {
 		this.state = state;
 	}
 
-	public Integer getTarget() {
-		return target;
+	public String getFailureCause() {
+		return failureCause;
 	}
 
-	public void setTarget(Integer target) {
-		this.target = target;
+	public void setFailureCause(String failureCause) {
+		this.failureCause = failureCause;
 	}
 
 }

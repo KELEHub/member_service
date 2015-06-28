@@ -821,22 +821,6 @@ function forbiddenService(serviceId){
 	}
 }
 
-function checkFailure(applyId){
-	if (window.confirm('您确定该申请失败？')) {
-		var reqObj = {};
-		reqObj["id"] = applyId;
-		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/applyCheckFailure.do",reqObj);
-		if (result.success) {
-			alert(result.msg);
-			$('#myModal').modal('hide');
-			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-			});
-		}
-	}
-}
-
 function checkSuccess(id,submitId,submitNumber,applyId,applyNumber){
 	if (window.confirm('您确定该申请通过？')) {
 		var reqObj = {};
@@ -903,5 +887,22 @@ function deleteActiveMember(memberId,number,isService,recommendId,recommendNumbe
 				resetTable();
 			});
 		}
+	}
+}
+
+function editFailureCause(arg_id){
+	document.getElementById("applyCheckFailureId").value = arg_id;
+}
+
+function checkFailure(sFormId){
+	var result = ajaxRequestForFormGetJson(sFormId);
+	if(result.success){
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
 	}
 }

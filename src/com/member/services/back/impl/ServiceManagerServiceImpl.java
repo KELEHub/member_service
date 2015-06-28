@@ -74,10 +74,11 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void updateApplyState(Integer state,Integer id) {
-		String hql = "update ApplyService set state=? where id=?";
+	public void updateApplyState(Integer state,Integer id,String failureCause) {
+		String hql = "update ApplyService set state=?,failureCause=? where id=?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(state);
+		list.add(failureCause);
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
 	}

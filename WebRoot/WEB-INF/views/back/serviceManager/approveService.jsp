@@ -33,11 +33,14 @@
 									<td>${item.applyNumber}</td>
 									<td>${item.submitNumber}</td>
 									<td>${item.applyDate}</td>
-									<td>${item.state}</td>
+									<td>
+									<c:if test="${item.state eq 0}">未处理</c:if> 
+									<c:if test="${item.state eq 1}">已处理</c:if>
+									</td>
 									<td>${item.submitReason}</td>
 									<td>
 									<c:if test="${item.state eq 0}">
-										<button class="btn btn-large" onclick="checkFailure('${item.id}')">审核失败</button>
+										<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editFailureCause('${item.id}')">审核失败</a>
 										<button class="btn btn-large" onclick="checkSuccess('${item.id}','${item.submitId}','${item.submitNumber}','${item.applyId}','${item.applyNumber}')">审核通过</button>
 									</c:if>
 									</td>
@@ -49,4 +52,30 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div id="myModal" class="modal hide">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">×</button>
+		<h3>失败原因</h3>
+	</div>
+	<div class="widget-content nopadding">
+		<form action="/ServiceManagerController/applyCheckFailure.do" method="post"
+			id="applyCheckFailureForm" class="form-horizontal">
+			<input type="hidden" class="span11" name="id" id="applyCheckFailureId" />
+			<div class="control-group">
+					<div class="control-group">
+						<div class="controls">
+							<textarea class="textarea_editor span12" rows="6" name="failureCause"
+								style="width:220;"></textarea>
+						</div>
+					</div>
+			</div>
+		</form>
+	</div>
+	<div class="form-actions">	
+	<button type="submit" class="btn btn-success" onclick="checkFailure('applyCheckFailureForm')">
+		提交
+	</button>
+</div>
 </div>

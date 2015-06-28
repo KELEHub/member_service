@@ -60,7 +60,7 @@
 				</label>
 				<div class="controls">
 					<input type="text" class="span11" name="title"
-						id="editNotice_title" style="width:220;"/>
+						id="editNotice_title" style="width:220;height: 25"/>
 				</div>
 			</div>
 			<div class="control-group">
