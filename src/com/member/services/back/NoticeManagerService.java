@@ -15,4 +15,6 @@ public interface NoticeManagerService {
 
 	void deleteNotice(NoticeForm form);
 
+	List<Notice> getNoticeInfo(NoticeForm form);
+
 }

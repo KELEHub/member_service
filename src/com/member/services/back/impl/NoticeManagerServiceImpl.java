@@ -56,4 +56,11 @@ public class NoticeManagerServiceImpl implements NoticeManagerService {
 		list.add(Integer.parseInt(form.getNoticeId()));
 		releaseNoticeDao.executeHqlUpdate(hql, list);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Notice> getNoticeInfo(NoticeForm form) {
+		return (List<Notice>) releaseNoticeDao.queryByHql(
+				HqlNoticeManager.getNoticeInfo,Integer.parseInt(form.getNoticeId()));
+	}
 }

@@ -72,4 +72,14 @@ public class NoticeManagerController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/getNoticeInfo",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> getNoticeInfo(@RequestBody NoticeForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		List<Notice> noticeList = noticeManagerService.getNoticeInfo(form);
+		result.setElseExtend(noticeList.get(0));
+		result.setSuccess(true);
+		return result;
+	}
+	
 }

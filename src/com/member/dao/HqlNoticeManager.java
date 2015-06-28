@@ -8,4 +8,6 @@ public class HqlNoticeManager {
 		"from Notice where category='公告'";
 	public final static String getFAQ=
 		"from Notice where category='常见问题'";
+	public final static String getNoticeInfo=
+		"from Notice where id=?";
 }

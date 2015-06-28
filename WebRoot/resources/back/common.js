@@ -735,12 +735,18 @@ function logout(reqUrl){
 	window.location.href=bathPath+reqUrl;
 }
 
-function editNoticeWin(arg_id,arg_title,arg_category,arg_content){
-	document.getElementById("noticeListId").value = arg_id;
-	document.getElementById("editNotice_title").value = arg_title;
-	document.getElementById("editNotice_category").value = arg_category;
-//	document.getElementById("editNotice_content").value = arg_content;
-	ndinstance1.setContent(arg_content); 
+function editNoticeWin(arg_id) {
+	var reqObj = {};
+	reqObj["noticeId"] = arg_id;
+	var result = ajaxRequestForJsonGetJson(
+			"/NoticeManagerController/getNoticeInfo.do", reqObj);
+	if (result.success) {
+		document.getElementById("noticeListId").value = result.elseExtend.id;
+		document.getElementById("editNotice_title").value = result.elseExtend.title;
+		document.getElementById("editNotice_category").value = result.elseExtend.category;
+		// document.getElementById("editNotice_content").value = arg_content;
+		ndinstance1.setContent(result.elseExtend.content);
+	}
 }
 
 function doDeleteNotice(noticeId){

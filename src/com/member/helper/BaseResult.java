@@ -10,6 +10,8 @@ public class BaseResult<T> {
 	private String msg;
 	private String codeName;
 	private String extension;
+	private Object elseExtend;
+	
 	private static final String CODE_SUCCESS = "global_success";
 
 	private static final String CODE_FAIL_DEFALUT = "global_fail";
@@ -74,6 +76,14 @@ public class BaseResult<T> {
 	public BaseResult<T> setMsgCode(String msgCode) {
 		this.msgCode = msgCode;
 		return this;
+	}
+
+	public Object getElseExtend() {
+		return elseExtend;
+	}
+
+	public void setElseExtend(Object elseExtend) {
+		this.elseExtend = elseExtend;
 	}
 
 	public BaseResult<T> formatMessage(MessageSource msgSource) {
