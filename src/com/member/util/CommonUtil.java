@@ -90,6 +90,32 @@ public class CommonUtil {
 		return Integer.valueOf(no);
 	}
 	
+	/**
+	 * 获取当前年
+	 * @return
+	 */
+	public static Integer getYearNumber(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		String no = nowDateStr.substring(0,4);
+		return Integer.valueOf(no);
+	}
+	
+	/**
+	 * 获取当前月
+	 * @return
+	 */
+	public static Integer getMounthNumber(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		String no = nowDateStr.substring(4,6);
+		return Integer.valueOf(no);
+	}
+	
 	
 	/**
 	 * 批次号batchNo获取
