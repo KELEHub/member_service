@@ -117,24 +117,37 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public Boolean DeleteGifts(String number) {
 		try {
-			String hql = "from GiftsDetails mr where mr.number=?";
+			String selectHql = "from Information t where t.number=?";
 			List arguments = new ArrayList();
 			arguments.add(number);
-			List<GiftsDetails> result = (List<GiftsDetails>) giftsDao
-					.queryByHql(hql, arguments);
-			if (result != null && result.size() > 0) {
-				for (GiftsDetails gs : result) {
-					giftsDao.delete(gs);
+			List<Information> selectResult = (List<Information>) giftsDao
+			.queryByHql(selectHql, arguments);
+			Information info = null;
+			if(selectResult!=null && selectResult.size()>0){
+				info=selectResult.get(0);
+			}
+		
+			if(info!=null){
+				String hql = "from GiftsDetails mr where mr.childId=?";
+				List argumentsId = new ArrayList();
+				argumentsId.add(info.getId());
+				List<GiftsDetails> result = (List<GiftsDetails>) giftsDao
+						.queryByHql(hql, argumentsId);
+				if (result != null && result.size() > 0) {
+					for (GiftsDetails gs : result) {
+						giftsDao.delete(gs);
+					}
+				}
+				String Sendhql = "from SendGiftsDetails md where md.childId=?";
+				List<SendGiftsDetails> senResult = (List<SendGiftsDetails>) giftsDao
+						.queryByHql(Sendhql, argumentsId);
+				if (senResult != null && senResult.size() > 0) {
+					for (SendGiftsDetails sd : senResult) {
+						giftsDao.delete(sd);
+					}
 				}
 			}
-			String Sendhql = "from SendGiftsDetails md where md.number=?";
-			List<SendGiftsDetails> senResult = (List<SendGiftsDetails>) giftsDao
-					.queryByHql(Sendhql, arguments);
-			if (senResult != null && senResult.size() > 0) {
-				for (SendGiftsDetails sd : senResult) {
-					giftsDao.delete(sd);
-				}
-			}
+			
 			return true;
 		} catch (Exception e) {
 			return false;
