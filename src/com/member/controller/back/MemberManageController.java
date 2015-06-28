@@ -128,6 +128,7 @@ public class MemberManageController {
 			List<Information> memberInfo = memberManageService.getMemberInfoById(form.getLeaderServiceId());
 			serviceAD.setKindData(KindDataEnum.points);
 			serviceAD.setDateNumber(CommonUtil.getDateNumber());
+			serviceAD.setCountNumber(CommonUtil.getCountNumber());
 			serviceAD.setProject(ProjectEnum.cost);
 			serviceAD.setPointbalance(memberInfo.get(0).getShoppingMoney());
 			serviceAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());
@@ -148,6 +149,7 @@ public class MemberManageController {
 				List<Information> memberInfo = memberManageService.getMemberInfoById(form.getRecommendId());
 				memberAD.setKindData(KindDataEnum.points);
 				memberAD.setDateNumber(CommonUtil.getDateNumber());
+				memberAD.setCountNumber(CommonUtil.getCountNumber());
 				memberAD.setProject(ProjectEnum.cost);
 				memberAD.setPointbalance(memberInfo.get(0).getShoppingMoney());
 				memberAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());

@@ -110,6 +110,8 @@ public class ServiceManagerController {
 		shopingDetails.setKindData(KindDataEnum.points);
 		/**日期类别统计 */
 		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+		/**流水号 */
+		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
 		/**项目 */
 		shopingDetails.setProject(ProjectEnum.servicepointsforone);
 		/**积分余额 */

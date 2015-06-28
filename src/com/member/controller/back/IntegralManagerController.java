@@ -117,6 +117,8 @@ public class IntegralManagerController {
 					accountDetail.setKindData(KindDataEnum.points);
 					/**日期类别统计 */
 					accountDetail.setDateNumber(CommonUtil.getDateNumber());
+					/**流水号 */
+					accountDetail.setCountNumber(CommonUtil.getCountNumber());
 					/**项目 */
 					accountDetail.setProject(ProjectEnum.servicepointsformuch);
 					/**积分余额 */
