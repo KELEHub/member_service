@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.member.beans.back.MenuBean;
 import com.member.common.config.FrameConfig;
+import com.member.entity.BankService;
 import com.member.entity.Information;
 import com.member.form.front.MemberOperForm;
 import com.member.form.front.MemberUpdateForm;
@@ -138,6 +139,11 @@ public class MemberLoginController {
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		Object userId = logonUserMap.get("userId");
 		Information result = institutionService.getInformationById((Integer)userId);
+		
+		// 取得银行卡的信息
+		List<BankService> bankServiceList = institutionService
+				.getBankServiceInfo();
+		model.addAttribute("bank", bankServiceList);
 		model.addAttribute("result", result);
 		return "front/memberinfo/showmemberinfo";
 	}

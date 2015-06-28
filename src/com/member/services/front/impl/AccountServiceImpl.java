@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.ChargeDao;
 import com.member.dao.InformationDao;
+import com.member.dao.ParameterDao;
 import com.member.dao.WithdrawalsDao;
 import com.member.entity.Charge;
 import com.member.entity.Information;
+import com.member.entity.SystemParameter;
 import com.member.entity.Withdrawals;
 import com.member.form.front.MemberChargeApplyForm;
 import com.member.form.front.MemberWithdrawalsApplyForm;
@@ -35,6 +37,9 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Resource(name = "InformationDaoImpl")
 	private InformationDao informationDao;
+	
+	@Resource(name = "ParameterDaoImpl")
+	private ParameterDao parameterDao;
 	
 	@Override
 	public List<Charge> getMemberChargeInfoByUserName(String userName) {
@@ -59,6 +64,21 @@ public class AccountServiceImpl implements AccountService{
 		if(!isRightPwd){
 			result.setMsg("您输入的二级密码不正确");
 			result.setSuccess(false);
+			return result;
+		}
+		
+		//充值的判断
+		BigDecimal tradeAmt = form.getChageAmt();
+		
+		//取得系统参数
+		SystemParameter syspar = getSystemParameter();
+		
+		/**	积分充值最小金额: */
+		BigDecimal scoreInMin = syspar.getScoreInMin();
+		
+		if(tradeAmt.compareTo(scoreInMin)==-1){
+			result.setSuccess(false);
+			result.setMsg("低于单笔充值最低金额.");
 			return result;
 		}
 		
@@ -117,6 +137,33 @@ public class AccountServiceImpl implements AccountService{
 		if(!isRightPwd){
 			result.setMsg("您输入的二级密码不正确");
 			result.setSuccess(false);
+			return result;
+		}
+		
+		//提现的业务判断
+		// 提现金额
+		BigDecimal tradeAmt = form.getWithdrawalsAmt();
+		SystemParameter syspar = getSystemParameter();
+		
+		String goldFlg = syspar.getGoldFlg();
+		if("close".equals(goldFlg) || "".equals(goldFlg)){
+			result.setSuccess(false);
+			result.setMsg("现在不允许提现申请,请联系平台确认.");
+			return result;
+		}
+		
+		BigDecimal goldMax = syspar.getGoldMax();
+		BigDecimal goldMin = syspar.getGoldMin();
+
+		if (tradeAmt.compareTo(goldMax) == 1) {
+			result.setSuccess(false);
+			result.setMsg("超过单笔提现最大金额.");
+			return result;
+		}
+
+		if (tradeAmt.compareTo(goldMin) == -1) {
+			result.setSuccess(false);
+			result.setMsg("低于单笔提现最低金额.");
 			return result;
 		}
 		
@@ -185,5 +232,14 @@ public class AccountServiceImpl implements AccountService{
 			return null;
 		}
 	}
-
+	
+	private SystemParameter getSystemParameter(){
+		String hqlQuery = " from SystemParameter s";
+		List result = parameterDao.queryByHql(hqlQuery);
+		if(result!=null){
+			return (SystemParameter) result.get(0);
+		}else{
+			return null;
+		}
+	}
 }

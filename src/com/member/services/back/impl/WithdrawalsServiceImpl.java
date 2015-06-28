@@ -114,6 +114,12 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		BigDecimal tradeAmt = singleResult.getTradeAmt();
 		
 		SystemParameter syspar = getSystemParameter();
+		String goldFlg = syspar.getGoldFlg();
+		if("close".equals(goldFlg) || "".equals(goldFlg)){
+			result.setSuccess(false);
+			result.setMsg("现在不允许提现申请,请联系平台确认.");
+			return result;
+		}
 		
 		BigDecimal goldMax = syspar.getGoldMax();
 		BigDecimal goldMin = syspar.getGoldMin();
