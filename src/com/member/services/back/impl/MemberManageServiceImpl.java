@@ -79,7 +79,11 @@ public class MemberManageServiceImpl implements MemberManageService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateMemberLockFlag(Integer id) {
 		Information member = getMemberById(id);
-		member.setIsLock(1);
+		if(1==member.getIsLock()){
+			member.setIsLock(0);
+		}else{
+			member.setIsLock(1);
+		}
 		informationDao.update(member);
 	}
 
@@ -87,7 +91,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateMemberPassword(Integer id) {
 		Information member = getMemberById(id);
-		member.setPassword("123456");
+		member.setPassword("123");
 		informationDao.update(member);
 	}
 
