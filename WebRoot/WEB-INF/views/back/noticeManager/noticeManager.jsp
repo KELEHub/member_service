@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
 	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('editNotice_content');
-	ndinstance = ndPanel.nicInstances[0];
+	ndinstance1 = ndPanel.nicInstances[0];
 </script>
 
   <div id="content-header">
@@ -57,8 +57,8 @@
 		<h3>修改公告</h3>
 	</div>
 	<div class="widget-content nopadding">
-		<form action="/NoticeManagerController/editNotice.do" method="post"
-			id="editNoticeForm" class="form-horizontal">
+<!--		<form action="/NoticeManagerController/editNotice.do" method="post"-->
+<!--			id="editNoticeForm" class="form-horizontal">-->
 			<input type="hidden" class="span11" name="noticeId" id="noticeListId" />
 			<div class="control-group">
 				<label class="control-label">
@@ -99,10 +99,10 @@
 						</div>
 					</div>
 			</div>
-		</form>
+<!--		</form>-->
 	</div>
 	<div class="form-actions">
-	<button type="submit" class="btn btn-success" onclick="editNotice('editNoticeForm')">
+	<button type="submit" class="btn btn-success" onclick="editNotice(document.getElementById('noticeListId').value,document.getElementById('editNotice_title').value,document.getElementById('editNotice_category').value,ndinstance1.getContent())">
 		确认修改
 	</button>
 </div>

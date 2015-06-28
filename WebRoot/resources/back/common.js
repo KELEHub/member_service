@@ -343,8 +343,14 @@ function saveNotice(title,category,content){
 	}
 }
 
-function editNotice(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
+function editNotice(noticeId,title,category,content){
+	var reqObj={};
+	reqObj["noticeId"]=noticeId;
+	reqObj["title"]=title;
+	reqObj["category"]=category;
+	reqObj["content"]=content;
+    var result = ajaxRequestForJsonGetJson("/NoticeManagerController/editNotice.do", reqObj);
+	//var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){
 		alert(result.msg);
 		$('#myModal').modal('hide');
@@ -734,7 +740,7 @@ function editNoticeWin(arg_id,arg_title,arg_category,arg_content){
 	document.getElementById("editNotice_title").value = arg_title;
 	document.getElementById("editNotice_category").value = arg_category;
 //	document.getElementById("editNotice_content").value = arg_content;
-	ndinstance.setContent(arg_content); 
+	ndinstance1.setContent(arg_content); 
 }
 
 function doDeleteNotice(noticeId){
