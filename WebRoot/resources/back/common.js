@@ -249,13 +249,19 @@ function saveMemberDetail(sFormId) {
 }
 
 function doMemberLock(memberId){
-	if (window.confirm('您确定要锁定该用户么？')) {
+	if (window.confirm('您确定要操作该用户么？')) {
 		var reqObj = {};
 		reqObj["id"] = memberId;
 		var result = ajaxRequestForJsonGetJson("/membermanage/doMemberLock.do",
 				reqObj);
 		if (result.success) {
 			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
 		}
 	}
 }

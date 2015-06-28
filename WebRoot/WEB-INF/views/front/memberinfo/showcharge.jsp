@@ -40,7 +40,7 @@
 					<div class="control-group">
 						<label class="control-label">充值金额</label>
 						<div class="controls">
-							<input type="text" name="chageAmt" />
+							<input type="text" name="chageAmt" value="" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="control-group">
@@ -52,7 +52,7 @@
 					<div class="control-group">
 						<label class="control-label">二级密码</label>
 						<div class="controls">
-							<input type="password" placeholder="请输入您的交易二级密码" name="protectPassword" value=""/>
+							<input type="password" placeholder="请输入您的交易二级密码" name="protectPassword" value="" autocomplete="off"/>
 						</div>
 					</div>
 				</form>
