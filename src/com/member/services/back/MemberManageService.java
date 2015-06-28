@@ -26,7 +26,7 @@ public interface MemberManageService {
 	public void deleteMember(MemberSaveForm form);
 	
 	List<AccountDetails> getAccountDetailsByProjectAndUserId(
-			ProjectEnum project, Integer userId);
+			ProjectEnum project,Integer childId);
 
 	void deleteActiveMember(Integer id, String number, Integer isService, Integer recommendId,
 			Integer leaderServiceId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
