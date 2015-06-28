@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.member.entity.BankService;
 import com.member.entity.Information;
 import com.member.entity.Institution;
-import com.member.entity.SystemParameter;
 import com.member.form.front.ActivateForm;
 import com.member.form.front.RegisterForm;
 import com.member.helper.BaseResult;
