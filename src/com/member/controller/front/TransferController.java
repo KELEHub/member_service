@@ -79,7 +79,7 @@ public class TransferController {
 				  return result;
 			  }
 			  
-			  if(ad.getCrmMoney().compareTo(getValue(form.getToGoldMoney().replace(",", "")))==-1){
+			  if(ad.getCrmMoney().compareTo(getValue(form.getToGoldMoney().replace(",", "")).add(getValue(form.getToGoldMoney().replace(",", "")).multiply(parameter.getScoreTake())))==-1){
 				  result.setMsg("葛粮币余额不足");
 				  return result;
 			  }

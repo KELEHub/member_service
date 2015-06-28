@@ -81,7 +81,7 @@ public class ConvertController {
 			  }else{
 				  mid = ad.getShoppingMoney();
 			  }
-			  if(mid.compareTo(getValue(form.getToCmrMoney().replace(",", "")).add(parameter.getGlbTake()))==-1){
+			  if(mid.compareTo(getValue(form.getToCmrMoney().replace(",", "")).add(getValue(form.getToCmrMoney().replace(",", "")).multiply(parameter.getGlbTake())))==-1){
 				  result.setMsg("可装换的积分余额不足");
 				  return result;
 			  }
