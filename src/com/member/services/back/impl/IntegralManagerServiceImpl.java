@@ -67,7 +67,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		String hql = "from AccountDetails t where t.project=? or t.project=?";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.fromgifts);
-		arguments.add(ProjectEnum.servicepointsforone);
+		arguments.add(ProjectEnum.servicepointsformuch);
 		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
 		if(result!=null && result.size()>0){
 			return result;
@@ -81,7 +81,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		String hql = "from AccountDetails t where (t.project=? or t.project=?) and t.userNumber=?";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.fromgifts);
-		arguments.add(ProjectEnum.servicepointsforone);
+		arguments.add(ProjectEnum.servicepointsformuch);
 		arguments.add(number);
 		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
 		if(result!=null && result.size()>0){
