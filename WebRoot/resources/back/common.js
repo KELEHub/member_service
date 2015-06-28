@@ -204,6 +204,39 @@ function searchOrderList(sFormId){
 
 function saveMemberDetail(sFormId) {
 	var result = ajaxRequestForFormGetJson(sFormId);
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
+	
+	//处理银行的省市区
+	reqObj["bankProvince"] = provinceMap2.get(parseInt(reqObj["bankProvince"]));
+	reqObj["bankCity"] = provinceMap2.get(parseInt(reqObj["bankCity"]));
+	reqObj["bankCounty"] = provinceMap2.get(parseInt(reqObj["bankCounty"]));
+	//处理联系地址的省市区
+	reqObj["linkProvince"] = provinceMap2.get(parseInt(reqObj["linkProvince"]));
+	reqObj["linkCity"] = provinceMap2.get(parseInt(reqObj["linkCity"]));
+	reqObj["linkCounty"] = provinceMap2.get(parseInt(reqObj["linkCounty"]));
+	
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+			result=data;
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
 	if (result.success) {
 		alert(result.msg);
 		$('#myModal').modal('hide');
@@ -321,7 +354,10 @@ function serchPointHistory(sFormId){
 	resetTable();
 }
 
-
+function initMemberInfoUpdateSelect(){
+	region_init("select_province","select_city","select_area",provinceMap.get($("#bankProvince").val()),provinceMap.get($("#bankCity").val()),provinceMap.get($("#bankCounty").val()));
+	region_init("select_province1","select_city1","select_area1",provinceMap.get($("#linkProvince").val()),provinceMap.get($("#linkCity").val()),provinceMap.get($("#linkCounty").val()));
+}
 
 function saveBank(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
@@ -334,8 +370,6 @@ function saveBank(sFormId){
 		});
 	}
 }
-
-
 
 function deleteBank(bankname){
 	 event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");

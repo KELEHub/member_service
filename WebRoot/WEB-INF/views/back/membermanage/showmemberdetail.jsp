@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script type="text/javascript">
+	initMemberInfoUpdateSelect();
+</script>
 <div id="showmemberdetail" class="modal hide" style="width: 800px;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
@@ -18,7 +21,7 @@
 			</div>
 			<div class="widget-content nopadding">
 			<form action="/membermanage/saveMemberDetail.do" id="saveMemberDetailForm">
-			    <input type="text" name="id" value="${member.id}">
+			    <input type="hidden" name="id" value="${member.id}">
 				<table class="table table-bordered table-striped">
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">会员账号:</td>
@@ -48,6 +51,9 @@
 						<td width="120" style="text-align: right;">分行名称:</td>
 						<td colspan="3">
 						<div class="controls controls-row">
+						        <input type="hidden" id="bankProvince" value="${member.bankProvince}">
+						        <input type="hidden" id="bankCity" value="${member.bankCity}">
+						        <input type="hidden" id="bankCounty" value="${member.bankCounty}">
 								<select id="select_province" name="bankProvince"></select> 
 								<select id="select_city"  name="bankCity"></select>
 								<select id="select_area"  name="bankCounty"></select>
@@ -59,6 +65,9 @@
 						<td width="120" style="text-align: right;">联系地址:</td>
 						<td colspan="3">
 						<div class="controls controls-row">
+						        <input type="hidden" id="linkProvince" value="${member.linkProvince}">
+						        <input type="hidden" id="linkCity" value="${member.linkCity}">
+						        <input type="hidden" id="linkCounty" value="${member.linkCounty}">
 								<select id="select_province1" name="linkProvince"></select>
 							    <select id="select_city1" name="linkCity"></select>
 								<select id="select_area1" name="linkCounty"></select>

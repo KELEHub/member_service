@@ -48,6 +48,7 @@
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/fileUpload/jquery.fileupload.js"></script>
 <script type="text/javascript" src="<%=basePath%>/resources/back/js/lightbox/lightbox.min.js"></script>
+<script src="<%=basePath%>/resources/back/common_map.js"></script>
 <script src="<%=basePath%>/resources/back/bankInfo.js"></script>
 <script src="<%=basePath%>/resources/back/common.js"></script>
 <script type="text/javascript">
@@ -68,7 +69,7 @@
           }
       }
   }
-
+  setProvinceMap();
 // resets the menu selection upon entry to this page:
 function resetMenu() {
    document.gomenu.selector.selectedIndex = 2;

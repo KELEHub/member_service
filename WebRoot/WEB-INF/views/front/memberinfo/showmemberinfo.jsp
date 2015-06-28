@@ -57,15 +57,9 @@
 						<label class="control-label">开户银行</label>
 						<div class="controls">
 								<select name="bankName" id="bankName">
-									<option value="中国农业银行" <c:if test="${result.bankName eq '中国农业银行' }">selected="selected</c:if>>中国农业银行</option>
-									<option value="中国工商银行" <c:if test="${result.bankName eq '中国工商银行' }">selected="selected</c:if>>中国工商银行</option>
-									<option value="中国建设银行" <c:if test="${result.bankName eq '中国建设银行' }">selected="selected</c:if>>中国建设银行</option>
-									<option value="交通银行" <c:if test="${result.bankName eq '交通银行' }">selected="selected</c:if>>交通银行</option>
-									<option value="招商银行" <c:if test="${result.bankName eq '招商银行' }">selected="selected</c:if>>招商银行</option>
-									<option value="Peter Winter" <c:if test="${result.bankName eq 'Peter Winter' }">selected="selected</c:if>>Peter Winter</option>
-									<option value="兴业银行" <c:if test="${result.bankName eq '兴业银行' }">selected="selected</c:if>>兴业银行</option>
-									<option value="中国银行" <c:if test="${result.bankName eq '中国银行' }">selected="selected</c:if>>中国银行</option>
-									<option value="农村商业银行" <c:if test="${result.bankName eq '农村商业银行' }">selected="selected</c:if>>农村商业银行</option>
+								  <c:forEach var="item" items="${bank}">
+								  	<option value="${item.bankName }" <c:if test="${result.bankName eq item.bankName }">selected="selected"</c:if>>${item.bankName }</option>
+								  </c:forEach>
 								</select> 
 						</div>
 					</div>
