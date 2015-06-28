@@ -27,7 +27,7 @@ public class TransferServiceImpl implements TransferService{
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void transferManager(Information from, Information to,BigDecimal goldValue,SystemParameter parameter) {
 		BigDecimal xm = from.getCrmMoney().subtract(goldValue);
-		BigDecimal cm = xm.subtract(parameter.getScoreTake());
+		BigDecimal cm = xm.subtract(goldValue.multiply(parameter.getScoreTake()));
 		from.setCrmMoney(cm);
 		BigDecimal dm = to.getCrmMoney().add(goldValue);
 		BigDecimal history = to.getCrmAccumulative().add(goldValue);
@@ -51,7 +51,7 @@ public class TransferServiceImpl implements TransferService{
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("会员转账,转入账号"+to.getNumber()+",手续费" +parameter.getScoreTake());
+		acFrom.setRedmin("会员转账,转入账号"+to.getNumber()+",手续费" +goldValue.multiply(parameter.getScoreTake()));
 		/**用户ID */
 		acFrom.setUserId(from.getId());
 		AccountDetails acTo = new AccountDetails();
@@ -86,7 +86,7 @@ public class TransferServiceImpl implements TransferService{
 	public void convertManager(Information info, BigDecimal goldValue,
 			SystemParameter parameter) {
 		BigDecimal xm = info.getShoppingMoney().subtract(goldValue);
-		BigDecimal cm = xm.subtract(parameter.getGlbTake());
+		BigDecimal cm = xm.subtract(goldValue.multiply(parameter.getGlbTake()));
 		BigDecimal midCrm = info.getCrmMoney();
 		BigDecimal addcermoney = info.getCrmMoney().add(goldValue);
 		BigDecimal history = info.getCrmAccumulative().add(goldValue);
@@ -111,7 +111,7 @@ public class TransferServiceImpl implements TransferService{
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("积分转换葛粮币减少"+",手续费" +parameter.getGlbTake());
+		acFrom.setRedmin("积分转换葛粮币减少"+",手续费" +goldValue.multiply(parameter.getGlbTake()));
 		/**用户ID */
 		acFrom.setUserId(info.getId());
 		AccountDetails acTo = new AccountDetails();
