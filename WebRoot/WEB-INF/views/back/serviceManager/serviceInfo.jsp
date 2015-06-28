@@ -45,7 +45,7 @@
 									<td>${item.serviceSum}</td>
 									<td>
 									<button class="btn btn-large" onclick="serviceInfoDetail('${item.id}')" id="serviceInfo_Info">详细信息</button>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="rechargeToForm('${item.id}')" id="serviceInfo_edit">后台充值</a>
+<!--									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="rechargeToForm('${item.id}')" id="serviceInfo_edit">后台充值</a>-->
 									<!--<button class="btn btn-large" onclick="forbiddenService('${item.id}')" id="serviceInfo_Forbidden">禁用</button>-->
 									</td>
 								</tr>

@@ -62,7 +62,8 @@
 										${item.replyContent}
 									</td>
 									<td>
-										${item.state}
+									<c:if test="${item.state eq 0}">未回复</c:if> 
+									<c:if test="${item.state eq 1}">已回复</c:if>
 									</td>
 								</tr>
 							</c:forEach>
@@ -99,7 +100,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="releaseTickling_content" style="width: 220;"></textarea>
+							id="releaseTickling_content" style="width: 220;resize: none;"></textarea>
 					</div>
 				</div>
 			</div>
