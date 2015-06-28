@@ -20,6 +20,7 @@ public enum ProjectEnum {
 	/** 礼包发放*/
 	fromgifts,
 	/** 激活会员*/
-	activateMember;
-	
+	activateMember,
+	/** 扣费*/
+	cost;
 }

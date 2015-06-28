@@ -37,7 +37,7 @@ public class AccountDetails {
 	
 	/**项目(会员转账,充值,后台调整,积分转葛粮币增加,
 	 * 单个服务积分,极差服务积分,积分转葛粮币减少,
-	 * 积分提现,礼包发放,激活会员) */
+	 * 积分提现,礼包发放,激活会员,扣费) */
 	@Column(name="project")
 	private ProjectEnum project;
 	

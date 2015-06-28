@@ -842,3 +842,26 @@ function rangeIntegralIssue(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 	resetTable();
 }
+
+function deleteActiveMember(memberId,number,isService,recommendId,recommendNumber,leaderServiceId,leaderServiceNumber){
+	if (window.confirm('您确定要删除当前用户么？')) {
+		var reqObj = {};
+		reqObj["id"] = memberId;
+		reqObj["number"] = number;
+		reqObj["isService"] = isService;
+		reqObj["recommendId"] = recommendId;
+		reqObj["recommendNumber"] = recommendNumber;
+		reqObj["leaderServiceId"] = leaderServiceId;
+		reqObj["leaderServiceNumber"] = leaderServiceNumber;
+		var result = ajaxRequestForJsonGetJson("/membermanage/deleteActiveMember.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
