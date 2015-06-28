@@ -58,7 +58,7 @@ public class ChargeController {
 	
 	@RequestMapping(value = "/searchDealChargezRecord")
 	public String searchNotDealChargezRecord(@RequestBody ChargeOperForm form,HttpServletRequest request, Model model) {
-		form.setStatus(1);
+		form.setStatus(0);
 		List<Charge> result = chargeService.getChargeList(form);
 		model.addAttribute("result", result);
 		model.addAttribute("form", form);

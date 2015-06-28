@@ -72,6 +72,12 @@ public class AccountServiceImpl implements AccountService{
 		
 		//取得系统参数
 		SystemParameter syspar = getSystemParameter();
+
+		
+		/**	积分充值手续费: */
+		BigDecimal scoreInTakeRate = syspar.getScoreInTake();
+		//百分比计算手续费
+		BigDecimal scoreInTake=scoreInTakeRate.multiply(tradeAmt);
 		
 		/**	积分充值最小金额: */
 		BigDecimal scoreInMin = syspar.getScoreInMin();
@@ -96,13 +102,13 @@ public class AccountServiceImpl implements AccountService{
 		insertCharge.setChargeDate(new Date());
 		
 		/**充值金额*/
-		insertCharge.setChageAmt(form.getChageAmt());
+		insertCharge.setChageAmt(tradeAmt);
 		
 		/**实际得到金额*/
-		insertCharge.setRealGetAmt(new BigDecimal(0));
+		insertCharge.setRealGetAmt(tradeAmt.subtract(scoreInTake));
 
 		/**充值手续费*/
-		insertCharge.setChargesurplus(new BigDecimal(0));
+		insertCharge.setChargesurplus(scoreInTake);
 		
 		/**充值状态 0：未处理，1：已处理*/
 		insertCharge.setStatus(0);
@@ -167,6 +173,29 @@ public class AccountServiceImpl implements AccountService{
 			return result;
 		}
 		
+
+		/**提现手续费 */
+		BigDecimal goldTakeRate = syspar.getGoldTake();
+		BigDecimal goldTake = goldTakeRate.multiply(tradeAmt);
+		
+		//提现实际需要积分.
+		BigDecimal realWithDrawalsAmt = tradeAmt.add(goldTake);
+		
+		//取得客户账户信息
+		Information ifm = getActInfo(form.getId());
+
+		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
+		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
+		
+		//可以提现的积分=积分-服务积分
+		BigDecimal catdoMoeyBd = shoppingMoney.subtract(repeatedMoey);
+		//判断积分是否够提现
+		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
+			result.setSuccess(false);
+			result.setMsg("提现积分不足.");
+			return result;
+		}
+		
 		//将提现申请保存到申请表中.
 		Withdrawals insertWithdrawals = new Withdrawals();
 		/**会员数据记录ID */
@@ -182,13 +211,13 @@ public class AccountServiceImpl implements AccountService{
 		insertWithdrawals.setTradeDate(new Date());
 		
 		/**提现金额 */
-		insertWithdrawals.setTradeAmt(form.getWithdrawalsAmt());
+		insertWithdrawals.setTradeAmt(tradeAmt);
 		
 		/**手续费 */
-//		insertWithdrawals.setTradeFee(new BigDecimal(0));
+		insertWithdrawals.setTradeFee(goldTake);
 		
 		/**实际金额*/
-//		insertWithdrawals.setRealGetAmt(new BigDecimal(0));
+		insertWithdrawals.setRealGetAmt(tradeAmt.subtract(goldTake));
 		
 		/**余额 */
 //		insertWithdrawals.setBalanceAmt(new BigDecimal(0));
@@ -238,6 +267,16 @@ public class AccountServiceImpl implements AccountService{
 		List result = parameterDao.queryByHql(hqlQuery);
 		if(result!=null){
 			return (SystemParameter) result.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	private Information getActInfo(Integer id){
+		String hqlQuery = " from Information s where s.isActivate=1 and s.isLock=0 and s.id=?";
+		List result = informationDao.queryByHql(hqlQuery, id);
+		if(result!=null){
+			return (Information) result.get(0);
 		}else{
 			return null;
 		}

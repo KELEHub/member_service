@@ -1,7 +1,6 @@
 package com.member.services.back.impl;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -102,25 +101,16 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		//取得当前审核的充值记录项目.
 		Charge singleResult = (Charge) queryResult.get(0);
 		//提现金额
-		BigDecimal tradeAmt = singleResult.getChageAmt();
+//		BigDecimal tradeAmt = singleResult.getChageAmt();
 		
-		SystemParameter syspar = getSystemParameter();
 		
-		/**	积分充值最小金额: */
-		BigDecimal scoreInMin = syspar.getScoreInMin();
-		
-		/**	积分充值手续费: */
-		BigDecimal scoreInTakeRate = syspar.getScoreInTake();
-		//百分比计算手续费
-		BigDecimal scoreInTake=scoreInTakeRate.multiply(tradeAmt);
-		
-		if(tradeAmt.compareTo(scoreInMin)==-1){
-			result.setSuccess(false);
-			result.setMsg("低于单笔充值最低金额.");
-			return result;
-		}
+//		if(tradeAmt.compareTo(scoreInMin)==-1){
+//			result.setSuccess(false);
+//			result.setMsg("低于单笔充值最低金额.");
+//			return result;
+//		}
 		//充值扣除收费费之后的实际金额
-		BigDecimal chargeRealAmt = tradeAmt.subtract(scoreInTake);
+		BigDecimal chargeRealAmt = singleResult.getRealGetAmt();
 		
 		// 取得客户账户信息
 		Information ifm = getActInfoByNumber(singleResult.getNumber());
@@ -139,8 +129,8 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		informationDao.update(ifm);
 
 		// 2.更新充值信息的手续费，状态和实际金额。
-		singleResult.setChargesurplus(scoreInTake);
-		singleResult.setRealGetAmt(chargeRealAmt);
+//		singleResult.setChargesurplus(scoreInTake);
+//		singleResult.setRealGetAmt(chargeRealAmt);
 		singleResult.setStatus(1);
 		singleResult.setUserName(dealUserName);//处理这条数据的用户名
 		chargeDao.update(singleResult);
@@ -179,9 +169,9 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		/** 收入 */
 		insertAccountDetails.setIncome(chargeRealAmt);
 		/** 支出 */
-		insertAccountDetails.setPay(scoreInTake);
+		insertAccountDetails.setPay(singleResult.getChargesurplus());
 		/** 备注 */
-		insertAccountDetails.setRedmin("充值金额:"+tradeAmt+" || 手续费:"+scoreInTake+" || 实际到账:"+chargeRealAmt+"|| 处理时间:" + nowDateStr);
+		insertAccountDetails.setRedmin("充值金额:"+singleResult.getChageAmt()+" || 手续费:"+singleResult.getChargesurplus()+" || 实际到账:"+chargeRealAmt+"|| 处理时间:" + nowDateStr);
 		/** 用户ID */
 		insertAccountDetails.setUserId(ifm.getId());
 		/**用户登录ID */
