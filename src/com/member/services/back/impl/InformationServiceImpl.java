@@ -154,7 +154,7 @@ public class InformationServiceImpl implements InformationService{
 			sg.setChildId(info.getId());
 			sg.setNumber(selfInfo.getNumber());
 			sg.setGiftEnum(CommonUtil.getGiftEnum());
-			sg.setCountNumber(CommonUtil.getCountNumber());
+			sg.setCountNumber(CommonUtil.getCountNumber()+i-1);
 			sg.setDateNumber(CommonUtil.getDateNumber());
 			sg.setBatchNo(CommonUtil.getBatchNo());
 			sg.setPointNumber(1);
