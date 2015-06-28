@@ -69,6 +69,10 @@ public class AccountDetails {
 	@Column(name="userNumber")
 	private String userNumber;
 	
+	/**childNumber 礼包删除用 */
+	@Column(name="childId")
+	private Integer childId;
+	
 	/**流水号 */
 	@Column(name="countNumber")
 	private Integer countNumber;
@@ -192,5 +196,15 @@ public class AccountDetails {
 	public void setCountNumber(Integer countNumber) {
 		this.countNumber = countNumber;
 	}
+
+	public Integer getChildId() {
+		return childId;
+	}
+
+	public void setChildId(Integer childId) {
+		this.childId = childId;
+	}
+
+
 	
 }

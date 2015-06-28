@@ -167,11 +167,11 @@ public class MemberManageServiceImpl implements MemberManageService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<AccountDetails> getAccountDetailsByProjectAndUserId(ProjectEnum project,Integer userId) {
-		String hqlQuery = "from AccountDetails where project=? and userId=?";
+	public List<AccountDetails> getAccountDetailsByProjectAndUserId(ProjectEnum project,Integer childId) {
+		String hqlQuery = "from AccountDetails where project=? and childId=?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(project);
-		list.add(userId);
+		list.add(childId);
 		return (List<AccountDetails>) informationDao.queryByHql(
 				hqlQuery, list);
 	}
@@ -194,7 +194,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 		//删除以所删除会员为推荐人的信息，包括未激活的会员（报单中心，普通会员）
 		String hql2 = "update Information set recommendId=null,recommendNumber=null where recommendId=?";
 		informationDao.executeHqlUpdate(hql2, id);
-		if (isService==1){
+		if (isService==1 && leaderServiceId!=null){
 			//删除该会员的上级报单中心积分和服务积分各50（报单中心）
 			String hql3 = "update Information set shoppingMoney=shoppingMoney-50,repeatedMoney=repeatedMoney-50 where id=?";
 			informationDao.executeHqlUpdate(hql3, leaderServiceId);
