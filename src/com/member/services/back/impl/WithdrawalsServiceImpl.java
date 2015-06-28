@@ -26,6 +26,7 @@ import com.member.entity.SystemParameter;
 import com.member.entity.Withdrawals;
 import com.member.helper.BaseResult;
 import com.member.services.back.WithdrawalsService;
+import com.member.util.CommonUtil;
 
 @Service("WithdrawalsServiceImpl")
 public class WithdrawalsServiceImpl implements WithdrawalsService {
@@ -97,7 +98,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	}
 
 	@Override
-	public BaseResult<Void> agreewithdrawals(Integer id) {
+	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		String withdrawalsQuery = "from Withdrawals s where status='0' and s.id=?";
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
@@ -114,16 +115,20 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		BigDecimal tradeAmt = singleResult.getTradeAmt();
 		
 		SystemParameter syspar = getSystemParameter();
+		//判断提现开关是否开启
 		String goldFlg = syspar.getGoldFlg();
 		if("close".equals(goldFlg) || "".equals(goldFlg)){
 			result.setSuccess(false);
 			result.setMsg("现在不允许提现申请,请联系平台确认.");
 			return result;
 		}
-		
+		/**提现最高限额 */
 		BigDecimal goldMax = syspar.getGoldMax();
+		/**提现最小限额 */
 		BigDecimal goldMin = syspar.getGoldMin();
-		BigDecimal goldTake = syspar.getGoldTake();
+		/**提现手续费 */
+		BigDecimal goldTakeRate = syspar.getGoldTake();
+		BigDecimal goldTake = goldTakeRate.multiply(tradeAmt);
 		
 		if(tradeAmt.compareTo(goldMax)==1){
 			result.setSuccess(false);
@@ -136,15 +141,18 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			result.setMsg("低于单笔提现最低金额.");
 			return result;
 		}
-		
+		//提现实际需要积分.
+		BigDecimal realWithDrawalsAmt = tradeAmt.add(goldTake);
 		//取得客户账户信息
 		Information ifm = getActInfo(singleResult.getMemberId());
+		
 		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
 		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
+		
 		//可以提现的积分=积分-服务积分
 		BigDecimal catdoMoeyBd = shoppingMoney.subtract(repeatedMoey);
 		//判断积分是否够提现
-		if(catdoMoeyBd.compareTo(tradeAmt)==-1){//积分小于提现金额
+		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
 			result.setSuccess(false);
 			result.setMsg("提现积分不足.");
 			return result;
@@ -160,6 +168,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		//2.更新提现信息的手续费，状态和实际金额。
 		singleResult.setTradeFee(goldTake);
 		singleResult.setRealGetAmt(tradeAmt.subtract(goldTake));
+		singleResult.setUserName(dealUserName);
 		singleResult.setStatus("1");
 		withdrawalsDao.update(singleResult);
 		
@@ -167,7 +176,6 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		AccountDetails insertAccountDetails = new AccountDetails();
 		/**种类 */
 		insertAccountDetails.setKindData(KindDataEnum.points);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar d1 = Calendar.getInstance();
 		Date nowDate = d1.getTime();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -183,6 +191,8 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			dateNumber="03";
 			
 		}
+		/**流水号 */
+		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
 		/**日期类别统计 */
 		insertAccountDetails.setDateNumber(nowDateStr.substring(0,6)+dateNumber);
 		/**项目 */
@@ -194,12 +204,15 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		/**收入 */
 		insertAccountDetails.setIncome(new BigDecimal(0));
 		/**支出 */
-		insertAccountDetails.setPay(tradeAmt.subtract(goldTake));
-		
+		insertAccountDetails.setPay(tradeAmt);
 		/**备注 */
-		insertAccountDetails.setRedmin("积分提现 || "+nowDateStr);
+		insertAccountDetails.setRedmin("提现金额:" + tradeAmt + "手续费:" + goldTake
+				+ "实际到账金额:" + tradeAmt.subtract(goldTake) + "处理时间: || "
+				+ nowDateStr);
 		/**用户ID */
-		insertAccountDetails.setUserId(singleResult.getMemberId());
+		insertAccountDetails.setUserId(ifm.getId());
+		/**用户登录ID */
+		insertAccountDetails.setUserNumber(ifm.getNumber());
 		/** createTime 创建时间 */
 		insertAccountDetails.setCreateTime(new Date());
 		accountDetailsDao.save(insertAccountDetails);

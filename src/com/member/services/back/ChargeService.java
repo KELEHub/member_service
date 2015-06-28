@@ -12,7 +12,7 @@ public interface ChargeService {
 	
 	public Charge getChargeDetailById(Integer id);
 	
-	public BaseResult<Void> agreeCharge(ChargeOperForm form);
+	public BaseResult<Void> agreeCharge(ChargeOperForm form,String dealUserName);
 	
 	public void saveOrderList(ChargeOperForm form);
 	

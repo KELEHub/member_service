@@ -68,6 +68,10 @@ public class Charge {
 	@Column(name="chageMessage")
 	private String chageMessage;
 
+	/**审核人*/
+	@Column(name="userName")
+	private String userName;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -162,5 +166,13 @@ public class Charge {
 
 	public void setChageMessage(String chageMessage) {
 		this.chageMessage = chageMessage;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

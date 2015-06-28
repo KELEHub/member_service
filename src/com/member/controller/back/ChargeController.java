@@ -1,6 +1,7 @@
 package com.member.controller.back;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -66,9 +67,13 @@ public class ChargeController {
 	
 	@RequestMapping(value = "/agreeCharge")
 	@ResponseBody
-	public BaseResult<Void> agreeCharge(@RequestBody ChargeOperForm form, Model model) {
+	public BaseResult<Void> agreeCharge(@RequestBody ChargeOperForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		
 		BaseResult<Void> result = 
-				chargeService.agreeCharge(form);
+				chargeService.agreeCharge(form,(String)userName);
 		return result;
 	}
 	

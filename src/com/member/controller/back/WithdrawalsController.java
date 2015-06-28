@@ -81,9 +81,13 @@ public class WithdrawalsController {
 	
 	@RequestMapping(value = "/agreewithdrawals")
 	@ResponseBody
-	public BaseResult<Void> agreewithdrawals(@RequestBody WithdrawalsCheckForm form, Model model) {
+	public BaseResult<Void> agreewithdrawals(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		
 		BaseResult<Void> result = 
-		withdrawalsService.agreewithdrawals(form.getId());
+		withdrawalsService.agreewithdrawals(form.getId(),(String)userName);
 		return result;
 	}
 	

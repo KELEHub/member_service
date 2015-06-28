@@ -1,6 +1,7 @@
 package com.member.services.back.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +28,7 @@ import com.member.form.ChargeOperForm;
 import com.member.helper.BaseResult;
 import com.member.helper.dao.impl.BaseDaoImpl;
 import com.member.services.back.ChargeService;
+import com.member.util.CommonUtil;
 
 @Service("ChargeServiceImpl")
 @Transactional
@@ -87,7 +89,7 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 	}
 
 	@Override
-	public BaseResult<Void> agreeCharge(ChargeOperForm form) {
+	public BaseResult<Void> agreeCharge(ChargeOperForm form,String dealUserName) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		String query = "from Charge s where status='0' and s.id=?";
 		List queryResult = chargeDao.queryByHql(query, form.getId());
@@ -108,38 +110,45 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		BigDecimal scoreInMin = syspar.getScoreInMin();
 		
 		/**	积分充值手续费: */
-		BigDecimal scoreInTake = syspar.getScoreInTake();
+		BigDecimal scoreInTakeRate = syspar.getScoreInTake();
+		//百分比计算手续费
+		BigDecimal scoreInTake=scoreInTakeRate.multiply(tradeAmt);
 		
 		if(tradeAmt.compareTo(scoreInMin)==-1){
 			result.setSuccess(false);
 			result.setMsg("低于单笔充值最低金额.");
 			return result;
 		}
+		//充值扣除收费费之后的实际金额
+		BigDecimal chargeRealAmt = tradeAmt.subtract(scoreInTake);
+		
 		// 取得客户账户信息
 		Information ifm = getActInfoByNumber(singleResult.getNumber());
 
+		//增加客户葛粮币
+		BigDecimal crmMoney = ifm.getCrmMoney();
+		BigDecimal aftercrmMoney = crmMoney.add(chargeRealAmt);
+		//增加葛粮币累计
+		BigDecimal crmAccumulative = ifm.getCrmAccumulative();
+		BigDecimal aftercrmAccumulative = crmAccumulative.add(chargeRealAmt);
 		// 进行充值处理.
-		// 1.增加会员账户普通积分
-		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
-		BigDecimal afterShopingMoney = shoppingMoney.add(tradeAmt);
-		// 1.增加会员账户服务积分
-		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
-		BigDecimal afterRepeatedMoey = repeatedMoey.add(tradeAmt);
-	
-		ifm.setShoppingMoney(afterShopingMoney);// 普通积分
-		ifm.setRepeatedMoney(afterRepeatedMoey);//服务积分
+		ifm.setCrmMoney(aftercrmMoney);
+		//葛粮币
+		ifm.setCrmAccumulative(aftercrmAccumulative);
+		//葛粮币累计
 		informationDao.update(ifm);
 
 		// 2.更新充值信息的手续费，状态和实际金额。
 		singleResult.setChargesurplus(scoreInTake);
-		singleResult.setRealGetAmt(tradeAmt.subtract(scoreInTake));
+		singleResult.setRealGetAmt(chargeRealAmt);
 		singleResult.setStatus(1);
+		singleResult.setUserName(dealUserName);//处理这条数据的用户名
 		chargeDao.update(singleResult);
 
 		// 3.插入账户明细表
 		AccountDetails insertAccountDetails = new AccountDetails();
 		/** 种类 */
-		insertAccountDetails.setKindData(KindDataEnum.points);
+		insertAccountDetails.setKindData(KindDataEnum.goldmoney);
 		Calendar d1 = Calendar.getInstance();
 		Date nowDate = d1.getTime();
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -155,25 +164,31 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 			dateNumber = "03";
 
 		}
+		
+		/**流水号 */
+		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
 		/** 日期类别统计 */
 		insertAccountDetails.setDateNumber(nowDateStr.substring(0, 6)
 				+ dateNumber);
 		/** 项目 */
 		insertAccountDetails.setProject(ProjectEnum.recharge);
 		/** 积分余额 */
-		insertAccountDetails.setPointbalance(afterShopingMoney);
+		insertAccountDetails.setPointbalance(ifm.getShoppingMoney());
 		/** 葛粮币余额 */
-		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
+		insertAccountDetails.setGoldmoneybalance(aftercrmMoney);
 		/** 收入 */
-		insertAccountDetails.setIncome(tradeAmt.subtract(scoreInTake));
+		insertAccountDetails.setIncome(chargeRealAmt);
 		/** 支出 */
 		insertAccountDetails.setPay(scoreInTake);
 		/** 备注 */
-		insertAccountDetails.setRedmin("充值 || " + nowDateStr);
+		insertAccountDetails.setRedmin("充值金额:"+tradeAmt+" || 手续费:"+scoreInTake+" || 实际到账:"+chargeRealAmt+"|| 处理时间:" + nowDateStr);
 		/** 用户ID */
 		insertAccountDetails.setUserId(ifm.getId());
+		/**用户登录ID */
+		insertAccountDetails.setUserNumber(ifm.getNumber());
 		/** createTime 创建时间 */
 		insertAccountDetails.setCreateTime(new Date());
+		
 		accountDetailsDao.save(insertAccountDetails);
 
 		result.setSuccess(true);
