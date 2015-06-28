@@ -210,12 +210,12 @@ function saveMemberDetail(sFormId) {
 	
 	//处理银行的省市区
 	reqObj["bankProvince"] = provinceMap2.get(parseInt(reqObj["bankProvince"]));
-	reqObj["bankCity"] = provinceMap2.get(parseInt(reqObj["bankCity"]));
-	reqObj["bankCounty"] = provinceMap2.get(parseInt(reqObj["bankCounty"]));
+	reqObj["bankCity"] = cityMap2.get(parseInt(reqObj["bankCity"]));
+	reqObj["bankCounty"] = countryMap2.get(parseInt(reqObj["bankCounty"]));
 	//处理联系地址的省市区
 	reqObj["linkProvince"] = provinceMap2.get(parseInt(reqObj["linkProvince"]));
-	reqObj["linkCity"] = provinceMap2.get(parseInt(reqObj["linkCity"]));
-	reqObj["linkCounty"] = provinceMap2.get(parseInt(reqObj["linkCounty"]));
+	reqObj["linkCity"] = cityMap2.get(parseInt(reqObj["linkCity"]));
+	reqObj["linkCounty"] = countryMap2.get(parseInt(reqObj["linkCounty"]));
 	
 	var reqData={};
 	if(reqObj!=null){
@@ -361,8 +361,8 @@ function serchPointHistory(sFormId){
 }
 
 function initMemberInfoUpdateSelect(){
-	region_init("select_province","select_city","select_area",provinceMap.get($("#bankProvince").val()),provinceMap.get($("#bankCity").val()),provinceMap.get($("#bankCounty").val()));
-	region_init("select_province1","select_city1","select_area1",provinceMap.get($("#linkProvince").val()),provinceMap.get($("#linkCity").val()),provinceMap.get($("#linkCounty").val()));
+	region_init("select_province","select_city","select_area",provinceMap.get($("#bankProvince").val()),cityMap.get($("#bankCity").val()),countryMap.get($("#bankCounty").val()));
+	region_init("select_province1","select_city1","select_area1",provinceMap.get($("#linkProvince").val()),cityMap.get($("#linkCity").val()),countryMap.get($("#linkCounty").val()));
 }
 
 function saveBank(sFormId){

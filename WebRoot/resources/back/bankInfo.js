@@ -3670,7 +3670,12 @@ var province_enum = [
 
 //通过名称取得对应的省市的编号用map
 var provinceMap = new Map();
+var cityMap = new Map();
+var countryMap = new Map();
+
 var provinceMap2 = new Map();
+var cityMap2 = new Map();
+var countryMap2 = new Map();
 function setProvinceMap(){
 	for(var i=0;i<province_enum.length;i++){
 		var provinceObj = province_enum[i];
@@ -3679,13 +3684,13 @@ function setProvinceMap(){
 		var cityArr = provinceObj["city"];
 		for(var j=0;j<cityArr.length;j++){
 			var cityObj = cityArr[j];
-			provinceMap.put(cityObj["name"],cityObj["id"]);
-			provinceMap2.put(cityObj["id"],cityObj["name"]);
+			cityMap.put(cityObj["name"],cityObj["id"]);
+			cityMap2.put(cityObj["id"],cityObj["name"]);
 			var countryArr = cityObj["district"];
 			for(var k=0;k<countryArr.length;k++){
 				var countryObj = countryArr[k];
-				provinceMap.put(countryObj["name"],countryObj["id"]);
-				provinceMap2.put(countryObj["id"],countryObj["name"]);
+				countryMap.put(countryObj["name"],countryObj["id"]);
+				countryMap2.put(countryObj["id"],countryObj["name"]);
 			}
 		}
 	}
