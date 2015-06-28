@@ -146,6 +146,7 @@ public class RegisterController {
 			newInfo.setNumber(form.getNumber());
 			newInfo.setName(form.getUsername());
 			newInfo.setRecommendNumber(form.getRefereeNumber());
+			newInfo.setRecommendId(checkRefer.getId());
 			newInfo.setIdentity(form.getIdentity());
 			newInfo.setPhoneNumber(form.getPhoneNumber());
 			newInfo.setPassword("123");
