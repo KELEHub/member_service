@@ -19,6 +19,7 @@
                        <span class="add-on">$</span> </div>
                   </div>    
            </div>
+            <!-- 
             <div class="control-group">
               <label class="control-label">直播礼包数:</label>
               <div class="controls">
@@ -27,6 +28,7 @@
                        <span class="add-on">$</span> </div>
               </div>
             </div>
+             -->
             <div class="control-group">
               <label class="control-label">第一期:</label>
                 <div class="controls">
@@ -67,6 +69,7 @@
                   <span class="add-on">$</span> </div>
               </div>
             </div>
+            <!-- 
              <div class="control-group">
               <label class="control-label" for="inputInfo">服务费:</label>
               <div class="controls">
@@ -75,6 +78,7 @@
                   <span class="add-on">$</span> </div>
               </div>
             </div>
+             -->
           </form>
           <div class="form-actions">
                 <input type="submit" value="设定" onclick="saveParameter('institutionForm')" class="btn btn-success">

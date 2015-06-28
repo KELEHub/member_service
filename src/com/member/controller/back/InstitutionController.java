@@ -61,8 +61,8 @@ public class InstitutionController {
 			institution.setPreaFour(Integer.valueOf(form.getPreaFour()));
 			institution.setPreaFive(Integer.valueOf(form.getPreaFive()));
 			institution.setRegisterGold(Integer.valueOf(form.getRegisterGold()));
-			institution.setPreCount(Integer.valueOf(form.getPreCount()));
-			institution.setServiceCash(Integer.valueOf(form.getServiceCash()));
+//			institution.setPreCount(Integer.valueOf(form.getPreCount()));
+//			institution.setServiceCash(Integer.valueOf(form.getServiceCash()));
 			institutionService.setInstitution(institution);
 			result.setMsg("设置成功");
 			result.setSuccess(true);
