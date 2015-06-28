@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<script type="text/javascript">
+	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('editNotice_content');
+	ndinstance = ndPanel.nicInstances[0];
+</script>
+
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/NoticeManagerController/showNoticeManager.do" method="POST" id="noticeManagerForm">
@@ -32,7 +38,7 @@
 									<td>${item.category }</td>
 									<td>${item.date }</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNotice('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNoticeWin('${item.id}','${item.title}','${item.category}','${item.content}')">修改</a>
 									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">删除</button>
 									</td>
 								</tr>
@@ -59,7 +65,7 @@
 					标题:
 				</label>
 				<div class="controls">
-					<input type="text" class="span11" name="title"
+					<input type="text" class="span11" name="title" value=""
 						id="editNotice_title" style="width:220;height: 25"/>
 				</div>
 			</div>
@@ -68,7 +74,7 @@
 					类型:
 				</label>
 				<div class="controls">
-					<select name="category" id="editNotice_category">
+					<select name="category" id="editNotice_category" tabindex="">
 						<option>
 							公告
 						</option>
@@ -85,19 +91,18 @@
 				<label class="control-label">
 					内容:
 				</label>
-<!--				<div class="widget-content">-->
 					<div class="control-group">
 						<div class="controls">
-							<textarea class="textarea_editor span12" rows="6" name="content"
-								id="editNotice_content" style="width:220;"></textarea>
+						<textarea cols="50" rows="6" id="editNotice_content" name="content"></textarea>
+<!--							<textarea class="textarea_editor span12" rows="6" name="content"-->
+<!--								id="editNotice_content" style="width:220;"></textarea>-->
 						</div>
 					</div>
-<!--				</div>-->
 			</div>
 		</form>
 	</div>
-	<div class="form-actions">	
-	<button type="submit" class="btn btn-success" onclick="saveNotice('editNoticeForm')">
+	<div class="form-actions">
+	<button type="submit" class="btn btn-success" onclick="editNotice('editNoticeForm')">
 		确认修改
 	</button>
 </div>

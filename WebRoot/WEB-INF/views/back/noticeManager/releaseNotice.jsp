@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <script type="text/javascript">
-	new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('area4');
+	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('releaseNotice_context');
+	ndinstance = ndPanel.nicInstances[0];
 </script>
 
 <div class="row-fluid">
@@ -18,14 +19,14 @@
 				<form action="/NoticeManagerController/initNoticeEdit.do"  method="post" id="showNoticeForm" ></form>
 			</div>
 			<div class="widget-content nopadding">
-				<form action="/NoticeManagerController/releaseNotice.do"
-					method="post" id="releaseNoticeForm" class="form-horizontal">
+<!--				<form action="/NoticeManagerController/releaseNotice.do"-->
+<!--					method="post" id="releaseNoticeForm" class="form-horizontal">-->
 					<div class="control-group">
 						<label class="control-label">
 							标题:
 						</label>
 						<div class="controls">
-							<input type="text" class="span11" name="title" />
+							<input type="text" class="span11" name="title" id="releaseNotice_title"/>
 						</div>
 					</div>
 					<div class="control-group">
@@ -33,7 +34,7 @@
 							类型:
 						</label>
 						<div class="controls">
-							<select name="category">
+							<select name="category" id="releaseNotice_category">
 								<option>
 									公告
 								</option>
@@ -53,20 +54,20 @@
 						<div class="widget-content">
 							<div class="control-group">
 								<div class="controls">
-								<textarea cols="50" id="area4" name="content"></textarea>
+								<textarea cols="50" id="releaseNotice_context" name="content"></textarea>
 <!--									<textarea class="textarea_editor span12" rows="6"-->
 <!--										name="content"></textarea>-->
 								</div>
 							</div>
 						</div>
 					</div>
-				</form>
+<!--				</form>-->
 			</div>
 		</div>
 	</div>
 </div>
 <div class="form-actions">
-	<button type="submit" class="btn btn-success" onclick="saveNotice('releaseNoticeForm')">
+	<button type="submit" class="btn btn-success" onclick="saveNotice(document.getElementById('releaseNotice_title').value,document.getElementById('releaseNotice_category').value,ndinstance.getContent())">
 		确认发布
 	</button>
 </div>
