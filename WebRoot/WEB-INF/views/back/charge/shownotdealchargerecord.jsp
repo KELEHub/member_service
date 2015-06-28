@@ -57,7 +57,7 @@
 									<c:if test="${item.status eq 1}">已处理</c:if>
 									</td>
 									<td><button class="btn" onclick="agreecharge('${item.id}')">充值完成</button>
-									<button class="btn" onclick="disAgreewithdrawals('${item.id}')">拒绝充值</button></td>
+									<button class="btn" onclick="disAgreeCharge('${item.id}')">拒绝充值</button></td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -114,6 +114,6 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button data-dismiss="modal" class="save" type="button" onclick="saveWithFormAddRefeshTable('saveProductForm')">添加</button>
+		<button data-dismiss="modal" class="save" type="button" onclick="saveWithFormAddRefeshTable('saveProductForm','showAddProductDetail')">添加</button>
 	</div>
 </div>

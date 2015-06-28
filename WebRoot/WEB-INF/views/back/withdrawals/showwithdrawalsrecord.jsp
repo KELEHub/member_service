@@ -57,8 +57,13 @@
 									<td>
 									<c:if test="${item.status eq 0}">未处理</c:if> 
 									<c:if test="${item.status eq 1}">已处理</c:if>
+									<c:if test="${item.status eq 2}">被拒绝</c:if>
 									</td>
-									<td><button class="btn" onclick="showWithDrawalsDetail('${item.id}')">会员账户详情</button></td>
+									<td><button class="btn" onclick="showWithDrawalsDetail('${item.id}')">会员账户详情</button>
+									<c:if test="${item.status eq 2}">
+									<button class="btn" onclick="showWithDrawalsRefuseReason('${item.id}')">拒绝理由</button>
+									</c:if>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

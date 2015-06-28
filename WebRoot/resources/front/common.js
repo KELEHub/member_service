@@ -528,11 +528,11 @@ function disAgreewithdrawals(id){
 	alert("留言板敬请期待。。。。");
 }
 
-function saveWithFormAddRefeshTable(sFormId){
+function saveWithFormAddRefeshTable(sFormId,dialogId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	alert(result.msg);
 	if(result.success){
-		$('#showAddProductDetail').modal('hide');
+		$('#'+dialogId).modal('hide');
 		$("#content-header").find("form").each(function() {
 			var formid = this.id;
 			ajaxRequestForFormGetJsp(formid);
@@ -640,6 +640,18 @@ function showAccChargeDetail(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
 	showDynamicDialog("/acc/showAccChargeDetail.do", reqObj, "showAccChargeDetail");
+}
+
+function showAccChargeRefuseReason(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/acc/showRefuseReason.do", reqObj, "showAccChargeRefuseReason");
+}
+
+function showAccWithDrawalsRefuseReason(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/acc/showWithdrawalsRefuseReason.do", reqObj, "showAccChargeRefuseReason");
 }
 
 function showAccWithdrawalsDetail(memberId){

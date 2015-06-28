@@ -63,6 +63,6 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button data-dismiss="modal" class="save" type="button" onclick="saveWithFormAddRefeshTable('updateProductForm')">确认修改</button>
+		<button data-dismiss="modal" class="save" type="button" onclick="saveWithFormAddRefeshTable('updateProductForm','showProductDetail')">确认修改</button>
 	</div>
 </div>

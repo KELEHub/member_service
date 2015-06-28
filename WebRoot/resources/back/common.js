@@ -168,10 +168,22 @@ function showWithDrawalsDetail(memberId){
 	showDynamicDialog("/withdrawals/showWithDrawalsDetail.do", reqObj, "showWithDrawalsDetail");
 }
 
+function showWithDrawalsRefuseReason(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/withdrawals/showRefuseReason.do", reqObj, "showRefuseReason1");
+}
+
 function showChargeDetail(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
 	showDynamicDialog("/charge/showChargeDetail.do", reqObj, "showChargeDetail");
+}
+
+function showChargeRefuseReason(memberId){
+	var reqObj = {};
+	reqObj["id"] = memberId;
+	showDynamicDialog("/charge/showRefuseReason.do", reqObj, "showRefuseReason");
 }
 
 function showOrderListDetail(id){
@@ -647,15 +659,22 @@ function agreecharge(id){
 }
 
 function disAgreewithdrawals(id){
-	//TODO
-	alert("留言板敬请期待。。。。");
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/withdrawals/showdisagreeWithdrawals.do", reqObj, "showdisagreewithdrawals");
 }
 
-function saveWithFormAddRefeshTable(sFormId){
+function disAgreeCharge(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/charge/showdisagreecharge.do", reqObj, "showdisagreecharge");
+}
+
+function saveWithFormAddRefeshTable(sFormId,dialogId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	alert(result.msg);
 	if(result.success){
-		$('#showAddProductDetail').modal('hide');
+		$('#'+dialogId).modal('hide');
 		$("#content-header").find("form").each(function() {
 			var formid = this.id;
 			ajaxRequestForFormGetJsp(formid);
