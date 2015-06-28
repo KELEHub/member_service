@@ -109,7 +109,7 @@ public class BankRechargeController {
 			NmsUser user = users.get(0);
 			Information info = institutionService.getNnmuserByName(form
 					.getUserNumber());
-			String remaind = "为后台充值葛粮币金额：" + form.getCrmMoney();
+			String remaind = "后台充值葛粮币金额：" + form.getCrmMoney();
 			BigDecimal addMoney = info.getCrmMoney().add(
 					getValue(form.getCrmMoney().replace(",", "")));
 			AccountDetails shopingDetails = new AccountDetails();
@@ -138,6 +138,8 @@ public class BankRechargeController {
 			institutionService.savaOrUpdate(shopingDetails);
 
 			info.setCrmMoney(addMoney);
+			info.setCrmAccumulative(info.getCrmAccumulative().add(
+					getValue(form.getCrmMoney().replace(",", ""))));
 			institutionService.savaOrUpdate(info);
 			// 操作记录
 			BankRechargeHistory eh = new BankRechargeHistory();
