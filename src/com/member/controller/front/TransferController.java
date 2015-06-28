@@ -91,11 +91,11 @@ public class TransferController {
 				  result.setMsg("对不起，您没有上级报单中心");
 				  return result;
 			  }
-			  if(toInfo.getServiceNumber()==null){
+			  if(toInfo==null){
 				  result.setMsg("转账对象不是您的报单中心范围");
 				  return result;
 			  }
-			  if(!toInfo.getServiceNumber().equals(ad.getLeaderServiceNumber())){
+			  if(!toInfo.getNumber().equals(ad.getLeaderServiceNumber())){
 				  result.setMsg("转账对象不是您的报单中心范围");
 				  return result;
 			  }
