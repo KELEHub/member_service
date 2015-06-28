@@ -72,6 +72,10 @@ public class Charge {
 	@Column(name="userName")
 	private String userName;
 	
+	/**拒绝理由*/
+	@Column(name="refuseReason")
+	private String refuseReason;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -174,5 +178,13 @@ public class Charge {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getRefuseReason() {
+		return refuseReason;
+	}
+
+	public void setRefuseReason(String refuseReason) {
+		this.refuseReason = refuseReason;
 	}
 }

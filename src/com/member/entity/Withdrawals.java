@@ -69,6 +69,10 @@ public class Withdrawals {
 	@Column(name="withdrawalsBackInfo")
 	private String withdrawalsBackInfo;
 	
+	/**拒绝理由*/
+	@Column(name="refuseReason")
+	private String refuseReason;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -163,5 +167,13 @@ public class Withdrawals {
 
 	public void setWithdrawalsBackInfo(String withdrawalsBackInfo) {
 		this.withdrawalsBackInfo = withdrawalsBackInfo;
+	}
+
+	public String getRefuseReason() {
+		return refuseReason;
+	}
+
+	public void setRefuseReason(String refuseReason) {
+		this.refuseReason = refuseReason;
 	}
 }

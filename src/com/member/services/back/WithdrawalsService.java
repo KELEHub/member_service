@@ -10,4 +10,5 @@ public interface WithdrawalsService {
 	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber);
 	public Withdrawals getWithdrawalsDetailById(Integer id);
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName);
+	public BaseResult<Void> disAgreewithdrawals(Integer id,String dealUserName,String refuseReason);
 }

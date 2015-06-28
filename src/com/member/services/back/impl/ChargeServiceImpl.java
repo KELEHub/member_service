@@ -206,4 +206,31 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		}
 	}
 
+	@Override
+	public BaseResult<Void> disAgreeCharge(ChargeOperForm form,
+			String dealUserName) {
+		BaseResult<Void> result = new BaseResult<Void>();
+		
+		String query = "from Charge s where status='0' and s.id=?";
+		List queryResult = chargeDao.queryByHql(query, form.getId());
+		if(queryResult==null || queryResult.size()==0){
+			result.setSuccess(false);
+			result.setMsg("充值申请数据异常.");
+			return result;
+		}
+		
+		//取得当前审核的充值记录项目.
+		Charge singleResult = (Charge) queryResult.get(0);
+
+		// 2.更新充值信息的手续费，状态和实际金额。
+		singleResult.setStatus(2);
+		singleResult.setRefuseReason(form.getRefuseReason());
+		singleResult.setUserName(dealUserName);//处理这条数据的用户名
+		chargeDao.update(singleResult);
+
+		result.setSuccess(true);
+		result.setMsg("拒绝成功.");
+		return result;
+	}
+
 }

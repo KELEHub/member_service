@@ -9,6 +9,8 @@ public class ChargeOperForm {
 
 	private Integer status;
 	
+	private String refuseReason;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -31,5 +33,13 @@ public class ChargeOperForm {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getRefuseReason() {
+		return refuseReason;
+	}
+
+	public void setRefuseReason(String refuseReason) {
+		this.refuseReason = refuseReason;
 	}
 }

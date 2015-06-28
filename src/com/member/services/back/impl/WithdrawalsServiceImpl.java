@@ -231,4 +231,28 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			return null;
 		}
 	}
+
+	@Override
+	public BaseResult<Void> disAgreewithdrawals(Integer id, String dealUserName,String refuseReason) {
+		BaseResult<Void> result = new BaseResult<Void>();
+		String withdrawalsQuery = "from Withdrawals s where status='0' and s.id=?";
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
+		
+		if(withdrawalsResult==null || withdrawalsResult.size()==0){
+			result.setSuccess(false);
+			result.setMsg("提现申请数据异常.");
+			return result;
+		}
+		
+		//取得当前审核的提现记录项目.
+		Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
+		singleResult.setUserName(dealUserName);
+		singleResult.setStatus("2");
+		singleResult.setRefuseReason(refuseReason);
+		withdrawalsDao.update(singleResult);
+		
+		result.setSuccess(true);
+		result.setMsg("拒绝提现成功.");
+		return result;
+	}
 }

@@ -30,7 +30,7 @@ public class ChargeController {
 	@RequestMapping(value = "/showChargeRecord")
 	public String showChargezRecord(HttpServletRequest request, Model model) {
 		ChargeOperForm form = new ChargeOperForm();
-		form.setStatus(1);
+//		form.setStatus(1);
 		List<Charge> result = chargeService.getChargeList(form);
 		model.addAttribute("result", result);
 		return "back/charge/showchargerecord";
@@ -40,7 +40,7 @@ public class ChargeController {
 	public String searchActivationMember(
 			@RequestBody ChargeOperForm form,
 			HttpServletRequest request, Model model) {
-		form.setStatus(1);
+//		form.setStatus(1);
 		List<Charge> result = chargeService.getChargeList(form);
 		model.addAttribute("result", result);
 		model.addAttribute("form", form);
@@ -65,6 +65,12 @@ public class ChargeController {
 		return "back/charge/shownotdealchargerecord";
 	}
 	
+	@RequestMapping(value = "/showdisagreecharge")
+	public String showdisagree(@RequestBody ChargeOperForm form, Model model) {
+		model.addAttribute("form", form);
+		return "back/charge/disagreeCharge";
+	}
+	
 	@RequestMapping(value = "/agreeCharge")
 	@ResponseBody
 	public BaseResult<Void> agreeCharge(@RequestBody ChargeOperForm form,HttpServletRequest request, Model model) {
@@ -77,10 +83,28 @@ public class ChargeController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/disagreeCharge")
+	@ResponseBody
+	public BaseResult<Void> disAgreeCharge(@RequestBody ChargeOperForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		BaseResult<Void> result = 
+				chargeService.disAgreeCharge(form,(String)userName);
+		return result;
+	}
+	
 	@RequestMapping(value = "/showChargeDetail",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
 		Charge result = chargeService.getChargeDetailById(form.getId());
 		model.addAttribute("result",result);
 		return "back/charge/showsdetail";
+	}
+	
+	@RequestMapping(value = "/showRefuseReason",method = RequestMethod.POST)
+	public String showRefuseReason(@RequestBody MemberSearchForm form,Model model){
+		Charge result = chargeService.getChargeDetailById(form.getId());
+		model.addAttribute("result",result);
+		return "back/charge/showsrefusereason";
 	}
 }

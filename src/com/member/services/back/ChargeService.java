@@ -14,6 +14,8 @@ public interface ChargeService {
 	
 	public BaseResult<Void> agreeCharge(ChargeOperForm form,String dealUserName);
 	
+	public BaseResult<Void> disAgreeCharge(ChargeOperForm form,String dealUserName);
+	
 	public void saveOrderList(ChargeOperForm form);
 	
 	public void updateOrderList(ChargeOperForm form);

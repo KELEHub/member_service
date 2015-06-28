@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.member.entity.Information;
 import com.member.entity.Withdrawals;
 import com.member.form.back.MemberSearchForm;
 import com.member.form.back.WithdrawalsCheckForm;
 import com.member.form.back.WithdrawalsSearchForm;
 import com.member.helper.BaseResult;
-import com.member.services.back.MemberManageService;
 import com.member.services.back.WithdrawalsService;
 
 @Controller
@@ -91,11 +89,35 @@ public class WithdrawalsController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/showdisagreeWithdrawals")
+	public String showdisagree(@RequestBody WithdrawalsCheckForm form, Model model) {
+		model.addAttribute("form", form);
+		return "back/withdrawals/disagreeWithdrawals";
+	}
+	
+	@RequestMapping(value = "/disagreewithdrawals")
+	@ResponseBody
+	public BaseResult<Void> disagreewithdrawals(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		
+		BaseResult<Void> result = withdrawalsService.disAgreewithdrawals(
+				form.getId(), (String) userName, form.getRefuseReason());
+		return result;
+	}
+	
 	@RequestMapping(value = "/showWithDrawalsDetail",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
 		Withdrawals reslut = withdrawalsService.getWithdrawalsDetailById(form.getId());
-//		Information member = memberManageService.getMemberById(form.getId());
 		model.addAttribute("reslut",reslut);
 		return "back/withdrawals/showWithDrawalsDetail";
+	}
+	
+	@RequestMapping(value = "/showRefuseReason",method = RequestMethod.POST)
+	public String showRefuseReason(@RequestBody MemberSearchForm form,Model model){
+		Withdrawals result = withdrawalsService.getWithdrawalsDetailById(form.getId());
+		model.addAttribute("result",result);
+		return "back/withdrawals/showsrefusereason";
 	}
 }

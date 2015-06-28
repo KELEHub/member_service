@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.member.entity.Charge;
 import com.member.entity.Information;
 import com.member.entity.Withdrawals;
+import com.member.form.back.MemberSearchForm;
 import com.member.form.front.MemberChargeApplyForm;
 import com.member.form.front.MemberWithdrawalsApplyForm;
 import com.member.helper.BaseResult;
@@ -63,6 +64,13 @@ public class AccountController {
 		return "front/memberinfo/showaccchargedetail";
 	}
 	
+	@RequestMapping(value = "/showRefuseReason",method = RequestMethod.POST)
+	public String showRefuseReason(@RequestBody MemberSearchForm form,Model model){
+		Charge result = accountService.getChargeDetailById(form.getId());
+		model.addAttribute("result",result);
+		return "front/memberinfo/showsrefusereason";
+	}
+	
 	@RequestMapping(value = "/showaccwithdrawals",method = RequestMethod.POST)
 	public String showAccWithdrawals(HttpServletRequest request,Model model){
 		Object logonUserO = request.getSession().getAttribute("logonUser");
@@ -94,5 +102,13 @@ public class AccountController {
 		model.addAttribute("result",result);
 		return "front/memberinfo/showaccwithdrawalsdetail";
 	}
+	
+	@RequestMapping(value = "/showWithdrawalsRefuseReason",method = RequestMethod.POST)
+	public String showWithdrawalsRefuseReason(@RequestBody MemberSearchForm form,Model model){
+		Withdrawals result = accountService.getWithdrawalsDetailById(form.getId());
+		model.addAttribute("result",result);
+		return "front/memberinfo/showsrefusereason";
+	}
+	
 	
 }
