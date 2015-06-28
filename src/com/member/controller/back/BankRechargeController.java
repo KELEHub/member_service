@@ -131,7 +131,7 @@ public class BankRechargeController {
 			shopingDetails.setPay(new BigDecimal(0));
 
 			/** 备注 */
-			shopingDetails.setRedmin("充值");
+			shopingDetails.setRedmin("后台充值");
 			/** 用户ID */
 			shopingDetails.setUserId(info.getId());
 			shopingDetails.setCountNumber(CommonUtil.getCountNumber());
