@@ -18,12 +18,14 @@
 						常见问题
 					</h5>
 				</div>
+				<center>
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content" readonly="readonly"
 							id="FAQ_content" style="width: 100%; height: 50%; resize:none;">${result.content}</textarea>
 					</div>
 				</div>
+				</center>
 			</div>
 		</div>
 	</div>

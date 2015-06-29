@@ -765,10 +765,15 @@ function doDeleteNotice(noticeId){
 	}
 }
 
-function replyTickling(arg_id,arg_title,arg_content){
-	document.getElementById("replyTickling_id").value = arg_id;
-	document.getElementById("replyTickling_title").value = arg_title;
-	document.getElementById("replyTickling_content").value = arg_content;
+function replyTickling(arg_id){
+	var reqObj = {};
+	reqObj["id"] = arg_id;
+	var result = ajaxRequestForJsonGetJson("/TicklingManagerController/getTicklingInfo.do",reqObj);
+	if (result.success) {
+	document.getElementById("replyTickling_id").value = result.elseExtend.id;
+	document.getElementById("replyTickling_title").value = result.elseExtend.title;
+	document.getElementById("replyTickling_content").value = result.elseExtend.content;
+	}
 }
 
 function checkTickling(arg_id){

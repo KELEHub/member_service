@@ -32,7 +32,7 @@
 									<td>${item.title}</td>
 									<td>${item.ticklingDate}</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="replyTickling('${item.id}','${item.title}','${item.content}')">回复</a>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="replyTickling('${item.id}')">回复</a>
 									<button class="btn btn-large" onclick="deleteTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
