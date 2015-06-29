@@ -4,12 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <script type="text/javascript">
-	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('releaseNotice_context');
+// ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor']
+	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','upload']}).panelInstance('releaseNotice_context');
+// 	ndPanel = new nicEditor({fullPanel : true}).panelInstance('releaseNotice_context');
 	ndinstance = ndPanel.nicInstances[0];
 </script>
 
-<div class="row-fluid">
-	<div class="span6">
+<div class="row-fluid"  style="width: 850px;">
+	<div class="span6" style="width: 100%;">
 		<div class="widget-box">
 			<div class="widget-title">
 				<span class="icon"> <i class="icon-align-justify"></i> </span>
@@ -54,7 +56,7 @@
 						<div class="widget-content">
 							<div class="control-group">
 								<div class="controls">
-								<textarea cols="50" id="releaseNotice_context" name="content"></textarea>
+								<textarea cols="50" id="releaseNotice_context" name="content"  style="width: 750px; height: 300px; border: 1px solid #000;"></textarea>
 <!--									<textarea class="textarea_editor span12" rows="6"-->
 <!--										name="content"></textarea>-->
 								</div>

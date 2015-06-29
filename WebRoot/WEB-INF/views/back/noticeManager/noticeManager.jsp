@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <script type="text/javascript">
-	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('editNotice_content');
+// 	ndPanel = new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('editNotice_content');
+	ndPanel = new nicEditor({fullPanel : true}).panelInstance('editNotice_content');
 	ndinstance1 = ndPanel.nicInstances[0];
 </script>
 

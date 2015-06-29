@@ -5,6 +5,7 @@
  * For more information visit http://nicedit.com/
  * Do not remove this copyright message
  */
+
 var bkExtend = function(){
 	var args = arguments;
 	if (args.length == 1) args = [this, args[0]];
@@ -270,7 +271,7 @@ var nicEditorConfig = bkClass.extend({
 	},
 	iconsPath : 'member_service/resources/back/img/nicEditorIcons.gif',
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
-	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":25,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"image":21,"link":22,"unlink":23,"close":24,"arrow":26,"upload":27}
+	iconList : {"bgcolor":1,"forecolor":2,"bold":3,"center":4,"hr":5,"indent":6,"italic":7,"justify":8,"left":9,"ol":10,"outdent":11,"removeformat":12,"right":13,"save":24,"strikethrough":15,"subscript":16,"superscript":17,"ul":18,"underline":19,"image":20,"link":21,"unlink":22,"close":23,"arrow":25,"upload":26}
 	
 });
 /* END CONFIG */
@@ -1365,7 +1366,7 @@ var nicUploadOptions = {
 /* END CONFIG */
 
 var nicUploadButton = nicEditorAdvancedButton.extend({	
-	nicURI : 'http://files.nicedit.com/',
+	nicURI : '/member_service/upload/nicedituploadFile.do',
 
 	addPane : function() {
 		this.im = this.ne.selectedInstance.selElm().parentTag('IMG');
@@ -1385,13 +1386,15 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 		var myDoc = this.myDoc = this.myFrame.contentWindow.document;
 		myDoc.open();
 		myDoc.write("<html><body>");
-		myDoc.write('<form method="post" action="'+this.uri+'?id='+this.myID+'" enctype="multipart/form-data">');
+	
+		myDoc.write('<form method="post" action="'+this.uri+'" enctype="multipart/form-data">');
 		myDoc.write('<input type="hidden" name="APC_UPLOAD_PROGRESS" value="'+this.myID+'" />');
 		if(this.uri == this.nicURI) {
-			myDoc.write('<div style="position: absolute; margin-left: 160px;"><img src="http://imageshack.us/img/imageshack.png" width="30" style="float: left;" /><div style="float: left; margin-left: 5px; font-size: 10px;">Hosted by<br /><a href="http://www.imageshack.us/" target="_blank">ImageShack</a></div></div>');
+			myDoc.write('<div style="position: absolute; margin-left: 160px;"></div>');
 		}
 		myDoc.write('<div style="font-size: 14px; font-weight: bold; padding-top: 5px;">Insert an Image</div>');
-		myDoc.write('<input name="nicImage" type="file" style="margin-top: 10px;" />');
+		myDoc.write('<input name="files" type="file" style="margin-top: 10px;" />');
+		myDoc.write('<input name="relativelyPath" type="hidden" style="margin-top: 10px;" value="nicedit"/>');
 		myDoc.write('</form>');
 		myDoc.write("</body></html>");
 		myDoc.close();
@@ -1428,6 +1431,7 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 	},
 
 	update : function(o) {
+		o = eval('(' + o + ')');
 		if(o == false) {
 			this.progressWrapper.setStyle({display : 'none'});
 		} else if(o.url) {
@@ -1474,272 +1478,5 @@ nicUploadButton.statusCb = function(o) {
 }
 
 nicEditors.registerPlugin(nicPlugin,nicUploadOptions);
-
-
-
-var nicXHTML = bkClass.extend({
-	stripAttributes : ['_moz_dirty','_moz_resizing','_extended'],
-	noShort : ['style','title','script','textarea','a'],
-	cssReplace : {'font-weight:bold;' : 'strong', 'font-style:italic;' : 'em'},
-	sizes : {1 : 'xx-small', 2 : 'x-small', 3 : 'small', 4 : 'medium', 5 : 'large', 6 : 'x-large'},
-	
-	construct : function(nicEditor) {
-		this.ne = nicEditor;
-		if(this.ne.options.xhtml) {
-			nicEditor.addEvent('get',this.cleanup.closure(this));
-		}
-	},
-	
-	cleanup : function(ni) {
-		var node = ni.getElm();
-		var xhtml = this.toXHTML(node);
-		ni.content = xhtml;
-	},
-	
-	toXHTML : function(n,r,d) {
-		var txt = '';
-		var attrTxt = '';
-		var cssTxt = '';
-		var nType = n.nodeType;
-		var nName = n.nodeName.toLowerCase();
-		var nChild = n.hasChildNodes && n.hasChildNodes();
-		var extraNodes = new Array();
-		
-		switch(nType) {
-			case 1:
-				var nAttributes = n.attributes;
-				
-				switch(nName) {
-					case 'b':
-						nName = 'strong';
-						break;
-					case 'i':
-						nName = 'em';
-						break;
-					case 'font':
-						nName = 'span';
-						break;
-				}
-				
-				if(r) {
-					for(var i=0;i<nAttributes.length;i++) {
-						var attr = nAttributes[i];
-						
-						var attributeName = attr.nodeName.toLowerCase();
-						var attributeValue = attr.nodeValue;
-						
-						if(!attr.specified || !attributeValue || bkLib.inArray(this.stripAttributes,attributeName) || typeof(attributeValue) == "function") {
-							continue;
-						}
-						
-						switch(attributeName) {
-							case 'style':
-								var css = attributeValue.replace(/ /g,"");
-								for(itm in this.cssReplace) {
-									if(css.indexOf(itm) != -1) {
-										extraNodes.push(this.cssReplace[itm]);
-										css = css.replace(itm,'');
-									}
-								}
-								cssTxt += css;
-								attributeValue = "";
-							break;
-							case 'class':
-								attributeValue = attributeValue.replace("Apple-style-span","");
-							break;
-							case 'size':
-								cssTxt += "font-size:"+this.sizes[attributeValue]+';';
-								attributeValue = "";
-							break;
-						}
-						
-						if(attributeValue) {
-							attrTxt += ' '+attributeName+'="'+attributeValue+'"';
-						}
-					}
-
-					if(cssTxt) {
-						attrTxt += ' style="'+cssTxt+'"';
-					}
-
-					for(var i=0;i<extraNodes.length;i++) {
-						txt += '<'+extraNodes[i]+'>';
-					}
-				
-					if(attrTxt == "" && nName == "span") {
-						r = false;
-					}
-					if(r) {
-						txt += '<'+nName;
-						if(nName != 'br') {
-							txt += attrTxt;
-						}
-					}
-				}
-				
-
-				
-				if(!nChild && !bkLib.inArray(this.noShort,attributeName)) {
-					if(r) {
-						txt += ' />';
-					}
-				} else {
-					if(r) {
-						txt += '>';
-					}
-					
-					for(var i=0;i<n.childNodes.length;i++) {
-						var results = this.toXHTML(n.childNodes[i],true,true);
-						if(results) {
-							txt += results;
-						}
-					}
-				}
-					
-				if(r && nChild) {
-					txt += '</'+nName+'>';
-				}
-				
-				for(var i=0;i<extraNodes.length;i++) {
-					txt += '</'+extraNodes[i]+'>';
-				}
-
-				break;
-			case 3:
-				//if(n.nodeValue != '\n') {
-					txt += n.nodeValue;
-				//}
-				break;
-		}
-		
-		return txt;
-	}
-});
-nicEditors.registerPlugin(nicXHTML);
-
-
-
-var nicBBCode = bkClass.extend({
-	construct : function(nicEditor) {
-		this.ne = nicEditor;
-		if(this.ne.options.bbCode) {
-			nicEditor.addEvent('get',this.bbGet.closure(this));
-			nicEditor.addEvent('set',this.bbSet.closure(this));
-			
-			var loadedPlugins = this.ne.loadedPlugins;
-			for(itm in loadedPlugins) {
-				if(loadedPlugins[itm].toXHTML) {
-					this.xhtml = loadedPlugins[itm];
-				}
-			}
-		}
-	},
-	
-	bbGet : function(ni) {
-		var xhtml = this.xhtml.toXHTML(ni.getElm());
-		ni.content = this.toBBCode(xhtml);
-	},
-	
-	bbSet : function(ni) {
-		ni.content = this.fromBBCode(ni.content);
-	},
-	
-	toBBCode : function(xhtml) {
-		function rp(r,m) {
-			xhtml = xhtml.replace(r,m);
-		}
-		
-		rp(/\n/gi,"");
-		rp(/<strong>(.*?)<\/strong>/gi,"[b]$1[/b]");
-		rp(/<em>(.*?)<\/em>/gi,"[i]$1[/i]");
-		rp(/<span.*?style="text-decoration:underline;">(.*?)<\/span>/gi,"[u]$1[/u]");
-		rp(/<ul>(.*?)<\/ul>/gi,"[list]$1[/list]");
-		rp(/<li>(.*?)<\/li>/gi,"[*]$1[/*]");
-		rp(/<ol>(.*?)<\/ol>/gi,"[list=1]$1[/list]");
-		rp(/<img.*?src="(.*?)".*?>/gi,"[img]$1[/img]");
-		rp(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gi,"[url=$1]$2[/url]");
-		rp(/<br.*?>/gi,"\n");
-		rp(/<.*?>.*?<\/.*?>/gi,"");
-		
-		return xhtml;
-	},
-	
-	fromBBCode : function(bbCode) {
-		function rp(r,m) {
-			bbCode = bbCode.replace(r,m);
-		}		
-		
-		rp(/\[b\](.*?)\[\/b\]/gi,"<strong>$1</strong>");
-		rp(/\[i\](.*?)\[\/i\]/gi,"<em>$1</em>");
-		rp(/\[u\](.*?)\[\/u\]/gi,"<span style=\"text-decoration:underline;\">$1</span>");
-		rp(/\[list\](.*?)\[\/list\]/gi,"<ul>$1</ul>");
-		rp(/\[list=1\](.*?)\[\/list\]/gi,"<ol>$1</ol>");
-		rp(/\[\*\](.*?)\[\/\*\]/gi,"<li>$1</li>");
-		rp(/\[img\](.*?)\[\/img\]/gi,"<img src=\"$1\" />");
-		rp(/\[url=(.*?)\](.*?)\[\/url\]/gi,"<a href=\"$1\">$2</a>");
-		rp(/\n/gi,"<br />");
-		//rp(/\[.*?\](.*?)\[\/.*?\]/gi,"$1");
-		
-		return bbCode;
-	}
-
-	
-});
-nicEditors.registerPlugin(nicBBCode);
-
-
-
-nicEditor = nicEditor.extend({
-        floatingPanel : function() {
-                this.floating = new bkElement('DIV').setStyle({position: 'absolute', top : '-1000px'}).appendTo(document.body);
-                this.addEvent('focus', this.reposition.closure(this)).addEvent('blur', this.hide.closure(this));
-                this.setPanel(this.floating);
-        },
-        
-        reposition : function() {
-                var e = this.selectedInstance.e;
-                this.floating.setStyle({ width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px' });
-                var top = e.offsetTop-this.floating.offsetHeight;
-                if(top < 0) {
-                        top = e.offsetTop+e.offsetHeight;
-                }
-                
-                this.floating.setStyle({ top : top+'px', left : e.offsetLeft+'px', display : 'block' });
-        },
-        
-        hide : function() {
-                this.floating.setStyle({ top : '-1000px'});
-        }
-});
-
-
-
-/* START CONFIG */
-var nicCodeOptions = {
-	buttons : {
-		'xhtml' : {name : 'Edit HTML', type : 'nicCodeButton'}
-	}
-	
-};
-/* END CONFIG */
-
-var nicCodeButton = nicEditorAdvancedButton.extend({
-	width : '350px',
-		
-	addPane : function() {
-		this.addForm({
-			'' : {type : 'title', txt : 'Edit HTML'},
-			'code' : {type : 'content', 'value' : this.ne.selectedInstance.getContent(), style : {width: '340px', height : '200px'}}
-		});
-	},
-	
-	submit : function(e) {
-		var code = this.inputs['code'].value;
-		this.ne.selectedInstance.setContent(code);
-		this.removePane();
-	}
-});
-
-nicEditors.registerPlugin(nicPlugin,nicCodeOptions);
 
 
