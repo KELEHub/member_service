@@ -57,6 +57,28 @@ public class CommonFileUploadController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/nicedituploadFile", method = RequestMethod.POST,produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public String nicedituploadFile(UploadFileForm form,HttpServletRequest request,Model model) throws IOException {
+		
+		MultipartFile[] files = form.getFiles();
+		int length = files.length;
+		String tempServerPath="";
+		for(int i=0;i<length;i++){
+			MultipartFile file = files[0];
+			// 保存到文件
+			tempServerPath = getLocalTempFilePath(file,form,request);
+		}
+		String returnJson="{\"done\":0,\"url\":\""+tempServerPath+"\",\"width\":120}";
+//		{"done":0,"url":"upload/1435547640812.jpg","width":120}
+//		JSONObject json_object = new JSONObject();
+//		json_object.put("done",0);
+//		json_object.put("url",url+fname);
+//		json_object.put("width",120);
+		return "<script>try{parent.nicUploadButton.statusCb('" +returnJson+ "')}catch(e){alert(parent);alert(e.message); }</script>";  
+	}
+	
+	
 	@RequestMapping(value = "/testForm", method = RequestMethod.POST)
 	public void test(@RequestParam("file")   MultipartFile file,ProductOperForm form,Model model){
 		System.out.println(form.getId());
