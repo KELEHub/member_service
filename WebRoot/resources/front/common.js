@@ -728,12 +728,6 @@ function doDeleteNotice(noticeId){
 	}
 }
 
-function replyTickling(arg_id,arg_title,arg_content){
-	document.getElementById("replyTickling_id").value = arg_id;
-	document.getElementById("replyTickling_title").value = arg_title;
-	document.getElementById("replyTickling_content").value = arg_content;
-}
-
 function deleteTickling(ticklingId){
 	if (window.confirm('您确定要删除该留言么？')) {
 		var reqObj = {};
@@ -748,12 +742,6 @@ function deleteTickling(ticklingId){
 			});
 		}
 	}
-}
-
-function checkTickling(arg_id,arg_title,arg_content,arg_replyContent){
-	document.getElementById("checkTickling_title").value = arg_title;
-	document.getElementById("checkTickling_content").value = arg_content;
-	document.getElementById("checkTickling_replyContent").value = arg_replyContent;
 }
 
 function deleteDoneTickling(ticklingId){

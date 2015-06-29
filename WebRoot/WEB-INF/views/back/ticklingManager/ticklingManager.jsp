@@ -61,7 +61,7 @@
 				标题:
 			</label>
 			<div class="controls">
-				<input type="text" class="span11" name="title"
+				<input type="text" class="span11" name="title" readonly="readonly"
 					id="checkTickling_title" style="width:220;height:25"/>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="checkTickling_content" style="width: 220;"></textarea>
+							id="checkTickling_content" style="width: 220;resize: none" readonly="readonly"></textarea>
 					</div>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6"
 							name="replyContent" id="checkTickling_replyContent"
-							style="width: 220;"></textarea>
+							style="width: 220;resize:none" readonly="readonly"></textarea>
 					</div>
 				</div>
 			</div>
