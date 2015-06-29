@@ -33,16 +33,13 @@
 									标题
 								</th>
 								<th>
-									留言内容
-								</th>
-								<th>
 									留言日期
 								</th>
 								<th>
-									回复内容
+									状态
 								</th>
 								<th>
-									状态
+									操作
 								</th>
 							</tr>
 						</thead>
@@ -53,17 +50,14 @@
 										${item.title}
 									</td>
 									<td>
-										${item.content}
-									</td>
-									<td>
 										${item.ticklingDate}
-									</td>
-									<td>
-										${item.replyContent}
 									</td>
 									<td>
 									<c:if test="${item.state eq 0}">未回复</c:if> 
 									<c:if test="${item.state eq 1}">已回复</c:if>
+									</td>
+									<td>
+									<a href="#myModal2" data-toggle="modal" class="btn btn-large" onclick="checkInboxInfo('${item.id}')">查看</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -111,4 +105,51 @@
 		确认发布
 	</button>
 </div>
+</div>
+
+<div id="myModal2" class="modal hide">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">
+			×
+		</button>
+		<h3>
+			留言查看
+		</h3>
+	</div>
+	<div class="widget-content nopadding">
+	<form class="form-horizontal">
+		<div class="control-group">
+			<label class="control-label">
+				标题:
+			</label>
+			<div class="controls">
+				<input type="text" class="span11" name="title" readonly="readonly"
+					id="inbox_title" style="width:220;height:25"/>
+			</div>
+		</div>
+		<div class="control-group">
+				<label class="control-label">
+					内容:
+				</label>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6" name="content"
+							id="inbox_content" style="width: 220;resize: none" readonly="readonly"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">
+					回复内容:
+				</label>
+				<div class="control-group">
+					<div class="controls">
+						<textarea class="textarea_editor span12" rows="6"
+							name="replyContent" id="inbox_replyContent"
+							style="width: 220;resize:none" readonly="readonly"></textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

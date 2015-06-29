@@ -940,3 +940,14 @@ function getNews(id) {
     findJqueryFileUpload("content");
 	resetTable();
 }
+
+function checkInboxInfo(arg_id){
+	var reqObj = {};
+	reqObj["id"] = arg_id;
+	var result = ajaxRequestForJsonGetJson("/TicklingManagerController/getTicklingInfo.do",reqObj);
+	if (result.success) {
+	document.getElementById("inbox_title").value = result.elseExtend.title;
+	document.getElementById("inbox_content").value = result.elseExtend.content;
+	document.getElementById("inbox_replyContent").value = result.elseExtend.replyContent;
+	}
+}
