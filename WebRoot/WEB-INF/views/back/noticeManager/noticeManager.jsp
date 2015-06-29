@@ -88,17 +88,19 @@
 					</select>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group" style="overflow:auto;">
 				<label class="control-label">
 					内容:
 				</label>
-					<div class="control-group">
-						<div class="controls">
-						<textarea cols="50" rows="6" id="editNotice_content" name="content"></textarea>
-<!--							<textarea class="textarea_editor span12" rows="6" name="content"-->
-<!--								id="editNotice_content" style="width:220;"></textarea>-->
+					<div class="widget-content" style="height: 300px; overflow:auto;">
+							<div class="control-group">
+								<div class="controls">
+								<textarea cols="50" id="editNotice_content" name="content"  style="width: 450px; height: 300px; overflow:auto; border: 1px solid #000;"></textarea>
+<!--									<textarea class="textarea_editor span12" rows="6"-->
+<!--										name="content"></textarea>-->
+								</div>
+							</div>
 						</div>
-					</div>
 			</div>
 <!--		</form>-->
 	</div>
