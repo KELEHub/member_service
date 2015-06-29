@@ -8,4 +8,6 @@ public class HqlTicklingManager {
 		"from Tickling where memberNumber=?";
 	public final static String getInformationIdByMemberNumber=
 		"select id from Information where number=?";
+	public final static String getTicklingById=
+		"from Tickling where id=?";
 }

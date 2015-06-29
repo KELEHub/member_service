@@ -56,4 +56,14 @@ public class TicklingManagerController {
 		result.setSuccess(true);
 		return result;
 	}
+	
+	@RequestMapping(value = "/getTicklingInfo",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> getTicklingInfo(@RequestBody TickForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		List<Tickling> ticklingList = ticklingManagerService.getTicklingById(Integer.parseInt(form.getId()));
+		result.setElseExtend(ticklingList.get(0));
+		result.setSuccess(true);
+		return result;
+	}
 }

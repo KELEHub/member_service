@@ -15,4 +15,6 @@ public interface TicklingManagerService {
 
 	void updateTickling(TickForm form);
 
+	List<Tickling> getTicklingById(Integer id);
+
 }

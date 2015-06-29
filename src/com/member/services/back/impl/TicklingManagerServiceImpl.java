@@ -16,6 +16,7 @@ import com.member.entity.Tickling;
 import com.member.form.back.TickForm;
 import com.member.services.back.TicklingManagerService;
 
+@SuppressWarnings("unchecked")
 @Service("TicklingManagerServiceImpl")
 public class TicklingManagerServiceImpl implements TicklingManagerService {
 
@@ -27,6 +28,13 @@ public class TicklingManagerServiceImpl implements TicklingManagerService {
 	public List<Tickling> getTicklingByState(Integer state) {
 		return (List<Tickling>) ticklingManagerDao.queryByHql(
 				HqlTicklingManager.getTickling, state);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Tickling> getTicklingById(Integer id) {
+		return (List<Tickling>) ticklingManagerDao.queryByHql(
+				HqlTicklingManager.getTicklingById, id);
 	}
 	
 	@Override

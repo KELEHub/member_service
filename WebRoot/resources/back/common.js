@@ -771,10 +771,15 @@ function replyTickling(arg_id,arg_title,arg_content){
 	document.getElementById("replyTickling_content").value = arg_content;
 }
 
-function checkTickling(arg_id,arg_title,arg_content,arg_replyContent){
-	document.getElementById("checkTickling_title").value = arg_title;
-	document.getElementById("checkTickling_content").value = arg_content;
-	document.getElementById("checkTickling_replyContent").value = arg_replyContent;
+function checkTickling(arg_id){
+	var reqObj = {};
+	reqObj["id"] = arg_id;
+	var result = ajaxRequestForJsonGetJson("/TicklingManagerController/getTicklingInfo.do",reqObj);
+	if (result.success) {
+	document.getElementById("checkTickling_title").value = result.elseExtend.title;
+	document.getElementById("checkTickling_content").value = result.elseExtend.content;
+	document.getElementById("checkTickling_replyContent").value = result.elseExtend.replyContent;
+	}
 }
 
 function deleteTickling(ticklingId){

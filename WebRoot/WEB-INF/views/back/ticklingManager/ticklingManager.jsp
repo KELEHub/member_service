@@ -32,7 +32,7 @@
 									<td>${item.title}</td>
 									<td>${item.ticklingDate}</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="checkTickling('${item.id}','${item.title}','${item.content}','${item.replyContent}')">查看</a>
+									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="checkTickling('${item.id}')">查看</a>
 									<button class="btn btn-large" onclick="deleteDoneTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
