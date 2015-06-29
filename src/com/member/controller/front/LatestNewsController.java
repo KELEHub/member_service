@@ -32,7 +32,6 @@ public class LatestNewsController {
 	}
 	
 	@RequestMapping(value = "/getNews",method = RequestMethod.POST)
-	@ResponseBody
 	public String getNews(@RequestBody NoticeForm form,Model model){
 		List<Notice> result = latestNewsService.getNews(Integer.parseInt(form.getNoticeId()));
 		model.addAttribute("result", result.get(0));

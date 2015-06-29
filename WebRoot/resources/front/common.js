@@ -936,5 +936,7 @@ function releaseTickling(sFormId){
 function getNews(id) {
 	var reqObj = {};
 	reqObj["noticeId"] = id;
-	showDynamicDialog("/LatestNewsController/getNews.do", reqObj, "showLatestNewsDetail");
+	var result = ajaxRequestForJsonGetJson("/LatestNewsController/getNews.do", reqObj);
+	if (result.success) {
+	}
 }
