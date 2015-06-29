@@ -3,7 +3,7 @@
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<div class="container-fluid">
+<div class="container-fluid" id="latestNewsDiv">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
