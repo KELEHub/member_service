@@ -12,6 +12,7 @@ import com.member.dao.LatestNewsDao;
 import com.member.entity.Notice;
 import com.member.services.front.LatestNewsService;
 
+@SuppressWarnings("unchecked")
 @Service("LatestNewsServiceImpl")
 public class LatestNewsServiceImpl implements LatestNewsService {
 
@@ -23,5 +24,12 @@ public class LatestNewsServiceImpl implements LatestNewsService {
 	public List<Notice> getLatestNewsList() {
 		return (List<Notice>) latestNewsDao.queryByHql(
 				HqlNoticeManager.getLatestNewsList);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Notice> getNews(Integer id) {
+		return (List<Notice>) latestNewsDao.queryByHql(
+				HqlNoticeManager.getNoticeInfo,id);
 	}
 }

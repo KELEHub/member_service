@@ -932,3 +932,9 @@ function releaseTickling(sFormId){
 		});
 	}
 }
+
+function getNews(id) {
+	var reqObj = {};
+	reqObj["noticeId"] = id;
+	showDynamicDialog("/LatestNewsController/getNews.do", reqObj, "showLatestNewsDetail");
+}

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -21,11 +22,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result }">
+							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
 									<td>${item.category}</td>
-									<td>${item.title }</td>
-									<td>${item.date }</td>
+									<td>${item.title}</td>
+									<td>${item.date}</td>
 									<td> <button class="btn" onclick="getNews('${item.id}')">查看</button></td>
 								</tr>
 							</c:forEach>

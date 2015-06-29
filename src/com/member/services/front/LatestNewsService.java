@@ -8,4 +8,6 @@ public interface LatestNewsService {
 
 	List<Notice> getLatestNewsList();
 
+	List<Notice> getNews(Integer id);
+
 }
