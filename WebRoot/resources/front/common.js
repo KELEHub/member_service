@@ -213,31 +213,31 @@ function ajaxRequestForFormGetJsp(sFormId){
 }
 
 
-//
-//function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
-//	var bathPath=$("#basePath").val();
-//	var reqData={};
-//	if(reqObj!=null){
-//		reqData = JSON.stringify(reqObj);
-//	}
-//	var returnData={};
-//	$.ajax({
-//		url : bathPath+reqUrl,
-//		type : 'POST',
-//		cache : false,
-//		async : false,//同步 or 异步
-//		data :  reqData,
-//		contentType: "application/json",
-//		dataType : 'json',
-//		success : function(data) {
-//				$("#content").empty();
-//				$("#content").html(data);
-//		},
-//		error : function (msg) {
-//			alert(msg);
-//       }
-//	});
-//}
+
+function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
+	var bathPath=$("#basePath").val();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'text',
+		success : function(data) {
+				$("#content").empty();
+				$("#content").html(data);
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
 
 
 
@@ -936,7 +936,7 @@ function releaseTickling(sFormId){
 function getNews(id) {
 	var reqObj = {};
 	reqObj["noticeId"] = id;
-	var result = ajaxRequestForJsonGetJson("/LatestNewsController/getNews.do", reqObj);
-	if (result.success) {
-	}
+	ajaxRequestForFormGetJspByParamter("/LatestNewsController/getNews.do", reqObj);
+    findJqueryFileUpload("content");
+	resetTable();
 }
