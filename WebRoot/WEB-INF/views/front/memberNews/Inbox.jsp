@@ -57,7 +57,7 @@
 									<c:if test="${item.state eq 1}">已回复</c:if>
 									</td>
 									<td>
-									<a href="#myModal2" data-toggle="modal" class="btn btn-large" onclick="checkInboxInfo('${item.id}')">查看</a>
+									<a href="#myModal2" data-toggle="modal" class="btn" onclick="checkInboxInfo('${item.id}')">查看</a>
 									</td>
 								</tr>
 							</c:forEach>
