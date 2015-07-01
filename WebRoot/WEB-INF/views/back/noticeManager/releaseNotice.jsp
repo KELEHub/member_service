@@ -10,6 +10,7 @@
 	ndinstance = ndPanel.nicInstances[0];
 </script>
 
+<div class="container-fluid">
 <div class="row-fluid"  style="width: 850px;">
 	<div class="span6" style="width: 100%;">
 		<div class="widget-box">
@@ -67,6 +68,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <div class="form-actions">
 	<button type="submit" class="btn btn-success" onclick="saveNotice(document.getElementById('releaseNotice_title').value,document.getElementById('releaseNotice_category').value,ndinstance.getContent())">
