@@ -32,8 +32,8 @@
 									<td>${item.title}</td>
 									<td>${item.ticklingDate}</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="checkTickling('${item.id}')">查看</a>
-									<button class="btn btn-large" onclick="deleteDoneTickling('${item.id}')">删除</button>
+									<a href="#myModal" data-toggle="modal" class="btn" onclick="checkTickling('${item.id}')">查看</a>
+									<button class="btn" onclick="deleteDoneTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
