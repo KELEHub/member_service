@@ -39,8 +39,8 @@
 									<td>${item.category }</td>
 									<td>${item.date }</td>
 									<td>
-									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editNoticeWin('${item.id}')">修改</a>
-									<button class="btn btn-large" onclick="doDeleteNotice('${item.id}')">删除</button>
+									<a href="#myModal" data-toggle="modal" class="btn" onclick="editNoticeWin('${item.id}')">修改</a>
+									<button class="btn" onclick="doDeleteNotice('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
