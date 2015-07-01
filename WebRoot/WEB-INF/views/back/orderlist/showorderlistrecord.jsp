@@ -2,33 +2,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
-	<h1>
-		产品订单记录
-	</h1>
-	<form action="/orderlist/searchOrderListRecord.do" method="POST"
-							id="searchOrderListRecordForm">
-		<div class="controls controls-row">
-			<div class="control-group" style="float: left;margin-left: 10px;">
-				<label class="control-label">会员账号:</label>
-				<div class="controls">
-					<input type="text" name="memeberNumber" value="${form.memeberNumber}">
-				</div>
-		</div>
-	</form>
-	<div class="control-group" style="float: left; margin-left: 10px;">
-		<a class="btn" onclick="searchOrderList('searchOrderListRecordForm')">查询</a>
-	</div>
-</div>
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
+			 <div class="widget-title">
+					<span class="icon"><i class="icon-th"></i></span>
+					<h5>产品订单记录</h5>
+				</div>
+			
+			<div class="widget-content nopadding">
+					<form class="form-horizontal"
+						action="/orderlist/searchOrderListRecord.do" method="POST"
+						id="searchOrderListRecordForm">
+						<div class="control-group">
+							<label class="control-label">会员账号:</label>
+							<div class="controls">
+								<div class="input-append">
+									<input type="text" name="memeberNumber" value="${form.memeberNumber}">
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="form-actions">
+						<input type="submit" value="查询"
+							onclick="searchOrderList('searchOrderListRecordForm')"
+							class="btn btn-success">
+					</div>
+				</div>
 				<div class="widget-content nopadding">
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
