@@ -40,8 +40,8 @@
 									<td>${item.submitReason}</td>
 									<td>
 									<c:if test="${item.state eq 0}">
-										<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="editFailureCause('${item.id}')">审核失败</a>
-										<button class="btn btn-large" onclick="checkSuccess('${item.id}','${item.submitId}','${item.submitNumber}','${item.applyId}','${item.applyNumber}')">审核通过</button>
+										<a href="#myModal" data-toggle="modal" class="btn" onclick="editFailureCause('${item.id}')">审核失败</a>
+										<button class="btn" onclick="checkSuccess('${item.id}','${item.submitId}','${item.submitNumber}','${item.applyId}','${item.applyNumber}')">审核通过</button>
 									</c:if>
 									</td>
 								</tr>
