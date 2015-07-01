@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
 <base href="<%=basePath%>">
-<title>会员消费平台</title>
+<title>会员中心</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/bootstrap.min.css" />

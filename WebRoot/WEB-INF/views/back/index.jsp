@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
 <base href="<%=basePath%>">
-<title>Matrix Admin</title>
+<title>管理中心</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="<%=basePath%>/resources/back/css/bootstrap.min.css" />
