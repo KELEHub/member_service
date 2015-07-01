@@ -2,33 +2,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
-	<h1>
-		提现申请记录
-	</h1>
-	<form action="/withdrawals/searchWithdrawalszRecord.do" method="POST"
-							id="searchWidhdrawalsxForm">
-		<div class="controls controls-row">
-			<div class="control-group" style="float: left;margin-left: 10px;">
-				<label class="control-label">会员账号:</label>
-				<div class="controls">
-					<input type="text" name="number" value="${form.number}">
-				</div>
-		</div>
-	</form>
-	<div class="control-group" style="float: left; margin-left: 10px;">
-		<a class="btn" onclick="searchMembers('searchWidhdrawalsxForm')">查询</a>
-	</div>
-</div>
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
+			  <div class="widget-title">
+					<span class="icon"><i class="icon-th"></i></span>
+					<h5>提现申请记录</h5>
+				</div>
+			
+			  <div class="widget-content nopadding">
+					<form class="form-horizontal"
+						action="/withdrawals/searchWithdrawalszRecord.do" method="POST"
+						id="searchWidhdrawalsxForm">
+						<div class="control-group">
+							<label class="control-label">会员账号:</label>
+							<div class="controls">
+								<div class="input-append">
+									<input type="text" name="number" value="${form.number}">
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="form-actions">
+						<input type="submit" value="查询"
+							onclick="searchMembers('searchWidhdrawalsxForm')"
+							class="btn btn-success">
+					</div>
+				</div>
 				<div class="widget-content nopadding">
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
