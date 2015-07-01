@@ -94,7 +94,7 @@
 									<td>${item.state}</td>
 									<td>
 									<c:if test="${item.state eq 0}">
-										<button class="btn btn-large" onclick="deleteApplyQualification('${item.id}')">删除</button>
+										<button class="btn" onclick="deleteApplyQualification('${item.id}')">删除</button>
 									</c:if>
 									</td>
 								</tr>
