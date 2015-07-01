@@ -24,7 +24,7 @@
 			<div class="widget-content nopadding">
 <!--				<form action="/NoticeManagerController/releaseNotice.do"-->
 <!--					method="post" id="releaseNoticeForm" class="form-horizontal">-->
-					<div class="control-group">
+					<div class="control-group" style="margin-left: 0.5cm">
 						<label class="control-label">
 							标题:
 						</label>
@@ -32,7 +32,7 @@
 							<input type="text" class="span11" name="title" id="releaseNotice_title"/>
 						</div>
 					</div>
-					<div class="control-group">
+					<div class="control-group" style="margin-left: 0.5cm">
 						<label class="control-label">
 							类型:
 						</label>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label">
+						<label class="control-label" style="margin-left: 0.5cm">
 							内容:
 						</label>
 						<div class="widget-content">

@@ -57,6 +57,7 @@
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>修改公告</h3>
 	</div>
+	<div class="container-fluid">
 	<div class="widget-content nopadding">
 <!--		<form action="/NoticeManagerController/editNotice.do" method="post"-->
 <!--			id="editNoticeForm" class="form-horizontal">-->
@@ -92,7 +93,7 @@
 				<label class="control-label">
 					内容:
 				</label>
-					<div class="widget-content" style="height: 300px; overflow:auto;">
+					<div class="widget-content" style="height: 370px; overflow:auto;">
 							<div class="control-group">
 								<div class="controls">
 								<textarea cols="50" id="editNotice_content" name="content"  style="width: 450px; height: 300px; overflow:auto; border: 1px solid #000;"></textarea>
@@ -103,6 +104,7 @@
 						</div>
 			</div>
 <!--		</form>-->
+	</div>
 	</div>
 	<div class="form-actions">
 	<button type="submit" class="btn btn-success" onclick="editNotice(document.getElementById('noticeListId').value,document.getElementById('editNotice_title').value,document.getElementById('editNotice_category').value,ndinstance1.getContent())">
