@@ -91,6 +91,20 @@ public class CommonUtil {
 	}
 	
 	/**
+	 * 服务积分专用
+	 * @return
+	 */
+	public static Integer getServerCountNumber(){
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+		return Integer.valueOf(nowDateStr);
+	}
+	
+	
+	
+	/**
 	 * 获取当前年
 	 * @return
 	 */
