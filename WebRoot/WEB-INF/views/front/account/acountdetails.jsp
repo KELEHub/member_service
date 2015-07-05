@@ -101,6 +101,40 @@
 		<input type="submit" value="查询" onclick="searchAccount('acountDetailsForm')"
 			class="btn btn-success">
 	</div>
+		<div class="controls controls-row">
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				葛粮币余额：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="goldmoneybalance" id="goldmoneybalance" disabled="true" value="${goldmoneybalance}">
+				</div>
+			</div>
+		</div>
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				积分余额：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="pointsbalance" id="pointsbalance" disabled="true" value="${pointsbalance}">
+				</div>
+			</div>
+		</div>
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				服务积分：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="serverbalance" id="serverbalance" disabled="true" value="${serverbalance}">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
