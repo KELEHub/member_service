@@ -44,10 +44,31 @@ public class AccountDetailsController {
 			Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			String userNaemO =(String) logonUserMap.get("username");
 			Information info = informationService.getInformationByNumber(userNaemO);
-			List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByUserNumber(userNaemO);
-			if(accountDetailsList!=null){
-				List<AccountBean> beanList = new ArrayList<AccountBean>();
-				  for(AccountDetails ad : accountDetailsList){
+			String condition = "userNumber=?";
+			List arguments = new ArrayList();
+			arguments.add(userNaemO);
+			String sigleCodition = "";
+			List<AccountBean> beanList = new ArrayList<AccountBean>();
+			   sigleCodition = condition;
+			  condition= sigleCodition + "and project != ? and project != ?";
+			  sigleCodition= sigleCodition + "and (project = ? or project = ?) group by countNumber";
+			  arguments.add(ProjectEnum.servicepointsformuch);
+			  arguments.add(ProjectEnum.servicepointsforone);
+			  List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByservicepoints(sigleCodition,arguments);
+				 if(accountDetailsList!=null && accountDetailsList.size()>0){
+					 for(AccountDetails ads : accountDetailsList){
+						 AccountBean bean= new AccountBean();
+						  bean.setKindData("积分");
+						  bean.setCreateTime(ads.getCountNumber().toString());
+						  bean.setIncome(ads.getIncome().toString());
+						  bean.setPay(ads.getPay().toString());
+						  bean.setRedmin("该天的服务积分合计");
+						  bean.setProject("服务积分");
+						  beanList.add(bean);
+					 }
+				 }
+				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments);
+				  for(AccountDetails ad : accountList){
 					  AccountBean bean= new AccountBean();
 					  bean.setKindData(getKindDataName(ad.getKindData()));
 					  bean.setCreateTime(ad.getCreateTime().toString());
@@ -59,8 +80,7 @@ public class AccountDetailsController {
 					  bean.setProject(getProjectName(ad.getProject()));
 					  beanList.add(bean);
 				  }
-				 model.addAttribute("result",beanList);
-			}
+		     model.addAttribute("result",beanList);
 			 model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
 			 model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
 			 model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
