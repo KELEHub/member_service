@@ -7,16 +7,14 @@
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>公告内容</h3>
 	</div>
-<div class="modal-body">
+<div class="modal-body" style="width: 1000">
 	<div class="widget-box">
 		<div class="widget-content nopadding">
-			<center>
-				<div class="control-group">
-					<h3>
-						${result.title}
-					</h3>
-				</div>
-			</center>
+			<div class="control-group">
+				<h3 align="center">
+					${result.title}
+				</h3>
+			</div>
 			<br />
 			<br />
 			<div class="control-group">
