@@ -99,31 +99,31 @@ public class RegisterController {
 					.getNumber());
 			if (check != null) {
 				result.setMsg("注册失败，账号已存在");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 			Information checkRefer = informationService
 					.getInformationByNumber(form.getRefereeNumber());
 			if (checkRefer == null) {
 				result.setMsg("注册失败，推荐人不存在");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 			if (form.getIdentity() == null || "".equals(form.getIdentity())) {
 				result.setMsg("身份证必须填写");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 			if (form.getPhoneNumber() == null
 					|| "".equals(form.getPhoneNumber())) {
 				result.setMsg("电话号码必须填写");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 			if (form.getUsername() == null
 					|| "".equals(form.getUsername())) {
 				result.setMsg("姓名必须填写");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 			if (form.getBankname() == null || form.getBankCard() == null
@@ -138,7 +138,7 @@ public class RegisterController {
 					|| "".equals(form.getBankCounty())
 					|| "".equals(form.getBankCity())) {
 				result.setMsg("银行信息必须填写完整");
-				result.setSuccess(true);
+				result.setSuccess(false);
 				return result;
 			}
 
@@ -179,7 +179,7 @@ public class RegisterController {
 			return result;
 		} catch (Exception e) {
 			result.setMsg("注册失败，请重试");
-			result.setSuccess(true);
+			result.setSuccess(false);
 			return result;
 		}
 
