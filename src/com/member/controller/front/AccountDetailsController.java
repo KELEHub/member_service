@@ -20,8 +20,11 @@ import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.beans.front.AccountBean;
 import com.member.entity.AccountDetails;
+import com.member.entity.Information;
 import com.member.form.front.SearchPointsForm;
+import com.member.services.back.InformationService;
 import com.member.services.front.AccountDetailsService;
+import com.member.util.CommonUtil;
 
 
 @Controller
@@ -31,12 +34,16 @@ public class AccountDetailsController {
 	@Resource(name = "AccountDetailsServiceImpl")
 	public AccountDetailsService accountDetailsService;
 	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
+	
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
 	public String show(Model model,HttpSession sesison) {
 		try {
 			Object logonUserO = sesison.getAttribute("logonUser");
 			Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			String userNaemO =(String) logonUserMap.get("username");
+			Information info = informationService.getInformationByNumber(userNaemO);
 			List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByUserNumber(userNaemO);
 			if(accountDetailsList!=null){
 				List<AccountBean> beanList = new ArrayList<AccountBean>();
@@ -54,6 +61,9 @@ public class AccountDetailsController {
 				  }
 				 model.addAttribute("result",beanList);
 			}
+			 model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
+			 model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
+			 model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
 			return "front/account/acountdetails";
 
 		} catch (Exception e) {
@@ -91,6 +101,7 @@ public class AccountDetailsController {
 			  Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
+			  Information info = informationService.getInformationByNumber(userNaemO);
 			  String condition = "userNumber=?";
 			  String sigleCodition="";
 			  List arguments = new ArrayList();
@@ -190,6 +201,9 @@ public class AccountDetailsController {
 			  model.addAttribute("projectFlg", form.getProjectFlg());
 			  model.addAttribute("monthFlg", form.getMonthFlg());
 			  model.addAttribute("yearFlg", form.getYearFlg());
+			  model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
+			  model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
+			  model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
 			  return "front/account/acountdetails";
 
 		} catch (Exception e) {
