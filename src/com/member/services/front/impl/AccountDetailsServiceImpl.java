@@ -24,14 +24,14 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public AccountDetails getAccountDetailsByUserNumber(String userNumber) {
+	public  List<AccountDetails> getAccountDetailsByUserNumber(String userNumber) {
 		String hql = "from AccountDetails where userNumber=?";
 		List arguments = new ArrayList();
 		arguments.add(userNumber);
 		List<AccountDetails> list = (List<AccountDetails>) parameterDao
 				.queryByHql(hql, arguments);
 		if (list != null && list.size() > 0) {
-			return list.get(0);
+			return list;
 		}
 		return null;
 	}

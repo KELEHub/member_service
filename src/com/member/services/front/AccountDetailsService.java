@@ -9,7 +9,7 @@ import com.member.form.back.StatisticsForm;
 
 public interface AccountDetailsService {
 
-	public AccountDetails  getAccountDetailsByUserNumber(String userNumber);
+	public  List<AccountDetails> getAccountDetailsByUserNumber(String userNumber);
 
 	public List<AccountDetails>  getAccountDetailsByNoservicepoints(String condition,List argumenrs);
 	
