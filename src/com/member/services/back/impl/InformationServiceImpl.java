@@ -177,13 +177,13 @@ public class InformationServiceImpl implements InformationService{
 		selfInfo.setShoppingAccumulative(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
 		institutionDao.saveOrUpdate(selfInfo);
 		
-		//在AccountDetails表记录上级报单中心获得服务积分明细
+		//在AccountDetails表记录激活人获得服务积分明细
 		AccountDetails shopingDetails = new AccountDetails();
 		shopingDetails.setKindData(KindDataEnum.points);
 		/**日期类别统计 */
 		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
 		/**流水号 */
-		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
+		shopingDetails.setCountNumber(CommonUtil.getServerCountNumber());
 		/**项目 */
 		shopingDetails.setProject(ProjectEnum.servicepointsforone);
 		/**积分余额 */

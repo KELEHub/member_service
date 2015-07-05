@@ -9,18 +9,19 @@
 	</div>
 <div class="modal-body">
 	<div class="widget-box">
-		<center>
-			<div class="widget-content nopadding">
+		<div class="widget-content nopadding">
+			<center>
 				<div class="control-group">
 					<h3>
 						${result.title}
 					</h3>
 				</div>
-				<br/><br/>
-				<div class="control-group">
-					${result.content}
-				</div>
+			</center>
+			<br />
+			<br />
+			<div class="control-group">
+				${result.content}
 			</div>
-		</center>
+		</div>
 	</div>
 </div>

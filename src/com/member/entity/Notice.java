@@ -32,7 +32,7 @@ public class Notice {
 	private String title;
 	
 	/**公告内容 */
-	@Column(name="content")
+	@Column(name="content",columnDefinition="text")
 	private String content;
 
 	/**工程（意义不明确） */
