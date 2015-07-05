@@ -16,6 +16,6 @@ public interface InformationService {
 	
 	public void deleteData(Information info);
 	
-	public void activate(Information info,Information selfInfo,Institution institution );
+	public void activate(Information info,Information selfInfo,Institution institution, Information recommendInfo);
 	
 }
