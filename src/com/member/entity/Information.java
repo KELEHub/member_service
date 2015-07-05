@@ -128,6 +128,14 @@ public class Information {
 	@Column(name="recommendNumber")
 	private String recommendNumber;
 	
+	/**激活人在本表中的表ID */
+	@Column(name="activateId")
+	private Integer activateId;
+	
+	/**激活人的登录ID */
+	@Column(name="activateNumber")
+	private String activateNumber;
+	
 	/**是否是报单中心，1表示是报单中心，0表示普通会员 */
 	@Column(name="isService",columnDefinition="INT default 0")
 	private Integer isService;
@@ -571,4 +579,22 @@ public class Information {
 	public void setActiveDate(Date activeDate) {
 		this.activeDate = activeDate;
 	}
+
+	public Integer getActivateId() {
+		return activateId;
+	}
+
+	public void setActivateId(Integer activateId) {
+		this.activateId = activateId;
+	}
+
+	public String getActivateNumber() {
+		return activateNumber;
+	}
+
+	public void setActivateNumber(String activateNumber) {
+		this.activateNumber = activateNumber;
+	}
+	
+	
 }
