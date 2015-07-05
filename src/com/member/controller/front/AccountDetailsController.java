@@ -78,6 +78,16 @@ public class AccountDetailsController {
 					  return "front/account/acountdetails";
 				  }
 			  }
+			  if(!"space".equals(form.getMonthFlg())){
+				  if("space".equals(form.getYearFlg())){
+					  model.addAttribute("error","请选择年");
+					  model.addAttribute("goldFlg", form.getGoldFlg());
+					  model.addAttribute("projectFlg", form.getProjectFlg());
+					  model.addAttribute("monthFlg", form.getMonthFlg());
+					  model.addAttribute("yearFlg", form.getYearFlg());
+					  return "front/account/acountdetails";
+				  }
+			  }
 			  Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
