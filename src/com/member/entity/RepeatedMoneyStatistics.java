@@ -23,19 +23,19 @@ public class RepeatedMoneyStatistics {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	/**报单人ID*/
+	/**会员表ID*/
 	@Column(name="declarationId")
 	private Integer declarationId;
 	
-	/**报单人登录ID */
+	/**会员登录ID */
 	@Column(name="declarationNumber")
 	private String declarationNumber;
 	
-	/**报单受益人ID*/
+	/**激活账号表ID*/
 	@Column(name="declarationBenefitId")
 	private Integer declarationBenefitId;
 	
-	/**报单受益人登录ID */
+	/**激活账号登录ID */
 	@Column(name="declarationBenefitNumber")
 	private String declarationBenefitNumber;
 	

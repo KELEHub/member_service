@@ -91,12 +91,12 @@ public class ServiceManagerController {
 		BaseResult<Void> result = new BaseResult<Void>();
 		//更改申请表信息，更新上级报单中心的information信息
 		serviceManagerService.updateApplyState(1,form.getId(),"");
-		Information superiorInfo = serviceManagerService.getServiceById(form.getSubmitId());
-		superiorInfo.setRepeatedMoney(superiorInfo.getRepeatedMoney().add(new BigDecimal(50)));
-		superiorInfo.setRepeatedAccumulative(superiorInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
-		superiorInfo.setShoppingMoney(superiorInfo.getShoppingMoney().add(new BigDecimal(50)));
-		superiorInfo.setShoppingAccumulative(superiorInfo.getShoppingAccumulative().add(new BigDecimal(50)));
-		serviceManagerService.saveOrUpdate(superiorInfo);
+//		Information superiorInfo = serviceManagerService.getServiceById(form.getSubmitId());
+//		superiorInfo.setRepeatedMoney(superiorInfo.getRepeatedMoney().add(new BigDecimal(50)));
+//		superiorInfo.setRepeatedAccumulative(superiorInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
+//		superiorInfo.setShoppingMoney(superiorInfo.getShoppingMoney().add(new BigDecimal(50)));
+//		superiorInfo.setShoppingAccumulative(superiorInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+//		serviceManagerService.saveOrUpdate(superiorInfo);
 		
 		//更新下级报单中心information表信息
 		Information juniorInfo = serviceManagerService.getServiceById(form.getApplyId());
@@ -106,42 +106,42 @@ public class ServiceManagerController {
 		serviceManagerService.saveOrUpdate(juniorInfo);
 		
 		//在AccountDetails表记录上级报单中心获得服务积分明细
-		AccountDetails shopingDetails = new AccountDetails();
-		shopingDetails.setKindData(KindDataEnum.points);
-		/**日期类别统计 */
-		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
-		/**流水号 */
-		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
-		/**项目 */
-		shopingDetails.setProject(ProjectEnum.servicepointsforone);
-		/**积分余额 */
-		shopingDetails.setPointbalance(superiorInfo.getRepeatedMoney());
-		/**葛粮币余额 */
-		shopingDetails.setGoldmoneybalance(superiorInfo.getCrmMoney());
-		/**收入 */
-		shopingDetails.setIncome(new BigDecimal(50));
-		/**支出 */
-		shopingDetails.setPay(new BigDecimal(0));
-		/**备注 */
-		shopingDetails.setRedmin("审核报单中心通过");
-		/**用户ID */
-		shopingDetails.setUserId(superiorInfo.getId());
-		/**用户登录ID */
-		shopingDetails.setUserNumber(superiorInfo.getNumber());
-		shopingDetails.setCreateTime(new Date());
-		serviceManagerService.saveOrUpdate(shopingDetails);
+//		AccountDetails shopingDetails = new AccountDetails();
+//		shopingDetails.setKindData(KindDataEnum.points);
+//		/**日期类别统计 */
+//		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+//		/**流水号 */
+//		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
+//		/**项目 */
+//		shopingDetails.setProject(ProjectEnum.servicepointsforone);
+//		/**积分余额 */
+//		shopingDetails.setPointbalance(superiorInfo.getRepeatedMoney());
+//		/**葛粮币余额 */
+//		shopingDetails.setGoldmoneybalance(superiorInfo.getCrmMoney());
+//		/**收入 */
+//		shopingDetails.setIncome(new BigDecimal(50));
+//		/**支出 */
+//		shopingDetails.setPay(new BigDecimal(0));
+//		/**备注 */
+//		shopingDetails.setRedmin("审核报单中心通过");
+//		/**用户ID */
+//		shopingDetails.setUserId(superiorInfo.getId());
+//		/**用户登录ID */
+//		shopingDetails.setUserNumber(superiorInfo.getNumber());
+//		shopingDetails.setCreateTime(new Date());
+//		serviceManagerService.saveOrUpdate(shopingDetails);
 		
 		//在RepeatedMoneyStatistics表中添加一条记录
-		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
-		moneyStatistics.setCreateTime(new Date());
-		moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
-		moneyStatistics.setDeclarationId(superiorInfo.getId());
-		moneyStatistics.setDeclarationNumber(superiorInfo.getNumber());
-		moneyStatistics.setDeclarationBenefitId(superiorInfo.getLeaderServiceId());
-		moneyStatistics.setDeclarationBenefitNumber(superiorInfo.getLeaderServiceNumber());
-		moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
-		moneyStatistics.setState(0);
-		serviceManagerService.saveOrUpdate(moneyStatistics);
+//		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
+//		moneyStatistics.setCreateTime(new Date());
+//		moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
+//		moneyStatistics.setDeclarationId(superiorInfo.getId());
+//		moneyStatistics.setDeclarationNumber(superiorInfo.getNumber());
+//		moneyStatistics.setDeclarationBenefitId(superiorInfo.getLeaderServiceId());
+//		moneyStatistics.setDeclarationBenefitNumber(superiorInfo.getLeaderServiceNumber());
+//		moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
+//		moneyStatistics.setState(0);
+//		serviceManagerService.saveOrUpdate(moneyStatistics);
 		
 		result.setMsg("操作成功.");
 		result.setSuccess(true);

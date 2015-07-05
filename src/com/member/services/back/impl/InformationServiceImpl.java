@@ -19,6 +19,7 @@ import com.member.entity.AccountDetails;
 import com.member.entity.GiftsDetails;
 import com.member.entity.Information;
 import com.member.entity.Institution;
+import com.member.entity.RepeatedMoneyStatistics;
 import com.member.entity.SendGiftsDetails;
 import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
@@ -33,10 +34,6 @@ public class InformationServiceImpl implements InformationService{
 	
 	@Resource(name = "InstitutionServiceImpl")
     InstitutionService institutionService;
-	
-	
-	
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -125,7 +122,7 @@ public class InformationServiceImpl implements InformationService{
 		/**用户ID */
 		acFrom.setUserId(selfInfo.getId());
 		institutionDao.saveOrUpdate(info);
-		institutionDao.saveOrUpdate(selfInfo);
+//		institutionDao.saveOrUpdate(selfInfo);
 		institutionDao.saveOrUpdate(acFrom);
 		//礼包生成信息
 		GiftsDetails gf = new GiftsDetails();
@@ -173,11 +170,51 @@ public class InformationServiceImpl implements InformationService{
 			sg.setCreateTime(new Date());
 			institutionDao.saveOrUpdate(sg);
 		}
-		//获取50服务积分
+		//激活人获取50服务积分
+		selfInfo.setRepeatedMoney(selfInfo.getRepeatedMoney().add(new BigDecimal(50)));
+		selfInfo.setRepeatedAccumulative(selfInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
+		selfInfo.setShoppingMoney(selfInfo.getShoppingMoney().add(new BigDecimal(50)));
+		selfInfo.setShoppingAccumulative(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+		institutionDao.saveOrUpdate(selfInfo);
 		
+		//在AccountDetails表记录上级报单中心获得服务积分明细
+		AccountDetails shopingDetails = new AccountDetails();
+		shopingDetails.setKindData(KindDataEnum.points);
+		/**日期类别统计 */
+		shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+		/**流水号 */
+		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
+		/**项目 */
+		shopingDetails.setProject(ProjectEnum.servicepointsforone);
+		/**积分余额 */
+		shopingDetails.setPointbalance(selfInfo.getRepeatedMoney());
+		/**葛粮币余额 */
+		shopingDetails.setGoldmoneybalance(selfInfo.getCrmMoney());
+		/**收入 */
+		shopingDetails.setIncome(new BigDecimal(50));
+		/**支出 */
+		shopingDetails.setPay(new BigDecimal(0));
+		/**备注 */
+		shopingDetails.setRedmin("激活会员");
+		/**用户ID */
+		shopingDetails.setUserId(selfInfo.getId());
+		/**用户登录ID */
+		shopingDetails.setUserNumber(selfInfo.getNumber());
+		shopingDetails.setCreateTime(new Date());
+		institutionDao.saveOrUpdate(shopingDetails);
 		
+		//在RepeatedMoneyStatistics表中添加一条记录，用于发放极差积分
+		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
+		moneyStatistics.setCreateTime(new Date());
+		moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
+		moneyStatistics.setDeclarationId(info.getId());
+		moneyStatistics.setDeclarationNumber(info.getNumber());
+		moneyStatistics.setDeclarationBenefitId(selfInfo.getId());
+		moneyStatistics.setDeclarationBenefitNumber(selfInfo.getNumber());
+		moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
+		moneyStatistics.setState(0);
+		institutionDao.saveOrUpdate(moneyStatistics);
 	}
-	
 	
 	private Integer getGoldMoney(Institution inst,int countNumber,GiftEnum gift){
 		if(gift.equals(GiftEnum.FIVE)){
