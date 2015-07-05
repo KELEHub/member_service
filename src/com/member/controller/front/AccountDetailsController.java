@@ -32,9 +32,29 @@ public class AccountDetailsController {
 	public AccountDetailsService accountDetailsService;
 	
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
-	public String show(Model model) {
+	public String show(Model model,HttpSession sesison) {
 		try {
-				return "front/account/acountdetails";
+			Object logonUserO = sesison.getAttribute("logonUser");
+			Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+			String userNaemO =(String) logonUserMap.get("username");
+			List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByUserNumber(userNaemO);
+			if(accountDetailsList!=null){
+				List<AccountBean> beanList = new ArrayList<AccountBean>();
+				  for(AccountDetails ad : accountDetailsList){
+					  AccountBean bean= new AccountBean();
+					  bean.setKindData(getKindDataName(ad.getKindData()));
+					  bean.setCreateTime(ad.getCreateTime().toString());
+					  bean.setIncome(ad.getIncome().toString());
+					  bean.setPay(ad.getPay().toString());
+					  bean.setPointbalance(ad.getPointbalance().toString());
+					  bean.setGoldmoneybalance(ad.getGoldmoneybalance().toString());
+					  bean.setRedmin(ad.getRedmin());
+					  bean.setProject(getProjectName(ad.getProject()));
+					  beanList.add(bean);
+				  }
+				 model.addAttribute("result",beanList);
+			}
+			return "front/account/acountdetails";
 
 		} catch (Exception e) {
 			e.printStackTrace();
