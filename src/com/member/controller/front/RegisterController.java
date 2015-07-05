@@ -92,9 +92,18 @@ public class RegisterController {
 	
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> register(@RequestBody RegisterForm form, Model model) {
+	public BaseResult<Void> register(@RequestBody RegisterForm form, Model model, HttpSession sesison) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		try {
+			Object logonUserO = sesison.getAttribute("logonUser");
+			Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+			String userNaemO =(String) logonUserMap.get("username");
+			if(userNaemO == null){
+				result.setMsg("登陆账号已损毁，请重新登陆");
+				result.setSuccess(true);
+				return result;
+			}
+			Information activateNumber = informationService.getInformationByNumber(userNaemO);
 			Information check = informationService.getInformationByNumber(form
 					.getNumber());
 			if (check != null) {
@@ -147,6 +156,8 @@ public class RegisterController {
 			newInfo.setName(form.getUsername());
 			newInfo.setRecommendNumber(form.getRefereeNumber());
 			newInfo.setRecommendId(checkRefer.getId());
+			newInfo.setActivateId(activateNumber.getId());
+			newInfo.setActivateNumber(activateNumber.getNumber());
 			newInfo.setIdentity(form.getIdentity());
 			newInfo.setPhoneNumber(form.getPhoneNumber());
 			newInfo.setPassword("123");
@@ -190,7 +201,7 @@ public class RegisterController {
 	@RequestMapping(value = "/showActivate", method = RequestMethod.POST)
 	public String showActivate(Model model, HttpSession sesison) {
 		try {
-			 Object logonUserO = sesison.getAttribute("logonUser");
+			  Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
 			  Information ad = informationService.getInformationByNumber(userNaemO);
@@ -263,6 +274,11 @@ public class RegisterController {
 			Information selfInfo = informationService.getInformationByNumber(userNaemO);
 			 //被激活对象
 			Information ad = informationService.getInformationByNumber(form.getNumber());
+			if(!ad.getActivateNumber().equals(userNaemO)){
+				result.setMsg("登陆账号已损毁，请重新登陆");
+				result.setSuccess(true);
+				return result;
+			}
 			//推荐人
 			Information recommendInfo = informationService.getInformationByNumber(ad.getRecommendNumber());
 			
