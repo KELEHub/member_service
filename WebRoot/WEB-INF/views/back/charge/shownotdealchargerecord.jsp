@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div class="container-fluid">
+<div class="container-fluid" id="content-header">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
 			   <div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
 					<h5>充值申请处理</h5>
+					 <form action="/charge/searchDealChargezRecord.do" method="POST" id="searchDealChargezRecordForm">
+	                </form>
 				</div>
 				
 				<div class="widget-content nopadding">

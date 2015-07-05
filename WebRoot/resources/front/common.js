@@ -523,7 +523,7 @@ function agreecharge(id){
 		alert(result.msg);
 		if (result.success) {
 			$('#myModal').modal('hide');
-			$("#content-header").find("form").each(function() {
+			$("#content-header").find("form[id='searchDealChargezRecordForm']").each(function() {
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 				resetTable();
