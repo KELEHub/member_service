@@ -93,14 +93,14 @@ public class InformationServiceImpl implements InformationService{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void activate(Information info, Information selfInfo,Institution institution ) {
+	public void activate(Information info, Information selfInfo,Institution institution, Information recommendInfo ) {
 		info.setIsActivate(1);
 		info.setActiveDate(new Date());
 		int count =0;
-		if(selfInfo.getRecommendCount()!=null){
-			count = selfInfo.getRecommendCount();
+		if(recommendInfo.getRecommendCount()!=null){
+			count = recommendInfo.getRecommendCount();
 		}
-		selfInfo.setRecommendCount(count+1);
+		recommendInfo.setRecommendCount(count+1);
 		BigDecimal midMoney = selfInfo.getCrmMoney().subtract(new BigDecimal(institution.getRegisterGold()));
 		selfInfo.setCrmMoney(midMoney);
 		AccountDetails acFrom = new AccountDetails();
@@ -127,11 +127,11 @@ public class InformationServiceImpl implements InformationService{
 		institutionDao.saveOrUpdate(info);
 		institutionDao.saveOrUpdate(selfInfo);
 		institutionDao.saveOrUpdate(acFrom);
-		//礼包信息
+		//礼包生成信息
 		GiftsDetails gf = new GiftsDetails();
-		gf.setUserId(selfInfo.getId());
+		gf.setUserId(recommendInfo.getId());
 		gf.setChildId(info.getId());
-		gf.setNumber(selfInfo.getNumber());
+		gf.setNumber(recommendInfo.getNumber());
 		gf.setGiftEnum(CommonUtil.getGiftEnum());
 		gf.setCountNumber(CommonUtil.getCountNumber());
 		gf.setDateNumber(CommonUtil.getDateNumber());
@@ -150,9 +150,9 @@ public class InformationServiceImpl implements InformationService{
 		Institution inst = institutionService.getInstitutionInfo();
 		for(int i =1;i<=countGifts;i++){
 			SendGiftsDetails sg = new SendGiftsDetails();
-			sg.setUserId(selfInfo.getId());
+			sg.setUserId(recommendInfo.getId());
 			sg.setChildId(info.getId());
-			sg.setNumber(selfInfo.getNumber());
+			sg.setNumber(recommendInfo.getNumber());
 			sg.setGiftEnum(CommonUtil.getGiftEnum());
 			int countNumber = CommonUtil.getMounthNumber()+i-1;
 			int realNumber = 0;
@@ -173,6 +173,7 @@ public class InformationServiceImpl implements InformationService{
 			sg.setCreateTime(new Date());
 			institutionDao.saveOrUpdate(sg);
 		}
+		//获取50服务积分
 		
 		
 	}
