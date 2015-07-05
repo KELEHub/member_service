@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div class="content-header">
-	<div class="widget-title">
-		<span class="icon"><i class="icon-th"></i> </span>
-		<h5>
-			账户明细展示
-		</h5>
+<div id="content-header">
+	<div id="breadcrumb">
+		<a href="#" title="Go to Home" class="tip-bottom"><i
+			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
+			&amp; icons</a>
 	</div>
+	<h1>
+		账户明细展示
+	</h1>
 	<form  action="/AccountDetailsController/selectData.do" method="POST" id="acountDetailsForm">
 	<div class="controls controls-row">
 		<div class="control-group"  style="float: left; margin-left: 10px;">
@@ -25,9 +27,28 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="controls controls-row">
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				项目：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<select name="projectFlg">
+						<option value="space" <c:if test='${projectFlg == "space"}'>  selected='selected'  </c:if>></option>
+                        <option value="tootherman" <c:if test='${projectFlg == "tootherman"}'>  selected='selected'  </c:if>>会员转账</option>
+                        <option value="recharge" <c:if test='${projectFlg == "recharge"}'>  selected='selected'  </c:if>>充值</option>
+                        <option value="fromback" <c:if test='${projectFlg == "fromback"}'>  selected='selected'  </c:if>>后台调整</option>
+                        <option value="frompointsadd" <c:if test='${projectFlg == "frompointsadd"}'>  selected='selected'  </c:if>>积分转葛粮币增加</option>
+                        <option value="servicepoints" <c:if test='${projectFlg == "servicepoints"}'>  selected='selected'  </c:if>>服务积分</option>
+                        <option value="togoldmoneycut" <c:if test='${projectFlg == "togoldmoneycut"}'>  selected='selected'  </c:if>>积分转葛粮币减少</option>
+                        <option value="pointcash" <c:if test='${projectFlg == "pointcash"}'>  selected='selected'  </c:if>>积分提现</option>
+                        <option value="fromgifts" <c:if test='${projectFlg == "fromgifts"}'>  selected='selected'  </c:if>>礼包发放</option>
+                        <option value="activateMember" <c:if test='${projectFlg == "activateMember"}'>  selected='selected'  </c:if>>激活会员</option>
+                        <option value="cost" <c:if test='${projectFlg == "cost"}'>  selected='selected'  </c:if>>扣费</option>
+                   </select>
+				</div>
+			</div>
+		</div>
 		<div class="control-group" style="float: left; margin-left: 10px;">
 			<label class="control-label">
 				年:
@@ -69,42 +90,17 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="controls controls-row">
-		<div class="control-group"  style="float: left; margin-left: 10px;">
-			<label class="control-label">
-				项目：
-			</label>
-			<div class="controls">
-				<div class="input-append">
-					<select name="projectFlg">
-						<option value="space" <c:if test='${projectFlg == "space"}'>  selected='selected'  </c:if>></option>
-                        <option value="tootherman" <c:if test='${projectFlg == "tootherman"}'>  selected='selected'  </c:if>>会员转账</option>
-                        <option value="recharge" <c:if test='${projectFlg == "recharge"}'>  selected='selected'  </c:if>>充值</option>
-                        <option value="fromback" <c:if test='${projectFlg == "fromback"}'>  selected='selected'  </c:if>>后台调整</option>
-                        <option value="frompointsadd" <c:if test='${projectFlg == "frompointsadd"}'>  selected='selected'  </c:if>>积分转葛粮币增加</option>
-                        <option value="servicepoints" <c:if test='${projectFlg == "servicepoints"}'>  selected='selected'  </c:if>>服务积分</option>
-                        <option value="togoldmoneycut" <c:if test='${projectFlg == "togoldmoneycut"}'>  selected='selected'  </c:if>>积分转葛粮币减少</option>
-                        <option value="pointcash" <c:if test='${projectFlg == "pointcash"}'>  selected='selected'  </c:if>>积分提现</option>
-                        <option value="fromgifts" <c:if test='${projectFlg == "fromgifts"}'>  selected='selected'  </c:if>>礼包发放</option>
-                        <option value="activateMember" <c:if test='${projectFlg == "activateMember"}'>  selected='selected'  </c:if>>激活会员</option>
-                        <option value="cost" <c:if test='${projectFlg == "cost"}'>  selected='selected'  </c:if>>扣费</option>
-                   </select>
-				</div>
-			</div>
 		</div>
-	</div>
+	</form>
 	<div class="controls controls-row">
 		<div class="control-group"  style="float: left; margin-left: 10px;">
 			<label class="control-label" style="color: red">${error }</label>
 		</div>
 	</div>
-	</form>
 	<div class="form-actions">
 		<input type="submit" value="查询" onclick="searchAccount('acountDetailsForm')"
 			class="btn btn-success">
 	</div>
-	
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
