@@ -89,9 +89,18 @@ function registerData(){
 	 reqObj["bankAddress"] = bankAddress;
 		var result = ajaxRequestForJsonGetJson("/RegisterController/register.do",
 				reqObj);
-		if(result.success){
+		if(!result.success){
 			var name = result.msg;
 			alert(name);
+		}else{
+			    var name = result.msg;
+			    alert(name);
+			    $("#content-header").find("form[id='toActivateForm']").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			    findJqueryFileUpload("content");
+				resetTable();
+			});
 		}
 	 
 	
