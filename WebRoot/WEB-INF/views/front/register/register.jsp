@@ -7,7 +7,7 @@
 		<a href="#" title="Go to Home" class="tip-bottom"><i
 			class="icon-home"></i> Home</a>
 		<a href="#" class="current">Buttons &amp; icons</a>
-		 <form action="/RegisterController/showActivate.do" method="POST" id="toActivateForm">
+		 <form action="/RegisterController/show.do" method="POST" id="toActivateForm">
 	</form>
 	</div>
 </div>
