@@ -72,7 +72,7 @@ public class InformationServiceImpl implements InformationService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Information> getInformationForNoActivate(String number) {
-		String hql="from Information mr where mr.recommendNumber=?";
+		String hql="from Information mr where mr.activateNumber=?";
 		List arguments = new ArrayList();
 		arguments.add(number);
 		List<Information> result = (List<Information>)institutionDao.queryByHql(hql,arguments);
