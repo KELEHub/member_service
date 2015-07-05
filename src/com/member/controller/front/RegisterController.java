@@ -258,15 +258,22 @@ public class RegisterController {
 			Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
-			  Information selfInfo = informationService.getInformationByNumber(userNaemO);
+			  
+			  //激活人
+			Information selfInfo = informationService.getInformationByNumber(userNaemO);
+			 //被激活对象
 			Information ad = informationService.getInformationByNumber(form.getNumber());
+			//推荐人
+			Information recommendInfo = informationService.getInformationByNumber(ad.getRecommendNumber());
+			
 			Institution institution = institutionService.getInstitutionInfo();
 			if(selfInfo.getCrmMoney().compareTo(new BigDecimal(institution.getRegisterGold()))==-1){
 				result.setMsg("葛粮币余额不足");
 				result.setSuccess(true);
 				return result;
 			}
-			informationService.activate(ad, selfInfo, institution);
+			//礼包生成和激活会员
+			informationService.activate(ad, selfInfo, institution,recommendInfo);
 			result.setMsg("激活成功");
 			result.setSuccess(true);
 			return result;
