@@ -193,10 +193,7 @@ public class RegisterController {
 			result.setSuccess(false);
 			return result;
 		}
-
 	}
-	
-	
 	
 	@RequestMapping(value = "/showActivate", method = RequestMethod.POST)
 	public String showActivate(Model model, HttpSession sesison) {
@@ -237,7 +234,6 @@ public class RegisterController {
 			e.printStackTrace();
 			return "front/register/activate";
 		}
-
 	}
 	
 	
@@ -258,7 +254,6 @@ public class RegisterController {
 			result.setSuccess(true);
 			return result;
 		}
-		
 	}
 	
 	@RequestMapping(value = "/activateUser",method = RequestMethod.POST)
@@ -298,13 +293,7 @@ public class RegisterController {
 			result.setSuccess(true);
 			return result;
 		}
-		
 	}
-	
-	
-	
-	
-	
 
 	private String getNumber() {
 		Random r = new Random();
@@ -319,7 +308,6 @@ public class RegisterController {
 				 return number;
 			 }
 		}
-		
 		return null;
 	}
 
