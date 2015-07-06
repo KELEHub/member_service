@@ -86,11 +86,11 @@ public class TransferServiceImpl implements TransferService{
 	public void convertManager(Information info, BigDecimal goldValue,
 			SystemParameter parameter) {
 		BigDecimal xm = info.getShoppingMoney().subtract(goldValue);
-		BigDecimal cm = xm.subtract(goldValue.multiply(parameter.getGlbTake()));
+		BigDecimal cm = goldValue.subtract(goldValue.multiply(parameter.getGlbTake()));
 		BigDecimal midCrm = info.getCrmMoney();
-		BigDecimal addcermoney = info.getCrmMoney().add(goldValue);
-		BigDecimal history = info.getCrmAccumulative().add(goldValue);
-		info.setShoppingMoney(cm);
+		BigDecimal addcermoney = info.getCrmMoney().add(cm);
+		BigDecimal history = info.getCrmAccumulative().add(cm);
+		info.setShoppingMoney(xm);
 		info.setCrmAccumulative(history);
 		info.setCrmMoney(addcermoney);
 		AccountDetails acFrom = new AccountDetails();
@@ -103,7 +103,7 @@ public class TransferServiceImpl implements TransferService{
 		acFrom.setDateNumber(CommonUtil.getDateNumber());
 		acFrom.setProject(ProjectEnum.togoldmoneycut);
 		/**积分余额 */
-		acFrom.setPointbalance(cm);
+		acFrom.setPointbalance(xm);
 		/**葛粮币余额 */
 		acFrom.setGoldmoneybalance(midCrm);
 		/**收入 */
@@ -111,7 +111,7 @@ public class TransferServiceImpl implements TransferService{
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("积分转换葛粮币减少"+",手续费" +getValue(goldValue.multiply(parameter.getGlbTake()).toString()));
+		acFrom.setRedmin("将"+cm.toString()+"积分转换成葛粮币[转换"+goldValue.toString()+"手续费" +getValue(goldValue.multiply(parameter.getGlbTake()).toString())+"]");
 		/**用户ID */
 		acFrom.setUserId(info.getId());
 		AccountDetails acTo = new AccountDetails();
@@ -124,11 +124,11 @@ public class TransferServiceImpl implements TransferService{
 		acTo.setDateNumber(CommonUtil.getDateNumber());
 		acTo.setProject(ProjectEnum.frompointsadd);
 		/**积分余额 */
-		acTo.setPointbalance(cm);
+		acTo.setPointbalance(xm);
 		/**葛粮币余额 */
 		acTo.setGoldmoneybalance(addcermoney);
 		/**收入 */
-		acTo.setIncome(goldValue);
+		acTo.setIncome(cm);
 		/**支出 */
 		acTo.setPay(new BigDecimal(0));
 		/**备注 */
