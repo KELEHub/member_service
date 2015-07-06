@@ -132,6 +132,16 @@ public class CommonUtil {
 		return Integer.valueOf(no);
 	}
 	
+	/**
+	 * 获取当前日
+	 * @return
+	 */
+	public static Integer getDay(){
+		Calendar d1 = Calendar.getInstance();
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		return day;
+	}
+	
 	
 	/**
 	 * 批次号batchNo获取
