@@ -75,13 +75,14 @@ public class ConvertController {
 				  result.setMsg("转换金额不能为空");
 				  return result;
 			  }
-			  BigDecimal mid;
-			  if(ad.getRepeatedMoney() != null){
-				   mid = ad.getShoppingMoney().subtract(ad.getRepeatedMoney());
-			  }else{
-				  mid = ad.getShoppingMoney();
-			  }
-			  if(mid.compareTo(getValue(form.getToCmrMoney().replace(",", "")).add(getValue(form.getToCmrMoney().replace(",", "")).multiply(parameter.getGlbTake())))==-1){
+			  BigDecimal  mid = ad.getShoppingMoney();
+//			  if(ad.getRepeatedMoney() != null){
+//				   mid = ad.getShoppingMoney().subtract(ad.getRepeatedMoney());
+//			  }else{
+//				  mid = ad.getShoppingMoney();
+//			  }
+			  if(mid.compareTo(getValue(form.getToCmrMoney().replace(",", "")))==-1){
+				  //.add(getValue(form.getToCmrMoney().replace(",", "")).multiply(parameter.getGlbTake())))
 				  result.setMsg("可装换的积分余额不足");
 				  return result;
 			  }
