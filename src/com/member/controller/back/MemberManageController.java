@@ -157,28 +157,28 @@ public class MemberManageController {
 		if (form.getRecommendNumber()!=null){
 			//查询是否需要删除礼包，如果需要，则查询账户明细表
 			Boolean ifDelete = giftsDetailsService.DeleteGifts(form.getNumber());
-			if (ifDelete){
-				List<AccountDetails> adList = memberManageService.getAccountDetailsByProjectAndUserId(ProjectEnum.fromgifts,form.getId());
-				
-				for (AccountDetails ad : adList){
-					sum = sum.add(ad.getIncome());
-				}
-				List<Information> memberInfo = memberManageService.getMemberInfoById(form.getRecommendId());
-				memberAD.setKindData(KindDataEnum.points);
-				memberAD.setDateNumber(CommonUtil.getDateNumber());
-				memberAD.setCountNumber(CommonUtil.getCountNumber());
-				memberAD.setProject(ProjectEnum.cost);
-				memberAD.setPointbalance(memberInfo.get(0).getShoppingMoney());
-				memberAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());
-				memberAD.setIncome(new BigDecimal(0));
-				memberAD.setPay(sum);
-				memberAD.setUserId(form.getRecommendId());
-				memberAD.setUserNumber(form.getRecommendNumber());
-				memberAD.setCreateTime(new Date());
-				
-				shoppingMoneySurplus = memberInfo.get(0).getShoppingMoney().subtract(sum);
-				repeatedMoneySurplus = memberInfo.get(0).getRepeatedMoney().subtract(sum);
-			}
+//			if (ifDelete){
+//				List<AccountDetails> adList = memberManageService.getAccountDetailsByProjectAndUserId(ProjectEnum.fromgifts,form.getId());
+//				
+//				for (AccountDetails ad : adList){
+//					sum = sum.add(ad.getIncome());
+//				}
+//				List<Information> memberInfo = memberManageService.getMemberInfoById(form.getRecommendId());
+//				memberAD.setKindData(KindDataEnum.points);
+//				memberAD.setDateNumber(CommonUtil.getDateNumber());
+//				memberAD.setCountNumber(CommonUtil.getCountNumber());
+//				memberAD.setProject(ProjectEnum.cost);
+//				memberAD.setPointbalance(memberInfo.get(0).getShoppingMoney());
+//				memberAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());
+//				memberAD.setIncome(new BigDecimal(0));
+//				memberAD.setPay(sum);
+//				memberAD.setUserId(form.getRecommendId());
+//				memberAD.setUserNumber(form.getRecommendNumber());
+//				memberAD.setCreateTime(new Date());
+//				
+//				shoppingMoneySurplus = memberInfo.get(0).getShoppingMoney().subtract(sum);
+//				repeatedMoneySurplus = memberInfo.get(0).getRepeatedMoney().subtract(sum);
+//			}
 		}
 		memberManageService.deleteActiveMember(form.getId(),form.getNumber(), form.getIsService(), form.getRecommendId(), form.getLeaderServiceId(),serviceAD,memberAD,sum,shoppingMoneySurplus,repeatedMoneySurplus);
 		result.setMsg("删除会员成功.");
