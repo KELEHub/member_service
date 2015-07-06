@@ -118,7 +118,7 @@
 						<td width="120" style="text-align: right;">服务积分累计:</td>
 						<td>${member.repeatedAccumulative }</td>
 						<td style="text-align: right;">参与分红点数:</td>
-						<td class="center">${member.bonusCount }</td>
+						<td class="center">${member.recommendCount }</td>
 					</tr>
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">是否报单中心:</td>
