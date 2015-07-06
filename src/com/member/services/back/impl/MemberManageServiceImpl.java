@@ -186,7 +186,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void deleteActiveMember(Integer id,String number,Integer isService,Integer recommendId,Integer leaderServiceId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
+	public void deleteActiveMember(Integer id,String number,Integer isService,Integer recommendId,Integer activateId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus) {
 		//删除以所删除会员为上级报单中心的信息（报单中心）
 		String hql1 = "update Information set leaderServiceId=null,leaderServiceNumber=null where leaderServiceId=?";
@@ -194,13 +194,14 @@ public class MemberManageServiceImpl implements MemberManageService {
 		//删除以所删除会员为推荐人的信息，包括未激活的会员（报单中心，普通会员）
 		String hql2 = "update Information set recommendId=null,recommendNumber=null where recommendId=?";
 		informationDao.executeHqlUpdate(hql2, id);
-		if (isService==1 && leaderServiceId!=null){
-			//删除该会员的上级报单中心积分和服务积分各50（报单中心）
+//		if (isService==1 && leaderServiceId!=null){
+			//删除该会员的激活人的积分和服务积分各50
 			String hql3 = "update Information set shoppingMoney=shoppingMoney-50,repeatedMoney=repeatedMoney-50 where id=?";
-			informationDao.executeHqlUpdate(hql3, leaderServiceId);
+			informationDao.executeHqlUpdate(hql3, activateId);
 			//在账户明细表里记录
 			informationDao.saveOrUpdate(serviceAD);
-		}
+//		}
+			
 //		if (recommendId!=null){
 //			//删除该会员的推荐人的相应礼包（报单中心，普通会员）
 //			String hql4 = "update Information set shoppingMoney=?,repeatedMoney=? where id=?";
@@ -217,10 +218,12 @@ public class MemberManageServiceImpl implements MemberManageService {
 		String hql6="delete Withdrawals where number=? and status='0'";//删除提现申请
 		String hql7="delete Charge where number=?";//删除充值申请
 		String hql8="delete ApplyService where applyId=?";//删除申请人为要删除的会员的报单中心申请
+		String hql11 = "delete RepeatedMoneyStatistics where declarationId=?";//删除RepeatedMoneyStatistics（极差积分统计表）对应激活人的极差积分统计信息
 		informationDao.executeHqlUpdate(hql5,id);
 		informationDao.executeHqlUpdate(hql6,number);
 		informationDao.executeHqlUpdate(hql7,number);
 		informationDao.executeHqlUpdate(hql8,id);
+		informationDao.executeHqlUpdate(hql11,id);
 		
 		//删除提交人为要删除的会员的报单中心申请字段信息
 		String hql9 = "update ApplyService set submitId=null,submitNumber=null where submitId=?";

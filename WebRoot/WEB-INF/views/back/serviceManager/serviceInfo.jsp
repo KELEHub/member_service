@@ -46,7 +46,7 @@
 									<td>
 									<button class="btn" onclick="serviceInfoDetail('${item.id}')" id="serviceInfo_Info">详细信息</button>
 <!--									<a href="#myModal" data-toggle="modal" class="btn btn-large" onclick="rechargeToForm('${item.id}')" id="serviceInfo_edit">后台充值</a>-->
-									<!--<button class="btn btn-large" onclick="forbiddenService('${item.id}')" id="serviceInfo_Forbidden">禁用</button>-->
+									<button class="btn" onclick="forbiddenService('${item.id}')" id="serviceInfo_Forbidden">禁用</button>
 									</td>
 								</tr>
 							</c:forEach>

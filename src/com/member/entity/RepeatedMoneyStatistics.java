@@ -23,7 +23,7 @@ public class RepeatedMoneyStatistics {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
-	/**会员表ID*/
+	/**会员表ID，被激活账号*/
 	@Column(name="declarationId")
 	private Integer declarationId;
 	
@@ -31,7 +31,7 @@ public class RepeatedMoneyStatistics {
 	@Column(name="declarationNumber")
 	private String declarationNumber;
 	
-	/**激活账号表ID*/
+	/**激活账号表ID，受益人*/
 	@Column(name="declarationBenefitId")
 	private Integer declarationBenefitId;
 	

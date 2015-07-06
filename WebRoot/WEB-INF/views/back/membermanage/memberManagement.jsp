@@ -59,7 +59,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result }">
+							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
 									<td>${item.number}</td>
 									<td>${item.name}</td>
@@ -81,7 +81,7 @@
 										</c:if>
 										</button>
 										<button class="btn" onclick="doResetPwd('${item.id}')">密码重置</button>
-										<button class="btn" onclick="deleteActiveMember('${item.id}','${item.number}','${item.isService}','${item.recommendId}','${item.recommendNumber}','${item.leaderServiceId}','${item.leaderServiceNumber}')">删除会员</button>
+										<button class="btn" onclick="deleteActiveMember('${item.id}','${item.number}','${item.isService}','${item.recommendId}','${item.recommendNumber}','${item.activateId}','${item.activateNumber}')">删除会员</button>
 									</td>
 								</tr>
 							</c:forEach>

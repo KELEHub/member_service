@@ -140,8 +140,8 @@ public class MemberManageController {
 		BigDecimal sum = new BigDecimal(0.00);
 		BigDecimal shoppingMoneySurplus = new BigDecimal(0.00);
 		BigDecimal repeatedMoneySurplus = new BigDecimal(0.00);
-		if (form.getIsService()==1 && form.getLeaderServiceId()!= null){
-			List<Information> memberInfo = memberManageService.getMemberInfoById(form.getLeaderServiceId());
+//		if (form.getIsService()==1 && form.getLeaderServiceId()!= null){
+			List<Information> memberInfo = memberManageService.getMemberInfoById(form.getActivateId());
 			serviceAD.setKindData(KindDataEnum.points);
 			serviceAD.setDateNumber(CommonUtil.getDateNumber());
 			serviceAD.setCountNumber(CommonUtil.getCountNumber());
@@ -153,7 +153,7 @@ public class MemberManageController {
 			serviceAD.setUserId(form.getLeaderServiceId());
 			serviceAD.setUserNumber(form.getLeaderServiceNumber());
 			serviceAD.setCreateTime(new Date());
-		}
+//		}
 		if (form.getRecommendNumber()!=null){
 			//查询是否需要删除礼包，如果需要，则查询账户明细表
 			Boolean ifDelete = giftsDetailsService.DeleteGifts(form.getNumber());
@@ -180,7 +180,7 @@ public class MemberManageController {
 //				repeatedMoneySurplus = memberInfo.get(0).getRepeatedMoney().subtract(sum);
 //			}
 		}
-		memberManageService.deleteActiveMember(form.getId(),form.getNumber(), form.getIsService(), form.getRecommendId(), form.getLeaderServiceId(),serviceAD,memberAD,sum,shoppingMoneySurplus,repeatedMoneySurplus);
+		memberManageService.deleteActiveMember(form.getId(),form.getNumber(), form.getIsService(), form.getRecommendId(), form.getActivateId(),serviceAD,memberAD,sum,shoppingMoneySurplus,repeatedMoneySurplus);
 		result.setMsg("删除会员成功.");
 		result.setSuccess(true);
 		return result;

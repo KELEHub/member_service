@@ -69,7 +69,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> forbiddenService(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerService.forbiddenService(1,form.getId());
+		serviceManagerService.forbiddenService(0,form.getId());
 		result.setMsg("禁用成功.");
 		result.setSuccess(true);
 		return result;

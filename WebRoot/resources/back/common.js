@@ -927,7 +927,7 @@ function rangeIntegralIssue(sFormId){
 	resetTable();
 }
 
-function deleteActiveMember(memberId,number,isService,recommendId,recommendNumber,leaderServiceId,leaderServiceNumber){
+function deleteActiveMember(memberId,number,isService,recommendId,recommendNumber,activateId,activateNumber){
 	if (window.confirm('您确定要删除当前用户么？')) {
 		var reqObj = {};
 		reqObj["id"] = memberId;
@@ -935,8 +935,8 @@ function deleteActiveMember(memberId,number,isService,recommendId,recommendNumbe
 		reqObj["isService"] = isService;
 		reqObj["recommendId"] = recommendId;
 		reqObj["recommendNumber"] = recommendNumber;
-		reqObj["leaderServiceId"] = leaderServiceId;
-		reqObj["leaderServiceNumber"] = leaderServiceNumber;
+		reqObj["activateId"] = activateId;
+		reqObj["activateNumber"] = activateNumber;
 		var result = ajaxRequestForJsonGetJson("/membermanage/deleteActiveMember.do",reqObj);
 		if (result.success) {
 			alert(result.msg);

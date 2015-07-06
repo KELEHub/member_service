@@ -823,10 +823,10 @@ function forbiddenService(serviceId){
 		if (result.success) {
 			alert(result.msg);
 			$('#myModal').modal('hide');
-//			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
-//				var formid = this.id;
-//				ajaxRequestForFormGetJsp(formid);
-//			});
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
 		}
 	}
 }

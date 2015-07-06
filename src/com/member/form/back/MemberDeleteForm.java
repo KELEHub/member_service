@@ -1,5 +1,7 @@
 package com.member.form.back;
 
+import javax.persistence.Column;
+
 
 public class MemberDeleteForm {
 
@@ -22,6 +24,28 @@ public class MemberDeleteForm {
 	
 	/**上级报单中心的登录ID */
 	private String leaderServiceNumber;
+	
+	/**激活人在本表中的表ID */
+	private Integer activateId;
+	
+	/**激活人的登录ID */
+	private String activateNumber;
+
+	public Integer getActivateId() {
+		return activateId;
+	}
+
+	public void setActivateId(Integer activateId) {
+		this.activateId = activateId;
+	}
+
+	public String getActivateNumber() {
+		return activateNumber;
+	}
+
+	public void setActivateNumber(String activateNumber) {
+		this.activateNumber = activateNumber;
+	}
 
 	public Integer getId() {
 		return id;

@@ -64,10 +64,10 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void forbiddenService(Integer isLock,Integer id) {
-		String hql = "update Information set isLock=? where id=?";
+	public void forbiddenService(Integer isService,Integer id) {
+		String hql = "update Information set isService=? where id=?";
 		List<Object> list = new ArrayList<Object>();
-		list.add(isLock);
+		list.add(isService);
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
 	}
