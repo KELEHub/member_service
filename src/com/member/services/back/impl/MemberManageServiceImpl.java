@@ -201,17 +201,17 @@ public class MemberManageServiceImpl implements MemberManageService {
 			//在账户明细表里记录
 			informationDao.saveOrUpdate(serviceAD);
 		}
-		if (recommendId!=null){
-			//删除该会员的推荐人的相应礼包（报单中心，普通会员）
-			String hql4 = "update Information set shoppingMoney=?,repeatedMoney=? where id=?";
-			List<Object> list = new ArrayList<Object>();
-			list.add(shoppingMoneySurplus);
-			list.add(repeatedMoneySurplus);
-			list.add(recommendId);
-			informationDao.executeHqlUpdate(hql4,list);
-			//在账户明细表里记录
-			informationDao.saveOrUpdate(memberAD);
-		}
+//		if (recommendId!=null){
+//			//删除该会员的推荐人的相应礼包（报单中心，普通会员）
+//			String hql4 = "update Information set shoppingMoney=?,repeatedMoney=? where id=?";
+//			List<Object> list = new ArrayList<Object>();
+//			list.add(shoppingMoneySurplus);
+//			list.add(repeatedMoneySurplus);
+//			list.add(recommendId);
+//			informationDao.executeHqlUpdate(hql4,list);
+//			//在账户明细表里记录
+//			informationDao.saveOrUpdate(memberAD);
+//		}
 		//删除留言未回复、提现申请、充值申请、报单中心申请的相关信息
 		String hql5="delete Tickling where memberId=?";//删除留言
 		String hql6="delete Withdrawals where number=? and status='0'";//删除提现申请
