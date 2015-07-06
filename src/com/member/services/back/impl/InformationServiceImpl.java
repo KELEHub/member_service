@@ -122,7 +122,7 @@ public class InformationServiceImpl implements InformationService{
 		/**用户ID */
 		acFrom.setUserId(selfInfo.getId());
 		institutionDao.saveOrUpdate(info);
-//		institutionDao.saveOrUpdate(selfInfo);
+		institutionDao.saveOrUpdate(recommendInfo);
 		institutionDao.saveOrUpdate(acFrom);
 		//礼包生成信息
 		GiftsDetails gf = new GiftsDetails();
