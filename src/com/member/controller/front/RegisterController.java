@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.entity.BankService;
+import com.member.entity.ForbidForm;
 import com.member.entity.Information;
 import com.member.entity.Institution;
 import com.member.form.front.ActivateForm;
@@ -26,6 +27,7 @@ import com.member.helper.BaseResult;
 import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
 import com.member.services.back.ParameterService;
+import com.member.services.back.ServiceManagerService;
 import com.member.util.CommonUtil;
 
 @Controller
@@ -40,6 +42,9 @@ public class RegisterController {
 	
 	@Resource(name = "InstitutionServiceImpl")
 	public InstitutionService institutionService;
+	
+	@Resource(name = "ServiceManagerServiceImpl")
+	public ServiceManagerService serviceManagerService;
 
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
 	public String show(Model model, HttpSession sesison) {
@@ -98,6 +103,12 @@ public class RegisterController {
 			Object logonUserO = sesison.getAttribute("logonUser");
 			Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			String userNaemO =(String) logonUserMap.get("username");
+			ForbidForm ifForbid = serviceManagerService.getForbidForm();
+			if(ifForbid == null || ifForbid.getIfForbid() == null || ifForbid.getIfForbid() == 1){
+				result.setMsg("现在禁止报单，请等待解禁");
+				result.setSuccess(true);
+				return result;
+			}
 			if(userNaemO == null){
 				result.setMsg("登陆账号已损毁，请重新登陆");
 				result.setSuccess(true);
@@ -242,6 +253,12 @@ public class RegisterController {
 	public BaseResult<Void> deleteUser(@RequestBody ActivateForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		try {
+			ForbidForm ifForbid = serviceManagerService.getForbidForm();
+			if(ifForbid == null || ifForbid.getIfForbid() == null || ifForbid.getIfForbid() == 1){
+				result.setMsg("现在禁止报单，请等待解禁");
+				result.setSuccess(true);
+				return result;
+			}
 			Information ad = informationService.getInformationByNumber(form.getNumber());
 			if(ad!=null){
 				informationService.deleteData(ad);
@@ -264,7 +281,12 @@ public class RegisterController {
 			Object logonUserO = sesison.getAttribute("logonUser");
 			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
 			  String userNaemO =(String) logonUserMap.get("username");
-			  
+				ForbidForm ifForbid = serviceManagerService.getForbidForm();
+				if(ifForbid == null || ifForbid.getIfForbid() == null || ifForbid.getIfForbid() == 1){
+					result.setMsg("现在禁止报单，请等待解禁");
+					result.setSuccess(true);
+					return result;
+				}
 			  //激活人
 			Information selfInfo = informationService.getInformationByNumber(userNaemO);
 			 //被激活对象
