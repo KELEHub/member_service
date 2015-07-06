@@ -157,6 +157,12 @@ public class AccountServiceImpl implements AccountService{
 			result.setMsg("现在不允许提现申请,请联系平台确认.");
 			return result;
 		}
+		//邓明亮修改
+		if(CommonUtil.getDay()!=2 && CommonUtil.getDay()!=22 && CommonUtil.getDay()!=12){
+			result.setSuccess(false);
+			result.setMsg("现在提现申请日,请等待申请日再提出提现申请.");
+			return result;
+		}
 		
 		BigDecimal goldMax = syspar.getGoldMax();
 		BigDecimal goldMin = syspar.getGoldMin();
@@ -185,10 +191,9 @@ public class AccountServiceImpl implements AccountService{
 		Information ifm = getActInfo(form.getId());
 
 		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
-		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
 		
 		//可以提现的积分=积分-服务积分
-		BigDecimal catdoMoeyBd = shoppingMoney.subtract(repeatedMoey);
+		BigDecimal catdoMoeyBd = shoppingMoney;
 		//判断积分是否够提现
 		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
 			result.setSuccess(false);
