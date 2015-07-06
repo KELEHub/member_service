@@ -51,7 +51,7 @@ public class TransferServiceImpl implements TransferService{
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("转出"+cm.toString()+"到账号"+to.getNumber()+"[转出"+goldValue+"手续费" +getValue(goldValue.multiply(parameter.getScoreTake()).toString())+"]");
+		acFrom.setRedmin("转出"+getValue(cm.toString()).toString()+"到账号"+to.getNumber()+"[转出"+goldValue+"手续费" +getValue(goldValue.multiply(parameter.getScoreTake()).toString())+"]");
 		/**用户ID */
 		acFrom.setUserId(from.getId());
 		AccountDetails acTo = new AccountDetails();
@@ -111,7 +111,7 @@ public class TransferServiceImpl implements TransferService{
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("将"+cm.toString()+"积分转换成葛粮币[转换"+goldValue.toString()+"手续费" +getValue(goldValue.multiply(parameter.getGlbTake()).toString())+"]");
+		acFrom.setRedmin("将"+getValue(cm.toString()).toString()+"积分转换成葛粮币[转换"+goldValue.toString()+"手续费" +getValue(goldValue.multiply(parameter.getGlbTake()).toString())+"]");
 		/**用户ID */
 		acFrom.setUserId(info.getId());
 		AccountDetails acTo = new AccountDetails();
