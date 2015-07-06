@@ -88,9 +88,9 @@ function resetMenu() {
 <input id="basePath" type="hidden" value="<%=basePath%>">
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
-    <li  class="dropdown" id="profile-messages" ><a><i class="icon icon-user"></i>  <span class="text">Welcome ${username}</span><b class="caret"></b></a>
+    <li  class="dropdown" id="profile-messages" ><a><i class="icon icon-user"></i>  <span class="text" style="font-size: 22px">Welcome ${username}</span><b class="caret"></b></a>
     </li>
-    <li class=""><a title="" onclick="logout('/LoginController/logout.do')"><i class="icon icon-share-alt"></i> <span class="text">退出系统</span></a></li>
+    <li class=""><a title="" onclick="logout('/LoginController/logout.do')"><i class="icon icon-share-alt"></i> <span class="text"  style="font-size: 22px">退出系统</span></a></li>
   </ul>
 </div>
 
