@@ -872,11 +872,11 @@ function forbiddenService(serviceId){
 		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/forbiddenService.do",reqObj);
 		if (result.success) {
 			alert(result.msg);
-			$('#myModal').modal('hide');
-//			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
-//				var formid = this.id;
-//				ajaxRequestForFormGetJsp(formid);
-//			});
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
 		}
 	}
 }

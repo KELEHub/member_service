@@ -792,43 +792,8 @@ function uploadFileWithPar(inputObj){
 	});
 }
 
-function serviceInfoDetail(serviceId){
-	var reqObj = {};
-	reqObj["id"] = serviceId;
-	showDynamicDialog("/ServiceManagerController/showServiceInfoDetail.do", reqObj, "showServiceDetail");
-}
-
-function rechargeService(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
-	if(result.success){
-		alert(result.msg);
-		$('#myModal').modal('hide');
-		$("#content-header").find("form[id='serviceManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-				resetTable();
-		});
-	}
-}
-
 function rechargeToForm(arg_id){
 	document.getElementById("serviceInfo_serviceId").value = arg_id;
-}
-
-function forbiddenService(serviceId){
-	if (window.confirm('您确定要禁用该报单中心？')) {
-		var reqObj = {};
-		reqObj["id"] = serviceId;
-		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/forbiddenService.do",reqObj);
-		if (result.success) {
-			alert(result.msg);
-			$('#myModal').modal('hide');
-			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
-			});
-		}
-	}
 }
 
 function checkSuccess(id,submitId,submitNumber,applyId,applyNumber){
