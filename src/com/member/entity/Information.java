@@ -180,10 +180,6 @@ public class Information {
 	@Column(name="bonusMoney",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal bonusMoney;
 	
-	/**分红点数 */
-	@Column(name="bonusCount",columnDefinition="NUMERIC(20,2) default 0")
-	private Integer bonusCount;
-	
 	/**分红累计 */
 	@Column(name="bonusAccumulative",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal bonusAccumulative;
@@ -599,14 +595,5 @@ public class Information {
 	public void setActivateNumber(String activateNumber) {
 		this.activateNumber = activateNumber;
 	}
-
-	public Integer getBonusCount() {
-		return bonusCount;
-	}
-
-	public void setBonusCount(Integer bonusCount) {
-		this.bonusCount = bonusCount;
-	}
-	
 	
 }
