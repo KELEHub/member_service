@@ -16,4 +16,6 @@ public class HqlServiceManager {
 		"from ApplyService where submitNumber=?";
 	public final static String getServiceByNumber=
 		"from Information where number=?";
+	public final static String getForbidForm=
+		"from ForbidForm";
 }

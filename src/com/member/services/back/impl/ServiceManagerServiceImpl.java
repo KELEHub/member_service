@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.member.dao.HqlServiceManager;
 import com.member.dao.ServiceManagerDao;
 import com.member.entity.ApplyService;
+import com.member.entity.ForbidForm;
 import com.member.entity.Information;
 import com.member.form.back.InformationForm;
 import com.member.services.back.ServiceManagerService;
 
+@SuppressWarnings("unchecked")
 @Service("ServiceManagerServiceImpl")
 public class ServiceManagerServiceImpl implements ServiceManagerService{
 
@@ -36,6 +38,18 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 				HqlServiceManager.getServiceById, id);
 		if(result!=null){
 			return (Information) result.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public ForbidForm getForbidForm() {
+		List<ForbidForm> result = (List<ForbidForm>) serviceManagerDao.queryByHql(
+				HqlServiceManager.getForbidForm);
+		if(result!=null){
+			return (ForbidForm) result.get(0);
 		}else{
 			return null;
 		}
@@ -80,6 +94,15 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 		list.add(state);
 		list.add(failureCause);
 		list.add(id);
+		serviceManagerDao.executeHqlUpdate(hql, list);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void updateForbidForm(Integer ifForbid) {
+		String hql = "update ForbidForm set ifForbid=?";
+		List<Object> list = new ArrayList<Object>();
+		list.add(ifForbid);
 		serviceManagerDao.executeHqlUpdate(hql, list);
 	}
 	

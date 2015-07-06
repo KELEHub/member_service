@@ -1,7 +1,5 @@
 package com.member.controller.back;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,18 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.member.beans.back.enumData.KindDataEnum;
-import com.member.beans.back.enumData.ProjectEnum;
-import com.member.entity.AccountDetails;
 import com.member.entity.ApplyService;
+import com.member.entity.ForbidForm;
 import com.member.entity.Information;
-import com.member.entity.RepeatedMoneyStatistics;
 import com.member.form.back.ApplyServiceForm;
 import com.member.form.back.InformationForm;
 import com.member.form.back.MemberSearchForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.ServiceManagerService;
-import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/ServiceManagerController")
@@ -36,7 +30,9 @@ public class ServiceManagerController {
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
 		List<Information> result = serviceManagerService.getServiceByIsService(1);
+		ForbidForm ifForbid = serviceManagerService.getForbidForm();
 		model.addAttribute("result", result);
+		model.addAttribute("ifFrobid",ifForbid.getIfForbid());
 		return "back/serviceManager/serviceInfo";
 	}
 	
@@ -80,6 +76,16 @@ public class ServiceManagerController {
 	public BaseResult<Void> applyCheckFailure(@RequestBody ApplyServiceForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		serviceManagerService.updateApplyState(1,form.getId(),form.getFailureCause());
+		result.setMsg("操作成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	@RequestMapping(value = "/forbidFormManager",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> forbidFormManager(@RequestBody ApplyServiceForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		serviceManagerService.updateForbidForm(form.getId());//权宜之计,此处id当ifForbid使用
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;

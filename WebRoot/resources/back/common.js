@@ -881,6 +881,36 @@ function forbiddenService(serviceId){
 	}
 }
 
+function forbidForm(){
+	if (window.confirm('您确定要禁止报单？')) {
+		var reqObj = {};
+		reqObj["id"] = 1;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/forbidFormManager.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+	}
+}
+
+function permitForm(){
+	var reqObj = {};
+	reqObj["id"] = 0;
+	var result = ajaxRequestForJsonGetJson("/ServiceManagerController/forbidFormManager.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+			});
+		}
+}
+
 function checkSuccess(id,submitId,submitNumber,applyId,applyNumber){
 	if (window.confirm('您确定该申请通过？')) {
 		var reqObj = {};

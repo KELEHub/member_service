@@ -15,6 +15,18 @@
 					<span class="icon"><i class="icon-th"></i></span>
 					<h5>报单中心信息</h5>
 				</div>
+				<div class="form-actions">
+				<c:if test="${ifFrobid eq 0}">
+						<input type="submit" value="禁止报单"
+							onclick="forbidForm()"
+							class="btn btn-success">
+				</c:if>
+				<c:if test="${ifFrobid eq 1}">
+						<input type="submit" value="允许报单"
+							onclick="permitForm()"
+							class="btn btn-success">
+				</c:if>
+				</div>
 				<div class="widget-content nopadding">
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
