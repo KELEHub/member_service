@@ -129,6 +129,8 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 			}
 		
 			if(info!=null){
+				
+				//删除推荐人的礼包信息
 				String hql = "from GiftsDetails mr where mr.childId=?";
 				List argumentsId = new ArrayList();
 				argumentsId.add(info.getId());
@@ -147,6 +149,27 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 						giftsDao.delete(sd);
 					}
 				}
+				//删除本人的礼包信息
+				String selfhql = "from GiftsDetails mr where mr.number=?";
+				List argumentsSelfId = new ArrayList();
+				argumentsSelfId.add(info.getNumber());
+				List<GiftsDetails> selfResult = (List<GiftsDetails>) giftsDao
+				.queryByHql(selfhql, argumentsSelfId);
+				if (selfResult != null && selfResult.size() > 0) {
+					for (GiftsDetails gs : selfResult) {
+						giftsDao.delete(gs);
+					}
+				}
+				
+				String sendSelfhql = "from SendGiftsDetails md where md.number=?";
+				List<SendGiftsDetails> sendSelfResult = (List<SendGiftsDetails>) giftsDao
+						.queryByHql(sendSelfhql, argumentsSelfId);
+				if (sendSelfResult != null && sendSelfResult.size() > 0) {
+					for (SendGiftsDetails sd : sendSelfResult) {
+						giftsDao.delete(sd);
+					}
+				}
+				
 			}
 			
 			return true;
