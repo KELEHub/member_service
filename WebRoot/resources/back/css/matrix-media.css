@@ -30,9 +30,12 @@ body {
 #sidebar > ul li ul {
 	background-color: #1e242b;
 }
-#sidebar > ul li ul li a{ color:#939da8}
+#sidebar > ul li ul li a{ 
+	color:#FFFFFF;
+	font-size: 20px;
+}
 #sidebar > ul li ul li a:hover, #sidebar > ul li ul li.active a {
-	color: #fff;
+	color: #FFFFFF;
 	background-color: #28b779;
 }
 

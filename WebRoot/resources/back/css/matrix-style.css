@@ -159,7 +159,8 @@ hr{ border-top-color:#dadada;}
 #sidebar > ul > li > a {
 	padding: 10px 0 10px 15px;
 	display: block;
-	color: #939da8;
+	color: #FFFFFF;
+	font-size: 22px;
 }
 #sidebar > ul > li > a > i {
 	margin-right: 10px;
