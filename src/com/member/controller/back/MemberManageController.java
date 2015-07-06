@@ -51,6 +51,22 @@ public class MemberManageController {
 		return "back/membermanage/shownotactivemember";
 	}
 	
+	@RequestMapping(value = "/showMemberManagement",method = RequestMethod.POST)
+	public String showMemberManagement(Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		List<Information> result = memberManageService.getActiveMembers(form);
+		model.addAttribute("result",result);
+		return "back/membermanage/memberManagement";
+	}
+	
+	@RequestMapping(value = "/searchMemberManagement",method = RequestMethod.POST)
+	public String searchMemberManagement(@RequestBody MemberSearchForm form,Model model) {
+		List<Information> result = memberManageService.getActiveMembers(form);
+		model.addAttribute("form",form);
+		model.addAttribute("result",result);
+		return "back/membermanage/memberManagement";
+	}
+	
 	@RequestMapping(value = "/searchActivationMember",method = RequestMethod.POST)
 	public String searchActivationMember(@RequestBody MemberSearchForm form,Model model) {
 		List<Information> result = memberManageService.getActiveMembers(form);

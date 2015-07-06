@@ -9,10 +9,10 @@
 			&amp; icons</a>
 	</div>
 	<h1>
-		已激活会员资料
+		会员管理操作
 	</h1>
-	<form action="/membermanage/searchActivationMember.do" method="POST"
-							id="searchActiveMemberForm">
+	<form action="/membermanage/searchMemberManagement.do" method="POST"
+							id="searchMemberManagementForm">
 		<div class="controls controls-row">
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">会员账号:</label>
@@ -35,7 +35,7 @@
 		</div>
 	</form>
 	<div class="control-group" style="float: left;margin-left: 10px;">
-			<a class="btn" onclick="searchMembers('searchActiveMemberForm')">查询</a>
+			<a class="btn" onclick="searchMembers('searchMemberManagementForm')">查询</a>
 			</div>
 </div>
 <div class="container-fluid">
@@ -71,17 +71,17 @@
 									<td>${item.recommendCount }</td>
 									<td>${item.activeDate }</td>
 									<td>
-										<button class="btn" onclick="doMemberShowDetail('${item.id}')">详细信息</button>
-<!--										<button class="btn" onclick="doMemberLock('${item.id}')">-->
-<!--										<c:if test="${item.isLock eq 1 }">-->
-<!--											<font color="red">解锁</font>-->
-<!--										</c:if>-->
-<!--										<c:if test="${item.isLock eq 0 }">-->
-<!--											锁定-->
-<!--										</c:if>-->
-<!--										</button>-->
-<!--										<button class="btn" onclick="doResetPwd('${item.id}')">密码重置</button>-->
-<!--										<button class="btn" onclick="deleteActiveMember('${item.id}','${item.number}','${item.isService}','${item.recommendId}','${item.recommendNumber}','${item.leaderServiceId}','${item.leaderServiceNumber}')">删除会员</button>-->
+<!--										<button class="btn" onclick="doMemberShowDetail('${item.id}')">详细信息</button>-->
+										<button class="btn" onclick="doMemberLock('${item.id}')">
+										<c:if test="${item.isLock eq 1 }">
+											<font color="red">解锁</font>
+										</c:if>
+										<c:if test="${item.isLock eq 0 }">
+											锁定
+										</c:if>
+										</button>
+										<button class="btn" onclick="doResetPwd('${item.id}')">密码重置</button>
+										<button class="btn" onclick="deleteActiveMember('${item.id}','${item.number}','${item.isService}','${item.recommendId}','${item.recommendNumber}','${item.leaderServiceId}','${item.leaderServiceNumber}')">删除会员</button>
 									</td>
 								</tr>
 							</c:forEach>
