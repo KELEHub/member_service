@@ -166,9 +166,11 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			dateNumber="01";
 		}else if(day<=20){
 			dateNumber="02";
-		}else{
+		}else if(day<=30){
 			dateNumber="03";
-			
+		}
+		if(day==31){
+			dateNumber="01";
 		}
 		/**流水号 */
 		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
