@@ -84,18 +84,10 @@ public class TransferController {
 				  return result;
 			  }
 			  if(toInfo==null){
-				  result.setMsg("用户不存在");
+				  result.setMsg("转账用户不存在");
 				  return result;
 			  }
-			  if(ad.getLeaderServiceNumber()==null){
-				  result.setMsg("对不起，您没有上级报单中心");
-				  return result;
-			  }
-			  if(toInfo==null){
-				  result.setMsg("转账对象不是您的报单中心范围");
-				  return result;
-			  }
-			  if(!toInfo.getNumber().equals(ad.getLeaderServiceNumber())){
+			  if(!toInfo.getNumber().equals(ad.getActivateNumber())){
 				  result.setMsg("转账对象不是您的报单中心范围");
 				  return result;
 			  }
