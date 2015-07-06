@@ -27,10 +27,10 @@ public class TransferServiceImpl implements TransferService{
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void transferManager(Information from, Information to,BigDecimal goldValue,SystemParameter parameter) {
 		BigDecimal xm = from.getCrmMoney().subtract(goldValue);
-		BigDecimal cm = xm.subtract(goldValue.multiply(parameter.getScoreTake()));
-		from.setCrmMoney(cm);
-		BigDecimal dm = to.getCrmMoney().add(goldValue);
-		BigDecimal history = to.getCrmAccumulative().add(goldValue);
+		BigDecimal cm = goldValue.subtract(goldValue.multiply(parameter.getScoreTake()));
+		from.setCrmMoney(xm);
+		BigDecimal dm = to.getCrmMoney().add(cm);
+		BigDecimal history = to.getCrmAccumulative().add(cm);
 		to.setCrmMoney(dm);
 		to.setCrmAccumulative(history);
 		AccountDetails acFrom = new AccountDetails();
@@ -45,13 +45,13 @@ public class TransferServiceImpl implements TransferService{
 		/**积分余额 */
 		acFrom.setPointbalance(from.getShoppingMoney());
 		/**葛粮币余额 */
-		acFrom.setGoldmoneybalance(cm);
+		acFrom.setGoldmoneybalance(xm);
 		/**收入 */
 		acFrom.setIncome(new BigDecimal(0));
 		/**支出 */
 		acFrom.setPay(goldValue);
 		/**备注 */
-		acFrom.setRedmin("会员转账,转入账号"+to.getNumber()+",手续费" +getValue(goldValue.multiply(parameter.getScoreTake()).toString()));
+		acFrom.setRedmin("转出"+cm.toString()+"到账号"+to.getNumber()+"[转出"+goldValue+"手续费" +getValue(goldValue.multiply(parameter.getScoreTake()).toString())+"]");
 		/**用户ID */
 		acFrom.setUserId(from.getId());
 		AccountDetails acTo = new AccountDetails();
@@ -68,7 +68,7 @@ public class TransferServiceImpl implements TransferService{
 		/**葛粮币余额 */
 		acTo.setGoldmoneybalance(dm);
 		/**收入 */
-		acTo.setIncome(goldValue);
+		acTo.setIncome(cm);
 		/**支出 */
 		acTo.setPay(new BigDecimal(0));
 		/**备注 */
