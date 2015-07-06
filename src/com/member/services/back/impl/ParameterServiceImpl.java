@@ -26,13 +26,11 @@ public class ParameterServiceImpl implements ParameterService{
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public SystemParameter getSystemParameter() {
-		
 		List<SystemParameter> dataPermissionCodes=(List<SystemParameter>) parameterDao.queryByHql(HqlParameter.getSystemParameter);
         if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
         	return dataPermissionCodes.get(0);
         }
         return null;
-		
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)

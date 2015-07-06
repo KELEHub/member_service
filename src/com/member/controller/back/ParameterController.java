@@ -28,33 +28,30 @@ public class ParameterController {
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
 	public String show(Model model) {
 		try {
-			SystemParameter form = parameterService
-					.getSystemParameter();
-			ParameterForm systemParameter = new ParameterForm();
+			SystemParameter form = parameterService.getSystemParameter();
+			if (form!=null){
+				ParameterForm systemParameter = new ParameterForm();
 //			systemParameter.setDayCount(form.getDayCount().toString());
-			systemParameter.setGoldFlg(form.getGoldFlg());
-			systemParameter.setGoldMax(CommonUtil.insertComma(form.getGoldMax().toString(),2));
-			systemParameter.setGoldMin(CommonUtil.insertComma(form.getGoldMin().toString(),2));
-			systemParameter.setGoldTake(CommonUtil.insertComma(form.getGoldTake().toString(),2));
-			systemParameter.setScoreMax(CommonUtil.insertComma(form.getScoreMax().toString(),2));
-			systemParameter.setScoreMin(CommonUtil.insertComma(form.getScoreMin().toString(),2));
-			systemParameter.setScoreTake(CommonUtil.insertComma(form.getScoreTake().toString(),2));
-			systemParameter.setGlbMin(CommonUtil.insertComma(form.getGlbMin().toString(),2));
-			systemParameter.setGlbTake(CommonUtil.insertComma(form.getGlbTake().toString(),2));
-			systemParameter.setScoreInTake(CommonUtil.insertComma(form.getScoreInTake().toString(),2));
-			systemParameter.setScoreInMin(CommonUtil.insertComma(form.getScoreInMin().toString(),2));
-			if (systemParameter != null) {
+				systemParameter.setGoldFlg(form.getGoldFlg());
+				systemParameter.setGoldMax(CommonUtil.insertComma(form.getGoldMax().toString(),2));
+				systemParameter.setGoldMin(CommonUtil.insertComma(form.getGoldMin().toString(),2));
+				systemParameter.setGoldTake(CommonUtil.insertComma(form.getGoldTake().toString(),2));
+				systemParameter.setScoreMax(CommonUtil.insertComma(form.getScoreMax().toString(),2));
+				systemParameter.setScoreMin(CommonUtil.insertComma(form.getScoreMin().toString(),2));
+				systemParameter.setScoreTake(CommonUtil.insertComma(form.getScoreTake().toString(),2));
+				systemParameter.setGlbMin(CommonUtil.insertComma(form.getGlbMin().toString(),2));
+				systemParameter.setGlbTake(CommonUtil.insertComma(form.getGlbTake().toString(),2));
+				systemParameter.setScoreInTake(CommonUtil.insertComma(form.getScoreInTake().toString(),2));
+				systemParameter.setScoreInMin(CommonUtil.insertComma(form.getScoreInMin().toString(),2));
 				model.addAttribute("bean", systemParameter);
 				return "back/systemset/systemParameter";
-			} else {
+			}else{
 				return "back/systemset/systemParameter";
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "back/systemset/systemParameter";
 		}
-
 	}
 
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
