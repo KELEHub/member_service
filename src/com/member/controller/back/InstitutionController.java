@@ -19,37 +19,32 @@ import com.member.services.back.InstitutionService;
 @Controller
 @RequestMapping(value = "/InstitutionController")
 public class InstitutionController {
-	
+
 	@Resource(name = "InstitutionServiceImpl")
 	public InstitutionService institutionService;
-	
+
 	@RequestMapping(value = "/show")
-	public String show(Model model)
-			 {
+	public String show(Model model) {
 		try {
-			 Institution institution = institutionService.getInstitutionInfo();
-			 if (institution != null) {
-					model.addAttribute("bean", institution);
-					return "back/systemset/institution";
-				} else {
-					return "back/systemset/institution";
-				}
-
-		} catch (Exception e) {
-			  e.printStackTrace();
+			Institution institution = institutionService.getInstitutionInfo();
+			if (institution != null) {
+				model.addAttribute("bean", institution);
 				return "back/systemset/institution";
+			} else {
+				return "back/systemset/institution";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "back/systemset/institution";
 		}
-
 	}
-	
-	
+
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseResult<Void> set(@RequestBody InstitutionForm form, Model model) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		try {
-			Institution institution = institutionService
-					.getInstitutionInfo();
+			Institution institution = institutionService.getInstitutionInfo();
 			if (institution == null) {
 				institution = new Institution();
 				institution.setSystemData("system");
@@ -60,9 +55,10 @@ public class InstitutionController {
 			institution.setPreaThree(Integer.valueOf(form.getPreaThree()));
 			institution.setPreaFour(Integer.valueOf(form.getPreaFour()));
 			institution.setPreaFive(Integer.valueOf(form.getPreaFive()));
-			institution.setRegisterGold(Integer.valueOf(form.getRegisterGold()));
-//			institution.setPreCount(Integer.valueOf(form.getPreCount()));
-//			institution.setServiceCash(Integer.valueOf(form.getServiceCash()));
+			institution
+					.setRegisterGold(Integer.valueOf(form.getRegisterGold()));
+			// institution.setPreCount(Integer.valueOf(form.getPreCount()));
+			// institution.setServiceCash(Integer.valueOf(form.getServiceCash()));
 			institutionService.setInstitution(institution);
 			result.setMsg("设置成功");
 			result.setSuccess(true);
@@ -73,7 +69,6 @@ public class InstitutionController {
 			result.setSuccess(true);
 			return result;
 		}
-
 	}
-	
+
 }
