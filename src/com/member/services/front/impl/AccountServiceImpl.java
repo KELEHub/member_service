@@ -160,7 +160,7 @@ public class AccountServiceImpl implements AccountService{
 		//邓明亮修改
 		if(CommonUtil.getDay()!=2 && CommonUtil.getDay()!=22 && CommonUtil.getDay()!=12){
 			result.setSuccess(false);
-			result.setMsg("现在提现申请日,请等待申请日再提出提现申请.");
+			result.setMsg("现在不是提现申请日,不能进行提现申请.");
 			return result;
 		}
 		
