@@ -91,10 +91,17 @@
 								<tr class="gradeX">
 									<td>${item.applyNumber}</td>
 									<td>${item.applyDate}</td>
-									<td>${item.state}</td>
+									<td>
+									<c:if test="${item.state eq 0}">未处理</c:if> 
+									<c:if test="${item.state eq 1}">已通过</c:if>
+									<c:if test="${item.state eq 2}">已拒绝</c:if>
+									</td>
 									<td>
 									<c:if test="${item.state eq 0}">
 										<button class="btn" onclick="deleteApplyQualification('${item.id}')">删除</button>
+									</c:if>
+									<c:if test="${item.state eq 2}">
+										<a href="#myModal" data-toggle="modal" class="btn" onclick="showForbidFailureCause('${item.failureCause}')">查看理由</a>
 									</c:if>
 									</td>
 								</tr>
@@ -103,6 +110,21 @@
 					</table>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+<div id="myModal" class="modal hide" style="width: 400;height: 300;">
+	<div class="modal-header">
+		<button data-dismiss="modal" class="close" type="button">×</button>
+		<h3>拒绝理由</h3>
+	</div>
+	<div class="widget-content nopadding">
+		<div class="control-group">
+				<div class="controls">
+					<textarea class="textarea_editor span12" rows="6"
+						id="forbid_failureCause" style="width: 400;height: 230;"></textarea>
+				</div>
 		</div>
 	</div>
 </div>

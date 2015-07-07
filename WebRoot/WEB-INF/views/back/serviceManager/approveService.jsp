@@ -35,7 +35,8 @@
 									<td>${item.applyDate}</td>
 									<td>
 									<c:if test="${item.state eq 0}">未处理</c:if> 
-									<c:if test="${item.state eq 1}">已处理</c:if>
+									<c:if test="${item.state eq 1}">已通过</c:if>
+									<c:if test="${item.state eq 2}">已拒绝</c:if>
 									</td>
 									<td>${item.submitReason}</td>
 									<td>

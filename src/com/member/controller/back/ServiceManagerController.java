@@ -75,7 +75,7 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> applyCheckFailure(@RequestBody ApplyServiceForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
-		serviceManagerService.updateApplyState(1,form.getId(),form.getFailureCause());
+		serviceManagerService.updateApplyState(2,form.getId(),form.getFailureCause());
 		result.setMsg("操作成功.");
 		result.setSuccess(true);
 		return result;

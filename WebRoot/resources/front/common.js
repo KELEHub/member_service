@@ -864,6 +864,10 @@ function deleteApplyQualification(applyId){
 	}
 }
 
+function showForbidFailureCause(failureCause){
+	$("#forbid_failureCause").val(failureCause);
+}
+
 function queryMemberInfo(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){

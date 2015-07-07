@@ -51,7 +51,7 @@ public class ApplyService {
 	@Column(name="disposeDate")
 	private Date disposeDate;
 	
-	/**处理状态，0未处理，1已处理 */
+	/**处理状态，0未处理，1已处理 ，2拒绝*/
 	@Column(name="state",columnDefinition="INT default 0")
 	private Integer state;
 	
