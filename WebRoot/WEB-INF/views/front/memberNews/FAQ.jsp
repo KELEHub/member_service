@@ -10,7 +10,7 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
-			<div class="widget-box">
+			<div class="widget-box" style="width: 800;">
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i>
 					</span>
@@ -18,7 +18,7 @@
 						常见问题
 					</h5>
 				</div>
-				<center>
+<!--				<center>-->
 				<div class="control-group">
 					<div class="controls">
 					${result.content}
@@ -26,7 +26,7 @@
 <!--							id="FAQ_content" style="width: 100%; height: 50%; resize:none;">${result.content}</textarea>-->
 					</div>
 				</div>
-				</center>
+<!--				</center>-->
 			</div>
 		</div>
 	</div>
