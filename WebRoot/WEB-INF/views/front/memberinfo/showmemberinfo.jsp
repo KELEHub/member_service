@@ -30,6 +30,18 @@
 						</div>
 					</div>
 					<div class="control-group">
+						<label class="control-label">推荐人</label>
+						<div class="controls">
+							<input type="text" value="${result.recommendNumber}" disabled="disabled"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">报单中心</label>
+						<div class="controls">
+							<input type="text" value="${result.activateNumber}" disabled="disabled"/>
+						</div>
+					</div>
+					<div class="control-group">
 						<label class="control-label">姓名</label>
 						<div class="controls">
 							<input type="text"  value="${result.name }" disabled="disabled"/>
