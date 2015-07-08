@@ -26,7 +26,7 @@
 					<div class="control-group">
 						<label class="control-label">会员账号</label>
 						<div class="controls">
-							<input type="text" value="${result.number }" disabled="disabled"/>
+							<input type="text" name="number" value="${result.number }" disabled="disabled"/>
 						</div>
 					</div>
 					<div class="control-group">
