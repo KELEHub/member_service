@@ -5,8 +5,8 @@ public class MemberUpdateForm {
 	
 	private Integer id;
 	
-//	/**会员登录ID */
-//	private String number;
+	/**会员登录ID */
+	private String number;
 //	
 //	/**会员真实姓名 */
 //	private String name;
@@ -188,4 +188,14 @@ public class MemberUpdateForm {
 	public void setLinkAddress(String linkAddress) {
 		this.linkAddress = linkAddress;
 	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	
 }
