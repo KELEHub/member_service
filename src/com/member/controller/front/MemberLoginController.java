@@ -28,6 +28,7 @@ import com.member.entity.Information;
 import com.member.form.front.MemberOperForm;
 import com.member.form.front.MemberUpdateForm;
 import com.member.helper.BaseResult;
+import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
 import com.member.services.back.NmUserService;
 
@@ -41,6 +42,9 @@ public class MemberLoginController {
 	
 	@Resource(name = "NmUserServiceImpl")
 	private NmUserService nmUserService;
+	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
 	
 	@RequestMapping(value = "/memberlogin")
 	public ModelAndView login(HttpServletRequest request,
@@ -182,6 +186,14 @@ public class MemberLoginController {
 	@ResponseBody
 	public BaseResult<Void> updateMemberInfo(@RequestBody MemberUpdateForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
+		Information info = informationService.getInformationByNumber(form.getNumber());
+		if(!info.getBankCard().equals(form.getBankCard())){
+			if(informationService.countBankCard(form.getBankCard())>=2){
+				result.setMsg("系统已存在两张相同的银行卡，请换卡");
+				result.setSuccess(true);
+				return result;
+			}
+		}
 		institutionService.updateMemberInfo(form);
 		result.setMsg("更新个人信息成功.");
 		result.setSuccess(true);
