@@ -20,4 +20,6 @@ public interface InformationService {
 	
 	public void saveOrUpfate(Information info);
 	
+	public int countBankCard(String card);
+	
 }
