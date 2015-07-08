@@ -35,7 +35,7 @@
 					<div class="control-group">
 						<label class="control-label">备注</label>
 						<div class="controls">
-						   <textarea rows="5" cols="500" style="width: 600px;" disabled="disabled" name="withdrawalsBackInfo">姓名: ${result.name} > 银行名称:${result.bankName} > 银行账号:${result.bankCard} > 银行地址:${result.bankProvince}${result.bankCity}${result.bankCounty}${result.bankAddress} > 联系电话:${result.phoneNumber}</textarea>
+						   <textarea rows="5" cols="500" style="width: 600px;" disabled="disabled" name="withdrawalsBackInfo">姓名: ${result.name} > 银行名称:${result.bankName} > 银行账号:${result.bankCard} > 银行地址:${result.bankProvince} ${result.bankCity} ${result.bankCounty} ${result.bankAddress} > 联系电话:${result.phoneNumber}</textarea>
 						</div>
 					</div>
 					<div class="control-group">

@@ -27,6 +27,9 @@
 						<input type="submit" value="查询"
 							onclick="searchMembers('searchWidhdrawalsxForm')"
 							class="btn btn-success">
+							<input type="button" value="导出"
+							onclick="exportTiXian('searchWidhdrawalsxForm')"
+							class="btn btn-success">
 					</div>
 				</div>
 				<div class="widget-content nopadding">
