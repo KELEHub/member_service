@@ -101,11 +101,11 @@ public class TransferServiceImpl implements TransferService{
 		
 		/**日期类别统计 */
 		acFrom.setDateNumber(CommonUtil.getDateNumber());
-		acFrom.setProject(ProjectEnum.togoldmoneycut);
+		acFrom.setProject(ProjectEnum.frompointsadd);
 		/**积分余额 */
 		acFrom.setPointbalance(xm);
 		/**葛粮币余额 */
-		acFrom.setGoldmoneybalance(midCrm);
+		acFrom.setGoldmoneybalance(addcermoney);
 		/**收入 */
 		acFrom.setIncome(new BigDecimal(0));
 		/**支出 */
@@ -114,29 +114,28 @@ public class TransferServiceImpl implements TransferService{
 		acFrom.setRedmin("将"+getValue(cm.toString()).toString()+"积分转换成葛粮币[转换"+goldValue.toString()+"手续费" +getValue(goldValue.multiply(parameter.getGlbTake()).toString())+"]");
 		/**用户ID */
 		acFrom.setUserId(info.getId());
-		AccountDetails acTo = new AccountDetails();
-		acTo.setUserNumber(info.getNumber());
-		acTo.setCreateTime(new Date());
-		acTo.setKindData(KindDataEnum.goldmoney);
-		acTo.setCountNumber(CommonUtil.getCountNumber());
-		
-		/**日期类别统计 */
-		acTo.setDateNumber(CommonUtil.getDateNumber());
-		acTo.setProject(ProjectEnum.frompointsadd);
-		/**积分余额 */
-		acTo.setPointbalance(xm);
-		/**葛粮币余额 */
-		acTo.setGoldmoneybalance(addcermoney);
-		/**收入 */
-		acTo.setIncome(cm);
-		/**支出 */
-		acTo.setPay(new BigDecimal(0));
-		/**备注 */
-		acTo.setRedmin("积分转换葛粮币增加");
-		/**用户ID */
-		acTo.setUserId(info.getId());
+//		AccountDetails acTo = new AccountDetails();
+//		acTo.setUserNumber(info.getNumber());
+//		acTo.setCreateTime(new Date());
+//		acTo.setKindData(KindDataEnum.goldmoney);
+//		acTo.setCountNumber(CommonUtil.getCountNumber());
+//		
+//		/**日期类别统计 */
+//		acTo.setDateNumber(CommonUtil.getDateNumber());
+//		acTo.setProject(ProjectEnum.frompointsadd);
+//		/**积分余额 */
+//		acTo.setPointbalance(xm);
+//		/**葛粮币余额 */
+//		acTo.setGoldmoneybalance(addcermoney);
+//		/**收入 */
+//		acTo.setIncome(cm);
+//		/**支出 */
+//		acTo.setPay(new BigDecimal(0));
+//		/**备注 */
+//		acTo.setRedmin("积分转换葛粮币增加");
+//		/**用户ID */
+//		acTo.setUserId(info.getId());
 		parameterDao.saveOrUpdate(acFrom);
-		parameterDao.saveOrUpdate(acTo);
 		parameterDao.saveOrUpdate(info);
 	}
 

@@ -156,7 +156,7 @@ public class Information {
 	@Column(name="leaderServiceNumber")
 	private String leaderServiceNumber;
 	
-	/**是否激活，1表示已激活，0表示未激活 */
+	/**是否激活，1表示已激活，0表示未激活 ,2表示删除 */
 	@Column(name="isActivate",columnDefinition="INT default 0")
 	private Integer isActivate;
 	

@@ -54,6 +54,7 @@ public class AccountDetailsController {
 			  sigleCodition= sigleCodition + "and (project = ? or project = ?) group by countNumber";
 			  arguments.add(ProjectEnum.servicepointsformuch);
 			  arguments.add(ProjectEnum.servicepointsforone);
+			  sigleCodition = sigleCodition+"  order by countNumber desc";
 			  List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByservicepoints(sigleCodition,arguments);
 				 if(accountDetailsList!=null && accountDetailsList.size()>0){
 					 for(AccountDetails ads : accountDetailsList){
@@ -67,6 +68,8 @@ public class AccountDetailsController {
 						  beanList.add(bean);
 					 }
 				 }
+				 
+				 condition = condition+"  order by createTime desc";
 				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments);
 				  for(AccountDetails ad : accountList){
 					  AccountBean bean= new AccountBean();
@@ -158,7 +161,11 @@ public class AccountDetailsController {
 				  flg=2;
 			  }
 			  List<AccountBean> beanList = new ArrayList<AccountBean>();
+			  
+			  
+			  
 			 if(flg==0){
+				 condition = condition+"  order by createTime desc";
 				  List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments);
 				  for(AccountDetails ad : accountDetailsList){
 					  AccountBean bean= new AccountBean();
@@ -174,6 +181,7 @@ public class AccountDetailsController {
 				  }
 			 }
 			 if(flg==1){
+				  condition = condition+"  order by countNumber desc";
 				 List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByservicepoints(condition,arguments);
 				 if(accountDetailsList!=null && accountDetailsList.size()>0){
 					 for(AccountDetails ads : accountDetailsList){
@@ -189,6 +197,7 @@ public class AccountDetailsController {
 				 }
 			 }
 			 if(flg==2){
+				 sigleCodition = sigleCodition+"  order by countNumber desc";
 				 List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByservicepoints(sigleCodition,arguments);
 				 if(accountDetailsList!=null && accountDetailsList.size()>0){
 					 for(AccountDetails ads : accountDetailsList){
@@ -202,6 +211,7 @@ public class AccountDetailsController {
 						  beanList.add(bean);
 					 }
 				 }
+				 condition = condition+"  order by createTime desc";
 				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments);
 				  for(AccountDetails ad : accountList){
 					  AccountBean bean= new AccountBean();
@@ -263,9 +273,9 @@ public class AccountDetailsController {
 		if("frompointsadd".equals(project)){
 			return ProjectEnum.frompointsadd;
 		}
-		if("togoldmoneycut".equals(project)){
-			return ProjectEnum.togoldmoneycut;
-		}
+//		if("togoldmoneycut".equals(project)){
+//			return ProjectEnum.togoldmoneycut;
+//		}
 		if("pointcash".equals(project)){
 			return ProjectEnum.pointcash;
 		}
@@ -292,11 +302,11 @@ public class AccountDetailsController {
 			return "后台调整";
 		}
 		if(project.equals(ProjectEnum.frompointsadd)){
-			return "积分转葛粮币增加";
+			return "积分转葛粮币";
 		}
-		if(project.equals(ProjectEnum.togoldmoneycut)){
-			return "积分转葛粮币减少";
-		}
+//		if(project.equals(ProjectEnum.togoldmoneycut)){
+//			return "积分转葛粮币减少";
+//		}
 		if(project.equals(ProjectEnum.pointcash)){
 			return "积分提现";
 		}

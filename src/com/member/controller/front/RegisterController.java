@@ -216,7 +216,8 @@ public class RegisterController {
 		      List<Information> informationServiceList = informationService.getInformationForNoActivate(userNaemO);
 		      List<ActivateForm> list = new ArrayList<ActivateForm>();
 		      if(informationServiceList!=null && informationServiceList.size()>0){
-		    	  for(Information info:informationServiceList){
+		    	  for(int i = 0;i<informationServiceList.size();i++){
+		    		  Information info = informationServiceList.get(i);
 		    		  ActivateForm acForm = new ActivateForm();
 		    		  acForm.setNumber(info.getNumber());
 		    		  acForm.setName(info.getName());
@@ -229,11 +230,14 @@ public class RegisterController {
 		    		  if(info.getIsActivate()==1){
 		    			  acForm.setActivate("已激活["+info.getActiveDate()+"]");
 		    			  acForm.setFlg("1");
+		    		  }else if(info.getIsActivate() == 2){
+		    			  acForm.setActivate("已退除");
+		    			  acForm.setFlg("2");
 		    		  }else{
 		    			  acForm.setActivate("未激活");
 		    			  acForm.setFlg("0");
 		    		  }
-		    		  list.add(acForm);
+		    		  list.add(i,acForm);
 		    	  }
 		      }
 		    
@@ -261,7 +265,8 @@ public class RegisterController {
 			}
 			Information ad = informationService.getInformationByNumber(form.getNumber());
 			if(ad!=null){
-				informationService.deleteData(ad);
+				ad.setIsActivate(2);
+				informationService.saveOrUpfate(ad);
 			}
 			result.setMsg("删除成功");
 			result.setSuccess(true);

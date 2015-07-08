@@ -18,4 +18,6 @@ public interface InformationService {
 	
 	public void activate(Information info,Information selfInfo,Institution institution, Information recommendInfo);
 	
+	public void saveOrUpfate(Information info);
+	
 }

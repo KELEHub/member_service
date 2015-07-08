@@ -69,7 +69,7 @@ public class InformationServiceImpl implements InformationService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Information> getInformationForNoActivate(String number) {
-		String hql="from Information mr where mr.activateNumber=?";
+		String hql="from Information mr where mr.activateNumber=?   order by registerDate desc";
 		List arguments = new ArrayList();
 		arguments.add(number);
 		List<Information> result = (List<Information>)institutionDao.queryByHql(hql,arguments);
@@ -246,5 +246,17 @@ public class InformationServiceImpl implements InformationService{
 			return 1000;
 		}
 		return 1000;
+	}
+
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveOrUpfate(Information info) {
+		try {
+			institutionDao.saveOrUpdate(info);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 }

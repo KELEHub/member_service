@@ -43,14 +43,14 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Override
 	public List<Charge> getMemberChargeInfoByUserName(String userName) {
-		String roleQuery = "from Charge s where s.number=?";
+		String roleQuery = "from Charge s where s.number=?   order by chargeDate desc";
 		List result = chargeDao.queryByHql(roleQuery, userName);
 		return result;
 	}
 
 	@Override
 	public List<Withdrawals> getMemberWithdrawalsInfoByUserName(String userName) {
-		String withdrawalsQuery = "from Withdrawals s where s.number=?";
+		String withdrawalsQuery = "from Withdrawals s where s.number=?  order by tradeDate desc";
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, userName);
 		return withdrawalsResult;
 	}
