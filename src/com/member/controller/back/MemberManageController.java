@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.sound.midi.MidiDevice.Info;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import com.member.form.back.MemberSaveForm;
 import com.member.form.back.MemberSearchForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.GiftsDetailsService;
+import com.member.services.back.InformationService;
 import com.member.services.back.MemberManageService;
 import com.member.util.CommonUtil;
 
@@ -34,6 +36,9 @@ public class MemberManageController {
 	
 	@Resource(name="GiftsDetailsServiceImpl")
 	private GiftsDetailsService giftsDetailsService;
+	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
 	
 	@RequestMapping(value = "/showActivationMember",method = RequestMethod.POST)
 	public String showActivationMember(Model model) {
@@ -125,6 +130,16 @@ public class MemberManageController {
 	@ResponseBody
 	public BaseResult<Void> saveMemberDetail(@RequestBody MemberSaveForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
+		
+		Information info = informationService.getInformationByNumber(form.getNumber());
+		if(!info.getBankCard().equals(form.getBankCard())){
+			if(informationService.countBankCard(form.getBankCard())>=2){
+				result.setMsg("系统已存在两张相同的银行卡，请换卡");
+				result.setSuccess(true);
+				return result;
+			}
+		}
+		
 		memberManageService.updateMemberDetails(form);
 		result.setMsg("修改会员详细信息成功.");
 		result.setSuccess(true);
