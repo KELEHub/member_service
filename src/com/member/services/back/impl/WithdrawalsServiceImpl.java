@@ -1,5 +1,6 @@
 package com.member.services.back.impl;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import com.member.entity.ManageUserRoleHub;
 import com.member.entity.SystemParameter;
 import com.member.entity.Withdrawals;
 import com.member.helper.BaseResult;
+import com.member.services.back.ExcelExportService;
 import com.member.services.back.WithdrawalsService;
 import com.member.util.CommonUtil;
 
@@ -45,6 +47,9 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	
 	@Resource(name = "ParameterDaoImpl")
 	private ParameterDao parameterDao;
+	
+	@Resource(name = "ExcelExportServiceImpl")
+	private ExcelExportService excelExportService;
 	
 	@Override
 	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(
@@ -257,4 +262,22 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		result.setMsg("拒绝提现成功.");
 		return result;
 	}
+
+	@Override
+	public InputStream getExportRecords(String memeberNumber) throws Exception {
+		List<Withdrawals> list = getWithdrawalsExportRecord(memeberNumber);
+		return excelExportService.export(list);
+	}
+	
+	public List<Withdrawals> getWithdrawalsExportRecord(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String withdrawalsQuery = "from Withdrawals s where 1=1 ";
+		if(!"".equals(memeberNumber)){
+			withdrawalsQuery+="and s.number=:number";
+			arguments.put("number", memeberNumber);
+		}
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
+		return withdrawalsResult;
+	}
+
 }

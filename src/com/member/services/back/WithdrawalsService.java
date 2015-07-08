@@ -1,5 +1,6 @@
 package com.member.services.back;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.member.entity.Withdrawals;
@@ -11,4 +12,5 @@ public interface WithdrawalsService {
 	public Withdrawals getWithdrawalsDetailById(Integer id);
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName);
 	public BaseResult<Void> disAgreewithdrawals(Integer id,String dealUserName,String refuseReason);
+	public InputStream getExportRecords(String memeberNumber) throws Exception;
 }
