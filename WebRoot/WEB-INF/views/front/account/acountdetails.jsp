@@ -38,9 +38,9 @@
                         <option value="tootherman" <c:if test='${projectFlg == "tootherman"}'>  selected='selected'  </c:if>>会员转账</option>
                         <option value="recharge" <c:if test='${projectFlg == "recharge"}'>  selected='selected'  </c:if>>充值</option>
                         <option value="fromback" <c:if test='${projectFlg == "fromback"}'>  selected='selected'  </c:if>>后台调整</option>
-                        <option value="frompointsadd" <c:if test='${projectFlg == "frompointsadd"}'>  selected='selected'  </c:if>>积分转葛粮币增加</option>
+                        <option value="frompointsadd" <c:if test='${projectFlg == "frompointsadd"}'>  selected='selected'  </c:if>>积分转葛粮币</option>
                         <option value="servicepoints" <c:if test='${projectFlg == "servicepoints"}'>  selected='selected'  </c:if>>服务积分</option>
-                        <option value="togoldmoneycut" <c:if test='${projectFlg == "togoldmoneycut"}'>  selected='selected'  </c:if>>积分转葛粮币减少</option>
+                       <!-- <option value="togoldmoneycut" <c:if test='${projectFlg == "togoldmoneycut"}'>  selected='selected'  </c:if>>积分转葛粮币减少</option>  -->
                         <option value="pointcash" <c:if test='${projectFlg == "pointcash"}'>  selected='selected'  </c:if>>积分提现</option>
                         <option value="fromgifts" <c:if test='${projectFlg == "fromgifts"}'>  selected='selected'  </c:if>>礼包发放</option>
                         <option value="activateMember" <c:if test='${projectFlg == "activateMember"}'>  selected='selected'  </c:if>>激活会员</option>
