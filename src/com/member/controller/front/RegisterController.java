@@ -110,7 +110,7 @@ public class RegisterController {
 				return result;
 			}
 			if(userNaemO == null){
-				result.setMsg("登陆账号已损毁，请重新登陆");
+				result.setMsg("登录账号已损毁，请重新登录");
 				result.setSuccess(true);
 				return result;
 			}
@@ -292,7 +292,7 @@ public class RegisterController {
 			 //被激活对象
 			Information ad = informationService.getInformationByNumber(form.getNumber());
 			if(!ad.getActivateNumber().equals(userNaemO)){
-				result.setMsg("登陆账号已损毁，请重新登陆");
+				result.setMsg("登录账号已损毁，请重新登录");
 				result.setSuccess(true);
 				return result;
 			}

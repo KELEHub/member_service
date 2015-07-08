@@ -41,7 +41,7 @@ import org.hibernate.annotations.DynamicUpdate;
 	private String userRemark;
 	/** 用户类型*/
 	private Integer userType=0;
-	/** 用户登陆状�?*/
+	/** 用户登录状�?*/
 	private String userStatus;
 	/** phoneNumber*/
 	@Column(name="phoneNumber",nullable=true,unique=false,length=64)

@@ -50,7 +50,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(
 			String memeberNumber,Integer currentUserId,String currentUserNm) {
 		
-		//根据当前登陆人的编号，取得角色信息
+		//根据当前登录人的编号，取得角色信息
 		String roleQuery = "from ManageUserRoleHub s where s.userId=?";
 		List userRoleResult = manageUserRoleDao.queryByHql(roleQuery, currentUserId);
 		if(userRoleResult==null){

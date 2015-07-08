@@ -15,7 +15,7 @@
 <html lang="cn">
     
 <head>
-        <title>登陆</title><meta charset="UTF-8" />
+        <title>登录</title><meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
@@ -82,7 +82,7 @@ $(document).ready(
                     </div>
                 </div>
                 <div class="form-actions">
-                    <span class="pull-right"><a type="button"  id='btnLogin'class="btn btn-success" /> 登陆</a></span>
+                    <span class="pull-right"><a type="button"  id='btnLogin'class="btn btn-success" /> 登录</a></span>
                 </div>
             </form>
             <br>

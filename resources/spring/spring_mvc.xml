@@ -64,7 +64,7 @@
 <!-- 	<mvc:interceptors>  -->
 <!--     	<mvc:interceptor> -->
 <!--             <mvc:mapping path="/*/*.do" />  -->
-            <!-- 需排除拦截的地址,登陆的相关操作不拦截 --> 
+            <!-- 需排除拦截的地址,登录的相关操作不拦截 --> 
 <!--             <mvc:exclude-mapping path="/LoginController/login.do"/>  -->
 <!--             <mvc:exclude-mapping path="/LoginController/getSystemLanguage.do"/>  -->
 <!--             <mvc:exclude-mapping path="/LoginController/changeLoginLanguage.do"/>  -->

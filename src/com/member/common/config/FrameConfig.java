@@ -13,7 +13,7 @@ public final  static String defaultUserName="DefaultUserName";
 public final  static String defaultUserPassword="DefaultUserPassword";
 public final  static String defaultRoleName="DefaultRoleName";
 /**
- * 用户挂机（不进行任何与后台交互的操作）的最长超时时间，超过此时间需要重新登陆.  单位分钟
+ * 用户挂机（不进行任何与后台交互的操作）的最长超时时间，超过此时间需要重新登录.  单位分钟
  */
 public   static int userLeaveMaxTime=30;
 

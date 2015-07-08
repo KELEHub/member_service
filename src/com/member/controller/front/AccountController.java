@@ -39,10 +39,10 @@ public class AccountController {
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		Object userId = logonUserMap.get("userId");
 		Object userName = logonUserMap.get("username");
-		//取得客户的当前登陆客户的账户信息
+		//取得客户的当前登录客户的账户信息
 		Information result = institutionService.getInformationById((Integer)userId);
 		
-		//取得当前登陆客户的充值记录
+		//取得当前登录客户的充值记录
 		List<Charge> charList = accountService.getMemberChargeInfoByUserName((String)userName);
 		model.addAttribute("result", result);
 		model.addAttribute("charList", charList);
@@ -77,11 +77,11 @@ public class AccountController {
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		Object userId = logonUserMap.get("userId");
 		Object userName = logonUserMap.get("username");
-		// 取得客户的当前登陆客户的账户信息
+		// 取得客户的当前登录客户的账户信息
 		Information result = institutionService
 				.getInformationById((Integer) userId);
 
-		// 取得当前登陆客户的提现申请记录
+		// 取得当前登录客户的提现申请记录
 		List<Withdrawals> withdrawalsList = accountService.getMemberWithdrawalsInfoByUserName((String)userName);
 		model.addAttribute("result", result);
 		model.addAttribute("withdrawalsList", withdrawalsList);

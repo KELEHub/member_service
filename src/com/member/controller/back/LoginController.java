@@ -95,7 +95,7 @@ import com.member.util.FrameObjectUtil;
 
 				return mv;
 			}
-			  // 将用户状态该为已登陆
+			  // 将用户状态该为已登录
 //			   user.setUserStatus(FrameConfig.userStatus_Online);
 //			   nmsUserDao.saveOrUpdate(user);
 			   //将系统语�?��改为  用户 登录�?设置的语�?

@@ -15,7 +15,7 @@
 <html lang="cn">
 
 	<head>
-		<title>登陆</title>
+		<title>登录</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="resources/back/css/bootstrap.min.css" />
@@ -28,13 +28,12 @@
 			rel='stylesheet' type='text/css'>
 		<script type="text/javascript"
 			src="<%=basePath%>resources/back/js/jquery/jquery.js">
-</script>
+		</script>
 
 		
-</script>
 		<script type="text/javascript"
 			src="<%=basePath%>resources/front/login.js">
-</script>
+		</script>
 		<script type="text/javascript">
 basePath = "<%=basePath%>";
 function refresh(obj) {
@@ -57,9 +56,7 @@ $(document).ready(
 					&& '<%=loginReturnWarnMsg%>' != '') {
 				//  $("#btnCancel").after("<br><p color='red' align='left'>"+loginReturnMsg+"</p>");
 				$("#loginInfo").get(0).innerHTML = '<%=loginReturnWarnMsg%>';
-
 			}
-
 		})
 </script>
 	</head>
@@ -91,11 +88,9 @@ $(document).ready(
 					</div>
 				</div>
 
-
-
 				<div class="form-actions">
 					<span class="pull-right"><a type="submit" id='btnLogin'
-						class="btn btn-success" /> 登陆</a>
+						class="btn btn-success" /> 登录</a>
 					</span>
 				</div>
 			</form>
@@ -107,9 +102,6 @@ $(document).ready(
 					</td>
 				</tr>
 			</table>
-
 		</div>
-
 	</body>
-
 </html>
