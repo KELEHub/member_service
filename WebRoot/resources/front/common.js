@@ -328,10 +328,25 @@ function saveconvert(){
 		if(result.success){
 			var name = result.msg;
 			alert(name);
-			var cemoney = result.msgCode;
-			if(cemoney != null){
-				$("#shoppingMoney").attr("value",cemoney);
-			}
+			$('#myModal').modal('hide');
+		    $("#content-header").find("form[id='toConvertForm']").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 }
 
