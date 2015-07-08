@@ -93,7 +93,7 @@
 						<td width="120" style="text-align: right;">推荐人:</td>
 						<td width="70">${member.recommendNumber }</td>
 						<td width="120" style="text-align: right;">报单中心:</td>
-						<td width="70">${member.serviceNumber }</td>
+						<td width="70">${member.activateNumber }</td>
 					</tr>
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">是否锁定:</td>
@@ -125,7 +125,7 @@
 						<td><c:if test="${member.isService eq 0}">普通会员</c:if> <c:if
 								test="${member.isService eq 1}">报单中心</c:if></td>
 						<td style="text-align: right;">推荐报单中心:</td>
-						<td class="center"></td>
+						<td class="center">${member.leaderServiceNumber }</td>
 					</tr>
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">本月新报单人数统计:</td>
