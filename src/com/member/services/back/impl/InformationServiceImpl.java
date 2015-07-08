@@ -259,4 +259,17 @@ public class InformationServiceImpl implements InformationService{
 		}
 		
 	}
+
+
+	@Override
+	public int countBankCard(String card) {
+		String hql="from Information mr where mr.bankCard=?";
+		List arguments = new ArrayList();
+		arguments.add(card);
+		List<Information> result = (List<Information>)institutionDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
+	}
 }
