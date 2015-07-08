@@ -161,7 +161,12 @@ public class RegisterController {
 				result.setSuccess(false);
 				return result;
 			}
-
+			if(informationService.countBankCard(form.getBankCard())>=2){
+				result.setMsg("系统已存在两张相同的银行卡，请换卡");
+				result.setSuccess(false);
+				return result;
+			}
+			
 			Information newInfo = new Information();
 			newInfo.setNumber(form.getNumber());
 			newInfo.setName(form.getUsername());
