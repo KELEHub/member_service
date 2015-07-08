@@ -926,6 +926,7 @@ function checkSuccess(id,submitId,submitNumber,applyId,applyNumber){
 			$("#content-header").find("form[id='applyServiceManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}

@@ -122,8 +122,8 @@
 	<div class="widget-content nopadding">
 		<div class="control-group">
 				<div class="controls">
-					<textarea class="textarea_editor span12" rows="6"
-						id="forbid_failureCause" style="width: 400;height: 230;"></textarea>
+					<textarea class="textarea_editor span12" rows="6" readonly="readonly"
+						id="forbid_failureCause" style="width: 400;height: 230;resize:none"></textarea>
 				</div>
 		</div>
 	</div>
