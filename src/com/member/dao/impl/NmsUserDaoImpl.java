@@ -65,7 +65,8 @@ import com.member.helper.dao.impl.BaseDaoImpl;
 				+ " mm.menu_nm as menunm,"
 				+ " mm.menu_url as menuurl,"
 				+ " mm.p_menu_id as pid"
-				+ " from member_menu mm";
+				+ " from member_menu mm"
+				+ " order by id asc";
 		Session session = getCurrentSession();
 		Query q = session.createSQLQuery(sql)
 				.addScalar("id", IntegerType.INSTANCE)
@@ -85,7 +86,7 @@ import com.member.helper.dao.impl.BaseDaoImpl;
 			+ " mm.menu_nm as menunm,"
 			+ " mm.menu_url as menuurl,"
 			+ " mm.p_menu_id as pid"
-			+ " from member_menu mm where mm.menu_status='0'";
+			+ " from member_menu mm where mm.menu_status='0' order by id asc";
 		Session session = getCurrentSession();
 		Query q = session.createSQLQuery(sql)
 				.addScalar("id", IntegerType.INSTANCE)
