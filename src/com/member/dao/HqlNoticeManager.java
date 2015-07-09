@@ -5,7 +5,7 @@ public class HqlNoticeManager {
 	public final static String getNotice=
 		"from Notice";
 	public final static String getLatestNewsList=
-		"from Notice where category='公告'";
+		"from Notice where category='公告'  order by date desc";
 	public final static String getFAQ=
 		"from Notice where category='常见问题'";
 	public final static String getNoticeInfo=
