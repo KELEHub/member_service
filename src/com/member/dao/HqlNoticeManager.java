@@ -10,4 +10,6 @@ public class HqlNoticeManager {
 		"from Notice where category='常见问题'";
 	public final static String getNoticeInfo=
 		"from Notice where id=?";
+	public final static String getProtocolList=
+		"from Notice where category='服务协议'";
 }

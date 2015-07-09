@@ -924,3 +924,15 @@ function checkInboxInfo(arg_id){
 	document.getElementById("inbox_replyContent").value = result.elseExtend.replyContent;
 	}
 }
+
+function checkProtocol(result){
+	var reqObj = {};
+	reqObj["result"] = result;
+	if(result=='agree'){
+		ajaxRequestForFormGetJspByParamter("/RegisterController/showRegister.do", reqObj);
+	}else if (result=='oppose'){
+		ajaxRequestForFormGetJspByParamter("/LatestNewsController/showLatestNews2.do", reqObj);
+	}
+	findJqueryFileUpload("content");
+	resetTable();
+}

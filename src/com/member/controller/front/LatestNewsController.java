@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.member.entity.Notice;
 import com.member.form.back.NoticeForm;
+import com.member.form.front.ProtocolCheckForm;
 import com.member.services.front.LatestNewsService;
 
 @Controller
@@ -35,5 +36,14 @@ public class LatestNewsController {
 		List<Notice> result = latestNewsService.getNews(Integer.parseInt(form.getNoticeId()));
 		model.addAttribute("result", result.get(0));
 		return "front/memberNews/LatestNewsDetail";
+	}
+	
+	@RequestMapping(value = "/showLatestNews2",method = RequestMethod.POST)
+	public String showLatestNews2(@RequestBody ProtocolCheckForm form,Model model){
+		List<Notice> result = latestNewsService.getLatestNewsList();
+		if(result!=null){
+			model.addAttribute("result", result);
+		}
+		return "front/memberNews/LatestNews";
 	}
 }

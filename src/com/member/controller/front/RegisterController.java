@@ -21,11 +21,14 @@ import com.member.entity.BankService;
 import com.member.entity.ForbidForm;
 import com.member.entity.Information;
 import com.member.entity.Institution;
+import com.member.entity.Notice;
 import com.member.form.front.ActivateForm;
+import com.member.form.front.ProtocolCheckForm;
 import com.member.form.front.RegisterForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
+import com.member.services.back.NoticeManagerService;
 import com.member.services.back.ParameterService;
 import com.member.services.back.ServiceManagerService;
 import com.member.util.CommonUtil;
@@ -45,28 +48,46 @@ public class RegisterController {
 	
 	@Resource(name = "ServiceManagerServiceImpl")
 	public ServiceManagerService serviceManagerService;
+	
+	@Resource(name = "NoticeManagerServiceImpl")
+	public NoticeManagerService noticeManagerService;
 
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
 	public String show(Model model, HttpSession sesison) {
 		try {
-			Institution institution = institutionService.getInstitutionInfo();
-		    List<BankService> bankServiceList = institutionService.getBankServiceInfo();
-			String number = getNumber();
-			while (number == null) {
-				number= getNumber();
-			}
-			model.addAttribute("number",number);
-			model.addAttribute("list", bankServiceList);
-			model.addAttribute("registerMoney", "消费会员：￥"+institution.getRegisterGold());
-			return "front/register/register";
-
+			Notice protocol = noticeManagerService.getProtocol();
+			model.addAttribute("result",protocol.getContent());
+			return "front/register/protocol";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "front/register/register";
+			return "front/register/protocol";
 		}
-
 	}
 	
+	@RequestMapping(value = "/showRegister", method = RequestMethod.POST)
+	public String showRegister(@RequestBody ProtocolCheckForm form,Model model) {
+		try {
+			String resultStr = "";
+			if(form.getResult().equals("agree")){
+				Institution institution = institutionService.getInstitutionInfo();
+			    List<BankService> bankServiceList = institutionService.getBankServiceInfo();
+				String number = getNumber();
+				while (number == null) {
+					number= getNumber();
+				}
+				model.addAttribute("number",number);
+				model.addAttribute("list", bankServiceList);
+				model.addAttribute("registerMoney", "消费会员：￥"+institution.getRegisterGold());
+				resultStr = "front/register/register";
+			}else if (form.getResult().equals("oppose")){
+				resultStr = "front/memberNews/LatestNews";
+			}
+			return resultStr;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "front/memberNews/LatestNews";
+		}
+	}
 	
 	@RequestMapping(value = "/change",method = RequestMethod.POST)
 	@ResponseBody

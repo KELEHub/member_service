@@ -16,6 +16,7 @@ import com.member.entity.Notice;
 import com.member.form.back.NoticeForm;
 import com.member.services.back.NoticeManagerService;
 
+@SuppressWarnings("unchecked")
 @Service("NoticeManagerServiceImpl")
 public class NoticeManagerServiceImpl implements NoticeManagerService {
 
@@ -62,5 +63,13 @@ public class NoticeManagerServiceImpl implements NoticeManagerService {
 	public List<Notice> getNoticeInfo(NoticeForm form) {
 		return (List<Notice>) releaseNoticeDao.queryByHql(
 				HqlNoticeManager.getNoticeInfo,Integer.parseInt(form.getNoticeId()));
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Notice getProtocol() {
+		List<Notice> protocolList = (List<Notice>)releaseNoticeDao.queryByHql(
+				HqlNoticeManager.getNotice);
+		return protocolList.get(0);
 	}
 }
