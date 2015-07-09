@@ -269,7 +269,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	@Override
 	public InputStream getExportRecords(String memeberNumber) throws Exception {
 		List<Withdrawals> list = getWithdrawalsExportRecord(memeberNumber);
-		return excelExportService.export(list);
+		return excelExportService.exportWithdrawals(list);
 	}
 	
 	public List<Withdrawals> getWithdrawalsExportRecord(String memeberNumber) {

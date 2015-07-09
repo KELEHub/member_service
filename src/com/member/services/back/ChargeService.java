@@ -1,8 +1,10 @@
 package com.member.services.back;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.member.entity.Charge;
+import com.member.entity.Withdrawals;
 import com.member.form.ChargeOperForm;
 import com.member.helper.BaseResult;
 
@@ -21,4 +23,6 @@ public interface ChargeService {
 	public void updateOrderList(ChargeOperForm form);
 	
 	public void deleteOrderList(Integer id);
+	
+	public InputStream getExportRecords(String memeberNumber) throws Exception;
 }

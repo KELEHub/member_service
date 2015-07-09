@@ -1,5 +1,6 @@
 package com.member.services.back.impl;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +28,7 @@ import com.member.form.ChargeOperForm;
 import com.member.helper.BaseResult;
 import com.member.helper.dao.impl.BaseDaoImpl;
 import com.member.services.back.ChargeService;
+import com.member.services.back.ExcelExportService;
 import com.member.util.CommonUtil;
 
 @Service("ChargeServiceImpl")
@@ -44,6 +46,9 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 	
 	@Resource(name = "ParameterDaoImpl")
 	private ParameterDao parameterDao;
+	
+	@Resource(name = "ExcelExportServiceImpl")
+	private ExcelExportService excelExportService;
 	
 	@Override
 	public List<Charge> getChargeList(ChargeOperForm form) {
@@ -236,5 +241,21 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 		result.setMsg("拒绝成功.");
 		return result;
 	}
+	
+	public InputStream getExportRecords(String memeberNumber) throws Exception {
+		List<Charge> list = getChargeExportRecord(memeberNumber);
+		return excelExportService.exportCharge(list);
+	}
 
+	public List<Charge> getChargeExportRecord(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String query = "from Charge s where 1=1 ";
+		if(!"".equals(memeberNumber)){
+			query+="and s.number=:number";
+			arguments.put("number", memeberNumber);
+		}
+
+		List queryResult = chargeDao.queryByHql(query, arguments);
+		return queryResult;
+	}
 }
