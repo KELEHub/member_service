@@ -274,7 +274,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	
 	public List<Withdrawals> getWithdrawalsExportRecord(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String withdrawalsQuery = "from Withdrawals s where 1=1 ";
+		String withdrawalsQuery = "from Withdrawals s where status='1' ";
 		if(!"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);

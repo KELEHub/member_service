@@ -249,7 +249,7 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 
 	public List<Charge> getChargeExportRecord(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String query = "from Charge s where 1=1 ";
+		String query = "from Charge s where status='1' ";
 		if(!"".equals(memeberNumber)){
 			query+="and s.number=:number";
 			arguments.put("number", memeberNumber);
