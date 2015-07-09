@@ -316,7 +316,10 @@ public class RegisterController {
 				return result;
 			}
 			//礼包生成和激活会员
-			informationService.activate(ad, selfInfo, institution,recommendInfo);
+			boolean  flg = informationService.activate(ad, selfInfo, institution,recommendInfo);
+			if(flg){
+				informationService.serverRigster(ad, selfInfo, institution,recommendInfo);
+			}
 			result.setMsg("激活成功");
 			result.setSuccess(true);
 			return result;
