@@ -94,7 +94,7 @@ public class MemberManageController {
 	@RequestMapping(value = "/showMemberDetails",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
 		Information member = memberManageService.getMemberById(form.getId());
-		member.setServiceCount(accountDetailsService.getCountServerPointByNumber(member.getNumber()));
+		member.setServiceCount(accountDetailsService.getCountServerPointByNumber(member.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
 		model.addAttribute("form",form);
 		model.addAttribute("member",member);
 		return "back/membermanage/showmemberdetail";
