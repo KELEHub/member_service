@@ -49,8 +49,6 @@
 								<th>账号</th>
 								<th>姓名</th>
 								<th>电话号码</th>
-								<th>开户银行</th>
-								<th>邮政编码</th>
 								<th>推荐编号</th>
 								<th>报单中心</th>
 								<th>推荐人数</th>
@@ -64,10 +62,8 @@
 									<td>${item.number}</td>
 									<td>${item.name}</td>
 									<td>${item.phoneNumber }</td>
-									<td>${item.bankName }</td>
-									<td>${item.postNumber }</td>
 									<td>${item.recommendNumber }</td>
-									<td>${item.serviceNumber }</td>
+									<td>${item.activateNumber }</td>
 									<td>${item.recommendCount }</td>
 									<td>${item.activeDate }</td>
 									<td>
