@@ -47,7 +47,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 			hqlQuery+=" and serviceNumber=:serviceNumber";
 			arguments.put("serviceNumber", form.getServiceNumber());
 		}
-
+		hqlQuery = hqlQuery +"  order by activeDate desc";
 		List result = informationDao.queryByHql(hqlQuery, arguments);
 		return result;
 	}
@@ -71,6 +71,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 			hqlQuery+=" and serviceNumber=:serviceNumber";
 			arguments.put("serviceNumber", form.getServiceNumber());
 		}
+		hqlQuery = hqlQuery +"  order by registerDate desc";
 		List result = informationDao.queryByHql(hqlQuery, arguments);
 		return result;
 	}

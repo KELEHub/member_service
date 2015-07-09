@@ -57,6 +57,8 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 			roleQuery+=" and s.status=:status ";
 			arguments.put("status", form.getStatus());
 		}
+		
+		roleQuery = roleQuery+"  order by chargeDate desc";
 		List result = chargeDao.queryByHql(roleQuery, arguments);
 		return result;
 	}

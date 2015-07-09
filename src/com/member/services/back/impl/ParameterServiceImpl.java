@@ -51,7 +51,7 @@ public class ParameterServiceImpl implements ParameterService{
 	@Transactional(readOnly = true)
 	public List<GiftsDetails>  getGiftsDetails() {
 		String hql=
-			"from GiftsDetails";
+			"from GiftsDetails  order by createTime desc";
 		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql);
         if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
         	return dataPermissionCodes;
@@ -79,7 +79,7 @@ public class ParameterServiceImpl implements ParameterService{
 	@Transactional(readOnly = true)
 	public List<GiftsDetails> getGiftsDetailsByNumber(String number) {
 		String hql=
-			"from GiftsDetails where number=?";
+			"from GiftsDetails where number=?  order by createTime desc";
 		List arguments = new ArrayList();
 		arguments.add(number);
 		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql,arguments);
@@ -94,7 +94,7 @@ public class ParameterServiceImpl implements ParameterService{
 	@Transactional(readOnly = true)
 	public List<GiftsHistory> getGiftsHistoryAll() {
 		String hql=
-			"from GiftsHistory";
+			"from GiftsHistory order by createTime desc";
 		List<GiftsHistory> dataPermissionCodes=(List<GiftsHistory>) parameterDao.queryByHql(hql);
         if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
         	return dataPermissionCodes;
@@ -107,7 +107,7 @@ public class ParameterServiceImpl implements ParameterService{
 	@Transactional(readOnly = true)
 	public List<GiftsHistory> getGiftsHistoryByOperationId(Integer id) {
 		String hql=
-			"from GiftsHistory where userId=?";
+			"from GiftsHistory where userId=?  order by createTime desc";
 		List arguments = new ArrayList();
 		arguments.add(id);
 		List<GiftsHistory> dataPermissionCodes=(List<GiftsHistory>) parameterDao.queryByHql(hql,arguments);

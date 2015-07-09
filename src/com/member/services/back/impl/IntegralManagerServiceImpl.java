@@ -64,7 +64,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<AccountDetails> getIntegralHistoryPoints() {
-		String hql = "from AccountDetails t where t.project=? or t.project=?";
+		String hql = "from AccountDetails t where t.project=? or t.project=?  order by createTime desc";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.fromgifts);
 		arguments.add(ProjectEnum.servicepointsformuch);
@@ -78,7 +78,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<AccountDetails> getIntegralHistoryPointsByNumber(String number) {
-		String hql = "from AccountDetails t where (t.project=? or t.project=?) and t.userNumber=?";
+		String hql = "from AccountDetails t where (t.project=? or t.project=?) and t.userNumber=?  order by createTime desc";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.fromgifts);
 		arguments.add(ProjectEnum.servicepointsformuch);
