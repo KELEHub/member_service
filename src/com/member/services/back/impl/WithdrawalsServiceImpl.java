@@ -85,6 +85,8 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			withdrawalsQuery+="and s.userName=:userName";
 			arguments.put("userName", currentUserNm);
 		}
+		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
+		
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
 
 		return withdrawalsResult;
@@ -98,6 +100,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
 		}
+		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
 		return withdrawalsResult;
 	}
