@@ -24,7 +24,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public  List<AccountDetails> getAccountDetailsByUserNumber(String userNumber) {
+	public List<AccountDetails> getAccountDetailsByUserNumber(String userNumber) {
 		String hql = "from AccountDetails where userNumber=?";
 		List arguments = new ArrayList();
 		arguments.add(userNumber);
@@ -77,16 +77,26 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 		arguments.add(togoldmoneycut);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
-		if (list!=null &&list.size()>0){
+		if (list != null && list.size() > 0) {
 			List<StatisticsForm> rangeList = new ArrayList<StatisticsForm>();
-			for(Object obj : list){
+			for (Object obj : list) {
 				StatisticsForm rif = new StatisticsForm();
-				String dateNumber = ((Map<String, String>)obj).get("dateNumber");
-				rif.setDateNumber(dateNumber.substring(0,4)+"年"+dateNumber.substring(4,6)+"月第"+dateNumber.substring(7,8)+"期次");
-				rif.setCountBill(String.valueOf(((Map<String, Integer>)obj).get("countBill")));
-				rif.setCountFromgifts(String.valueOf(((Map<String, Integer>)obj).get("countFromgifts")));
-				rif.setCountPointcash(String.valueOf(((Map<String, Integer>)obj).get("countPointcash")));
-				rif.setCountRecharge(String.valueOf(((Map<String, Integer>)obj).get("countRecharge")));
+				String dateNumber = ((Map<String, String>) obj)
+						.get("dateNumber");
+				rif.setDateNumber(dateNumber.substring(0, 4) + "年"
+						+ dateNumber.substring(4, 6) + "月第"
+						+ dateNumber.substring(7, 8) + "期次");
+				rif.setCountBill(String.valueOf(((Map<String, Integer>) obj)
+						.get("countBill")));
+				rif.setCountFromgifts(String
+						.valueOf(((Map<String, Integer>) obj)
+								.get("countFromgifts")));
+				rif.setCountPointcash(String
+						.valueOf(((Map<String, Integer>) obj)
+								.get("countPointcash")));
+				rif.setCountRecharge(String
+						.valueOf(((Map<String, Integer>) obj)
+								.get("countRecharge")));
 				rangeList.add(rif);
 			}
 			return rangeList;
@@ -97,10 +107,10 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
-	public Map<String, Integer> getCountAll(
-			ProjectEnum servicepointsforone, ProjectEnum recharge,
-			ProjectEnum fromgifts, ProjectEnum togoldmoneycut) {
-		
+	public Map<String, Integer> getCountAll(ProjectEnum servicepointsforone,
+			ProjectEnum recharge, ProjectEnum fromgifts,
+			ProjectEnum togoldmoneycut) {
+
 		String hql = "select new map(sum(case when t.project =? then 1 else 0 end) as countBill, sum(case when t.project =? then t.income else 0 end) as countRecharge,sum(case when project =? then t.income else 0 end) as countFromgifts,sum(case when project =? then t.pay else 0 end) as countPointcash)from AccountDetails t";
 		List arguments = new ArrayList();
 		arguments.add(servicepointsforone);
@@ -109,10 +119,23 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 		arguments.add(togoldmoneycut);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
-		if (list!=null &&list.size()>0){
-			return (Map<String, Integer>)list.get(0);
+		if (list != null && list.size() > 0) {
+			return (Map<String, Integer>) list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public int getCountServerPointByNumber(String number) {
+		String hql = " from AccountDetails where project=? and userNumber=?";
+		List arguments = new ArrayList();
+		arguments.add(ProjectEnum.servicepointsforone);
+		arguments.add(number);
+		List<?> list = parameterDao.queryByHql(hql, arguments);
+		if (list != null && list.size() > 0) {
+			return list.size();
+		}
+		return 0;
 	}
 
 }

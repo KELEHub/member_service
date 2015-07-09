@@ -20,4 +20,8 @@ public interface AccountDetailsService {
 	public Map<String, Integer> getCountAll(
 			ProjectEnum servicepointsforone, ProjectEnum recharge,
 			ProjectEnum fromgifts, ProjectEnum togoldmoneycut);
+	
+	public int  getCountServerPointByNumber(String number);
+	
+	
 }
