@@ -126,11 +126,14 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 	}
 
 	@Override
-	public int getCountServerPointByNumber(String number) {
-		String hql = " from AccountDetails where project=? and userNumber=?";
+	public int getCountServerPointByNumber(String number,String dataNumber) {
+		String hql = " from AccountDetails where project=? and userNumber=? and (dateNumber=? or dateNumber=? or dateNumber=?)";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.servicepointsforone);
 		arguments.add(number);
+		arguments.add(dataNumber+"01");
+		arguments.add(dataNumber+"02");
+		arguments.add(dataNumber+"03");
 		List<?> list = parameterDao.queryByHql(hql, arguments);
 		if (list != null && list.size() > 0) {
 			return list.size();
