@@ -67,7 +67,7 @@
 									<td>${item.bankName }</td>
 									<td>${item.postNumber }</td>
 									<td>${item.recommendNumber }</td>
-									<td>${item.serviceNumber }</td>
+									<td>${item.activateNumber }</td>
 									<td>${item.recommendCount }</td>
 									<td>${item.activeDate }</td>
 									<td>
