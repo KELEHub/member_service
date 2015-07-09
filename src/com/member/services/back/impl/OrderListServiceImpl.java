@@ -8,11 +8,9 @@ import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
-import org.hibernate.type.IntegerType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.member.beans.back.MenuBean;
 import com.member.beans.back.OrderListBean;
 import com.member.dao.OrderListDao;
 import com.member.entity.OrderList;

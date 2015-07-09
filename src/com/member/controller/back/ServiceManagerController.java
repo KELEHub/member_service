@@ -16,8 +16,11 @@ import com.member.entity.ForbidForm;
 import com.member.entity.Information;
 import com.member.form.back.ApplyServiceForm;
 import com.member.form.back.InformationForm;
+import com.member.form.back.MemberSaveForm;
 import com.member.form.back.MemberSearchForm;
 import com.member.helper.BaseResult;
+import com.member.services.back.InformationService;
+import com.member.services.back.MemberManageService;
 import com.member.services.back.ServiceManagerService;
 
 @Controller
@@ -26,6 +29,12 @@ public class ServiceManagerController {
 
 	@Resource(name = "ServiceManagerServiceImpl")
 	public ServiceManagerService serviceManagerService;
+	
+	@Resource(name="MemberManageServiceImpl")
+	private MemberManageService memberManageService;
+	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
 	
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
@@ -49,6 +58,26 @@ public class ServiceManagerController {
 		model.addAttribute("form",form);
 		model.addAttribute("member", result);
 		return "back/serviceManager/serviceInfoDetail";
+	}
+	
+	@RequestMapping(value = "/saveServiceInfoDetail",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> saveServiceInfoDetail(@RequestBody MemberSaveForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		
+		Information info = informationService.getInformationByNumber(form.getNumber());
+		if(!info.getBankCard().equals(form.getBankCard())){
+			if(informationService.countBankCard(form.getBankCard())>=2){
+				result.setMsg("系统已存在两张相同的银行卡，请换卡");
+				result.setSuccess(true);
+				return result;
+			}
+		}
+		
+		memberManageService.updateMemberDetails(form);
+		result.setMsg("修改报单中心详细信息成功.");
+		result.setSuccess(true);
+		return result;
 	}
 	
 	@RequestMapping(value = "/serviceRecharge",method = RequestMethod.POST)

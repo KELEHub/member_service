@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.persistence.Column;
 
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,5 @@
 package com.member.form.back;
 
-import javax.persistence.Column;
-
-
 public class MemberDeleteForm {
 
 	private Integer id;

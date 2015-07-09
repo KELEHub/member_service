@@ -8,8 +8,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.member.common.config.FrameConfig;
 import com.member.helper.dao.BaseDao;
-import com.member.util.FrameDatabaseUtil;
-import com.member.util.FrameSpringContextUtil;
 
 @SuppressWarnings("serial")
 public class FrameInitServlet extends HttpServlet {
@@ -27,7 +25,6 @@ public class FrameInitServlet extends HttpServlet {
 		 //glossaryInit();
     }
 	
-	
 	/**
 	 * 通过�?��用户session的心跳时间，来判断用户是否异常�?出�?如果异常�?�� �?��session
 	 */
@@ -44,9 +41,6 @@ public class FrameInitServlet extends HttpServlet {
 								e.printStackTrace();
 							}
 						}
-
-					
-						
 					}
 				});
 		} catch (Exception e) {
@@ -54,7 +48,5 @@ public class FrameInitServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	
 
 }

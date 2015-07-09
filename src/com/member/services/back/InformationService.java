@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.member.entity.Information;
 import com.member.entity.Institution;
-import com.member.entity.SystemParameter;
 
 public interface InformationService {
 	

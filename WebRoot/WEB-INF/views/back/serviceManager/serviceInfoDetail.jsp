@@ -20,7 +20,7 @@
 				</h5>
 			</div>
 			<div class="widget-content nopadding">
-			<form action="/ServiceManagerController/showServiceInfoDetail.do" id="saveServiceDetailForm">
+			<form action="/ServiceManagerController/saveServiceInfoDetail.do" id="saveServiceDetailForm">
 			    <input type="hidden" name="id" value="${member.id}">
 				<table class="table table-bordered table-striped">
 					<tr class="odd gradeX">
