@@ -22,6 +22,8 @@ import com.member.helper.BaseResult;
 import com.member.services.back.InformationService;
 import com.member.services.back.MemberManageService;
 import com.member.services.back.ServiceManagerService;
+import com.member.services.front.AccountDetailsService;
+import com.member.util.CommonUtil;
 
 @Controller
 @RequestMapping(value = "/ServiceManagerController")
@@ -35,6 +37,9 @@ public class ServiceManagerController {
 	
 	@Resource(name = "InformationServiceImpl")
 	public InformationService informationService;
+	
+	@Resource(name = "AccountDetailsServiceImpl")
+	public AccountDetailsService accountDetailsService;
 	
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
@@ -55,6 +60,7 @@ public class ServiceManagerController {
 	@RequestMapping(value = "/showServiceInfoDetail",method = RequestMethod.POST)
 	public String showServiceInfoDetail(@RequestBody MemberSearchForm form,Model model){
 		Information result = serviceManagerService.getServiceById(form.getId());
+		result.setServiceCount(accountDetailsService.getCountServerPointByNumber(result.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
 		model.addAttribute("form",form);
 		model.addAttribute("member", result);
 		return "back/serviceManager/serviceInfoDetail";
