@@ -198,6 +198,13 @@ public class InformationServiceImpl implements InformationService{
 			selfInfo.setRepeatedAccumulative(selfInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
 			selfInfo.setShoppingMoney(selfInfo.getShoppingMoney().add(new BigDecimal(50)));
 			selfInfo.setShoppingAccumulative(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+			int servercount=0;
+			if(selfInfo.getServiceSum()==null){
+				servercount=0;
+			}else{
+				servercount = selfInfo.getServiceSum();
+			}
+			selfInfo.setServiceSum(servercount+1);
 			institutionDao.saveOrUpdate(selfInfo);
 			
 			//在AccountDetails表记录激活人获得服务积分明细
