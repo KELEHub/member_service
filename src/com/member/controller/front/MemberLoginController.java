@@ -25,12 +25,14 @@ import com.member.beans.back.MenuBean;
 import com.member.common.config.FrameConfig;
 import com.member.entity.BankService;
 import com.member.entity.Information;
+import com.member.entity.Notice;
 import com.member.form.front.MemberOperForm;
 import com.member.form.front.MemberUpdateForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
 import com.member.services.back.NmUserService;
+import com.member.services.front.LatestNewsService;
 
 @Controller
 @RequestMapping(value = "/MemberLoginController")
@@ -45,6 +47,9 @@ public class MemberLoginController {
 	
 	@Resource(name = "InformationServiceImpl")
 	public InformationService informationService;
+	
+	@Resource(name = "LatestNewsServiceImpl")
+	public LatestNewsService latestNewsService;
 	
 	@RequestMapping(value = "/memberlogin")
 	public ModelAndView login(HttpServletRequest request,
@@ -123,6 +128,22 @@ public class MemberLoginController {
 		              
 			    //根据当前用户的编号，取得用户的角色和菜单信息。
 			    model.addAttribute("menuList", getUserRoleMenu(info));
+			    
+			    List<Notice> result = latestNewsService.getLatestNewsList();
+			    List<Notice> list = new ArrayList<Notice>();
+			    int count =0;
+			    if(result!=null && result.size()>0){
+			    	if(result.size()>10){
+			    		count=10;
+			    	}else{
+			    		count=result.size();
+			    	}
+			    }
+			    for(int i=0;i<count;i++){
+			    	Notice nc = result.get(i);
+			    	list.add(nc);
+			    }
+				model.addAttribute("result", list);
 			    model.addAttribute("username", userName);
 			    return mv;
 		} catch (Exception e) {
