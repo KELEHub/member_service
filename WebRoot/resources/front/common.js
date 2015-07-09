@@ -146,6 +146,9 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
+	if(ndinstance1_releaseTickling_content){
+		reqObj["content"]=ndinstance1_releaseTickling_content.getContent();
+	}
 	var reqData={};
 	if(reqObj!=null){
 		reqData = JSON.stringify(reqObj);
@@ -922,7 +925,10 @@ function checkInboxInfo(arg_id){
 	if (result.success) {
 	document.getElementById("inbox_title").value = result.elseExtend.title;
 	document.getElementById("inbox_content").value = result.elseExtend.content;
-	document.getElementById("inbox_replyContent").value = result.elseExtend.replyContent;
+//	document.getElementById("inbox_replyContent").value = result.elseExtend.replyContent;
+	ndinstance1_inbox_content.setContent(result.elseExtend.content);
+	ndinstance1_replyContent.setContent(result.elseExtend.replyContent);
+	
 	}
 }
 

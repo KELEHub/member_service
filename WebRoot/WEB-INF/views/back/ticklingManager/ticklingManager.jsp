@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script type="text/javascript">
+	
+	ndPanel2_checkTickling_content = new nicEditor({fullPanel : true}).panelInstance('checkTickling_content');
+	ndinstance12_checkTickling_content = ndPanel2_checkTickling_content.nicInstances[0];
+	
+	ndPanel2_checkTickling_replyContent = new nicEditor({fullPanel : true}).panelInstance('checkTickling_replyContent');
+	ndinstance12_checkTickling_replyContent = ndPanel2_checkTickling_replyContent.nicInstances[0];
+</script>
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/TicklingManagerController/showDoneTicklingManager.do" method="POST" id="doneTicklingManagerForm">
@@ -45,7 +53,7 @@
 	</div>
 </div>
 
-<div id="myModal" class="modal hide">
+<div id="myModal" class="modal hide" style="width: 800px;height: 500;overflow: auto;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">
 			×
@@ -72,7 +80,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="checkTickling_content" style="width: 220;resize: none" readonly="readonly"></textarea>
+							id="checkTickling_content" style="width: 500px;height:300px;"></textarea>
 					</div>
 				</div>
 			</div>
@@ -84,7 +92,7 @@
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6"
 							name="replyContent" id="checkTickling_replyContent"
-							style="width: 220;resize:none" readonly="readonly"></textarea>
+							style="width: 500px;height:300px;"></textarea>
 					</div>
 				</div>
 			</div>

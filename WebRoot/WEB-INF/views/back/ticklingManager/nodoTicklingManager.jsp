@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script type="text/javascript">
+	
+	ndPanel_replyTickling_content = new nicEditor({fullPanel : true}).panelInstance('replyTickling_content');
+	ndinstance1_replyTickling_content = ndPanel_replyTickling_content.nicInstances[0];
+	
+	ndPanel_replyTickling_replyContent = new nicEditor({fullPanel : true}).panelInstance('replyTickling_replyContent');
+	ndinstance1_replyTickling_replyContent = ndPanel_replyTickling_replyContent.nicInstances[0];
+</script>
 <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/TicklingManagerController/showNotdoTicklingManager.do" method="POST" id="notdoTicklingManagerForm">
@@ -45,7 +53,7 @@
 	</div>
 </div>
 
-<div id="myModal" class="modal hide">
+<div id="myModal" class="modal hide" style="width: 800px;height: 500;overflow: auto;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>会员留言回复</h3>
@@ -70,7 +78,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content" readonly="readonly"
-							id="replyTickling_content" style="width: 220;resize:none"></textarea>
+							id="replyTickling_content" style="width: 500px;height:300px;" ></textarea>
 					</div>
 				</div>
 			</div>
@@ -82,13 +90,13 @@
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6"
 							name="replyContent" id="replyTickling_replyContent"
-							style="width: 220;resize:none"></textarea>
+							style="width: 500px;height:300px;" ></textarea>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-			<div class="form-actions">	
+	<div class="form-actions">	
 	<button type="submit" class="btn btn-success" onclick="saveTickling('replyTicklingForm')">
 		确认回复
 	</button>

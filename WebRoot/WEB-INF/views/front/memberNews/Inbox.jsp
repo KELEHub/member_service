@@ -2,6 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script type="text/javascript">
+	ndPanel_releaseTickling_content = new nicEditor({fullPanel : true}).panelInstance('releaseTickling_content');
+	ndinstance1_releaseTickling_content = ndPanel_releaseTickling_content.nicInstances[0];
+	
+	ndPanel_inbox_content = new nicEditor({fullPanel : true}).panelInstance('inbox_content');
+	ndinstance1_inbox_content = ndPanel_inbox_content.nicInstances[0];
+	
+	ndPanel_replyContent = new nicEditor({fullPanel : true}).panelInstance('replyContent');
+	ndinstance1_replyContent = ndPanel_replyContent.nicInstances[0];
+</script>
 <div id="content-header">
 	<div id="breadcrumb">
 		<a href="#" title="Go to Home" class="tip-bottom"><i
@@ -69,7 +79,7 @@
 	</div>
 </div>
 
-<div id="myModal" class="modal hide">
+<div id="myModal" class="modal hide" style="width: 800px;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>发布留言</h3>
@@ -94,7 +104,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="releaseTickling_content" style="width: 220;resize: none;"></textarea>
+							id="releaseTickling_content" style="width: 500px;height:300px;"></textarea>
 					</div>
 				</div>
 			</div>
@@ -107,7 +117,7 @@
 </div>
 </div>
 
-<div id="myModal2" class="modal hide">
+<div id="myModal2" class="modal hide" style="width: 800px;height: 500;overflow: auto;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">
 			×
@@ -133,8 +143,8 @@
 				</label>
 				<div class="control-group">
 					<div class="controls">
-						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="inbox_content" style="width: 220;resize: none" readonly="readonly"></textarea>
+					<textarea class="textarea_editor span12" rows="6" name="content"
+							id="inbox_content" style="width: 500px;height:300px;" readonly="readonly"></textarea>
 					</div>
 				</div>
 			</div>
@@ -144,9 +154,8 @@
 				</label>
 				<div class="control-group">
 					<div class="controls">
-						<textarea class="textarea_editor span12" rows="6"
-							name="replyContent" id="inbox_replyContent"
-							style="width: 220;resize:none" readonly="readonly"></textarea>
+					<textarea class="textarea_editor span12" rows="6" name="content"
+							id="replyContent" style="width: 500px;height:300px;" readonly="readonly"></textarea>
 					</div>
 				</div>
 			</div>

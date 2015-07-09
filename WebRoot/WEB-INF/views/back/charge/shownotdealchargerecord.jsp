@@ -9,10 +9,7 @@
 			   <div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
 					<h5>充值申请处理</h5>
-					 <form action="/charge/searchDealChargezRecord.do" method="POST" id="searchDealChargezRecordForm">
-	                </form>
 				</div>
-				
 				<div class="widget-content nopadding">
 					<form class="form-horizontal"
 						action="/charge/searchDealChargezRecord.do" method="POST"
@@ -29,6 +26,9 @@
 					<div class="form-actions">
 						<input type="submit" value="查询"
 							onclick="searchMembers('searchChargeForm')"
+							class="btn btn-success">
+							<input type="button" value="导出充值记录"
+							onclick="exportChongZhi('searchChargeForm')"
 							class="btn btn-success">
 					</div>
 				</div>

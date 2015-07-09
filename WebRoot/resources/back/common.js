@@ -35,6 +35,9 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
+	if(ndinstance1_replyTickling_replyContent){
+		reqObj["replyContent"]=ndinstance1_replyTickling_replyContent.getContent();
+	}
 	var reqData={};
 	if(reqObj!=null){
 		reqData = JSON.stringify(reqObj);
@@ -745,8 +748,8 @@ function editNoticeWin(arg_id) {
 		document.getElementById("noticeListId").value = result.elseExtend.id;
 		document.getElementById("editNotice_title").value = result.elseExtend.title;
 		document.getElementById("editNotice_category").value = result.elseExtend.category;
-		// document.getElementById("editNotice_content").value = arg_content;
-		ndinstance1.setContent(result.elseExtend.content);
+		 document.getElementById("editNotice_content").value = arg_content;
+//		ndinstance1.setContent(result.elseExtend.content);
 	}
 }
 
@@ -773,7 +776,9 @@ function replyTickling(arg_id){
 	if (result.success) {
 	document.getElementById("replyTickling_id").value = result.elseExtend.id;
 	document.getElementById("replyTickling_title").value = result.elseExtend.title;
-	document.getElementById("replyTickling_content").value = result.elseExtend.content;
+//	document.getElementById("replyTickling_content").value = result.elseExtend.content;
+	ndinstance1_replyTickling_content.setContent(result.elseExtend.content);
+	
 	}
 }
 
@@ -785,6 +790,9 @@ function checkTickling(arg_id){
 	document.getElementById("checkTickling_title").value = result.elseExtend.title;
 	document.getElementById("checkTickling_content").value = result.elseExtend.content;
 	document.getElementById("checkTickling_replyContent").value = result.elseExtend.replyContent;
+	ndinstance12_checkTickling_content.setContent(result.elseExtend.content);
+	ndinstance12_checkTickling_replyContent.setContent(result.elseExtend.replyContent);
+	
 	}
 }
 
@@ -1005,6 +1013,22 @@ function exportTiXian(sFormId){
     form.attr('target','');
     form.attr('method','post');
     form.attr('action',"/member_service/withdrawals/exportRecords.do");
+    var input1 = $('<input>'); 
+    input1.attr('type','hidden'); 
+    input1.attr('name','number'); 
+    input1.attr('value',$("#"+sFormId).find("input[name='number']").val()); 
+   
+    $('body').append(form);  //将表单放置在web中
+    form.append(input1);   //将查询参数控件提交到表单上
+    form.submit();   //表
+}
+
+function exportChongZhi(sFormId){
+	var form = $("<form>");   //定义一个form表单
+    form.attr('style','display:none');   //在form表单中添加查询参数
+    form.attr('target','');
+    form.attr('method','post');
+    form.attr('action',"/member_service/charge/exportRecords.do");
     var input1 = $('<input>'); 
     input1.attr('type','hidden'); 
     input1.attr('name','number'); 
