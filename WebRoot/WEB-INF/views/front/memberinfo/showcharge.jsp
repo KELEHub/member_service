@@ -34,12 +34,11 @@
 					<div class="control-group">
 						<label class="control-label">备注</label>
 						<div class="controls">
-<!--						   <textarea rows="5" cols="500" style="width: 600px;resize:none;" readonly="readonly" name="chageBackInfo">姓名: ${result.name} > 银行名称:${result.bankName} > 银行账号:${result.bankCard} > 银行地址:${result.bankProvince}${result.bankCity}${result.bankCounty}${result.bankAddress} > 联系电话:${result.phoneNumber}1、会员***,由**银行向公司尾号****的**银行转账*****元，申请充值-->
-<!--						   </textarea>-->
 						   <div style="width: 600px;border:1px solid #ccc">
-						   1、会员***,由***银行向公司尾号****的**银行转账*****元，申请充值
+						   留言格式基本要求：1、会员***,由***银行向公司尾号****的**银行转账*****元，申请充值
 						   <br/>2、会员***，在公司***服务站，由尾号****的***银行卡刷卡***元，申请充值
                   			<br/>3、会员***，在公司***服务站，交现金****元，收款人***。申请充值
+                  			<br/>以上信息可复制粘贴在留言处进行修改。
 						   </div>
 						</div>
 					</div>
