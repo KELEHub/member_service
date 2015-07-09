@@ -16,10 +16,12 @@ public interface InformationService {
 	
 	public void deleteData(Information info);
 	
-	public void activate(Information info,Information selfInfo,Institution institution, Information recommendInfo);
+	public boolean activate(Information info,Information selfInfo,Institution institution, Information recommendInfo);
 	
 	public void saveOrUpfate(Information info);
 	
 	public int countBankCard(String card);
+	
+	public void serverRigster(Information info, Information selfInfo,Institution institution, Information recommendInfo );
 	
 }

@@ -90,7 +90,7 @@ public class InformationServiceImpl implements InformationService{
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void activate(Information info, Information selfInfo,Institution institution, Information recommendInfo ) {
+	public boolean activate(Information info, Information selfInfo,Institution institution, Information recommendInfo ) {
 		try {
 			info.setIsActivate(1);
 			info.setActiveDate(new Date());
@@ -171,20 +171,34 @@ public class InformationServiceImpl implements InformationService{
 				sg.setCreateTime(new Date());
 				institutionDao.saveOrUpdate(sg);
 			}
+			return true;
+		
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 return false;
+		}
+		
+	}
+	
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void serverRigster(Information info, Information selfInfo,Institution institution, Information recommendInfo ){
+		try {
 			//激活人获取50服务积分
-			String hql = "update Information set repeatedMoney=?,repeatedAccumulative=?,shoppingMoney=?,shoppingAccumulative=? where id=?";
-			List<Object> list = new ArrayList<Object>();
-			list.add(selfInfo.getRepeatedMoney().add(new BigDecimal(50)));
-			list.add(selfInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
-			list.add(selfInfo.getShoppingMoney().add(new BigDecimal(50)));
-			list.add(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
-			list.add(selfInfo.getId());
-			institutionDao.executeHqlUpdate(hql, list);
-//			selfInfo.setRepeatedMoney();
-//			selfInfo.setRepeatedAccumulative();
-//			selfInfo.setShoppingMoney();
-//			selfInfo.setShoppingAccumulative();
-//			institutionDao.saveOrUpdate(selfInfo);
+//			String hql = "update Information set repeatedMoney=?,repeatedAccumulative=?,shoppingMoney=?,shoppingAccumulative=? where id=?";
+//			List<Object> list = new ArrayList<Object>();
+//			list.add(selfInfo.getRepeatedMoney().add(new BigDecimal(50)));
+//			list.add(selfInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
+//			list.add(selfInfo.getShoppingMoney().add(new BigDecimal(50)));
+//			list.add(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+//			list.add(selfInfo.getId());
+//			institutionDao.executeHqlUpdate(hql, list);
+			selfInfo.setRepeatedMoney(selfInfo.getRepeatedMoney().add(new BigDecimal(50)));
+			selfInfo.setRepeatedAccumulative(selfInfo.getRepeatedAccumulative().add(new BigDecimal(50)));
+			selfInfo.setShoppingMoney(selfInfo.getShoppingMoney().add(new BigDecimal(50)));
+			selfInfo.setShoppingAccumulative(selfInfo.getShoppingAccumulative().add(new BigDecimal(50)));
+			institutionDao.saveOrUpdate(selfInfo);
 			
 			//在AccountDetails表记录激活人获得服务积分明细
 			AccountDetails shopingDetails = new AccountDetails();
@@ -224,10 +238,13 @@ public class InformationServiceImpl implements InformationService{
 			moneyStatistics.setState(0);
 			institutionDao.saveOrUpdate(moneyStatistics);
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 	}
+	
+	
+	
 	
 	private Integer getGoldMoney(Institution inst,int countNumber,GiftEnum gift){
 		if(gift.equals(GiftEnum.FIVE)){

@@ -48,7 +48,7 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	public ForbidForm getForbidForm() {
 		List<ForbidForm> result = (List<ForbidForm>) serviceManagerDao.queryByHql(
 				HqlServiceManager.getForbidForm);
-		if(result!=null){
+		if(result!=null && result.size()>0){
 			return (ForbidForm) result.get(0);
 		}else{
 			return null;
