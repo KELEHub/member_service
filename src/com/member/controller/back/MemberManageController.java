@@ -24,6 +24,7 @@ import com.member.helper.BaseResult;
 import com.member.services.back.GiftsDetailsService;
 import com.member.services.back.InformationService;
 import com.member.services.back.MemberManageService;
+import com.member.services.front.AccountDetailsService;
 import com.member.util.CommonUtil;
 
 @Controller
@@ -38,6 +39,9 @@ public class MemberManageController {
 	
 	@Resource(name = "InformationServiceImpl")
 	public InformationService informationService;
+	
+	@Resource(name = "AccountDetailsServiceImpl")
+	public AccountDetailsService accountDetailsService;
 	
 	@RequestMapping(value = "/showActivationMember",method = RequestMethod.POST)
 	public String showActivationMember(Model model) {
@@ -90,6 +94,7 @@ public class MemberManageController {
 	@RequestMapping(value = "/showMemberDetails",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
 		Information member = memberManageService.getMemberById(form.getId());
+		member.setServiceCount(accountDetailsService.getCountServerPointByNumber(member.getNumber()));
 		model.addAttribute("form",form);
 		model.addAttribute("member",member);
 		return "back/membermanage/showmemberdetail";
@@ -138,7 +143,6 @@ public class MemberManageController {
 				return result;
 			}
 		}
-		
 		memberManageService.updateMemberDetails(form);
 		result.setMsg("修改会员详细信息成功.");
 		result.setSuccess(true);
