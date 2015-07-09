@@ -1,5 +1,6 @@
 package com.member.controller.back;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -41,11 +42,29 @@ public class ServiceManagerController {
 	@Resource(name = "AccountDetailsServiceImpl")
 	public AccountDetailsService accountDetailsService;
 	
+	
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
 		List<Information> result = serviceManagerService.getServiceByIsService(1);
 		ForbidForm ifForbid = serviceManagerService.getForbidForm();
-		model.addAttribute("result", result);
+		List<Information> list = new ArrayList<Information>();
+		if(result!=null && result.size()>0){
+			for(Information info : result){
+				Information newInfo = new Information();
+				newInfo.setNumber(info.getNumber());
+				newInfo.setId(info.getId());
+				newInfo.setName(info.getName());
+				newInfo.setShoppingMoney(info.getShoppingMoney());
+				newInfo.setPhoneNumber(info.getPhoneNumber());
+				newInfo.setPostNumber(info.getPostNumber());
+				newInfo.setBankName(info.getBankName());
+				newInfo.setRecommendNumber(info.getRecommendNumber());
+				newInfo.setServiceSum(info.getServiceSum());
+				newInfo.setServiceCount(accountDetailsService.getCountServerPointByNumber(info.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
+				list.add(newInfo);
+			}
+		}
+		model.addAttribute("result", list);
 		model.addAttribute("ifFrobid",ifForbid.getIfForbid());
 		return "back/serviceManager/serviceInfo";
 	}
