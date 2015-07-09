@@ -21,7 +21,7 @@ public interface AccountDetailsService {
 			ProjectEnum servicepointsforone, ProjectEnum recharge,
 			ProjectEnum fromgifts, ProjectEnum togoldmoneycut);
 	
-	public int  getCountServerPointByNumber(String number);
+	public int  getCountServerPointByNumber(String number,String countNumber);
 	
 	
 }
