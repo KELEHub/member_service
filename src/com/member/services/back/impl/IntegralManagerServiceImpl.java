@@ -74,6 +74,19 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		}
 		return null;
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<AccountDetails> getFromgiftsHistoryPoints() {
+		String hql = "from AccountDetails t where t.project=?  order by createTime desc";
+		List arguments = new ArrayList();
+		arguments.add(ProjectEnum.fromgifts);
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result;
+		}
+		return null;
+	}
 
 	@Override
 	@Transactional(readOnly=true)
