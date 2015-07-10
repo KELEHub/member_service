@@ -756,7 +756,7 @@ function doDeleteNotice(noticeId){
 	}
 }
 
-function deleteTickling(ticklingId){
+function frontDeleteDoneTickling(ticklingId){
 	if (window.confirm('您确定要删除该留言么？')) {
 		var reqObj = {};
 		reqObj["id"] = ticklingId;
@@ -764,25 +764,10 @@ function deleteTickling(ticklingId){
 		if (result.success) {
 			alert(result.msg);
 			$('#myModal').modal('hide');
-			$("#content-header").find("form[id='notdoTicklingManagerForm']").each(function(){
+			$("#content-header").find("form[id='inboxForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
-			});
-		}
-	}
-}
-
-function deleteDoneTickling(ticklingId){
-	if (window.confirm('您确定要删除该留言么？')) {
-		var reqObj = {};
-		reqObj["id"] = ticklingId;
-		var result = ajaxRequestForJsonGetJson("/TicklingManagerController/deleteTickling.do",reqObj);
-		if (result.success) {
-			alert(result.msg);
-			$('#myModal').modal('hide');
-			$("#content-header").find("form[id='doneTicklingManagerForm']").each(function(){
-				var formid = this.id;
-				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -858,6 +843,7 @@ function deleteApplyQualification(applyId){
 			$("#content-header").find("form[id='applyQualificationForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -892,6 +878,7 @@ function submitApply(applyId,applyNumber,submitReason,protectPassword){
 			$("#content-header").find("form[id='applyQualificationForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}

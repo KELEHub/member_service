@@ -68,6 +68,7 @@
 									</td>
 									<td>
 									<a href="#myModal2" data-toggle="modal" class="btn" onclick="checkInboxInfo('${item.id}')">查看</a>
+									<button class="btn" onclick="frontDeleteDoneTickling('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>

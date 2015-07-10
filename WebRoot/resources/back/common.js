@@ -764,6 +764,7 @@ function doDeleteNotice(noticeId){
 			$("#content-header").find("form[id='noticeManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -807,6 +808,7 @@ function deleteTickling(ticklingId){
 			$("#content-header").find("form[id='notdoTicklingManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -823,6 +825,7 @@ function deleteDoneTickling(ticklingId){
 			$("#content-header").find("form[id='doneTicklingManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -885,6 +888,7 @@ function forbiddenService(serviceId){
 			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -901,6 +905,7 @@ function forbidForm(){
 			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 	}
@@ -916,6 +921,7 @@ function permitForm(){
 			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
+				resetTable();
 			});
 		}
 }
