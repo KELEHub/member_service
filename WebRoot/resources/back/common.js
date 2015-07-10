@@ -35,9 +35,7 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
-	if(ndinstance1_replyTickling_replyContent){
-		reqObj["replyContent"]=ndinstance1_replyTickling_replyContent.getContent();
-	}
+
 	var reqData={};
 	if(reqObj!=null){
 		reqData = JSON.stringify(reqObj);
@@ -876,6 +874,12 @@ function rechargeService(sFormId){
 function rechargeToForm(arg_id){
 	document.getElementById("serviceInfo_serviceId").value = arg_id;
 }
+
+function searchBackAccount(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
 
 function forbiddenService(serviceId){
 	if (window.confirm('您确定要禁用该报单中心？')) {
