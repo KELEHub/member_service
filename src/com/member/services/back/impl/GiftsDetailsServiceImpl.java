@@ -62,10 +62,12 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 		arguments.add(batchNo);
 		List<?> result = giftsDao.queryByHql(sql, arguments);
 		if (result != null && result.size() > 0) {
-			return result.get(0).toString();
+			if(result.get(0) != null){
+				return result.get(0).toString();
+			}
 		}
 
-		return null;
+		return "0";
 	}
 
 	@Override
