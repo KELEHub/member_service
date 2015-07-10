@@ -266,13 +266,111 @@ public class GiftsDetailsController {
 		
 			int countNumber = CommonUtil.getCountNumber();
 			BatchNoEnum batchNo = CommonUtil.getBatchNo();
-			
-			List<SendGiftsDetails> giftsList = giftsDetailsService.getGiftsDetailsList(countNumber, batchNo);
-			if(giftsList!=null&&giftsList.size()>0){
-				model.addAttribute("result", giftsList);
-				String goldAll = giftsDetailsService.getCountGoldAll(countNumber, batchNo);
-				model.addAttribute("goldAll", goldAll);
+			String dayFrom = "";
+			String dayTo = "";
+			if(BatchNoEnum.FIRST.equals(batchNo)){
+				dayFrom = "1(31)";
+				dayTo = "10";
+			}else if(BatchNoEnum.SECOND.equals(batchNo)){
+				dayFrom = "11";
+				dayTo = "20";
+			}else if(BatchNoEnum.THREE.equals(batchNo)){
+				dayFrom = "21";
+				dayTo = "30";
 			}
+			int year = CommonUtil.getYearNumber();
+			int mouth = CommonUtil.getMounthNumber();
+			int nextMoth=0;
+			int nextYear = 0;
+			String nextDayFrom="";
+			String nextDayTo="";
+			BatchNoEnum nextBatchNo = null;
+			int nextCountNumber = 0;
+		
+			int threeMoth=0;
+			int threeYear = 0;
+			String threeDayFrom="";
+			String threeDayTo="";
+			BatchNoEnum threeBatchNo = null;
+			int threeCountNumber = 0;
+			
+			
+			
+			if(BatchNoEnum.FIRST.equals(batchNo)){
+				nextBatchNo = BatchNoEnum.SECOND;
+				nextYear =year;
+				nextMoth = mouth;
+				nextDayFrom = "11";
+				nextDayTo = "20";
+				
+				threeBatchNo = BatchNoEnum.THREE;
+				threeYear =year;
+				threeMoth = mouth;
+				threeDayFrom = "21";
+				threeDayTo= "30";
+			}else if(BatchNoEnum.SECOND.equals(batchNo)){
+				nextBatchNo = BatchNoEnum.THREE;
+				nextYear =year;
+				nextMoth = mouth;
+				nextDayFrom = "21";
+				nextDayTo = "30";
+				
+				threeBatchNo = BatchNoEnum.FIRST;
+				if(mouth==12){
+					threeYear =year +1;
+					threeMoth = 1;
+				}else{
+					threeYear =year;
+					threeMoth = mouth +1;
+				}
+				threeDayFrom = "1(31)";
+				threeDayTo= "10";
+				
+				
+			}else if(BatchNoEnum.THREE.equals(batchNo)){
+				nextBatchNo = BatchNoEnum.FIRST;
+				if(mouth==12){
+					nextYear =year +1;
+					nextMoth = 1;
+				}else{
+					nextYear =year;
+					nextMoth = mouth +1;
+				}
+				nextDayFrom = "1(31)";
+				nextDayTo = "10";
+				
+				threeBatchNo = BatchNoEnum.SECOND;
+				if(mouth==12){
+					threeYear =year +1;
+					threeMoth = 1;
+				}else{
+					threeYear =year;
+					threeMoth = mouth +1;
+				}
+				threeDayFrom = "11";
+				threeDayTo= "20";
+			}
+			nextCountNumber= getNextCountNumber(String.valueOf(nextYear),String.valueOf(nextMoth));
+			threeCountNumber= getNextCountNumber(String.valueOf(threeYear),String.valueOf(threeMoth));
+			
+			//当前积分发放总金额
+			String firstGold  =  String.valueOf(mouth) + "月"+dayFrom+"-" +dayTo+"应发放积分";
+			//下批次积分发放总金额
+			String SecondGold =   String.valueOf(nextMoth) + "月"+nextDayFrom+"-" +nextDayTo+"应发放积分";;
+			//下下批次积分发放总金额
+			String threeGold =  String.valueOf(threeMoth) + "月"+threeDayFrom+"-" +threeDayTo+"应发放积分";;
+			 firstGold = firstGold + giftsDetailsService.getCountGoldAll(countNumber, batchNo);
+			 SecondGold = SecondGold + giftsDetailsService.getCountGoldAll(nextCountNumber, nextBatchNo);
+			 threeGold = threeGold + giftsDetailsService.getCountGoldAll(threeCountNumber, threeBatchNo);
+			 model.addAttribute("firstGold", firstGold);
+			 model.addAttribute("SecondGold", SecondGold);
+			 model.addAttribute("threeGold", threeGold);
+//			List<SendGiftsDetails> giftsList = giftsDetailsService.getGiftsDetailsList(countNumber, batchNo);
+//			if(giftsList!=null&&giftsList.size()>0){
+//				model.addAttribute("result", giftsList);
+//				String goldAll = giftsDetailsService.getCountGoldAll(countNumber, batchNo);
+//				model.addAttribute("goldAll", goldAll);
+//			}
 			return "back/systeminfo/giftsSend";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -305,4 +403,14 @@ public class GiftsDetailsController {
 		return result;
 	}
 
+	
+	private int getNextCountNumber(String year , String month){
+		if(month.length()<2){
+			month = "0" + month;
+		}
+        int result = Integer.valueOf(year+month);
+        return result;
+		
+	}
+	
 }
