@@ -19,6 +19,8 @@ public interface IntegralManagerService {
 	List<AccountDetails> getIntegralHistoryPointsByNumber(String number);
 
 	Information getInformationById(Integer id);
+	
+	public List<AccountDetails> getFromgiftsHistoryPoints();
 
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
 			Integer BenefitId, Integer serialNumber);
