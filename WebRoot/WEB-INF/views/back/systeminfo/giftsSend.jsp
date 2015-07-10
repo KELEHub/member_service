@@ -65,18 +65,22 @@
 						<thead>
 							<tr>
 								<th>会员账号</th>
-								<th>礼包名称</th>
-								<th>流水号</th>
-								<th>积分</th>
+								<th>项目</th>
+								<th>收入</th>
+								<th>支出</th>
+								<th>积分余额</th>
+								<th>日期</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result }">
+							<c:forEach var="item" items="${result}">
 								<tr class="gradeX">
-									<td>${item.number }</td>
-									<td>${item.name }</td>
-									<td>${item.countNumber }</td>
-									<td>${item.goldMoney }</td>
+									<td>${item.userNumber}</td>
+									<td>${item.project}</td>
+									<td>${item.income}</td>
+									<td>${item.pay}</td>
+									<td>${item.pointbalance}</td>
+									<td>${item.createTime}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
