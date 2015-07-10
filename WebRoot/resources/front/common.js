@@ -146,9 +146,7 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
-	if(ndinstance1_releaseTickling_content){
-		reqObj["content"]=ndinstance1_releaseTickling_content.getContent();
-	}
+
 	var reqData={};
 	if(reqObj!=null){
 		reqData = JSON.stringify(reqObj);
