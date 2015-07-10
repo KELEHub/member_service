@@ -9,6 +9,8 @@
 		<a href="#" class="current">Buttons &amp; icons</a>
 		 <form action="/RegisterController/show.do" method="POST" id="toActivateForm">
 	</form>
+	<form action="/RegisterController/showRegister.do" method="POST" id="showRegisterForm">
+	</form>
 	</div>
 </div>
 

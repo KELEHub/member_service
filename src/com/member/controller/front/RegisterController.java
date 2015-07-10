@@ -68,19 +68,23 @@ public class RegisterController {
 	public String showRegister(@RequestBody ProtocolCheckForm form,Model model) {
 		try {
 			String resultStr = "";
-			if(form.getResult().equals("agree")){
-				Institution institution = institutionService.getInstitutionInfo();
-			    List<BankService> bankServiceList = institutionService.getBankServiceInfo();
-				String number = getNumber();
-				while (number == null) {
-					number= getNumber();
-				}
-				model.addAttribute("number",number);
-				model.addAttribute("list", bankServiceList);
-				model.addAttribute("registerMoney", "消费会员：￥"+institution.getRegisterGold());
+			if (form.getResult()==null){
 				resultStr = "front/register/register";
-			}else if (form.getResult().equals("oppose")){
-				resultStr = "front/memberNews/LatestNews";
+			}else{
+				if(form.getResult().equals("agree")){
+					Institution institution = institutionService.getInstitutionInfo();
+				    List<BankService> bankServiceList = institutionService.getBankServiceInfo();
+					String number = getNumber();
+					while (number == null) {
+						number= getNumber();
+					}
+					model.addAttribute("number",number);
+					model.addAttribute("list", bankServiceList);
+					model.addAttribute("registerMoney", "消费会员：￥"+institution.getRegisterGold());
+					resultStr = "front/register/register";
+				}else if (form.getResult().equals("oppose")){
+					resultStr = "front/memberNews/LatestNews";
+				}
 			}
 			return resultStr;
 		} catch (Exception e) {

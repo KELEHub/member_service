@@ -95,7 +95,7 @@ function registerData(){
 		}else{
 			    var name = result.msg;
 			    alert(name);
-			    $("#content-header").find("form[id='toActivateForm']").each(function() {
+			    $("#content-header").find("form[id='showRegisterForm']").each(function() {
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
 			    findJqueryFileUpload("content");
