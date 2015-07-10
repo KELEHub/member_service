@@ -6,6 +6,9 @@
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/GiftsDetailsController/showSend.do" method="POST" id="initGiftsForm">
 	</form>
+   <form action="/GiftsDetailsController/send.do" method="POST"
+						id="giftsDetailsSendForm">
+						</form>
   </div>
 <div class="container-fluid">
 	<div class="row-fluid">
@@ -16,22 +19,47 @@
 					<h5>礼包积分发放</h5>
 				</div>
 				<div class="widget-content nopadding">
-					<form class="form-horizontal"
-						action="/GiftsDetailsController/send.do" method="POST"
-						id="giftsDetailsSendForm">
-						<div class="control-group">
-							<label class="control-label">发送总金额：</label>
-							<div class="controls">
-								<label>${goldAll}</label>
-							</div>
-						</div>
-					</form>
-					<div class="form-actions">
-						<input type="submit" value="发送积分"
+		<div  class="form-horizontal"> 
+		
+		<div class="control-group">
+			<label class="control-label">
+				${firstGold}:
+			</label>
+			<div class="controls">
+				<div >
+				   <input type="submit" value="发送积分"
 							onclick="sendGifts('giftsDetailsSendForm')"
 							class="btn btn-success">
-					</div>
 				</div>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">
+				${SecondGold}:
+			</label>
+			<div class="controls">
+				<div >
+				   <input type="submit" value="发送积分"
+							class="btn btn-success">
+				</div>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">
+				${threeGold}:
+			</label>
+			<div class="controls">
+				<div>
+				   <input type="submit" value="发送积分"
+							class="btn btn-success">
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
 				<div class="widget-content nopadding">
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
