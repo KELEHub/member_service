@@ -821,11 +821,6 @@ function formatter(o, blur) {
 	o.value = fmoney(o.value,2);
 }
 
-function rangeIntegralIssue(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
-
 function viewLatestNews(arg_title,arg_content){
 	$("#viewLatestNews_title").val(arg_title);
 	$("#viewLatestNews_content").val(arg_content);
