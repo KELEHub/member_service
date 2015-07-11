@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<div class="container-fluid">
+<div class="container-fluid" id="content-header">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
@@ -27,6 +27,9 @@
 					<div class="form-actions">
 						<input type="submit" value="查询"
 							onclick="searchMembers('searchWidhdrawalsxForm')"
+							class="btn btn-success">
+							<input type="button" value="导出提现记录"
+							onclick="exportTiXian('searchWidhdrawalsxForm')"
 							class="btn btn-success">
 					</div>
 				</div>

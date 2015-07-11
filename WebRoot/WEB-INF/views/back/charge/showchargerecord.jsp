@@ -29,6 +29,9 @@
 						<input type="submit" value="查询"
 							onclick="searchMembers('searchChargeForm')"
 							class="btn btn-success">
+								<input type="button" value="导出充值记录"
+							onclick="exportChongZhi('searchChargeForm')"
+							class="btn btn-success">
 					</div>
 				</div>
 				<div class="widget-content nopadding">

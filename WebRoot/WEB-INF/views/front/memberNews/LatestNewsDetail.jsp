@@ -4,8 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 // ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor']
-	frontndPanel = new nicEditor({buttonList : []}).panelInstance('front_releaseNotice_context');
-// 	ndPanel = new nicEditor({fullPanel : true}).panelInstance('releaseNotice_context');
+	frontndPanel = new nicEditor({fullPanel : true}).panelInstance('front_releaseNotice_context');
 	frontndPanel = frontndPanel.nicInstances[0];
 	frontndPanel.setContent($("#hiddenDivContents").html());
 	

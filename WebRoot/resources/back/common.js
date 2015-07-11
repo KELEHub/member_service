@@ -35,7 +35,11 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
-
+	if (typeof ndinstance1_replyTickling_replyContent != "undefined") {
+		if (ndinstance1_replyTickling_replyContent) {
+			reqObj["replyContent"] = ndinstance1_replyTickling_replyContent.getContent();
+		}
+	}
 	var reqData={};
 	if(reqObj!=null){
 		reqData = JSON.stringify(reqObj);
@@ -548,6 +552,8 @@ function resetTable(){
             }  
 		}
 	});
+	
+	$("#testexample1_info").css({ float: "left", width: "30%"});
 }
 
 //权限菜单书的定义

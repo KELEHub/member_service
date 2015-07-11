@@ -105,7 +105,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<textarea class="textarea_editor span12" rows="6" name="content"
-							id="releaseTickling_content" style="width: 500px;height:300px;"></textarea>
+							id="releaseTickling_content" style="width: 500px;height:300px;overflow: auto;"></textarea>
 					</div>
 				</div>
 			</div>

@@ -427,7 +427,7 @@ var nicEditorInstance = bkClass.extend({
 			var s = {width: newX+'px', border : '1px solid #ccc', borderTop : 0, overflowY : 'auto', overflowX: 'hidden' };
 			s[(ie7s) ? 'height' : 'maxHeight'] = (this.ne.options.maxHeight) ? this.ne.options.maxHeight+'px' : null;
 			this.editorContain = new bkElement('DIV').setStyle(s).appendBefore(e);
-			var editorElm = new bkElement('DIV').setStyle({width : (newX-8)+'px', margin: '4px', minHeight : newY+'px'}).addClass('main').appendTo(this.editorContain);
+			var editorElm = new bkElement('DIV').setStyle({width : (newX-8)+'px', margin: '4px', height : newY+'px'}).addClass('main').appendTo(this.editorContain);
 
 			e.setStyle({display : 'none'});
 				
@@ -438,7 +438,7 @@ var nicEditorInstance = bkClass.extend({
 				var f = e.parentTag('FORM');
 				if(f) { bkLib.addEvent( f, 'submit', this.saveContent.closure(this)); }
 			}
-			editorElm.setStyle((ie7s) ? {height : newY+'px'} : {overflow: 'hidden'});
+			editorElm.setStyle((ie7s) ? {height : newY+'px'} : {overflowX: 'hidden'});
 			this.elm = editorElm;	
 		}
 		this.ne.addEvent('blur',this.blur.closure(this));

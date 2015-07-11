@@ -8,13 +8,13 @@
 		<h3>充值描述信息.</h3>
 	</div>
 	<div class="modal-body">
-		<div class="widget-box">
-			<h2>充值银行信息:</h2>
-			<div class="widget-content nopadding">
-				<font style="color: red; font-size: 20px;">
-					${result.chageBackInfo } </font>
-			</div>
-		</div>
+<!-- 		<div class="widget-box"> -->
+<!-- 			<h2>充值银行信息:</h2> -->
+<!-- 			<div class="widget-content nopadding"> -->
+<!-- 				<font style="color: red; font-size: 20px;"> -->
+<%-- 					${result.chageBackInfo } </font> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
 		<h2>充值备注信息:</h2>
 		<div class="widget-content nopadding">
 			<font style="color: red; font-size: 20px;">

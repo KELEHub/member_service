@@ -9,12 +9,12 @@
 	</div>
 	<div class="modal-body">
 		<div class="widget-box">
-		    <h2>充值银行信息:</h2>
-			<div class="widget-content nopadding">
-				<font style="color: red;font-size: 20px;">
-				  ${result.chageBackInfo }
-				</font>
-			</div>
+<!-- 		    <h2>充值银行信息:</h2> -->
+<!-- 			<div class="widget-content nopadding"> -->
+<!-- 				<font style="color: red;font-size: 20px;"> -->
+<%-- 				  ${result.chageBackInfo } --%>
+<!-- 				</font> -->
+<!-- 			</div> -->
 			<h2>充值备注:</h2>
 			<div class="widget-content nopadding">
 				<font style="color: red;font-size: 20px;">
