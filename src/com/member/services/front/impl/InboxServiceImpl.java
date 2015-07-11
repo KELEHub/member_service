@@ -37,6 +37,6 @@ public class InboxServiceImpl implements InboxService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveOrUpdate(Object entity) {
-		inboxDao.saveOrUpdate(entity);
+		inboxDao.save(entity);
 	}
 }
