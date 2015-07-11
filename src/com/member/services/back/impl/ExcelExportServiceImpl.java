@@ -3,6 +3,7 @@ package com.member.services.back.impl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -115,7 +116,7 @@ public class ExcelExportServiceImpl implements ExcelExportService {
 			// 收款市县
             row1.createCell(8).setCellValue(arr6[1]);
 			// 余额
-            row1.createCell(9).setCellValue(t.getBalanceAmt().toString());
+            row1.createCell(9).setCellValue(t.getBalanceAmt()!=null ? t.getBalanceAmt().toString() : new BigDecimal(0).toString());
         }  
         // 第六步，将文件存到指定位置  
         ByteArrayOutputStream os = new ByteArrayOutputStream();

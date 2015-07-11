@@ -80,6 +80,7 @@ public class WithdrawalsController {
 		List<Withdrawals> result = withdrawalsService
 				.getNotDealWithdrawalsRecord(form.getNumber());
 		model.addAttribute("result", result);
+		model.addAttribute("form", form);
 		return "back/withdrawals/showNotDealwithdrawalsrecord";
 	}
 	
