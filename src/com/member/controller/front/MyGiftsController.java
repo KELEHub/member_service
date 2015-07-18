@@ -42,9 +42,14 @@ public class MyGiftsController {
 			if(list!=null && list.size()>0){
 				for(GiftsDetails gd:list){
 					Information info =informationService.getInformationById(gd.getChildId());
+					
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
-					form.setName("礼包_"+info.getNumber());
+					if(info==null){
+						form.setName("礼包_"+"未知");
+					}else{
+						form.setName("礼包_"+info.getNumber());
+					}
 					form.setId(gd.getId().toString());
 					int last = 0;
 					if(gd.getGiftEnum().equals(GiftEnum.FIVE)){
