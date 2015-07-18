@@ -65,6 +65,9 @@ $(document).ready(
 	</head>
 	<body>
 		<div id="loginbox">
+		<form id="exprtForm" method="post" class="form-vertical"
+				action="ExportController/export.do">
+				</form>
 			<form id="loginForm" method="post" class="form-vertical"
 				action="LoginController/login.do">
 				<div class="control-group normal_text">
@@ -96,6 +99,11 @@ $(document).ready(
 				<div class="form-actions">
 					<span class="pull-right"><a type="submit" id='btnLogin'
 						class="btn btn-success" /> 登录</a>
+					</span>
+				</div>
+				<div class="form-actions">
+					<span class="pull-right"><a type="submit" id='btnExport'
+						class="btn btn-success" /> 数据导入</a>
 					</span>
 				</div>
 			</form>
