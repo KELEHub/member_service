@@ -26,6 +26,13 @@ function login() {
 	$("#loginForm").submit();
 }
 
+
+// 导入数据
+function dataExport() {
+
+	$("#exprtForm").submit();
+}
+
 // 回车
 function txtUserNamekeyEnter(e) {
 	var ev = document.all ? window.event : e;
@@ -48,6 +55,9 @@ $(document).ready(function() {
 
 				$("#btnLogin").click(function() {
 							login();
+						});
+				$("#btnExport").click(function() {
+							dataExport();
 						});
 				// 重置
 				$("#btnCancel").click(function() {
