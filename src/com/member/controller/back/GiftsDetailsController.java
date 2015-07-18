@@ -76,7 +76,11 @@ public class GiftsDetailsController {
 							.getChildId());
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
-					form.setName("礼包_" + info.getNumber());
+					if(info==null){
+						form.setName("礼包_"+"未知");
+					}else{
+						form.setName("礼包_"+info.getNumber());
+					}
 					form.setId(gd.getId().toString());
 					int last = 0;
 					if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
@@ -115,7 +119,11 @@ public class GiftsDetailsController {
 			typeGift = "十期次礼包类型";
 		}
 		gf.setTypeGift(typeGift);
-		gf.setName("礼包_" + info.getNumber());
+		if(info==null){
+			form.setName("礼包_"+"未知");
+		}else{
+			form.setName("礼包_"+info.getNumber());
+		}
 		gf.setPointNumber(giftsDetails.getPointNumber().toString());
 		model.addAttribute("bean", gf);
 		return "back/systeminfo/editeGifts";
@@ -140,7 +148,11 @@ public class GiftsDetailsController {
 							.getChildId());
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
-					form.setName("礼包_" + info.getNumber());
+					if(info==null){
+						form.setName("礼包_"+"未知");
+					}else{
+						form.setName("礼包_"+info.getNumber());
+					}
 					form.setId(gd.getId().toString());
 					int last = 0;
 					if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
@@ -217,7 +229,11 @@ public class GiftsDetailsController {
 			giftsHistory.setNumeber(giftsDetails.getNumber());
 			giftsHistory.setUserId(user.getId());
 			giftsHistory.setRemaind(remaind);
-			giftsHistory.setName("礼包_" + info.getNumber());
+			if(info==null){
+				form.setName("礼包_"+"未知");
+			}else{
+				form.setName("礼包_"+info.getNumber());
+			}
 			parameterService.saveOrUpdate(giftsDetails, giftsHistory, Integer
 					.valueOf(form.getPointNumber()));
 			result.setMsg("修改会员详细信息成功.");
