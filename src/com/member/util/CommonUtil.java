@@ -154,9 +154,13 @@ public class CommonUtil {
 			return BatchNoEnum.FIRST;
 		}else if(day<=20){
 			return BatchNoEnum.SECOND;
-		}else{
+		}else if(day<=30){
 			return BatchNoEnum.THREE;
 		}
+		if(day==31){
+			return BatchNoEnum.FIRST;
+		}
+		return null;
 	}
 	
 	
