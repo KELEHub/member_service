@@ -101,11 +101,6 @@ $(document).ready(
 						class="btn btn-success" /> 登录</a>
 					</span>
 				</div>
-				<div class="form-actions">
-					<span class="pull-right"><a type="submit" id='btnExport'
-						class="btn btn-success" /> 数据导入</a>
-					</span>
-				</div>
 			</form>
 			<br>
 			<p id="loginInfo" style="color: #FF3399;"></p>
