@@ -2,9 +2,12 @@ package com.member.controller.back;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
+import com.member.entity.TestPageEntity;
 import com.member.form.back.MemberDeleteForm;
 import com.member.form.back.MemberSaveForm;
 import com.member.form.back.MemberSearchForm;
@@ -27,6 +31,7 @@ import com.member.services.back.MemberManageService;
 import com.member.services.front.AccountDetailsService;
 import com.member.util.CommonUtil;
 
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/membermanage")
 public class MemberManageController {
@@ -45,34 +50,94 @@ public class MemberManageController {
 	
 	@RequestMapping(value = "/showActivationMember",method = RequestMethod.POST)
 	public String showActivationMember(Model model) {
-		MemberSearchForm form = new MemberSearchForm();
-		List<Information> result = memberManageService.getActiveMembers(form);
-		model.addAttribute("result",result);
 		return "back/membermanage/showactivemember";
+	}
+	
+	@RequestMapping(value = "/getActivationMemberPage")
+	@ResponseBody
+	public Map getPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = memberManageService.getActiveMembers(form,customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = memberManageService.countData(form,customerPar,1);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
 	
 	@RequestMapping(value = "/showNotActivationMember",method = RequestMethod.POST)
 	public String showNotActivationMember(Model model) {
-		MemberSearchForm form = new MemberSearchForm();
-		List<Information> result = memberManageService.getNotActiveMembers(form);
-		model.addAttribute("result",result);
 		return "back/membermanage/shownotactivemember";
+	}
+	
+	@RequestMapping(value = "/getNotActivationMemberPage")
+	@ResponseBody
+	public Map getNotActivationMemberPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = memberManageService.getNotActiveMembers(form,customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = memberManageService.countData(form,customerPar,0);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
 	
 	@RequestMapping(value = "/showMemberManagement",method = RequestMethod.POST)
 	public String showMemberManagement(Model model) {
-		MemberSearchForm form = new MemberSearchForm();
-		List<Information> result = memberManageService.getActiveMembers(form);
-		model.addAttribute("result",result);
 		return "back/membermanage/memberManagement";
 	}
 	
+	@RequestMapping(value = "/getMemberManagementPage")
+	@ResponseBody
+	public Map getMemberManagementPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = memberManageService.getActiveMembers(form,customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = memberManageService.countData(form,customerPar,1);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
 	@RequestMapping(value = "/searchMemberManagement",method = RequestMethod.POST)
-	public String searchMemberManagement(@RequestBody MemberSearchForm form,Model model) {
-		List<Information> result = memberManageService.getActiveMembers(form);
+	public Map searchMemberManagement(@RequestBody MemberSearchForm form,Model model) {
+		List<Information> result = memberManageService.getActiveMembers(form,null,1,1);
 		model.addAttribute("form",form);
 		model.addAttribute("result",result);
-		return "back/membermanage/memberManagement";
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", 1);
+		map.put("iTotalDisplayRecords",1);
+		return map;
+//		return "back/membermanage/memberManagement";
 	}
 	
 	@RequestMapping(value = "/searchActivationMember",method = RequestMethod.POST)

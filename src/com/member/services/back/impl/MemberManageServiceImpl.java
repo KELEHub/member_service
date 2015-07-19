@@ -29,7 +29,8 @@ public class MemberManageServiceImpl implements MemberManageService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Information> getActiveMembers(MemberSearchForm form) {
+	public List<Information> getActiveMembers(MemberSearchForm form,String customerPar,
+			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 
 		String hqlQuery = " from Information s where s.isActivate=1 ";
@@ -48,13 +49,30 @@ public class MemberManageServiceImpl implements MemberManageService {
 			arguments.put("serviceNumber", form.getServiceNumber());
 		}
 		hqlQuery = hqlQuery +"  order by activeDate desc";
-		List result = informationDao.queryByHql(hqlQuery, arguments);
+		List result = informationDao.queryByHql(hqlQuery,pageNumber,pageSize, arguments);
 		return result;
 	}
 
 	@Override
+	public int countData(MemberSearchForm form,String customerPar,Integer isActivate) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String hqlQuery = " from Information s where s.isActivate=:isActivate";
+		if(customerPar!=null && !"".equals(customerPar)){
+			hqlQuery+=" and s.testName=:customerPar ";
+			arguments.put("customerPar", customerPar);
+		}
+		arguments.put("isActivate", isActivate);
+		List result = informationDao.queryByHql(hqlQuery,arguments);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
+	}
+	
+	@Override
 	@Transactional(readOnly=true)
-	public List<Information> getNotActiveMembers(MemberSearchForm form) {
+	public List<Information> getNotActiveMembers(MemberSearchForm form,String customerPar,
+			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 
 		String hqlQuery = "from Information s where s.isActivate=0";
@@ -72,7 +90,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 			arguments.put("serviceNumber", form.getServiceNumber());
 		}
 		hqlQuery = hqlQuery +"  order by registerDate desc";
-		List result = informationDao.queryByHql(hqlQuery, arguments);
+		List result = informationDao.queryByHql(hqlQuery, pageNumber,pageSize,arguments);
 		return result;
 	}
 

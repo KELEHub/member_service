@@ -11,9 +11,11 @@ import com.member.form.back.MemberSearchForm;
 
 public interface MemberManageService {
 	
-	public List<Information> getActiveMembers(MemberSearchForm form);
+	public List<Information> getActiveMembers(MemberSearchForm form,String customerPar,
+			int iDisplayLength,int pageNumber);
 	
-	public List<Information> getNotActiveMembers(MemberSearchForm form);
+	public List<Information> getNotActiveMembers(MemberSearchForm form,String customerPar,
+			int pageSize,int pageNumber);
 	
 	public void updateMemberLockFlag(Integer id);
 	
@@ -33,4 +35,6 @@ public interface MemberManageService {
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus);
 
 	List<Information> getMemberInfoById(Integer id);
+
+	int countData(MemberSearchForm form, String customerPar,Integer isActivate);
 }
