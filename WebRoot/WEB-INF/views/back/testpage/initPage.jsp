@@ -52,6 +52,9 @@
 <script src="<%=basePath%>/resources/back/common_map.js"></script>
 <script src="<%=basePath%>/resources/back/bankInfo.js"></script>
 <script src="<%=basePath%>/resources/back/common.js"></script>
+<script type="text/javascript"
+			src="<%=basePath%>resources/back/login.js">
+</script>
 <script type="text/javascript">
 $(function(){
 	var bathPath=$("#basePath").val();
@@ -132,7 +135,6 @@ $(function(){
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {  
                         /* 用来改写用户权限的 */  
-                      
                             $('td:eq(3)', nRow).html("<button class=\"btn\" onclick=\"doAlertInfo("+aData.id+")\">密码重置</button>");  
                         return nRow;  
                     }
@@ -176,6 +178,11 @@ $(function(){
     </ul>
 </div>
 <div id="content" style="overflow: auto;">
+<div class="form-actions">
+					<span class="pull-right"><a type="submit" id='btnExport'
+						class="btn btn-success" /> 数据导入</a>
+					</span>
+</div>
 <table id="testPage" width="100%" border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
