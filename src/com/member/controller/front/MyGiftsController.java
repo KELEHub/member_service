@@ -41,7 +41,13 @@ public class MyGiftsController {
 			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
 			if(list!=null && list.size()>0){
 				for(GiftsDetails gd:list){
-					Information info =informationService.getInformationById(gd.getChildId());
+					Information info = null;
+					if(gd.getChildId() == null){
+						info = null; 
+					}else{
+					    info = informationService.getInformationById(gd
+								.getChildId());
+					}
 					
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
