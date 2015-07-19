@@ -126,13 +126,21 @@ $(function(){
                 "aoColumns": [
                         { "mData": "id" },
                         { "mData": "testName" },
-                        { "mData": "testDate" }
-                    ]
+                        { "mData": "testDate" },
+                        { "sDefaultContent" : ""}
+                        
+                    ],
+               "fnRowCallback" : function(nRow, aData, iDisplayIndex) {  
+                        /* 用来改写用户权限的 */  
+                      
+                            $('td:eq(3)', nRow).html("<button class=\"btn\" onclick=\"doAlertInfo("+aData.id+")\">密码重置</button>");  
+                        return nRow;  
+                    }
                 //"fnServerParams": function (aoData) {
                 //    aoData.push({ "name": "name1", "value": "value1" });
                 //    aoData.push({ "name": "name2", "value": "value2" });
                 //}
-            });
+            });            
 });
 </script>
 </head>
@@ -174,6 +182,7 @@ $(function(){
           <td>列1</td>
           <td>列2</td>
           <td>列3</td>
+          <td>列4</td>
         </tr>
       </thead>
       <tbody></tbody>
