@@ -140,7 +140,7 @@ public class ExportController {
 						batch= BatchNoEnum.FIRST;
 					}
 					gf.setBatchNo(batch);
-					gf.setPointNumber(participation.getP_count());
+					gf.setPointNumber(participation.getP_count()+1);
 					gf.setName("礼包_"+"未知");
 					gf.setCreateTime(participation.getP_indate());
 					nmsUserDao.saveOrUpdate(gf);
