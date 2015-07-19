@@ -72,8 +72,14 @@ public class GiftsDetailsController {
 			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
 			if (list != null && list.size() > 0) {
 				for (GiftsDetails gd : list) {
-					Information info = informationService.getInformationById(gd
-							.getChildId());
+					Information info = null;
+					if(gd.getChildId() == null){
+						info = null; 
+					}else{
+					    info = informationService.getInformationById(gd
+								.getChildId());
+					}
+					
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
 					if(info==null){
@@ -107,8 +113,13 @@ public class GiftsDetailsController {
 	public String showDialog(@RequestBody GiftsForm form, Model model) {
 		GiftsDetails giftsDetails = parameterService
 				.getGiftsDetailsById(Integer.valueOf(form.getId()));
-		Information info = informationService.getInformationById(giftsDetails
-				.getChildId());
+		Information info = null;
+		if(giftsDetails.getChildId() == null){
+			info = null; 
+		}else{
+		    info = informationService.getInformationById(giftsDetails
+					.getChildId());
+		}
 		GiftsForm gf = new GiftsForm();
 		gf.setNumber(giftsDetails.getNumber());
 		gf.setId(giftsDetails.getId().toString());
@@ -120,9 +131,9 @@ public class GiftsDetailsController {
 		}
 		gf.setTypeGift(typeGift);
 		if(info==null){
-			form.setName("礼包_"+"未知");
+			gf.setName("礼包_"+"未知");
 		}else{
-			form.setName("礼包_"+info.getNumber());
+			gf.setName("礼包_"+info.getNumber());
 		}
 		gf.setPointNumber(giftsDetails.getPointNumber().toString());
 		model.addAttribute("bean", gf);
@@ -144,8 +155,13 @@ public class GiftsDetailsController {
 			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
 			if (list != null && list.size() > 0) {
 				for (GiftsDetails gd : list) {
-					Information info = informationService.getInformationById(gd
-							.getChildId());
+					Information info = null;
+					if(gd.getChildId() == null){
+						info = null; 
+					}else{
+					    info = informationService.getInformationById(gd
+								.getChildId());
+					}
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
 					if(info==null){
@@ -219,8 +235,13 @@ public class GiftsDetailsController {
 				result.setMsg("期次号未修改");
 				return result;
 			}
-			Information info = informationService
-					.getInformationById(giftsDetails.getChildId());
+			Information info = null;
+			if(giftsDetails.getChildId() == null){
+				info = null; 
+			}else{
+			    info = informationService.getInformationById(giftsDetails
+						.getChildId());
+			}
 			String remaind = "修改前的期次：" + giftsDetails.getPointNumber() + ";"
 					+ "修改后的期次：" + form.getPointNumber();
 			giftsDetails.setPointNumber(Integer.valueOf(form.getPointNumber()));
