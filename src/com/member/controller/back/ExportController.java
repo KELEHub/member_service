@@ -105,6 +105,10 @@ public class ExportController {
 				if(participation.getP_count()<5){
 					GiftsDetails gf = new GiftsDetails();
 					Information info =informationService.getInformationByNumber(participation.getP_inumber());
+					if(info == null){
+						System.out.println("会员号："+participation.getP_inumber());
+						continue;
+					}
 					gf.setUserId(info.getId());
 //					gf.setChildId(info.getId());
 					gf.setNumber(info.getNumber());
@@ -159,7 +163,7 @@ public class ExportController {
 						sg.setCountNumber(realNumber);
 						sg.setDateNumber(date.substring(0,6)+dateNumber);
 						sg.setBatchNo(batch);
-						sg.setName("礼包_"+info.getNumber());
+						sg.setName("礼包_"+"未知");
 						sg.setCreateTime(new Date());
 						sg.setPointNumber(i);
 						sg.setGoldMoney(getGoldMoney(inst,i,GiftEnum.FIVE));
