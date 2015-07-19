@@ -159,6 +159,12 @@ function searchGifts(sFormId){
 	resetTable();
 }
 
+function doAlertInfo(id){
+	alert(id);
+}
+
+
+
 function doMemberShowDetail(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
