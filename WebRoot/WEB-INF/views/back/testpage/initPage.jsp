@@ -178,6 +178,9 @@ $(function(){
     </ul>
 </div>
 <div id="content" style="overflow: auto;">
+<form id="exprtForm" method="post" class="form-vertical"
+				action="ExportController/export.do">
+				</form>
 <div class="form-actions">
 					<span class="pull-right"><a type="submit" id='btnExport'
 						class="btn btn-success" /> 数据导入</a>
