@@ -72,11 +72,11 @@ public class ExportController {
 				info.setBankCity(old.getI_bankcity());
 				info.setBankCounty(old.getI_bankcounty());
 				info.setBankName(old.getI_bankname());
-				info.setBankProvince(old.getI_bankprovince());
+				info.setBankProvince(old.getI_bankprovince().substring(0,old.getI_bankprovince().length()-1));
 				info.setLinkAddress(old.getI_linkaddress());
 				info.setLinkCity(old.getI_linkcity());
 				info.setLinkCounty(old.getI_linkcounty());
-				info.setLinkProvince(old.getI_linkprovince());
+				info.setLinkProvince(old.getI_linkprovince().substring(0,old.getI_linkprovince().length()-1));
 				info.setActiveDate(old.getI_checkeddate());
 				info.setRecommendCount(old.getI_recommendcount().intValue());
 				info.setRecommendNumber(old.getI_recommendnumber());
