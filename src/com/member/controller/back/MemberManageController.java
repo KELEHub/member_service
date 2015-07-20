@@ -55,7 +55,7 @@ public class MemberManageController {
 	
 	@RequestMapping(value = "/getActivationMemberPage")
 	@ResponseBody
-	public Map getPage(HttpServletRequest request,Model model) {
+	public Map getActivationMemberPage(HttpServletRequest request,Model model) {
 		MemberSearchForm form = new MemberSearchForm();
 		String customerPar = request.getParameter("customerPar");
 		String iDisplayLength = request.getParameter("iDisplayLength");

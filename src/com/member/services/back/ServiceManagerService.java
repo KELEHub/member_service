@@ -9,9 +9,11 @@ import com.member.form.back.InformationForm;
 
 public interface ServiceManagerService {
 
-	List<Information> getServiceByIsService(Integer isService);
+	List<Information> getServiceByIsService(Integer isService,String customerPar,
+			int pageSize,int pageNumber);
 
-	List<ApplyService> getApplyService();
+	List<ApplyService> getApplyService(String customerPar,
+			int pageSize,int pageNumber);
 
 	Information getServiceById(Integer id);
 
@@ -26,5 +28,9 @@ public interface ServiceManagerService {
 	ForbidForm getForbidForm();
 
 	void updateForbidForm(Integer ifForbid);
+
+	int countApproveServiceData(String customerPar);
+
+	int countServiceManagerData(String customerPar, Integer isService);
 
 }

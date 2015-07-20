@@ -1,9 +1,12 @@
 package com.member.controller.back;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,7 @@ import com.member.services.back.ServiceManagerService;
 import com.member.services.front.AccountDetailsService;
 import com.member.util.CommonUtil;
 
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/ServiceManagerController")
 public class ServiceManagerController {
@@ -45,35 +49,78 @@ public class ServiceManagerController {
 	
 	@RequestMapping(value = "/showServiceManager",method = RequestMethod.POST)
 	public String showServiceManager(Model model){
-		List<Information> result = serviceManagerService.getServiceByIsService(1);
+//		List<Information> result = serviceManagerService.getServiceByIsService(1);
 		ForbidForm ifForbid = serviceManagerService.getForbidForm();
-		List<Information> list = new ArrayList<Information>();
-		if(result!=null && result.size()>0){
-			for(Information info : result){
-				Information newInfo = new Information();
-				newInfo.setNumber(info.getNumber());
-				newInfo.setId(info.getId());
-				newInfo.setName(info.getName());
-				newInfo.setShoppingMoney(info.getShoppingMoney());
-				newInfo.setPhoneNumber(info.getPhoneNumber());
-				newInfo.setPostNumber(info.getPostNumber());
-				newInfo.setBankName(info.getBankName());
-				newInfo.setRecommendNumber(info.getRecommendNumber());
-				newInfo.setServiceSum(info.getServiceSum());
-				newInfo.setServiceCount(accountDetailsService.getCountServerPointByNumber(info.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
-				list.add(newInfo);
-			}
-		}
-		model.addAttribute("result", list);
+//		List<Information> list = new ArrayList<Information>();
+//		if(result!=null && result.size()>0){
+//			for(Information info : result){
+//				Information newInfo = new Information();
+//				newInfo.setNumber(info.getNumber());
+//				newInfo.setId(info.getId());
+//				newInfo.setName(info.getName());
+//				newInfo.setShoppingMoney(info.getShoppingMoney());
+//				newInfo.setPhoneNumber(info.getPhoneNumber());
+//				newInfo.setPostNumber(info.getPostNumber());
+//				newInfo.setBankName(info.getBankName());
+//				newInfo.setRecommendNumber(info.getRecommendNumber());
+//				newInfo.setServiceSum(info.getServiceSum());
+//				newInfo.setServiceCount(accountDetailsService.getCountServerPointByNumber(info.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
+//				list.add(newInfo);
+//			}
+//		}
+//		model.addAttribute("result", list);
 		model.addAttribute("ifFrobid",ifForbid.getIfForbid());
 		return "back/serviceManager/serviceInfo";
 	}
 	
+	@RequestMapping(value = "/getServiceManagerPage")
+	@ResponseBody
+	public Map getServiceManagerPage(HttpServletRequest request,Model model) {
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = serviceManagerService.getServiceByIsService(1,customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		if(result!=null && result.size()>0){
+			for(Information info : result){
+				info.setServiceCount(accountDetailsService.getCountServerPointByNumber(info.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
+			}
+		}
+		int iTotalRecords = serviceManagerService.countServiceManagerData(customerPar,1);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
 	@RequestMapping(value = "/showApplyServiceManager",method = RequestMethod.POST)
 	public String showApplyServiceManager(Model model){
-		List<ApplyService> result = serviceManagerService.getApplyService();
-		model.addAttribute("result", result);
 		return "back/serviceManager/approveService";
+	}
+	
+	@RequestMapping(value = "/getApplyServiceManagerPage")
+	@ResponseBody
+	public Map getApplyServiceManagerPage(HttpServletRequest request,Model model) {
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<ApplyService> result = serviceManagerService.getApplyService(customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = serviceManagerService.countApproveServiceData(customerPar);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
 
 	@RequestMapping(value = "/showServiceInfoDetail",method = RequestMethod.POST)

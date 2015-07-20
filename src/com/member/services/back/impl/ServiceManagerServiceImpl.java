@@ -1,7 +1,9 @@
 package com.member.services.back.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,6 +17,7 @@ import com.member.entity.ApplyService;
 import com.member.entity.ForbidForm;
 import com.member.entity.Information;
 import com.member.form.back.InformationForm;
+import com.member.form.back.MemberSearchForm;
 import com.member.services.back.ServiceManagerService;
 
 @SuppressWarnings("unchecked")
@@ -26,9 +29,10 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Information> getServiceByIsService(Integer isService) {
+	public List<Information> getServiceByIsService(Integer isService,String customerPar,
+			int pageSize,int pageNumber) {
 		return (List<Information>) serviceManagerDao.queryByHql(
-				HqlServiceManager.getService, isService);
+				HqlServiceManager.getService,pageNumber,pageSize, isService);
 	}
 	
 	@Override
@@ -57,9 +61,28 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<ApplyService> getApplyService() {
+	public List<ApplyService> getApplyService(String customerPar,
+			int pageSize,int pageNumber) {
 		return (List<ApplyService>) serviceManagerDao.queryByHql(
-				HqlServiceManager.getApproveService);
+				HqlServiceManager.getApproveService,pageNumber,pageSize);
+	}
+	
+	@Override
+	public int countApproveServiceData(String customerPar) {
+		List result = serviceManagerDao.queryByHql(HqlServiceManager.getApproveService);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int countServiceManagerData(String customerPar,Integer isService) {
+		List result = serviceManagerDao.queryByHql(HqlServiceManager.getService,isService);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
 	}
 	
 	@Override
