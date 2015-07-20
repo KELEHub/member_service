@@ -6,9 +6,6 @@
 $(function(){
 	var bathPath=$("#basePath").val();
 		$("#notActiveMemberTable").dataTable({
-                "bLengthChange": false,
-                "bFilter": false,
-                "bSort": false,
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
