@@ -6,9 +6,6 @@
 $(function(){
 	var bathPath=$("#basePath").val();
 		$("#memberManagementTable").dataTable({
-                "bLengthChange": false,
-                "bFilter": false,
-                "bSort": false,
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
@@ -52,14 +49,19 @@ $(function(){
                         { "sDefaultContent" : ""}
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
-                       	$('td:eq(7)', nRow).html(
-<%--                       		"<button class=\"btn\" onclick=\"doMemberLock("+aData.id+")>"+--%>
-<%--										"<c:if test=\"+aData.isLock+" eq 1 \"><font color=\"red\">解锁</font></c:if>"+--%>
-<%--										"<c:if test=\"+aData.isLock+" eq 0 \">锁定</c:if></button>"+--%>
+        			if (aData.isLock==1){
+        				$('td:eq(7)', nRow).html(
+                       	"<button class=\"btn\" onclick=\"doMemberLock("+aData.id+")\"><font color=\"red\">解锁</font></button>"+
                        	"<button class=\"btn\" onclick=\"doResetPwd("+aData.id+")\">密码重置</button>" +
                        	"<button class=\"btn\" onclick=\"deleteActiveMember("+aData.id+","+aData.number+","+aData.isService+","+aData.recommendId+","+aData.recommendNumber+","+aData.activateId+","+aData.activateNumber+")\">删除</button>");
-                        return nRow;
-                    }
+        			}else if (aData.isLock==0){
+        				$('td:eq(7)', nRow).html(
+                       	"<button class=\"btn\" onclick=\"doMemberLock("+aData.id+")\">锁定</button>"+
+                       	"<button class=\"btn\" onclick=\"doResetPwd("+aData.id+")\">密码重置</button>" +
+                       	"<button class=\"btn\" onclick=\"deleteActiveMember("+aData.id+","+aData.number+","+aData.isService+","+aData.recommendId+","+aData.recommendNumber+","+aData.activateId+","+aData.activateNumber+")\">删除</button>");
+        			}
+                   	return nRow;
+                 }
             });            
 });
 </script>
