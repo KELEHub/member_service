@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.entity.ApplyService;
 import com.member.entity.Withdrawals;
 import com.member.form.back.MemberSearchForm;
 import com.member.form.back.WithdrawalsCheckForm;
@@ -38,18 +40,44 @@ public class WithdrawalsController {
 	
 	@RequestMapping(value = "/showWithdrawalszRecord")
 	public String showWithdrawalszRecord(HttpServletRequest request, Model model) {
+//		Object logonUserO = request.getSession().getAttribute("logonUser");
+//		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+//		Object userId = logonUserMap.get("id");
+//		Object userName = logonUserMap.get("userName");
+//		List<Withdrawals> result = withdrawalsService
+//				.getWithdrawalsRecordByMemberNumber("", (Integer) userId,
+//						(String) userName);
+//		model.addAttribute("result", result);
+		return "back/withdrawals/showwithdrawalsrecord";
+	}
 
+	@RequestMapping(value = "/getWithdrawalszRecordPage")
+	@ResponseBody
+	public Map getWithdrawalszRecordPage(HttpServletRequest request,Model model) {
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
 		Object logonUserO = request.getSession().getAttribute("logonUser");
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		Object userId = logonUserMap.get("id");
 		Object userName = logonUserMap.get("userName");
 		List<Withdrawals> result = withdrawalsService
 				.getWithdrawalsRecordByMemberNumber("", (Integer) userId,
-						(String) userName);
+						(String) userName,customerPar,
+						Integer.parseInt(iDisplayLength),
+						pageNumber);
+		int iTotalRecords = withdrawalsService.countWithdrawalsRecordByMemberNumberData("", (Integer) userId,
+				(String) userName);
 		model.addAttribute("result", result);
-		return "back/withdrawals/showwithdrawalsrecord";
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
-
+	
 	@RequestMapping(value = "/searchWithdrawalszRecord", method = RequestMethod.POST)
 	public String searchActivationMember(
 			@RequestBody WithdrawalsSearchForm form,
@@ -68,11 +96,30 @@ public class WithdrawalsController {
 	
 	@RequestMapping(value = "/dealWithdrawalszRecord")
 	public String dealWithdrawalszRecord(HttpServletRequest request, Model model) {
-
-		List<Withdrawals> result = withdrawalsService
-				.getNotDealWithdrawalsRecord("");
-		model.addAttribute("result", result);
+//		List<Withdrawals> result = withdrawalsService
+//				.getNotDealWithdrawalsRecord("");
+//		model.addAttribute("result", result);
 		return "back/withdrawals/showNotDealwithdrawalsrecord";
+	}
+	
+	@RequestMapping(value = "/getDealWithdrawalszRecordPage")
+	@ResponseBody
+	public Map getDealWithdrawalszRecordPage(HttpServletRequest request,Model model) {
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Withdrawals> result = withdrawalsService.getNotDealWithdrawalsRecord("",customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = withdrawalsService.countNotDealWithdrawalsRecordData("");
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
 	
 	@RequestMapping(value = "/searchNotDealWithdrawalszRecord")

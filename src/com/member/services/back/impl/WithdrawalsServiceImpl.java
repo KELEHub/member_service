@@ -53,7 +53,8 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	
 	@Override
 	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(
-			String memeberNumber,Integer currentUserId,String currentUserNm) {
+			String memeberNumber,Integer currentUserId,String currentUserNm,String customerPar,
+			int pageSize,int pageNumber) {
 		
 		//根据当前登录人的编号，取得角色信息
 		String roleQuery = "from ManageUserRoleHub s where s.userId=?";
@@ -87,13 +88,54 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		}
 		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
 		
-		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery,pageNumber,pageSize, arguments);
 
 		return withdrawalsResult;
 	}
 
 	@Override
-	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber) {
+	public int countWithdrawalsRecordByMemberNumberData(String memeberNumber,Integer currentUserId,String currentUserNm) {
+		//根据当前登录人的编号，取得角色信息
+		String roleQuery = "from ManageUserRoleHub s where s.userId=?";
+		List userRoleResult = manageUserRoleDao.queryByHql(roleQuery, currentUserId);
+		if(userRoleResult==null){
+			return 0;
+		}
+		
+		//超级管理员判断
+		boolean isSuperAdmin=false;
+		for(int i=0;i<userRoleResult.size();i++){
+			ManageUserRoleHub userRole = (ManageUserRoleHub) userRoleResult.get(i);
+			Integer roleId = userRole.getRoleId();
+			if(roleId==1){//超级管理员角色编号
+				isSuperAdmin = true;
+			}
+		}
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		
+		String withdrawalsQuery = "from Withdrawals s where 1=1";
+		if(!"".equals(memeberNumber)){
+			withdrawalsQuery+="and s.number=:number";
+			arguments.put("number", memeberNumber);
+		}
+		
+		if(isSuperAdmin){//超级管理员查看所有的
+			
+		}else{//不是超级管理员，查看自己审核的
+			withdrawalsQuery+="and s.userName=:userName";
+			arguments.put("userName", currentUserNm);
+		}
+		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
+		List result = withdrawalsDao.queryByHql(withdrawalsQuery,arguments);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
+	}
+	
+	@Override
+	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber,String customerPar,
+			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		String withdrawalsQuery = "from Withdrawals s where status='0' ";
 		if(!"".equals(memeberNumber)){
@@ -101,10 +143,26 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			arguments.put("number", memeberNumber);
 		}
 		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
-		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery,pageNumber,pageSize, arguments);
 		return withdrawalsResult;
 	}
 
+	@Override
+	public int countNotDealWithdrawalsRecordData(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String withdrawalsQuery = "from Withdrawals s where status='0' ";
+		if(!"".equals(memeberNumber)){
+			withdrawalsQuery+="and s.number=:number";
+			arguments.put("number", memeberNumber);
+		}
+		withdrawalsQuery = withdrawalsQuery+"  order by tradeDate desc";
+		List result = withdrawalsDao.queryByHql(withdrawalsQuery,arguments);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
+	}
+	
 	@Override
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName) {
 		BaseResult<Void> result = new BaseResult<Void>();
