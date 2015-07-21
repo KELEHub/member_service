@@ -29,24 +29,24 @@ public class MemberManageServiceImpl implements MemberManageService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Information> getActiveMembers(MemberSearchForm form,String customerPar,
+	public List<Information> getActiveMembers(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,
 			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 
 		String hqlQuery = " from Information s where s.isActivate=1 ";
 		
-		if (form.getNumber() != null && !"".equals(form.getNumber())) {
+		if (number != null && !"".equals(number)) {
 			hqlQuery+=" and number=:number";
-			arguments.put("number", form.getNumber());
+			arguments.put("number", number);
 		}
-		if (form.getRecommendNumber() != null && !"".equals(form.getRecommendNumber())) {
+		if (recommendNumber != null && !"".equals(recommendNumber)) {
 			hqlQuery+=" and recommendNumber=:recommendNumber";
-			arguments.put("recommendNumber", form.getRecommendNumber());
+			arguments.put("recommendNumber", recommendNumber);
 		}
-		if (form.getServiceNumber() != null
-				&& !"".equals(form.getServiceNumber())) {
-			hqlQuery+=" and serviceNumber=:serviceNumber";
-			arguments.put("serviceNumber", form.getServiceNumber());
+		if (serviceNumber != null
+				&& !"".equals(serviceNumber)) {
+			hqlQuery+=" and activateNumber=:serviceNumber";
+			arguments.put("serviceNumber", serviceNumber);
 		}
 		hqlQuery = hqlQuery +"  order by activeDate desc";
 		List result = informationDao.queryByHql(hqlQuery,pageNumber,pageSize, arguments);
@@ -54,12 +54,21 @@ public class MemberManageServiceImpl implements MemberManageService {
 	}
 
 	@Override
-	public int countData(MemberSearchForm form,String customerPar,Integer isActivate) {
+	public int countData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		String hqlQuery = " from Information s where s.isActivate=:isActivate";
-		if(customerPar!=null && !"".equals(customerPar)){
-			hqlQuery+=" and s.testName=:customerPar ";
-			arguments.put("customerPar", customerPar);
+		if (number != null && !"".equals(number)) {
+			hqlQuery+=" and number=:number";
+			arguments.put("number", number);
+		}
+		if (recommendNumber != null && !"".equals(recommendNumber)) {
+			hqlQuery+=" and recommendNumber=:recommendNumber";
+			arguments.put("recommendNumber", recommendNumber);
+		}
+		if (serviceNumber != null
+				&& !"".equals(serviceNumber)) {
+			hqlQuery+=" and activateNumber=:serviceNumber";
+			arguments.put("serviceNumber", serviceNumber);
 		}
 		arguments.put("isActivate", isActivate);
 		List result = informationDao.queryByHql(hqlQuery,arguments);
@@ -86,7 +95,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 		}
 		if (form.getServiceNumber() != null
 				&& !"".equals(form.getServiceNumber())) {
-			hqlQuery+=" and serviceNumber=:serviceNumber";
+			hqlQuery+=" and activateNumber=:serviceNumber";
 			arguments.put("serviceNumber", form.getServiceNumber());
 		}
 		hqlQuery = hqlQuery +"  order by registerDate desc";
