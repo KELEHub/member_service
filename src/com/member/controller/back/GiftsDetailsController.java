@@ -2,10 +2,12 @@ package com.member.controller.back;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.beans.back.enumData.BatchNoEnum;
 import com.member.beans.back.enumData.GiftEnum;
-import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
 import com.member.entity.AccountDetails;
@@ -63,50 +64,61 @@ public class GiftsDetailsController {
 
 	@Resource(name = "IntegralManagerServiceImpl")
 	public IntegralManagerService integralManagerService;
-
-	@RequestMapping(value = "/show", method = RequestMethod.POST)
-	public String show(Model model) {
-		try {
-
-			List<GiftsDetails> list = parameterService.getGiftsDetails();
-			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
-			if (list != null && list.size() > 0) {
-				for (GiftsDetails gd : list) {
-					Information info = null;
-					if(gd.getChildId() == null){
-						info = null; 
-					}else{
-					    info = informationService.getInformationById(gd
-								.getChildId());
-					}
-					
-					GiftsForm form = new GiftsForm();
-					form.setCreateTime(gd.getCreateTime().toString());
-					if(info==null){
-						form.setName("礼包_"+"未知");
-					}else{
-						form.setName("礼包_"+info.getNumber());
-					}
-					form.setId(gd.getId().toString());
-					int last = 0;
-					if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
-						last = 5 - gd.getPointNumber() + 1;
-					} else {
-						last = 10 - gd.getPointNumber() + 1;
-					}
-					form.setRemaind("积分领取剩余次数：" + last);
-					form.setNumber(gd.getNumber());
-					gfList.add(form);
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getGiftsDetailsPage")
+	@ResponseBody
+	public Map getGiftsDetailsPage(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");	
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<GiftsDetails> list = parameterService.getGiftsDetails(number,Integer.parseInt(iDisplayLength),
+				pageNumber);
+		List<GiftsForm> gfList = new ArrayList<GiftsForm>();
+		if (list != null && list.size() > 0) {
+			for (GiftsDetails gd : list) {
+				Information info = null;
+				if(gd.getChildId() == null){
+					info = null; 
+				}else{
+				    info = informationService.getInformationById(gd
+							.getChildId());
 				}
-				model.addAttribute("result", gfList);
+				
+				GiftsForm form = new GiftsForm();
+				form.setCreateTime(gd.getCreateTime().toString());
+				if(info==null){
+					form.setName("礼包_"+"未知");
+				}else{
+					form.setName("礼包_"+info.getNumber());
+				}
+				form.setId(gd.getId().toString());
+				int last = 0;
+				if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
+					last = 5 - gd.getPointNumber() + 1;
+				} else {
+					last = 10 - gd.getPointNumber() + 1;
+				}
+				form.setRemaind("积分领取剩余次数：" + last);
+				form.setNumber(gd.getNumber());
+				gfList.add(form);
 			}
-			return "back/systeminfo/gifts";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "back/systeminfo/gifts";
 		}
-
+		int iTotalRecords = parameterService.countGiftsDetails(number);
+		model.addAttribute("result", gfList);
+		Map map = new HashMap();
+		map.put("aaData", gfList);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
+	@RequestMapping(value = "/show",method = RequestMethod.POST)
+	public String show(Model model) {
+		return "back/systeminfo/gifts";
 	}
 
 	@RequestMapping(value = "/showDialog", method = RequestMethod.POST)
@@ -140,55 +152,55 @@ public class GiftsDetailsController {
 		return "back/systeminfo/editeGifts";
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(@RequestBody GiftsForm giftsForm, Model model) {
-		try {
-			List<GiftsDetails> list = null;
-			if (giftsForm.getNumber() == null
-					|| "".equals(giftsForm.getNumber())) {
-				list = parameterService.getGiftsDetails();
-			} else {
-				list = parameterService.getGiftsDetailsByNumber(giftsForm
-						.getNumber());
-			}
-
-			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
-			if (list != null && list.size() > 0) {
-				for (GiftsDetails gd : list) {
-					Information info = null;
-					if(gd.getChildId() == null){
-						info = null; 
-					}else{
-					    info = informationService.getInformationById(gd
-								.getChildId());
-					}
-					GiftsForm form = new GiftsForm();
-					form.setCreateTime(gd.getCreateTime().toString());
-					if(info==null){
-						form.setName("礼包_"+"未知");
-					}else{
-						form.setName("礼包_"+info.getNumber());
-					}
-					form.setId(gd.getId().toString());
-					int last = 0;
-					if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
-						last = 5 - gd.getPointNumber() + 1;
-					} else {
-						last = 10 - gd.getPointNumber() + 1;
-					}
-					form.setRemaind("积分领取剩余次数：" + last);
-					form.setNumber(gd.getNumber());
-					gfList.add(form);
-				}
-				model.addAttribute("result", gfList);
-			}
-			return "back/systeminfo/gifts";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "back/systeminfo/gifts";
-		}
-	}
+//	@RequestMapping(value = "/search", method = RequestMethod.POST)
+//	public String search(@RequestBody GiftsForm giftsForm, Model model) {
+//		try {
+//			List<GiftsDetails> list = null;
+//			if (giftsForm.getNumber() == null
+//					|| "".equals(giftsForm.getNumber())) {
+//				list = parameterService.getGiftsDetails();
+//			} else {
+//				list = parameterService.getGiftsDetailsByNumber(giftsForm
+//						.getNumber());
+//			}
+//
+//			List<GiftsForm> gfList = new ArrayList<GiftsForm>();
+//			if (list != null && list.size() > 0) {
+//				for (GiftsDetails gd : list) {
+//					Information info = null;
+//					if(gd.getChildId() == null){
+//						info = null; 
+//					}else{
+//					    info = informationService.getInformationById(gd
+//								.getChildId());
+//					}
+//					GiftsForm form = new GiftsForm();
+//					form.setCreateTime(gd.getCreateTime().toString());
+//					if(info==null){
+//						form.setName("礼包_"+"未知");
+//					}else{
+//						form.setName("礼包_"+info.getNumber());
+//					}
+//					form.setId(gd.getId().toString());
+//					int last = 0;
+//					if (gd.getGiftEnum().equals(GiftEnum.FIVE)) {
+//						last = 5 - gd.getPointNumber() + 1;
+//					} else {
+//						last = 10 - gd.getPointNumber() + 1;
+//					}
+//					form.setRemaind("积分领取剩余次数：" + last);
+//					form.setNumber(gd.getNumber());
+//					gfList.add(form);
+//				}
+//				model.addAttribute("result", gfList);
+//			}
+//			return "back/systeminfo/gifts";
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return "back/systeminfo/gifts";
+//		}
+//	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
