@@ -205,7 +205,7 @@ public class MemberManageController {
 		BaseResult<Void> result = new BaseResult<Void>();
 		
 		Information info = informationService.getInformationByNumber(form.getNumber());
-		if(!info.getBankCard().equals(form.getBankCard())){
+		if(!form.getBankCard().equals(info.getBankCard())){
 			if(informationService.countBankCard(form.getBankCard())>=2){
 				result.setMsg("系统已存在两张相同的银行卡，请换卡");
 				result.setSuccess(true);
