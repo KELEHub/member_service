@@ -1,7 +1,9 @@
 package com.member.services.back.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -49,14 +51,52 @@ public class ParameterServiceImpl implements ParameterService{
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<GiftsDetails>  getGiftsDetails() {
+	public List<GiftsDetails>  getGiftsDetails(String number, Integer pageSize,
+			Integer pageNumber) {
+		List<GiftsDetails> dataPermissionCodes = null;
 		String hql=
-			"from GiftsDetails  order by createTime desc";
-		List<GiftsDetails> dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql);
+			"from GiftsDetails  ";
+		if(number!=null && !"".equals(number)){
+			hql = hql + " where number = :number";
+			Map<String, Object> arguments = new HashMap<String, Object>();
+			arguments.put("number", number);
+			hql = hql + " order by createTime desc";
+			dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql,pageNumber,pageSize,arguments);
+		}else{
+			hql = hql + " order by createTime desc";
+			dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql,pageNumber,pageSize);
+		}
+		
+		
         if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
         	return dataPermissionCodes;
         }
         return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public int  countGiftsDetails(String number) {
+		List<GiftsDetails> dataPermissionCodes = null;
+		String hql=
+			"from GiftsDetails  ";
+		if(number!=null && !"".equals(number)){
+			hql = hql + " where number = :number";
+			Map<String, Object> arguments = new HashMap<String, Object>();
+			arguments.put("number", number);
+			hql = hql + " order by createTime desc";
+			dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql, arguments);
+		}else{
+			hql = hql + " order by createTime desc";
+			dataPermissionCodes=(List<GiftsDetails>) parameterDao.queryByHql(hql);
+		}
+		
+		
+        if(dataPermissionCodes!=null && dataPermissionCodes.size()>0){
+        	return dataPermissionCodes.size();
+        }
+        return 0;
 	}
 
 	@SuppressWarnings("unchecked")
