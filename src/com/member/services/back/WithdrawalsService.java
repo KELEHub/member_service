@@ -7,9 +7,9 @@ import com.member.entity.Withdrawals;
 import com.member.helper.BaseResult;
 
 public interface WithdrawalsService {
-	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(String memeberNumber,Integer currentUserId,String currentUserNm,String customerPar,
+	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(String memeberNumber,Integer currentUserId,String currentUserNm,
 			int pageSize,int pageNumber);
-	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber,String customerPar,
+	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber,
 			int pageSize,int pageNumber);
 	public Withdrawals getWithdrawalsDetailById(Integer id);
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName);

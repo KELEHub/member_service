@@ -53,7 +53,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	
 	@Override
 	public List<Withdrawals> getWithdrawalsRecordByMemberNumber(
-			String memeberNumber,Integer currentUserId,String currentUserNm,String customerPar,
+			String memeberNumber,Integer currentUserId,String currentUserNm,
 			int pageSize,int pageNumber) {
 		
 		//根据当前登录人的编号，取得角色信息
@@ -75,7 +75,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		
 		String withdrawalsQuery = "from Withdrawals s where 1=1";
-		if(!"".equals(memeberNumber)){
+		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
 		}
@@ -114,7 +114,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		
 		String withdrawalsQuery = "from Withdrawals s where 1=1";
-		if(!"".equals(memeberNumber)){
+		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
 		}
@@ -134,11 +134,11 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	}
 	
 	@Override
-	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber,String customerPar,
+	public List<Withdrawals> getNotDealWithdrawalsRecord(String memeberNumber,
 			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		String withdrawalsQuery = "from Withdrawals s where status='0' ";
-		if(!"".equals(memeberNumber)){
+		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
 		}
@@ -151,7 +151,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	public int countNotDealWithdrawalsRecordData(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		String withdrawalsQuery = "from Withdrawals s where status='0' ";
-		if(!"".equals(memeberNumber)){
+		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
 		}

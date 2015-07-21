@@ -3,17 +3,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
+var table = null;
+function searchMembers(){
+   table.fnDraw();
+}
 $(function(){
 	var bathPath=$("#basePath").val();
-		$("#notDealWithDrawalsRecordTable").dataTable({
+		table=$("#notDealWithDrawalsRecordTable").dataTable({
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
         		"bAutoWidth" : true, //是否自适应宽度 
         		"bScrollCollapse" : true,
-        		"iDisplayLength": 5,//每页显示5条数据
-        		"bLengthChange":true,
-        		"aLengthMenu":[5,10],
+        		"iDisplayLength": 10,//每页显示5条数据
+        		"bLengthChange":false,
         		"bSort": false,  
         		"bInfo": true,//页脚信息
         		"bFilter" : false,//是否启动过滤、搜索功能
@@ -38,6 +41,11 @@ $(function(){
         	        }  
         		},
                 "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "number", "value": $("#number").val() }
+                        );
+                },
                 "aoColumns": [
                         { "mData": "number" },
                         { "mData": "tradeNo" },
@@ -79,7 +87,7 @@ $(function(){
 							<label class="control-label">会员账号:</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="number" value="${form.number}">
+									<input type="text" id="number" name="number" value="${form.number}">
 								</div>
 							</div>
 						</div>

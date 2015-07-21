@@ -28,6 +28,7 @@ import com.member.form.back.WithdrawalsSearchForm;
 import com.member.helper.BaseResult;
 import com.member.services.back.WithdrawalsService;
 
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/withdrawals")
 public class WithdrawalsController {
@@ -40,21 +41,13 @@ public class WithdrawalsController {
 	
 	@RequestMapping(value = "/showWithdrawalszRecord")
 	public String showWithdrawalszRecord(HttpServletRequest request, Model model) {
-//		Object logonUserO = request.getSession().getAttribute("logonUser");
-//		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
-//		Object userId = logonUserMap.get("id");
-//		Object userName = logonUserMap.get("userName");
-//		List<Withdrawals> result = withdrawalsService
-//				.getWithdrawalsRecordByMemberNumber("", (Integer) userId,
-//						(String) userName);
-//		model.addAttribute("result", result);
 		return "back/withdrawals/showwithdrawalsrecord";
 	}
 
 	@RequestMapping(value = "/getWithdrawalszRecordPage")
 	@ResponseBody
 	public Map getWithdrawalszRecordPage(HttpServletRequest request,Model model) {
-		String customerPar = request.getParameter("customerPar");
+		String number = request.getParameter("number");
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
@@ -63,11 +56,9 @@ public class WithdrawalsController {
 		Object userId = logonUserMap.get("id");
 		Object userName = logonUserMap.get("userName");
 		List<Withdrawals> result = withdrawalsService
-				.getWithdrawalsRecordByMemberNumber("", (Integer) userId,
-						(String) userName,customerPar,
-						Integer.parseInt(iDisplayLength),
-						pageNumber);
-		int iTotalRecords = withdrawalsService.countWithdrawalsRecordByMemberNumberData("", (Integer) userId,
+				.getWithdrawalsRecordByMemberNumber(number, (Integer) userId,(String) userName,
+						Integer.parseInt(iDisplayLength),pageNumber);
+		int iTotalRecords = withdrawalsService.countWithdrawalsRecordByMemberNumberData(number, (Integer) userId,
 				(String) userName);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
@@ -78,41 +69,38 @@ public class WithdrawalsController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/searchWithdrawalszRecord", method = RequestMethod.POST)
-	public String searchActivationMember(
-			@RequestBody WithdrawalsSearchForm form,
-			HttpServletRequest request, Model model) {
-		Object logonUserO = request.getSession().getAttribute("logonUser");
-		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
-		Object userId = logonUserMap.get("id");
-		Object userName = logonUserMap.get("userName");
-		List<Withdrawals> result = withdrawalsService
-				.getWithdrawalsRecordByMemberNumber(form.getNumber(),
-						(Integer) userId, (String) userName);
-		model.addAttribute("result", result);
-		model.addAttribute("form", form);
-		return "back/withdrawals/showwithdrawalsrecord";
-	}
+//	@RequestMapping(value = "/searchWithdrawalszRecord", method = RequestMethod.POST)
+//	public String searchActivationMember(
+//			@RequestBody WithdrawalsSearchForm form,
+//			HttpServletRequest request, Model model) {
+//		Object logonUserO = request.getSession().getAttribute("logonUser");
+//		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+//		Object userId = logonUserMap.get("id");
+//		Object userName = logonUserMap.get("userName");
+//		List<Withdrawals> result = withdrawalsService
+//				.getWithdrawalsRecordByMemberNumber(form.getNumber(),
+//						(Integer) userId, (String) userName);
+//		model.addAttribute("result", result);
+//		model.addAttribute("form", form);
+//		return "back/withdrawals/showwithdrawalsrecord";
+//	}
 	
 	@RequestMapping(value = "/dealWithdrawalszRecord")
 	public String dealWithdrawalszRecord(HttpServletRequest request, Model model) {
-//		List<Withdrawals> result = withdrawalsService
-//				.getNotDealWithdrawalsRecord("");
-//		model.addAttribute("result", result);
 		return "back/withdrawals/showNotDealwithdrawalsrecord";
 	}
 	
 	@RequestMapping(value = "/getDealWithdrawalszRecordPage")
 	@ResponseBody
 	public Map getDealWithdrawalszRecordPage(HttpServletRequest request,Model model) {
-		String customerPar = request.getParameter("customerPar");
+		String number = request.getParameter("number");
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
-		List<Withdrawals> result = withdrawalsService.getNotDealWithdrawalsRecord("",customerPar,
+		List<Withdrawals> result = withdrawalsService.getNotDealWithdrawalsRecord(number,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = withdrawalsService.countNotDealWithdrawalsRecordData("");
+		int iTotalRecords = withdrawalsService.countNotDealWithdrawalsRecordData(number);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -122,14 +110,14 @@ public class WithdrawalsController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/searchNotDealWithdrawalszRecord")
-	public String searchNotDealWithdrawalszRecord(@RequestBody WithdrawalsSearchForm form,HttpServletRequest request, Model model) {
-		List<Withdrawals> result = withdrawalsService
-				.getNotDealWithdrawalsRecord(form.getNumber());
-		model.addAttribute("result", result);
-		model.addAttribute("form", form);
-		return "back/withdrawals/showNotDealwithdrawalsrecord";
-	}
+//	@RequestMapping(value = "/searchNotDealWithdrawalszRecord")
+//	public String searchNotDealWithdrawalszRecord(@RequestBody WithdrawalsSearchForm form,HttpServletRequest request, Model model) {
+//		List<Withdrawals> result = withdrawalsService
+//				.getNotDealWithdrawalsRecord(form.getNumber());
+//		model.addAttribute("result", result);
+//		model.addAttribute("form", form);
+//		return "back/withdrawals/showNotDealwithdrawalsrecord";
+//	}
 	
 	@RequestMapping(value = "/agreewithdrawals")
 	@ResponseBody

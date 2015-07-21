@@ -11,9 +11,8 @@ $(function(){
         		"bPaginate" : true, //是否显示（应用）分页器  
         		"bAutoWidth" : true, //是否自适应宽度 
         		"bScrollCollapse" : true,
-        		"iDisplayLength": 5,//每页显示5条数据
-        		"bLengthChange":true,
-        		"aLengthMenu":[5,10],
+        		"iDisplayLength": 10,//每页显示5条数据
+        		"bLengthChange":false,
         		"bSort": false,  
         		"bInfo": true,//页脚信息
         		"bFilter" : false,//是否启动过滤、搜索功能

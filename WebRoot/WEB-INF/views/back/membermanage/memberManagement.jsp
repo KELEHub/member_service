@@ -3,13 +3,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
-var memberManagementTable = null;
+var table = null;
 function searchMembers(){
-   memberManagementTable.fnDraw();
+   table.fnDraw();
 }
 $(function(){
 	var bathPath=$("#basePath").val();
-		 memberManagementTable=$("#memberManagementTable").dataTable({
+		 table=$("#memberManagementTable").dataTable({
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
