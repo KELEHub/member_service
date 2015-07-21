@@ -11,7 +11,7 @@ public interface ParameterService {
 	
 	public boolean setSystemParameter(SystemParameter systemParameter);
 	
-	public List<GiftsDetails> getGiftsDetails();
+	public List<GiftsDetails> getGiftsDetails(String number, Integer pageSize,Integer pageNumber);
 	
 	public GiftsDetails getGiftsDetailsById(Integer id);
 	
@@ -22,5 +22,7 @@ public interface ParameterService {
 	public List<GiftsHistory> getGiftsHistoryByOperationId(Integer id);
 	
 	public void saveOrUpdate(GiftsDetails gd,GiftsHistory gh,Integer pointNumber);
+	
+	public int  countGiftsDetails(String number);
 	
 }
