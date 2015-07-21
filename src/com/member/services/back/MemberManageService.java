@@ -11,7 +11,7 @@ import com.member.form.back.MemberSearchForm;
 
 public interface MemberManageService {
 	
-	public List<Information> getActiveMembers(MemberSearchForm form,String customerPar,
+	public List<Information> getActiveMembers(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,
 			int iDisplayLength,int pageNumber);
 	
 	public List<Information> getNotActiveMembers(MemberSearchForm form,String customerPar,
@@ -36,5 +36,5 @@ public interface MemberManageService {
 
 	List<Information> getMemberInfoById(Integer id);
 
-	int countData(MemberSearchForm form, String customerPar,Integer isActivate);
+	int countData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate);
 }
