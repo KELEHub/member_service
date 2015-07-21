@@ -149,11 +149,6 @@ function saveRole(sFormId){
 	}
 }
 
-//function searchMembers(sFormId){
-//	var result = ajaxRequestForFormGetJsp(sFormId);
-//	resetTable();
-//}
-
 function searchGifts(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
 	resetTable();
