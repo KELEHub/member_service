@@ -84,7 +84,7 @@ $(function(){
 	<h1>
 		会员管理操作
 	</h1>
-	<form action="/membermanage/searchMemberManagement.do" method="POST"
+	<form action="/membermanage/showMemberManagement.do" method="POST"
 							id="searchMemberManagementForm">
 		<div class="controls controls-row">
 			<div class="control-group" style="float: left;margin-left: 10px;">
