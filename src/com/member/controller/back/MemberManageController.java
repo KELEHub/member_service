@@ -66,7 +66,7 @@ public class MemberManageController {
 		List<Information> result = memberManageService.getActiveMembers(form,number,recommendNumber,serviceNumber,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = memberManageService.countData(form,number,recommendNumber,serviceNumber,1);
+		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -81,52 +81,54 @@ public class MemberManageController {
 		return "back/membermanage/shownotactivemember";
 	}
 	
-//	@RequestMapping(value = "/getNotActivationMemberPage")
-//	@ResponseBody
-//	public Map getNotActivationMemberPage(HttpServletRequest request,Model model) {
-//		MemberSearchForm form = new MemberSearchForm();
-//		String customerPar = request.getParameter("customerPar");
-//		String iDisplayLength = request.getParameter("iDisplayLength");
-//		String iDisplayStart = request.getParameter("iDisplayStart");
-//		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
-//		List<Information> result = memberManageService.getNotActiveMembers(form,customerPar,
-//				Integer.parseInt(iDisplayLength),
-//				pageNumber);
-//		int iTotalRecords = memberManageService.countData(form,customerPar,0);
-//		model.addAttribute("result", result);
-//		Map map = new HashMap();
-//		map.put("aaData", result);
-//		// 查出来总共有多少条记录
-//		map.put("iTotalRecords", iTotalRecords);
-//		map.put("iTotalDisplayRecords",iTotalRecords);
-//		return map;
-//	}
+	@RequestMapping(value = "/getNotActivationMemberPage")
+	@ResponseBody
+	public Map getNotActivationMemberPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String customerPar = request.getParameter("customerPar");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = memberManageService.getNotActiveMembers(form,customerPar,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = memberManageService.countNotActiveMembersData(form);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
 	
 	@RequestMapping(value = "/showMemberManagement",method = RequestMethod.POST)
 	public String showMemberManagement(Model model) {
 		return "back/membermanage/memberManagement";
 	}
 	
-//	@RequestMapping(value = "/getMemberManagementPage")
-//	@ResponseBody
-//	public Map getMemberManagementPage(HttpServletRequest request,Model model) {
-//		MemberSearchForm form = new MemberSearchForm();
-//		String customerPar = request.getParameter("customerPar");
-//		String iDisplayLength = request.getParameter("iDisplayLength");
-//		String iDisplayStart = request.getParameter("iDisplayStart");
-//		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
-//		List<Information> result = memberManageService.getActiveMembers(form,customerPar,
-//				Integer.parseInt(iDisplayLength),
-//				pageNumber);
-//		int iTotalRecords = memberManageService.countData(form,customerPar,1);
-//		model.addAttribute("result", result);
-//		Map map = new HashMap();
-//		map.put("aaData", result);
-//		// 查出来总共有多少条记录
-//		map.put("iTotalRecords", iTotalRecords);
-//		map.put("iTotalDisplayRecords",iTotalRecords);
-//		return map;
-//	}
+	@RequestMapping(value = "/getMemberManagementPage")
+	@ResponseBody
+	public Map getMemberManagementPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String number = request.getParameter("number");
+		String recommendNumber = request.getParameter("recommendNumber");
+		String serviceNumber = request.getParameter("serviceNumber");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<Information> result = memberManageService.getActiveMembers(form,number,recommendNumber,serviceNumber,
+				Integer.parseInt(iDisplayLength),
+				pageNumber);
+		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
 	
 //	@RequestMapping(value = "/searchMemberManagement",method = RequestMethod.POST)
 //	public Map searchMemberManagement(@RequestBody MemberSearchForm form,Model model) {

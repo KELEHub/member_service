@@ -3,18 +3,21 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
+var memberManagementTable = null;
+function searchMembers(){
+   memberManagementTable.fnDraw();
+}
 $(function(){
 	var bathPath=$("#basePath").val();
-		$("#memberManagementTable").dataTable({
+		 memberManagementTable=$("#memberManagementTable").dataTable({
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
         		"bAutoWidth" : true, //是否自适应宽度 
         		"bScrollCollapse" : true,
-        		"iDisplayLength": 5,//每页显示5条数据
-        		"bLengthChange":true,
-        		"aLengthMenu":[5,10],
-        		"bSort": false,  
+        		"iDisplayLength": 10,//每页显示5条数据
+        		"bLengthChange":false,
+        		"bSort": false,
         		"bInfo": true,//页脚信息
         		"bFilter" : false,//是否启动过滤、搜索功能
                 "bProcessing": true,
@@ -38,6 +41,13 @@ $(function(){
         	        }  
         		},
                 "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "number", "value": $("#number").val() },
+                        { "name": "recommendNumber", "value": $("#recommendNumber").val() },
+                        { "name": "serviceNumber", "value": $("#serviceNumber").val() }
+                        );
+                },
                 "aoColumns": [
                         { "mData": "number" },
                         { "mData": "name" },
@@ -80,25 +90,25 @@ $(function(){
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">会员账号:</label>
 				<div class="controls">
-					<input type="text" name="number" value="${form.number}">
+					<input type="text" id="number" name="number" value="${form.number}">
 				</div>
 			</div>
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">推荐编号:</label>
 				<div class="controls">
-					<input type="text" name="recommendNumber"  value="${form.recommendNumber }">
+					<input type="text" id="recommendNumber" name="recommendNumber"  value="${form.recommendNumber }">
 				</div>
 			</div>
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">报单中心:</label>
 				<div class="controls">
-					<input type="text" name="serviceNumber"   value="${form.serviceNumber }">
+					<input type="text" id="serviceNumber" name="serviceNumber"   value="${form.serviceNumber }">
 				</div>
 			</div>
 		</div>
 	</form>
 	<div class="control-group" style="float: left;margin-left: 10px;">
-			<a class="btn" onclick="searchMembers('searchMemberManagementForm')">查询</a>
+			<a class="btn" onclick="searchMembers()">查询</a>
 			</div>
 </div>
 <div class="container-fluid">

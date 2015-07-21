@@ -32,9 +32,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	public List<Information> getActiveMembers(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,
 			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-
 		String hqlQuery = " from Information s where s.isActivate=1 ";
-		
 		if (number != null && !"".equals(number)) {
 			hqlQuery+=" and number=:number";
 			arguments.put("number", number);
@@ -54,7 +52,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	}
 
 	@Override
-	public int countData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate) {
+	public int countActiveMembersData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		String hqlQuery = " from Information s where s.isActivate=:isActivate";
 		if (number != null && !"".equals(number)) {
@@ -83,7 +81,6 @@ public class MemberManageServiceImpl implements MemberManageService {
 	public List<Information> getNotActiveMembers(MemberSearchForm form,String customerPar,
 			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-
 		String hqlQuery = "from Information s where s.isActivate=0";
 		if (form.getNumber() != null && !"".equals(form.getNumber())) {
 			hqlQuery+=" and number=:number";
@@ -103,6 +100,31 @@ public class MemberManageServiceImpl implements MemberManageService {
 		return result;
 	}
 
+	@Override
+	public int countNotActiveMembersData(MemberSearchForm form) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String hqlQuery = "from Information s where s.isActivate=0";
+		if (form.getNumber() != null && !"".equals(form.getNumber())) {
+			hqlQuery+=" and number=:number";
+			arguments.put("number", form.getNumber());
+		}
+		if (form.getRecommendNumber() != null && !"".equals(form.getRecommendNumber())) {
+			hqlQuery+=" and recommendNumber=:recommendNumber";
+			arguments.put("recommendNumber", form.getRecommendNumber());
+		}
+		if (form.getServiceNumber() != null
+				&& !"".equals(form.getServiceNumber())) {
+			hqlQuery+=" and activateNumber=:serviceNumber";
+			arguments.put("serviceNumber", form.getServiceNumber());
+		}
+		hqlQuery = hqlQuery +"  order by registerDate desc";
+		List result = informationDao.queryByHql(hqlQuery,arguments);
+		if(result!=null){
+			return result.size();
+		}
+		return 0;
+	}
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateMemberLockFlag(Integer id) {

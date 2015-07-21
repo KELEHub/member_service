@@ -36,5 +36,7 @@ public interface MemberManageService {
 
 	List<Information> getMemberInfoById(Integer id);
 
-	int countData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate);
+	int countActiveMembersData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate);
+
+	int countNotActiveMembersData(MemberSearchForm form);
 }

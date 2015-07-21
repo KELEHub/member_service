@@ -149,10 +149,10 @@ function saveRole(sFormId){
 	}
 }
 
-function searchMembers(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
-}
+//function searchMembers(sFormId){
+//	var result = ajaxRequestForFormGetJsp(sFormId);
+//	resetTable();
+//}
 
 function searchGifts(sFormId){
 	var result = ajaxRequestForFormGetJsp(sFormId);
@@ -162,8 +162,6 @@ function searchGifts(sFormId){
 function doAlertInfo(id){
 	alert(id);
 }
-
-
 
 function doMemberShowDetail(memberId){
 	var reqObj = {};
