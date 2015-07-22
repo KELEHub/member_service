@@ -113,9 +113,9 @@ $(function(){
 								<th>账号</th>
 								<th>姓名</th>
 								<th>电话号码</th>
-								<th>推荐编号</th>
-								<th>报单中心</th>
-								<th>推荐人数</th>
+								<th style="width:80px">推荐编号</th>
+								<th style="width:80px">报单中心</th>
+								<th style="width:50px">推荐人数</th>
 								<th>激活日期</th>
 								<th>操作</th>
 							</tr>
