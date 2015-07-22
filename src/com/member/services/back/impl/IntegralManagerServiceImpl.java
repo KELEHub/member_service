@@ -116,6 +116,17 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public List<AccountDetails> getMemberBycountNumberAndUserNumber(Integer countNumber,String userNumber) {
+		String hql="from AccountDetails ad where ad.countNumber=? and ad.userNumber=?";
+		List arguments = new ArrayList();
+		arguments.add(countNumber);
+		arguments.add(userNumber);
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		return result;
+	}
+	
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveOrUpdateRelation(Information info,AccountDetails ad,Integer BenefitId,Integer serialNumber) {
 		integralManagerDao.saveOrUpdate(info);

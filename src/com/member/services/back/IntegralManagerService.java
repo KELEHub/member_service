@@ -25,4 +25,7 @@ public interface IntegralManagerService {
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
 			Integer BenefitId, Integer serialNumber);
 
+	List<AccountDetails> getMemberBycountNumberAndUserNumber(
+			Integer countNumber, String userNumber);
+
 }

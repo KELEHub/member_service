@@ -112,34 +112,46 @@ public class IntegralManagerController {
 					info.setShoppingMoney(info.getShoppingMoney().add(rif.getAvailableInt()));
 					info.setShoppingAccumulative(info.getShoppingAccumulative().add(rif.getAvailableInt()));
 					
-					//在AccountDetails表中添加一条纪律
-					AccountDetails accountDetail = new AccountDetails();
-					accountDetail.setKindData(KindDataEnum.points);
-					/**日期类别统计 */
-					accountDetail.setDateNumber(CommonUtil.getDateNumber());
-					/**流水号 */
-					accountDetail.setCountNumber(CommonUtil.getCountNumber());
-					/**项目 */
-					accountDetail.setProject(ProjectEnum.servicepointsformuch);
-					/**积分余额 */
-					accountDetail.setPointbalance(info.getRepeatedMoney());
-					/**葛粮币余额 */
-					accountDetail.setGoldmoneybalance(info.getCrmMoney());
-					/**收入 */
-					accountDetail.setIncome(rif.getAvailableInt());
-					/**支出 */
-					accountDetail.setPay(new BigDecimal(0));
-					/**备注 */
-					accountDetail.setRedmin("极差积分发放");
-					/**用户ID */
-					accountDetail.setUserId(info.getId());
-					/**用户登录ID */
-					accountDetail.setUserNumber(info.getNumber());
-					accountDetail.setCreateTime(new Date());
-					
-					//更新RepeatedMoneyStatistics表
-					
-					integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserId(), serialNumber);
+					//更新在AccountDetails表中添加一条纪律
+					List<AccountDetails> member = integralManagerService.getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), info.getNumber());
+					if (member==null){
+						AccountDetails accountDetail = new AccountDetails();
+						accountDetail.setKindData(KindDataEnum.points);
+						/**日期类别统计 */
+						accountDetail.setDateNumber(CommonUtil.getDateNumber());
+						/**流水号 */
+						accountDetail.setCountNumber(CommonUtil.getCountNumber());
+						/**项目 */
+						accountDetail.setProject(ProjectEnum.servicepointsforone);
+						/**积分余额 */
+						accountDetail.setPointbalance(info.getRepeatedMoney());
+						/**葛粮币余额 */
+						accountDetail.setGoldmoneybalance(info.getCrmMoney());
+						/**收入 */
+						accountDetail.setIncome(rif.getAvailableInt());
+						/**支出 */
+						accountDetail.setPay(new BigDecimal(0));
+						/**备注 */
+						accountDetail.setRedmin("极差积分发放");
+						/**用户ID */
+						accountDetail.setUserId(info.getId());
+						/**用户登录ID */
+						accountDetail.setUserNumber(info.getNumber());
+						accountDetail.setCreateTime(new Date());
+						
+						//更新RepeatedMoneyStatistics表
+						
+						integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserId(), serialNumber);
+					}else{
+						AccountDetails memberInfo = member.get(0);
+						/**积分余额 */
+						memberInfo.setPointbalance(info.getRepeatedMoney());
+						/**葛粮币余额 */
+						memberInfo.setGoldmoneybalance(info.getCrmMoney());
+						/**收入 */
+						memberInfo.setIncome(memberInfo.getIncome().add(rif.getAvailableInt()));
+						integralManagerService.saveOrUpdateRelation(info, memberInfo, rif.getUserId(), serialNumber);
+					}
 				}
 			}
 			return "back/integralManager/rangeIssue";
