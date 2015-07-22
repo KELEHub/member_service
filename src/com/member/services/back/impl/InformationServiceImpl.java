@@ -25,6 +25,7 @@ import com.member.services.back.InformationService;
 import com.member.services.back.InstitutionService;
 import com.member.util.CommonUtil;
 
+@SuppressWarnings("unchecked")
 @Service("InformationServiceImpl")
 public class InformationServiceImpl implements InformationService{
 	
@@ -35,7 +36,6 @@ public class InformationServiceImpl implements InformationService{
 	@Resource(name = "InstitutionServiceImpl")
     InstitutionService institutionService;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public Information getInformationById(Integer id) {
@@ -207,31 +207,43 @@ public class InformationServiceImpl implements InformationService{
 			selfInfo.setServiceSum(servercount+1);
 			institutionDao.saveOrUpdate(selfInfo);
 			
-			//在AccountDetails表记录激活人获得服务积分明细
-			AccountDetails shopingDetails = new AccountDetails();
-			shopingDetails.setKindData(KindDataEnum.points);
-			/**日期类别统计 */
-			shopingDetails.setDateNumber(CommonUtil.getDateNumber());
-			/**流水号 */
-			shopingDetails.setCountNumber(CommonUtil.getServerCountNumber());
-			/**项目 */
-			shopingDetails.setProject(ProjectEnum.servicepointsforone);
-			/**积分余额 */
-			shopingDetails.setPointbalance(selfInfo.getRepeatedMoney());
-			/**葛粮币余额 */
-			shopingDetails.setGoldmoneybalance(selfInfo.getCrmMoney());
-			/**收入 */
-			shopingDetails.setIncome(new BigDecimal(50));
-			/**支出 */
-			shopingDetails.setPay(new BigDecimal(0));
-			/**备注 */
-			shopingDetails.setRedmin("激活会员");
-			/**用户ID */
-			shopingDetails.setUserId(selfInfo.getId());
-			/**用户登录ID */
-			shopingDetails.setUserNumber(selfInfo.getNumber());
-			shopingDetails.setCreateTime(new Date());
-			institutionDao.saveOrUpdate(shopingDetails);
+			//更新在AccountDetails表记录激活人获得服务积分明细
+			List<AccountDetails> member = getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), selfInfo.getNumber());
+			if (member==null){
+				AccountDetails shopingDetails = new AccountDetails();
+				shopingDetails.setKindData(KindDataEnum.points);
+				/**日期类别统计 */
+				shopingDetails.setDateNumber(CommonUtil.getDateNumber());
+				/**流水号 */
+				shopingDetails.setCountNumber(CommonUtil.getServerCountNumber());
+				/**项目 */
+				shopingDetails.setProject(ProjectEnum.servicepointsforone);
+				/**积分余额 */
+				shopingDetails.setPointbalance(selfInfo.getRepeatedMoney());
+				/**葛粮币余额 */
+				shopingDetails.setGoldmoneybalance(selfInfo.getCrmMoney());
+				/**收入 */
+				shopingDetails.setIncome(new BigDecimal(50));
+				/**支出 */
+				shopingDetails.setPay(new BigDecimal(0));
+				/**备注 */
+				shopingDetails.setRedmin("激活会员");
+				/**用户ID */
+				shopingDetails.setUserId(selfInfo.getId());
+				/**用户登录ID */
+				shopingDetails.setUserNumber(selfInfo.getNumber());
+				shopingDetails.setCreateTime(new Date());
+				institutionDao.saveOrUpdate(shopingDetails);
+			}else{
+				AccountDetails memberInfo = member.get(0);
+				/**积分余额 */
+				memberInfo.setPointbalance(selfInfo.getRepeatedMoney());
+				/**葛粮币余额 */
+				memberInfo.setGoldmoneybalance(selfInfo.getCrmMoney());
+				/**收入 */
+				memberInfo.setIncome(memberInfo.getIncome().add(new BigDecimal(50)));
+				institutionDao.saveOrUpdate(memberInfo);
+			}
 			
 			//在RepeatedMoneyStatistics表中添加一条记录，用于发放极差积分
 			RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
@@ -250,8 +262,15 @@ public class InformationServiceImpl implements InformationService{
 		
 	}
 	
-	
-	
+	@Transactional(readOnly = true)
+	public List<AccountDetails> getMemberBycountNumberAndUserNumber(Integer countNumber,String userNumber) {
+		String hql="from AccountDetails ad where ad.countNumber=? and ad.userNumber=?";
+		List arguments = new ArrayList();
+		arguments.add(countNumber);
+		arguments.add(userNumber);
+		List<AccountDetails> result = (List<AccountDetails>)institutionDao.queryByHql(hql,arguments);
+		return result;
+	}
 	
 	private Integer getGoldMoney(Institution inst,int countNumber,GiftEnum gift){
 		if(gift.equals(GiftEnum.FIVE)){
@@ -281,11 +300,11 @@ public class InformationServiceImpl implements InformationService{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
 	}
 
 
 	@Override
+	@Transactional(readOnly = true)
 	public int countBankCard(String card) {
 		String hql="from Information mr where mr.bankCard=?";
 		List arguments = new ArrayList();

@@ -34,7 +34,7 @@ public interface MemberManageService {
 			Integer leaderServiceId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus);
 
-	List<Information> getMemberInfoById(Integer id);
+	List<Information> getMemberInfoByNumber(String number);
 
 	int countActiveMembersData(MemberSearchForm form,String number,String recommendNumber, String serviceNumber,Integer isActivate);
 

@@ -228,7 +228,7 @@ public class MemberManageController {
 		BigDecimal shoppingMoneySurplus = new BigDecimal(0.00);
 		BigDecimal repeatedMoneySurplus = new BigDecimal(0.00);
 //		if (form.getIsService()==1 && form.getLeaderServiceId()!= null){
-			List<Information> memberInfo = memberManageService.getMemberInfoById(form.getActivateId());
+			List<Information> memberInfo = memberManageService.getMemberInfoByNumber(form.getActivateNumber());
 			serviceAD.setKindData(KindDataEnum.points);
 			serviceAD.setDateNumber(CommonUtil.getDateNumber());
 			serviceAD.setCountNumber(CommonUtil.getCountNumber());

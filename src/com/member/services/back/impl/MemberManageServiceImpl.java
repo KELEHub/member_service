@@ -228,10 +228,10 @@ public class MemberManageServiceImpl implements MemberManageService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Information> getMemberInfoById(Integer id) {
-		String hqlQuery = "from Information where id=?";
+	public List<Information> getMemberInfoByNumber(String number) {
+		String hqlQuery = "from Information where number=?";
 		return (List<Information>) informationDao.queryByHql(
-				hqlQuery, id);
+				hqlQuery, number);
 	}
 	
 	@Override
@@ -239,11 +239,11 @@ public class MemberManageServiceImpl implements MemberManageService {
 	public void deleteActiveMember(Integer id,String number,Integer isService,Integer recommendId,Integer activateId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus) {
 		//删除以所删除会员为上级报单中心的信息（报单中心）
-		String hql1 = "update Information set leaderServiceId=null,leaderServiceNumber=null where leaderServiceId=?";
-		informationDao.executeHqlUpdate(hql1, id);
+		String hql1 = "update Information set leaderServiceId=null,leaderServiceNumber=null where leaderServiceNumber=?";
+		informationDao.executeHqlUpdate(hql1, number);
 		//删除以所删除会员为推荐人的信息，包括未激活的会员（报单中心，普通会员）
-		String hql2 = "update Information set recommendId=null,recommendNumber=null where recommendId=?";
-		informationDao.executeHqlUpdate(hql2, id);
+		String hql2 = "update Information set recommendId=null,recommendNumber=null where recommendNumber=?";
+		informationDao.executeHqlUpdate(hql2, number);
 //		if (isService==1 && leaderServiceId!=null){
 			//删除该会员的激活人的积分和服务积分各50
 			String hql3 = "update Information set shoppingMoney=shoppingMoney-50,repeatedMoney=repeatedMoney-50 where id=?";
@@ -264,23 +264,23 @@ public class MemberManageServiceImpl implements MemberManageService {
 //			informationDao.saveOrUpdate(memberAD);
 //		}
 		//删除留言未回复、提现申请、充值申请、报单中心申请的相关信息
-		String hql5="delete Tickling where memberId=?";//删除留言
+		String hql5="delete Tickling where memberNumber=?";//删除留言
 		String hql6="delete Withdrawals where number=? and status='0'";//删除提现申请
 		String hql7="delete Charge where number=?";//删除充值申请
-		String hql8="delete ApplyService where applyId=?";//删除申请人为要删除的会员的报单中心申请
-		String hql11 = "delete RepeatedMoneyStatistics where declarationId=?";//删除RepeatedMoneyStatistics（极差积分统计表）对应激活人的极差积分统计信息
-		informationDao.executeHqlUpdate(hql5,id);
+		String hql8="delete ApplyService where applyNumber=?";//删除申请人为要删除的会员的报单中心申请
+		String hql11 = "delete RepeatedMoneyStatistics where declarationNumber=?";//删除RepeatedMoneyStatistics（极差积分统计表）对应激活人的极差积分统计信息
+		informationDao.executeHqlUpdate(hql5,number);
 		informationDao.executeHqlUpdate(hql6,number);
 		informationDao.executeHqlUpdate(hql7,number);
-		informationDao.executeHqlUpdate(hql8,id);
-		informationDao.executeHqlUpdate(hql11,id);
+		informationDao.executeHqlUpdate(hql8,number);
+		informationDao.executeHqlUpdate(hql11,number);
 		
 		//删除提交人为要删除的会员的报单中心申请字段信息
-		String hql9 = "update ApplyService set submitId=null,submitNumber=null where submitId=?";
-		informationDao.executeHqlUpdate(hql9, id);
+		String hql9 = "update ApplyService set submitId=null,submitNumber=null where submitNumber=?";
+		informationDao.executeHqlUpdate(hql9, number);
 		
 		//删除information表记录
-		String hql10="delete Information where id=?";
-		informationDao.executeHqlUpdate(hql10,id);
+		String hql10="delete Information where number=?";
+		informationDao.executeHqlUpdate(hql10,number);
 	}
 }
