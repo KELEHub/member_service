@@ -74,6 +74,13 @@ public class GiftsDetailsController {
 		String iDisplayLength = request.getParameter("iDisplayLength");	
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = parameterService.countGiftsDetails(number);
+		if(iTotalRecords!=0){
+			int cc = (int)Math.floor(iTotalRecords/10);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<GiftsDetails> list = parameterService.getGiftsDetails(number,Integer.parseInt(iDisplayLength),
 				pageNumber);
 		List<GiftsForm> gfList = new ArrayList<GiftsForm>();
@@ -106,7 +113,7 @@ public class GiftsDetailsController {
 				gfList.add(form);
 			}
 		}
-		int iTotalRecords = parameterService.countGiftsDetails(number);
+		
 		model.addAttribute("result", gfList);
 		Map map = new HashMap();
 		map.put("aaData", gfList);
@@ -437,22 +444,7 @@ public class GiftsDetailsController {
 			model.addAttribute("SecondGold", SecondGold);
 			model.addAttribute("threeGold", threeGold);
 
-			List<AccountDetails> list = integralManagerService
-					.getFromgiftsHistoryPoints();
-			List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
-			if (list != null && list.size() > 0) {
-				for (AccountDetails ad : list) {
-					IntegralHistoryForm form = new IntegralHistoryForm();
-					form.setCreateTime(ad.getCreateTime().toString());
-					form.setIncome(ad.getIncome().toString());
-					form.setPay(ad.getPay().toString());
-					form.setPointbalance(ad.getPointbalance().toString());
-					form.setUserNumber(ad.getUserNumber());
-					form.setProject("礼包释放积分");
-					result.add(form);
-				}
-			}
-			model.addAttribute("result", result);
+			
 
 			// List<SendGiftsDetails> giftsList =
 			// giftsDetailsService.getGiftsDetailsList(countNumber, batchNo);
@@ -469,6 +461,44 @@ public class GiftsDetailsController {
 		}
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getSendGiftsDetailsPage")
+	@ResponseBody
+	public Map getSendGiftsDetailsPage(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");	
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		List<AccountDetails> list = integralManagerService
+		.getFromgiftsHistoryPoints(Integer.parseInt(iDisplayLength),pageNumber);
+        List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
+        if (list != null && list.size() > 0) {
+	        for (AccountDetails ad : list) {
+		         IntegralHistoryForm form = new IntegralHistoryForm();
+		         form.setCreateTime(ad.getCreateTime().toString());
+		         form.setIncome(ad.getIncome().toString());
+		         form.setPay(ad.getPay().toString());
+		         form.setPointbalance(ad.getPointbalance().toString());
+		         form.setUserNumber(ad.getUserNumber());
+		         form.setProject("礼包释放积分");
+		         result.add(form);
+	}
+}
+		int iTotalRecords = integralManagerService.countFromgiftsHistoryPoints();
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
+	
+	
+	
 
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	@ResponseBody
