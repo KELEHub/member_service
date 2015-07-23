@@ -9,7 +9,7 @@ function searchMembers(){
 }
 $(function(){
 	var bathPath=$("#basePath").val();
-		table=$("#notDealWithDrawalsRecordTable").dataTable({
+		table=$("#showNotDealWithDrawalsRecordTable").dataTable({
                 "sPaginationType": "full_numbers",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
@@ -80,9 +80,11 @@ $(function(){
 					<h5>提现申请处理</h5>
 				</div>
 			   <div class="widget-content nopadding">
-					<form class="form-horizontal"
-						action="/withdrawals/searchNotDealWithdrawalszRecord.do" method="POST"
+					<form 
+						action="/withdrawals/dealWithdrawalszRecord.do" method="POST"
 						id="searchWidhdrawalsxForm">
+						</form>
+						<div class="form-horizontal">
 						<div class="control-group">
 							<label class="control-label">会员账号:</label>
 							<div class="controls">
@@ -91,15 +93,15 @@ $(function(){
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 					<div class="form-actions">
 						<input type="submit" value="查询"
-							onclick="searchMembers('searchWidhdrawalsxForm')"
+							onclick="searchMembers()"
 							class="btn btn-success">
 					</div>
 				</div>
 				<div class="widget-content nopadding">
-					<table id="notDealWithDrawalsRecordTable" class="table table-bordered data-table">
+					<table id="showNotDealWithDrawalsRecordTable" class="table table-bordered data-table">
 						<thead>
 							<tr>
 								<th>会员账号</th>
@@ -110,27 +112,10 @@ $(function(){
 								<th>实际金额</th>
 								<th>余额</th>
 								<th>状态</th>
-								<th>操作</th>
+								<th style="width:150px">数据操作</th>
 							</tr>
 						</thead>
 						<tbody>
-<%--							<c:forEach var="item" items="${result }">--%>
-<%--								<tr class="gradeX">--%>
-<%--									<td>${item.number}</td>--%>
-<%--									<td>${item.tradeNo}</td>--%>
-<%--									<td>${item.tradeDate }</td>--%>
-<%--									<td>${item.tradeAmt }</td>--%>
-<%--									<td>${item.tradeFee }</td>--%>
-<%--									<td>${item.realGetAmt }</td>--%>
-<%--									<td>${item.balanceAmt }</td>--%>
-<%--									<td>--%>
-<%--									<c:if test="${item.status eq 0}">未处理</c:if> --%>
-<%--									<c:if test="${item.status eq 1}">已处理</c:if>--%>
-<%--									</td>--%>
-<%--									<td><button class="btn" onclick="agreewithdrawals('${item.id}')">提现</button>--%>
-<%--									<button class="btn" onclick="disAgreewithdrawals('${item.id}')">拒绝提现</button></td>--%>
-<%--								</tr>--%>
-<%--							</c:forEach>--%>
 						</tbody>
 					</table>
 				</div>
