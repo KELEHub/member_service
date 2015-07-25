@@ -105,7 +105,7 @@ $(function(){
 								<th>推荐编号</th>
 								<th>报单中心</th>
 								<th>注册日期</th>
-								<th>操作</th>
+								<th style="width:150px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
