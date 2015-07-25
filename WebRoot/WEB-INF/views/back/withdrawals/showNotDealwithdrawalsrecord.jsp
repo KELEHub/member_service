@@ -53,18 +53,17 @@ $(function(){
                         { "mData": "tradeAmt" },
                         { "mData": "tradeFee" },
                         { "mData": "realGetAmt" },
-                        { "mData": "balanceAmt" },
                         { "sDefaultContent" : ""},
                          { "sDefaultContent" : ""}
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
         			if (aData.status==0){
-        				$('td:eq(7)', nRow).html("未处理");
-        				$('td:eq(8)', nRow).html(
+        				$('td:eq(6)', nRow).html("未处理");
+        				$('td:eq(7)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreewithdrawals("+aData.id+")\">提现</button>"+
 						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>");
         			}else if (aData.status==1){
-        				$('td:eq(7)', nRow).html("已处理");
+        				$('td:eq(6)', nRow).html("已处理");
         			}
                    	return nRow;
                  }
@@ -106,13 +105,12 @@ $(function(){
 							<tr>
 								<th>会员账号</th>
 								<th>流水号</th>
-								<th>日期</th>
+								<th style="width:160px">日期</th>
 								<th>提现金额</th>
 								<th>手续费</th>
 								<th>实际金额</th>
-								<th>余额</th>
 								<th>状态</th>
-								<th style="width:150px">数据操作</th>
+								<th style="width:150px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
