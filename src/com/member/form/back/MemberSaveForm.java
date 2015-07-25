@@ -7,7 +7,7 @@ public class MemberSaveForm {
 	
 	private String number;
 	
-	private String name;
+	private String username;
 	
 	/**身份证号码 */
 	private String identity;
@@ -59,12 +59,14 @@ public class MemberSaveForm {
 		this.number = number;
 	}
 
-	public String getName() {
-		return name;
+	
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getIdentity() {
