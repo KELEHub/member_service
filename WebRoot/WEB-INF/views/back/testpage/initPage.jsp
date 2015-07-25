@@ -183,7 +183,7 @@ $(function(){
 				</form>
 <div class="form-actions">
 					<span class="pull-right"><a type="submit" id='btnExport'
-						class="btn btn-success" /> 数据导入</a>
+						class="btn btn-success"  /> 数据导入</a>
 					</span>
 </div>
 <table id="testPage" width="100%" border="0" cellspacing="0" cellpadding="0">
