@@ -76,7 +76,8 @@ public class GiftsDetailsController {
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
 		int iTotalRecords = parameterService.countGiftsDetails(number);
 		if(iTotalRecords!=0){
-			int cc = (int)Math.floor(iTotalRecords/10);
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
 			if(pageNumber>cc){
 				pageNumber=1;
 			}
