@@ -3,15 +3,19 @@ package com.member.controller.back;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
@@ -31,7 +35,27 @@ public class IntegralManagerController {
 
 	@RequestMapping(value = {"/showIntegralHistory"},method = RequestMethod.POST)
 	public String showIntegralHistory(Model model){
-		List<AccountDetails> list = integralManagerService.getIntegralHistoryPoints();
+		
+		return "back/integralManager/integralIssueHistory";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getIntegralHistory")
+	@ResponseBody
+	public Map getIntegralHistory(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");	
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = integralManagerService.countIntegralHistoryPoints(number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
+		List<AccountDetails> list = integralManagerService.getIntegralHistoryPoints(number,Integer.parseInt(iDisplayLength),pageNumber);
 		List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
 		if(list!=null &&list.size()>0){
 			for(AccountDetails ad : list){
@@ -50,7 +74,14 @@ public class IntegralManagerController {
 			}
 		}
 		model.addAttribute("result", result);
-		return "back/integralManager/integralIssueHistory";
+		
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
 	
 	@RequestMapping(value = "/showRangeIntegralIssueManager",method = RequestMethod.POST)
