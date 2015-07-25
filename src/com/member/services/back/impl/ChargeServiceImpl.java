@@ -51,20 +51,31 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 	private ExcelExportService excelExportService;
 	
 	@Override
-	public List<Charge> getChargeList(ChargeOperForm form) {
+	public List<Charge> getNoChargeList(String memeberNumber,
+			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String roleQuery = "from Charge s where 1=1";
-		if(form.getNumber()!=null && !"".equals(form.getNumber())){
+		String roleQuery = "from Charge s where status=0";
+		if(memeberNumber!=null && !"".equals(memeberNumber)){
 			roleQuery+=" and s.number=:number ";
-			arguments.put("number", form.getNumber());
-		}
-		if(form.getStatus()!=null){
-			roleQuery+=" and s.status=:status ";
-			arguments.put("status", form.getStatus());
+			arguments.put("number", memeberNumber);
 		}
 		
 		roleQuery = roleQuery+"  order by chargeDate desc";
-		List result = chargeDao.queryByHql(roleQuery, arguments);
+		List result = chargeDao.queryByHql(roleQuery, pageNumber,pageSize,arguments);
+		return result;
+	}
+	
+	@Override
+	public List<Charge> getChargeList(String memeberNumber,
+			int pageSize,int pageNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String roleQuery = "from Charge s where status=1 or status=2";
+		if(memeberNumber!=null && !"".equals(memeberNumber)){
+			roleQuery+=" and s.number=:number ";
+			arguments.put("number", memeberNumber);
+		}
+		roleQuery = roleQuery+"  order by chargeDate desc";
+		List result = chargeDao.queryByHql(roleQuery, pageNumber,pageSize,arguments);
 		return result;
 	}
 
@@ -249,7 +260,7 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 
 	public List<Charge> getChargeExportRecord(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String query = "from Charge s where status='1' ";
+		String query = "from Charge s where status=1 ";
 		if(!"".equals(memeberNumber)){
 			query+="and s.number=:number";
 			arguments.put("number", memeberNumber);
@@ -257,5 +268,37 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 
 		List queryResult = chargeDao.queryByHql(query, arguments);
 		return queryResult;
+	}
+
+	@Override
+	public int countChargeList(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String roleQuery = "from Charge s where status=1 or status=2";
+		if(memeberNumber!=null && !"".equals(memeberNumber)){
+			roleQuery+=" and s.number=:number ";
+			arguments.put("number", memeberNumber);
+		}
+		roleQuery = roleQuery+"  order by chargeDate desc";
+		List result = chargeDao.queryByHql(roleQuery, arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
+	}
+	
+	@Override
+	public int countNoChargeList(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String roleQuery = "from Charge s where status=0";
+		if(memeberNumber!=null && !"".equals(memeberNumber)){
+			roleQuery+=" and s.number=:number ";
+			arguments.put("number", memeberNumber);
+		}
+		roleQuery = roleQuery+"  order by chargeDate desc";
+		List result = chargeDao.queryByHql(roleQuery, arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
 	}
 }
