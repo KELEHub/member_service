@@ -10,7 +10,13 @@ import com.member.helper.BaseResult;
 
 public interface ChargeService {
 
-	public List<Charge> getChargeList(ChargeOperForm form);
+	public List<Charge> getNoChargeList(String memeberNumber,int pageSize,int pageNumber);
+	
+	public List<Charge> getChargeList(String memeberNumber,int pageSize,int pageNumber);
+	
+	public int countChargeList(String memeberNumber);
+	
+	public int countNoChargeList(String memeberNumber);
 	
 	public Charge getChargeDetailById(Integer id);
 	
