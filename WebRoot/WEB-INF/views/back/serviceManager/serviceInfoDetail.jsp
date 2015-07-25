@@ -27,7 +27,7 @@
 						<td width="120" style="text-align: right;">会员账号:</td>
 						<td><input type="text" name="number" readonly="readonly"  value="${member.number }"></td>
 						<td>姓名:</td>
-						<td><input type="text" name="name"  value="${member.name }"></td>
+						<td><input type="text" name="username"  value="${member.name }"></td>
 					</tr>
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">身份证号:</td>
