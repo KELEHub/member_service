@@ -2,6 +2,7 @@ package com.member.services.back.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,25 +64,49 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<AccountDetails> getIntegralHistoryPoints() {
-		String hql = "from AccountDetails t where t.project=? or t.project=?  order by createTime desc";
-		List arguments = new ArrayList();
-		arguments.add(ProjectEnum.fromgifts);
-		arguments.add(ProjectEnum.servicepointsformuch);
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+	public List<AccountDetails> getIntegralHistoryPoints(String number,int pageSize,int pageNumber) {
+		String hql = "from AccountDetails t where (t.project=:project1 or t.project=:project2) ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("project1", ProjectEnum.fromgifts);
+		arguments.put("project2", ProjectEnum.servicepointsformuch);
+		if(number != null && !"".equals(number)){
+			hql=hql+" and userNumber = :number";
+			arguments.put("number", number);
+		}
+		hql=hql+" order by createTime desc";
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
 		if(result!=null && result.size()>0){
 			return result;
 		}
 		return null;
 	}
+	@Override
+	@Transactional(readOnly=true)
+	public int countIntegralHistoryPoints(String number){
+		String hql = "from AccountDetails t where (t.project=:project1 or t.project=:project2) ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("project1", ProjectEnum.fromgifts);
+		arguments.put("project2", ProjectEnum.servicepointsformuch);
+		if(number != null && !"".equals(number)){
+			hql=hql+" and userNumber = :number";
+			arguments.put("number", number);
+		}
+		hql=hql+" order by createTime desc";
+	
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
+	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<AccountDetails> getFromgiftsHistoryPoints() {
+	public List<AccountDetails> getFromgiftsHistoryPoints(int pageSize,int pageNumber) {
 		String hql = "from AccountDetails t where t.project=?  order by createTime desc";
 		List arguments = new ArrayList();
 		arguments.add(ProjectEnum.fromgifts);
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
 		if(result!=null && result.size()>0){
 			return result;
 		}
@@ -136,5 +161,17 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		list.add(BenefitId);
 		list.add(serialNumber);
 		integralManagerDao.executeHqlUpdate(hql, list);
+	}
+
+	@Override
+	public int countFromgiftsHistoryPoints() {
+		String hql = "from AccountDetails t where t.project=? ";
+		List arguments = new ArrayList();
+		arguments.add(ProjectEnum.fromgifts);
+		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
 	}
 }
