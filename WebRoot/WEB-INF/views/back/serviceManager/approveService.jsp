@@ -83,7 +83,7 @@ $(function(){
 								<th>申请日期</th>
 								<th>状态</th>
 								<th>申请原因</th>
-								<th>操作</th>
+								<th style="width:180px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
