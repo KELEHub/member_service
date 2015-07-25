@@ -20,7 +20,6 @@ import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
-import com.member.entity.TestPageEntity;
 import com.member.form.back.MemberDeleteForm;
 import com.member.form.back.MemberSaveForm;
 import com.member.form.back.MemberSearchForm;
@@ -63,10 +62,17 @@ public class MemberManageController {
 		String iDisplayLength = request.getParameter("iDisplayLength");	
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Information> result = memberManageService.getActiveMembers(form,number,recommendNumber,serviceNumber,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -89,10 +95,18 @@ public class MemberManageController {
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = memberManageService.countNotActiveMembersData(form);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Information> result = memberManageService.getNotActiveMembers(form,customerPar,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = memberManageService.countNotActiveMembersData(form);
+		
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -117,10 +131,17 @@ public class MemberManageController {
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Information> result = memberManageService.getActiveMembers(form,number,recommendNumber,serviceNumber,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = memberManageService.countActiveMembersData(form,number,recommendNumber,serviceNumber,1);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -204,6 +225,11 @@ public class MemberManageController {
 	public BaseResult<Void> saveMemberDetail(@RequestBody MemberSaveForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		
+		if(form.getBankCard()==null || "".equals(form.getBankCard())){
+			result.setMsg("银行卡不能为空");
+			result.setSuccess(true);
+			return result;
+		}
 		Information info = informationService.getInformationByNumber(form.getNumber());
 		if(!form.getBankCard().equals(info.getBankCard())){
 			if(informationService.countBankCard(form.getBankCard())>=2){
