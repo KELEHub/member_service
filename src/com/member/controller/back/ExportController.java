@@ -63,6 +63,7 @@ public class ExportController {
 					info.setLeaderServiceNumber(serviceIPList.get(0).getA_submiti_number());
 				}
 				info.setNumber(old.getI_number());
+				info.setName(old.getI_name());
 				info.setAge(old.getI_age());
 				info.setPassword(old.getI_password());
 				info.setProtectPassword(old.getI_protectpassword());
