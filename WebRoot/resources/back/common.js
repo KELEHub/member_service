@@ -664,7 +664,7 @@ function agreewithdrawals(id){
 	alert(result.msg);
 	if (result.success) {
 		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function() {
+		$("#content-header").find("form[id='searchWidhdrawalsxForm']").each(function() {
 			var formid = this.id;
 			ajaxRequestForFormGetJsp(formid);
 			resetTable();
