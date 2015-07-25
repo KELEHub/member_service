@@ -89,14 +89,14 @@ $(function(){
 							<tr>
 								<th>账号</th>
 								<th>姓名</th>
-								<th>积分余额</th>
+								<th style="width:80px">积分余额</th>
 								<th>电话号码</th>
 								<th>开户银行</th>
 								<th>邮政编码</th>
-								<th>推荐报单中心编号</th>
-								<th>本月新报单人数</th>
-								<th>历史报单人数</th>
-								<th>操作</th>
+								<th style="width:100px">推荐报单中心编号</th>
+								<th style="width:90px">本月新报单人数</th>
+								<th style="width:80px">历史报单人数</th>
+								<th style="width:140px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
