@@ -169,7 +169,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	public void updateMemberDetails(MemberSaveForm form) {
 		Information member = getMemberById(form.getId());
 		member.setNumber(form.getNumber());
-		member.setName(form.getName());
+		member.setName(form.getUsername());
 		
 		/**身份证号码 */
 		member.setIdentity(form.getIdentity());
