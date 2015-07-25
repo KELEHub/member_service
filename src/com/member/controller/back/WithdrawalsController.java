@@ -55,11 +55,19 @@ public class WithdrawalsController {
 		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
 		Object userId = logonUserMap.get("id");
 		Object userName = logonUserMap.get("userName");
+		int iTotalRecords = withdrawalsService.countWithdrawalsRecordByMemberNumberData(number, (Integer) userId,
+				(String) userName);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Withdrawals> result = withdrawalsService
 				.getWithdrawalsRecordByMemberNumber(number, (Integer) userId,(String) userName,
 						Integer.parseInt(iDisplayLength),pageNumber);
-		int iTotalRecords = withdrawalsService.countWithdrawalsRecordByMemberNumberData(number, (Integer) userId,
-				(String) userName);
+
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
@@ -97,10 +105,18 @@ public class WithdrawalsController {
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = withdrawalsService.countNotDealWithdrawalsRecordData(number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Withdrawals> result = withdrawalsService.getNotDealWithdrawalsRecord(number,
 				Integer.parseInt(iDisplayLength),
 				pageNumber);
-		int iTotalRecords = withdrawalsService.countNotDealWithdrawalsRecordData(number);
+		
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
