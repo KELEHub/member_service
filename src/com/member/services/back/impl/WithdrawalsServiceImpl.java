@@ -215,6 +215,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 //		singleResult.setRealGetAmt(tradeAmt.subtract(goldTake));
 		singleResult.setUserName(dealUserName);
 		singleResult.setStatus("1");
+		singleResult.setBalanceAmt(afterShopingMoney);
 		withdrawalsDao.update(singleResult);
 		
 		//3.插入账户明细表
