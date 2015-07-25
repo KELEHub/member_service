@@ -14,13 +14,17 @@ public interface IntegralManagerService {
 
 	List<RangeIssueForm> getAvailableRangeIntegral(int serialNumber);
 	
-	List<AccountDetails> getIntegralHistoryPoints();
+	List<AccountDetails> getIntegralHistoryPoints(String number,int pageSize,int pageNumber);
+	
+	public int countIntegralHistoryPoints(String number);
 	
 	List<AccountDetails> getIntegralHistoryPointsByNumber(String number);
 
 	Information getInformationById(Integer id);
 	
-	public List<AccountDetails> getFromgiftsHistoryPoints();
+	public List<AccountDetails> getFromgiftsHistoryPoints(int pageSize,int pageNumber);
+	
+	public int countFromgiftsHistoryPoints();
 
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
 			Integer BenefitId, Integer serialNumber);
