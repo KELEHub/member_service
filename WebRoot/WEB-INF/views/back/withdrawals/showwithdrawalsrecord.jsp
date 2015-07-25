@@ -110,15 +110,15 @@ $(function(){
 					<table id="withDrawalsRecordTable" class="table table-bordered data-table">
 						<thead>
 							<tr>
-								<th>会员账号</th>
-								<th>流水号</th>
-								<th>日期</th>
+								<th style="width:50px">会员账号</th>
+								<th style="width:50px">流水号</th>
+								<th style="width:160px">日期</th>
 								<th>提现金额</th>
 								<th>手续费</th>
 								<th>实际金额</th>
 								<th>余额</th>
 								<th>状态</th>
-								<th>操作</th>
+								<th style="width:200px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
