@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,42 +37,75 @@ public class ChargeController {
 	
 
 	@RequestMapping(value = "/showChargeRecord")
-	public String showChargezRecord(HttpServletRequest request, Model model) {
-		ChargeOperForm form = new ChargeOperForm();
-//		form.setStatus(1);
-		List<Charge> result = chargeService.getChargeList(form);
-		model.addAttribute("result", result);
+	public String showChargeRecord(HttpServletRequest request, Model model) {
 		return "back/charge/showchargerecord";
 	}
+	
+	@RequestMapping(value = "/getChargezRecordPage")
+	@ResponseBody
+	public Map getChargezRecordPage(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = chargeService.countChargeList(number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
+		List<Charge> result = chargeService.getChargeList(number,
+				Integer.parseInt(iDisplayLength),pageNumber);
 
-	@RequestMapping(value = "/searchChargeRecord", method = RequestMethod.POST)
-	public String searchActivationMember(
-			@RequestBody ChargeOperForm form,
-			HttpServletRequest request, Model model) {
-//		form.setStatus(1);
-		List<Charge> result = chargeService.getChargeList(form);
 		model.addAttribute("result", result);
-		model.addAttribute("form", form);
-		return "back/charge/showchargerecord";
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
+	
+	
+	
+
 	
 	@RequestMapping(value = "/dealChargeRecord")
 	public String dealChargezRecord(HttpServletRequest request, Model model) {
-		ChargeOperForm form = new ChargeOperForm();
-		form.setStatus(0);
-		List<Charge> result = chargeService.getChargeList(form);
-		model.addAttribute("result", result);
 		return "back/charge/shownotdealchargerecord";
 	}
 	
-	@RequestMapping(value = "/searchDealChargezRecord")
-	public String searchNotDealChargezRecord(@RequestBody ChargeOperForm form,HttpServletRequest request, Model model) {
-		form.setStatus(0);
-		List<Charge> result = chargeService.getChargeList(form);
+	@RequestMapping(value = "/getNoChargezRecordPage")
+	@ResponseBody
+	public Map getNoChargezRecordPage(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = chargeService.countNoChargeList(number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
+		List<Charge> result = chargeService.getNoChargeList(number,
+				Integer.parseInt(iDisplayLength),pageNumber);
+
 		model.addAttribute("result", result);
-		model.addAttribute("form", form);
-		return "back/charge/shownotdealchargerecord";
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
 	}
+	
+	
+	
 	
 	@RequestMapping(value = "/showdisagreecharge")
 	public String showdisagree(@RequestBody ChargeOperForm form, Model model) {
