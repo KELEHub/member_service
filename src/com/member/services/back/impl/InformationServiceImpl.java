@@ -16,6 +16,7 @@ import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.InstitutionDao;
 import com.member.entity.AccountDetails;
+import com.member.entity.CountService;
 import com.member.entity.GiftsDetails;
 import com.member.entity.Information;
 import com.member.entity.Institution;
@@ -209,7 +210,17 @@ public class InformationServiceImpl implements InformationService{
 			
 			//更新在AccountDetails表记录激活人获得服务积分明细
 			List<AccountDetails> member = getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), selfInfo.getNumber());
-			if (member==null){
+			if (member!=null && member.size()>0){
+				
+				AccountDetails memberInfo = member.get(0);
+				/**积分余额 */
+				memberInfo.setPointbalance(selfInfo.getRepeatedMoney());
+				/**葛粮币余额 */
+				memberInfo.setGoldmoneybalance(selfInfo.getCrmMoney());
+				/**收入 */
+				memberInfo.setIncome(memberInfo.getIncome().add(new BigDecimal(50)));
+				institutionDao.saveOrUpdate(memberInfo);
+			}else{
 				AccountDetails shopingDetails = new AccountDetails();
 				shopingDetails.setKindData(KindDataEnum.points);
 				/**日期类别统计 */
@@ -234,16 +245,19 @@ public class InformationServiceImpl implements InformationService{
 				shopingDetails.setUserNumber(selfInfo.getNumber());
 				shopingDetails.setCreateTime(new Date());
 				institutionDao.saveOrUpdate(shopingDetails);
-			}else{
-				AccountDetails memberInfo = member.get(0);
-				/**积分余额 */
-				memberInfo.setPointbalance(selfInfo.getRepeatedMoney());
-				/**葛粮币余额 */
-				memberInfo.setGoldmoneybalance(selfInfo.getCrmMoney());
-				/**收入 */
-				memberInfo.setIncome(memberInfo.getIncome().add(new BigDecimal(50)));
-				institutionDao.saveOrUpdate(memberInfo);
 			}
+			//在报单统计表中插入一条记录便于统计
+			CountService count = new CountService();
+			/**流水号 */
+			count.setCountNumber(CommonUtil.getServerCountNumber());
+			/**日期类别统计 */
+			count.setDateNumber(CommonUtil.getDateNumber());
+			/**用户ID */
+			count.setUserId(selfInfo.getId());
+			/**用户登录ID */
+			count.setUserNumber(selfInfo.getNumber());
+			count.setCreateTime(new Date());
+			institutionDao.saveOrUpdate(count);
 			
 			//在RepeatedMoneyStatistics表中添加一条记录，用于发放极差积分
 			RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
