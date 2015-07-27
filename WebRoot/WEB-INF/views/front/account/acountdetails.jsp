@@ -2,6 +2,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script type="text/javascript">
+$(function(){
+	var bathPath=$("#basePath").val();
+		 table=$("#frontAccountTable").dataTable({
+                "sPaginationType": "full_numbers",   
+        		"bJQueryUI" : true, //是否使用 jQury的UI theme  
+        		"bPaginate" : true, //是否显示（应用）分页器  
+        		"bAutoWidth" : true, //是否自适应宽度 
+        		"bScrollCollapse" : true,
+        		"iDisplayLength": 10,//每页显示5条数据
+        		"bLengthChange":false,
+        		"bSort": false,
+        		"bInfo": true,//页脚信息
+        		"bFilter" : false,//是否启动过滤、搜索功能
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": bathPath+"/AccountDetailsController/getFrontAccountDataPage.do",
+                "oLanguage": { //国际化配置  
+        	        "sProcessing" : "正在获取数据，请稍后...",    
+        	        "sLengthMenu" : "显示 _MENU_ 条",    
+        	        "sZeroRecords" : "没有您要搜索的内容",    
+        	        "sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",    
+        	        "sInfoEmpty" : "记录数为0",    
+        	        "sInfoFiltered" : "(全部记录数 _MAX_ 条)",    
+        	        "sInfoPostFix" : "",    
+        	        "sSearch" : "搜索",    
+        	        "sUrl" : "",    
+        	        "oPaginate": {    
+        	            "sFirst" : "第一页",    
+        	            "sPrevious" : "上一页",    
+        	            "sNext" : "下一页",    
+        	            "sLast" : "最后一页"    
+        	        }  
+        		},
+                "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "number", "value": $("#number").val() },
+                        { "name": "goldFlg", "value": $("#goldFlg").val() },
+                        { "name": "projectFlg", "value": $("#projectFlg").val() },
+                        { "name": "yearFlg", "value": $("#yearFlg").val() },
+                        { "name": "monthFlg", "value": $("#monthFlg").val() }
+                        );
+                },
+                "aoColumns": [
+                        { "mData": "kindData" },
+                        { "mData": "createTime" },
+                        { "mData": "project" },
+                        { "mData": "income" },
+                        { "mData": "pay" },
+                        { "mData": "pointbalance" },
+                        { "mData": "goldmoneybalance" },
+                        { "mData": "redmin"}
+                    ]
+            });            
+});
+</script>
+
 <div id="content-header">
 	<div id="breadcrumb">
 		<a href="#" title="Go to Home" class="tip-bottom"><i
@@ -19,7 +77,7 @@
 			</label>
 			<div class="controls">
 				<div class="input-append">
-					<select name="goldFlg">
+					<select name="goldFlg" id="goldFlg">
 						<option value="space" <c:if test='${goldFlg == "space"}'>  selected='selected'  </c:if>></option>
 						<option value="crmMoney" <c:if test='${goldFlg == "crmMoney"}'>  selected='selected'  </c:if>>葛粮币</option>
 						<option value="shoppingMoney" <c:if test='${goldFlg == "shoppingMoney"}'>  selected='selected'  </c:if>>积分</option>
@@ -33,7 +91,7 @@
 			</label>
 			<div class="controls">
 				<div class="input-append">
-					<select name="projectFlg">
+					<select name="projectFlg" id="projectFlg">
 						<option value="space" <c:if test='${projectFlg == "space"}'>  selected='selected'  </c:if>></option>
                         <option value="tootherman" <c:if test='${projectFlg == "tootherman"}'>  selected='selected'  </c:if>>会员转账</option>
                         <option value="recharge" <c:if test='${projectFlg == "recharge"}'>  selected='selected'  </c:if>>充值</option>
@@ -55,7 +113,7 @@
 			</label>
 			<div class="controls">
 				<div class="input-append">
-					<select name="yearFlg">
+					<select name="yearFlg" id="yearFlg">
 						<option value="space" <c:if test='${yearFlg == "space"}'>  selected='selected'  </c:if>></option>
 						<option value="2017" <c:if test='${yearFlg == "2017"}'>  selected='selected'  </c:if>>2017</option>
 						<option value="2016" <c:if test='${yearFlg == "2016"}'>  selected='selected'  </c:if>>2016</option>
@@ -72,7 +130,7 @@
 			</label>
 			<div class="controls">
 				<div class="input-append">
-					<select name="monthFlg">
+					<select name="monthFlg" id="monthFlg">
 						<option value="space" <c:if test='${monthFlg == "space"}'>  selected='selected'  </c:if>></option>
 						<option value="1" <c:if test='${monthFlg == "1"}'>  selected='selected'  </c:if>>1</option>
 						<option value="2" <c:if test='${monthFlg == "2"}'>  selected='selected'  </c:if>>2</option>
@@ -141,7 +199,7 @@
 		<div class="span12">
 			<div class="widget-box">
 				<div class="widget-content nopadding">
-					<table id="testexample1" class="table table-bordered data-table">
+					<table id="frontAccountTable" class="table table-bordered data-table">
 						<thead>
 							<tr>
 								<th>种类</th>
@@ -155,18 +213,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result }">
-								<tr class="gradeX">
-									<td>${item.kindData }</td>
-									<td>${item.createTime }</td>
-									<td>${item.project }</td>
-									<td>${item.income }</td>
-									<td>${item.pay }</td>
-									<td>${item.pointbalance }</td>
-									<td>${item.goldmoneybalance }</td>
-									<td>${item.redmin }</td>
-								</tr>
-							</c:forEach>
 						</tbody>
 					</table>
 				</div>
