@@ -1,9 +1,12 @@
 package com.member.controller.back;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.beans.front.AccountBean;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
+import com.member.form.back.MemberSearchForm;
 import com.member.form.back.SearchBackForm;
 import com.member.services.back.InformationService;
 import com.member.services.front.AccountDetailsService;
@@ -43,6 +48,58 @@ public class BackAccountController {
 		}
 
 	}
+	
+	
+	@RequestMapping(value = "/getAccountDataPage")
+	@ResponseBody
+	public Map getAccountDataPage(HttpServletRequest request,Model model) {
+		MemberSearchForm form = new MemberSearchForm();
+		String number = request.getParameter("number");
+		  List<AccountBean> result = new ArrayList<AccountBean>();
+		  int iTotalRecords =0;
+		if(number!=null &&  !"".equals(number)){
+			  String condition = "userNumber=?";
+			  String sigleCodition="";
+			  List arguments = new ArrayList();
+			  arguments.add(number);
+				String iDisplayLength = request.getParameter("iDisplayLength");	
+				String iDisplayStart = request.getParameter("iDisplayStart");
+				int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+				iTotalRecords = accountDetailsService.couontDetails(condition,arguments);
+				if(iTotalRecords!=0){
+					float  t = (float)iTotalRecords/10;
+					int cc = (int)Math.ceil(t);
+					if(pageNumber>cc){
+						pageNumber=1;
+					}
+				}
+			
+			  condition = condition+"  order by createTime desc";
+				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments,Integer.parseInt(iDisplayLength),
+							pageNumber);
+				  for(AccountDetails ad : accountList){
+					  AccountBean bean= new AccountBean();
+					  bean.setKindData(getKindDataName(ad.getKindData()));
+					  bean.setCreateTime(ad.getCreateTime().toString());
+					  bean.setIncome(ad.getIncome().toString());
+					  bean.setPay(ad.getPay().toString());
+					  bean.setPointbalance(ad.getPointbalance().toString());
+					  bean.setGoldmoneybalance(ad.getGoldmoneybalance().toString());
+					  bean.setRedmin(ad.getRedmin());
+					  bean.setProject(getProjectName(ad.getProject()));
+					  result.add(bean);
+				  }
+
+		}
+		
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
 
 	
 	@SuppressWarnings("unchecked")
@@ -59,53 +116,16 @@ public class BackAccountController {
 				  model.addAttribute("error","该会员不存在");
 				  return "back/account/backacountdetails";
 			  }
-			  String condition = "userNumber=?";
-			  String sigleCodition="";
-			  List arguments = new ArrayList();
-			  arguments.add(form.getNumber());
-				  sigleCodition = condition;
-				  condition= sigleCodition + "and project != ? and project != ?";
-				  sigleCodition= sigleCodition + "and (project = ? or project = ?) group by countNumber";
-				  arguments.add(ProjectEnum.servicepointsformuch);
-				  arguments.add(ProjectEnum.servicepointsforone);
-			  List<AccountBean> beanList = new ArrayList<AccountBean>();
-			  
-				 sigleCodition = sigleCodition+"  order by countNumber desc";
-				 List<AccountDetails> accountDetailsList = accountDetailsService.getAccountDetailsByservicepoints(sigleCodition,arguments);
-				 if(accountDetailsList!=null && accountDetailsList.size()>0){
-					 for(AccountDetails ads : accountDetailsList){
-						 AccountBean bean= new AccountBean();
-						  bean.setKindData("积分");
-						  bean.setCreateTime(ads.getCountNumber().toString());
-						  bean.setIncome(ads.getIncome().toString());
-						  bean.setPay(ads.getPay().toString());
-						  bean.setRedmin("该天的服务积分合计");
-						  bean.setProject("服务积分");
-						  beanList.add(bean);
-					 }
-				 }
-				 condition = condition+"  order by createTime desc";
-				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments);
-				  for(AccountDetails ad : accountList){
-					  AccountBean bean= new AccountBean();
-					  bean.setKindData(getKindDataName(ad.getKindData()));
-					  bean.setCreateTime(ad.getCreateTime().toString());
-					  bean.setIncome(ad.getIncome().toString());
-					  bean.setPay(ad.getPay().toString());
-					  bean.setPointbalance(ad.getPointbalance().toString());
-					  bean.setGoldmoneybalance(ad.getGoldmoneybalance().toString());
-					  bean.setRedmin(ad.getRedmin());
-					  bean.setProject(getProjectName(ad.getProject()));
-					  beanList.add(bean);
-				  }
-			  model.addAttribute("result",beanList);
+
 			  model.addAttribute("goldFlg", form.getGoldFlg());
 			  model.addAttribute("projectFlg", form.getProjectFlg());
 			  model.addAttribute("monthFlg", form.getMonthFlg());
 			  model.addAttribute("yearFlg", form.getYearFlg());
+			  model.addAttribute("number", form.getNumber());
 			  model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
 			  model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
 			  model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
+
 			  return "back/account/backacountdetails";
 
 		} catch (Exception e) {
@@ -142,6 +162,9 @@ public class BackAccountController {
 //		}
 		if(project.equals(ProjectEnum.pointcash)){
 			return "积分提现";
+		}
+		if(project.equals(ProjectEnum.servicepointsforone)){
+			return "服务积分";
 		}
 		if(project.equals(ProjectEnum.fromgifts)){
 			return "礼包发放";
