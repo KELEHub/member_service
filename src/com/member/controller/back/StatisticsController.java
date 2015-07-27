@@ -34,7 +34,9 @@ public class StatisticsController {
 					ProjectEnum.recharge, ProjectEnum.fromgifts,
 					ProjectEnum.pointcash);
 			
-			model.addAttribute("countBill", countAll.get("countBill"));
+			
+			int countServiceNumber = accountDetailsService.countService();
+			model.addAttribute("countBill", countServiceNumber);
 			model.addAttribute("countRecharge", countAll.get("countRecharge"));
 			model.addAttribute("countFromgifts", countAll.get("countFromgifts"));
 			model.addAttribute("countPointcash", countAll.get("countPointcash"));
