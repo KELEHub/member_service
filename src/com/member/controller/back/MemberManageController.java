@@ -263,9 +263,10 @@ public class MemberManageController {
 			serviceAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());
 			serviceAD.setIncome(new BigDecimal(0));
 			serviceAD.setPay(new BigDecimal(50));
-			serviceAD.setUserId(form.getLeaderServiceId());
-			serviceAD.setUserNumber(form.getLeaderServiceNumber());
+			serviceAD.setUserId(memberInfo.get(0).getId());
+			serviceAD.setUserNumber(memberInfo.get(0).getNumber());
 			serviceAD.setCreateTime(new Date());
+			serviceAD.setRedmin("删除会员："+ form.getNumber());
 //		}
 		if (form.getRecommendNumber()!=null){
 			//查询是否需要删除礼包，如果需要，则查询账户明细表
