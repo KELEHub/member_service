@@ -128,7 +128,7 @@ function resetMenu() {
   <div class="container-fluid">
     <div class="row-fluid">
            <div align="center">
-            <font size="30">欢迎使用后台管理系统！</font>
+				<img src="<%=basePath%>/resources/back/img/000.jpg"  alt="欢迎使用后台管理系统！" height="100%" width="100%" />
        	 </div>
 <!--     <div class="row-fluid"> -->
 <!--       <div class="span12"> -->
