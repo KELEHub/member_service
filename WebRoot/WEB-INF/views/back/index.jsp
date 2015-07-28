@@ -77,7 +77,7 @@ function resetMenu() {
 }
 </script>
 </head>
-<body style="overflow:hidden;">
+<body style="overflow:hidden">
 <!--Header-part-->
 <div id="header">
   <h1><a href="dashboard.html">会员管理系统</a></h1>
@@ -113,6 +113,7 @@ function resetMenu() {
     </ul>
 </div>
 <div id="content">
+ 
 <!--   <div  class="quick-actions_homepage"> -->
 <!--     <ul class="quick-actions"> -->
 <!--       <li class="bg_lb"> <a href="#"> <i class="icon-dashboard"></i> My Dashboard </a> </li> -->
@@ -125,7 +126,7 @@ function resetMenu() {
   <div class="container-fluid">
     <div class="row-fluid">
            <div align="center">
-				<img src="<%=basePath%>/resources/back/img/000.jpg"  alt="欢迎使用后台管理系统！" height="100%" width="100%" />
+            <img src="<%=basePath%>/resources/back/img/000.jpg"  alt="欢迎使用后台管理系统！" height="100%" width="100%" />
        	 </div>
 <!--     <div class="row-fluid"> -->
 <!--       <div class="span12"> -->
@@ -170,12 +171,11 @@ function resetMenu() {
 <!--     </div> -->
     </div>
   </div>
-
+</div>
  <div id="showDialogDiv">
  </div>
 <!--Footer-part-->
 <div class="row-fluid">
-</div>
 </div>
 <!--end-Footer-part-->
 </body>
