@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<div style="overflow:auto; height:700px">
 <div id="content-header">
 	<div id="breadcrumb">
 		<a href="#" title="Go to Home" class="tip-bottom"><i
@@ -104,4 +105,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
