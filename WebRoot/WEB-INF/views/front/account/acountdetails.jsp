@@ -59,7 +59,7 @@ $(function(){
             });            
 });
 </script>
-<div style="overflow:auto; height:800px">
+<div style="overflow:auto; height:740px">
 <div id="content-header">
  <br/>
 	<h1>

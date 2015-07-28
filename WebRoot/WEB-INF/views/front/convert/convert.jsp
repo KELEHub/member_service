@@ -4,9 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div id="content-header">
 	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a>
-		<a href="#" class="current">Buttons &amp; icons</a>
 		<form action="/ConvertController/show.do" method="POST" id="toConvertForm">
 	</form>
 	</div>
