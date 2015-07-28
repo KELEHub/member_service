@@ -70,7 +70,8 @@ $(function(){
             });            
 });
 </script>
-<div class="container-fluid" id="content-header" style="overflow:auto; height:800px">
+<div style="overflow:auto; height:740px"> 
+<div class="container-fluid" id="content-header" >
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
@@ -121,4 +122,5 @@ $(function(){
 			</div>
 		</div>
 	</div>
+</div>
 </div>

@@ -55,13 +55,9 @@ $(function(){
             });            
 });
 </script>
-<div style="overflow:auto; height:800px">
+<div style="overflow:auto; height:740px">
 <div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
+    <br/>
 	<h1>
 		未激活会员资料
 	</h1>

@@ -58,13 +58,9 @@ $(function(){
 
 
 
-<div>
+<div  style="overflow:auto; height:740px">
 <div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
+    <br/>
 	<h1>
 		会员账户明细展示
 	</h1>
