@@ -77,7 +77,7 @@ function resetMenu() {
 }
 </script>
 </head>
-<body>
+<body style="overflow:hidden;">
 <!--Header-part-->
 <div id="header">
   <h1><a href="dashboard.html">会员管理系统</a></h1>
@@ -112,10 +112,7 @@ function resetMenu() {
     </c:forEach>
     </ul>
 </div>
-<div id="content" style="overflow: auto;">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
+<div id="content">
 <!--   <div  class="quick-actions_homepage"> -->
 <!--     <ul class="quick-actions"> -->
 <!--       <li class="bg_lb"> <a href="#"> <i class="icon-dashboard"></i> My Dashboard </a> </li> -->
@@ -173,11 +170,12 @@ function resetMenu() {
 <!--     </div> -->
     </div>
   </div>
-</div>
+
  <div id="showDialogDiv">
  </div>
 <!--Footer-part-->
 <div class="row-fluid">
+</div>
 </div>
 <!--end-Footer-part-->
 </body>
