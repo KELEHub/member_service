@@ -7,15 +7,12 @@
 	int year = c.get(Calendar.YEAR);
 	int month = c.get(Calendar.MONTH) + 1;
 %>
+<div style="overflow:auto; height:800px">
  <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/IntegralManagerController/showRangeIntegralIssueManager.do" method="POST" id="rangeIntegralForm">
 	</form>
   </div>
 <div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a>
-	</div>
 	<h1>
 		极差积分发放
 	</h1>
@@ -76,4 +73,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>

@@ -61,8 +61,8 @@ $(function(){
             });            
 });
 </script>
+<div style="overflow:auto; height:800px">
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/ServiceManagerController/showApplyServiceManager.do" method="POST" id="applyServiceManagerForm">
 	</form>
   </div>
@@ -113,7 +113,7 @@ $(function(){
 		</div>
 	</div>
 </div>
-
+</div>
 <div id="myModal" class="modal hide">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>

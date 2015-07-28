@@ -62,13 +62,8 @@ $(function(){
 });
 </script>
 
-
+<div style="overflow:auto; height:800px">
 <div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
 	<h1>
 		礼包信息管理
 	</h1>
@@ -110,7 +105,7 @@ $(function(){
 		</div>
 	</div>
 </div>
-
+</div>
 
 
 

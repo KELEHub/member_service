@@ -75,6 +75,7 @@ $(function(){
             });            
 });
 </script>
+<div style="overflow:auto; height:800px">
 <div id="content-header">
 	<div id="breadcrumb">
 		<a href="#" title="Go to Home" class="tip-bottom"><i
@@ -160,4 +161,5 @@ $(function(){
 			</div>
 		</div>
 	</div>
+</div>
 </div>

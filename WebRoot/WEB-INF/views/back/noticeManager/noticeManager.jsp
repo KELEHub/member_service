@@ -9,7 +9,6 @@
 </script>
 
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
     <form action="/NoticeManagerController/showNoticeManager.do" method="POST" id="noticeManagerForm">
 	</form>
   </div>

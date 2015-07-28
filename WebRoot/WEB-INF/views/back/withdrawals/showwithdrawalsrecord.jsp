@@ -75,7 +75,8 @@ $(function(){
             });            
 });
 </script>
-<div class="container-fluid" id="content-header">
+<div style="overflow:auto; height:800px">
+<div class="container-fluid" id="content-header" >
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
@@ -85,9 +86,11 @@ $(function(){
 				</div>
 			
 			  <div class="widget-content nopadding">
-					<form class="form-horizontal"
-						action="/withdrawals/searchWithdrawalszRecord.do" method="POST"
+					<form 
+						action="/withdrawals/showWithdrawalszRecord.do" method="POST"
 						id="searchWidhdrawalsxForm">
+						</form>
+						<div class="form-horizontal">
 						<div class="control-group">
 							<label class="control-label">会员账号:</label>
 							<div class="controls">
@@ -96,10 +99,10 @@ $(function(){
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 					<div class="form-actions">
 						<input type="submit" value="查询"
-							onclick="searchMembers('searchWidhdrawalsxForm')"
+							onclick="searchMembers()"
 							class="btn btn-success">
 							<input type="button" value="导出提现记录"
 							onclick="exportTiXian('searchWidhdrawalsxForm')"
@@ -117,7 +120,7 @@ $(function(){
 								<th>手续费</th>
 								<th>实际金额</th>
 								<th>余额</th>
-								<th>状态</th>
+								<th style="width:50px">状态</th>
 								<th style="width:200px">操作</th>
 							</tr>
 						</thead>
@@ -149,4 +152,5 @@ $(function(){
 			</div>
 		</div>
 	</div>
+</div>
 </div>

@@ -75,7 +75,7 @@ $(function(){
 });
 </script>
 
-<div class="container-fluid">
+<div class="container-fluid" style="overflow:auto; height:800px">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">

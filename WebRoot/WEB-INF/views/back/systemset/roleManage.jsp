@@ -8,7 +8,7 @@
     <form action="/rolemanage/showRoleManage.do" method="POST" id="searchRoleForm">
 	</form>
   </div>
-<div class="container-fluid">
+<div class="container-fluid" style="overflow:auto; height:700px">
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="widget-box">
