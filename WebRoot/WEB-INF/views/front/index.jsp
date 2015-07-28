@@ -77,7 +77,7 @@ function resetMenu() {
 }
 </script>
 </head>
-<body>
+<body style="overflow: hidden;">
 <!--Header-part-->
 <div id="header">
   <h1><a href="dashboard.html">会员中心</a></h1>
@@ -97,7 +97,6 @@ function resetMenu() {
 <!--close-top-serch--> 
 
 <!--sidebar-menu-->
-
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard2</a>
   <ul>
     <c:forEach var="item1" items="${menuList}">
