@@ -52,7 +52,12 @@ public class MyGiftsController {
 					GiftsForm form = new GiftsForm();
 					form.setCreateTime(gd.getCreateTime().toString());
 					if(info==null){
-						form.setName("礼包_"+"未知");
+						if(gd.getName()!=null && !"".equals(gd.getName())){
+							form.setName(gd.getName());
+						}else{
+							form.setName("礼包_"+"未知");
+						}
+						
 					}else{
 						form.setName("礼包_"+info.getNumber());
 					}
