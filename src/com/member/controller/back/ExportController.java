@@ -25,6 +25,7 @@
 //import com.member.entity.SendGiftsDetails;
 //import com.member.services.back.InformationService;
 //import com.member.services.back.InstitutionService;
+//import com.member.util.CommonUtil;
 //
 //@Controller
 //@RequestMapping(value = "/ExportController")
@@ -63,7 +64,6 @@
 //					info.setLeaderServiceNumber(serviceIPList.get(0).getA_submiti_number());
 //				}
 //				info.setNumber(old.getI_number());
-//				info.setName(old.getI_name());
 //				info.setAge(old.getI_age());
 //				info.setPassword(old.getI_password());
 //				info.setProtectPassword(old.getI_protectpassword());
@@ -99,11 +99,10 @@
 //		}
 //		//礼包导入
 //		String participationHql = "from Participation";
-//		 
 //		List<Participation> OldParticipationList = (List<Participation>)nmsUserDao.queryByHql(participationHql);
 //		if(OldParticipationList!=null && OldParticipationList.size()>0){
 //			for(Participation participation : OldParticipationList){
-//				if(participation.getP_count()<5){
+//				if(participation.getP_count()<10 && participation.getP_state()!=1){
 //					GiftsDetails gf = new GiftsDetails();
 //					Information info =informationService.getInformationByNumber(participation.getP_inumber());
 //					if(info == null){
@@ -113,9 +112,20 @@
 //					gf.setUserId(info.getId());
 ////					gf.setChildId(info.getId());
 //					gf.setNumber(info.getNumber());
-//					gf.setGiftEnum(GiftEnum.FIVE);
 //					String date =participation.getP_indate().toString().replace("-", "");
-//					int day = participation.getP_indate().getDate();
+//					int month = Integer.valueOf(date.substring(4,6));
+//					int day = Integer.valueOf(date.substring(6,8));
+//					String dayStr = String.valueOf(day);
+//					if(dayStr.length()<2){
+//						dayStr="0"+dayStr;
+//					}
+//					int dayNumber = Integer.valueOf(String.valueOf(month)+dayStr);
+//					if(dayNumber>410){
+//						gf.setGiftEnum(GiftEnum.TEN);
+//					}else{
+//						gf.setGiftEnum(GiftEnum.FIVE);
+//					}
+//					
 //					String dateNumber="";
 //					if(day<=10){
 //						dateNumber="01";
@@ -142,32 +152,37 @@
 //					}
 //					gf.setBatchNo(batch);
 //					gf.setPointNumber(participation.getP_count()+1);
-//					gf.setName("礼包_"+"未知");
+//					gf.setName("礼包"+"_"+participation.getP_number());
 //					gf.setCreateTime(participation.getP_indate());
 //					nmsUserDao.saveOrUpdate(gf);
 //					//详细礼包信息
-//					int countGifts = 5;
+//					int countGifts = 0;
+//					if(gf.getGiftEnum().equals(GiftEnum.FIVE)){
+//						countGifts=5;
+//					}else{
+//						countGifts=10;
+//					}
 //					Institution inst = institutionService.getInstitutionInfo();
 //					for(int i =participation.getP_count()+1;i<=countGifts;i++){
 //						SendGiftsDetails sg = new SendGiftsDetails();
 //						sg.setUserId(info.getId());
 ////						sg.setChildId(info.getId());
 //						sg.setNumber(info.getNumber());
-//						sg.setGiftEnum(GiftEnum.FIVE);
-//						int countNumber = participation.getP_indate().getMonth()+i-1;
+//						sg.setGiftEnum(gf.getGiftEnum());
+//						int countNumber = Integer.valueOf(date.substring(4,6))+i-1;
 //						int realNumber = 0;
 //						if(countNumber>12){
-//							realNumber=(participation.getP_indate().getYear()+1)*100+(i-(13-participation.getP_indate().getMonth()));
+//							realNumber=(Integer.valueOf(date.substring(0,4))+1)*100+(i-(13-Integer.valueOf(date.substring(4,6))));
 //						}else{
 //							realNumber=Integer.valueOf(date.substring(0,6))+i-1;
 //						}
 //						sg.setCountNumber(realNumber);
 //						sg.setDateNumber(date.substring(0,6)+dateNumber);
 //						sg.setBatchNo(batch);
-//						sg.setName("礼包_"+"未知");
+//						sg.setName("礼包"+"_"+participation.getP_number());
 //						sg.setCreateTime(new Date());
 //						sg.setPointNumber(i);
-//						sg.setGoldMoney(getGoldMoney(inst,i,GiftEnum.FIVE));
+//						sg.setGoldMoney(getGoldMoney(inst,i,gf.getGiftEnum()));
 //						sg.setGiftsDetailsId(gf.getId());
 //						sg.setCreateTime(new Date());
 //						nmsUserDao.saveOrUpdate(sg);
