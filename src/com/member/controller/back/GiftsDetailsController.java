@@ -363,6 +363,7 @@ public class GiftsDetailsController {
 			}
 			int year = CommonUtil.getYearNumber();
 			int mouth = CommonUtil.getMounthNumber();
+			int day = CommonUtil.getDay();
 			int nextMoth = 0;
 			int nextYear = 0;
 			String nextDayFrom = "";
@@ -378,6 +379,16 @@ public class GiftsDetailsController {
 			int threeCountNumber = 0;
 
 			if (BatchNoEnum.FIRST.equals(batchNo)) {
+				if(day==31){
+					if(mouth==12){
+						mouth=1;
+						year=year+1;
+					}else{
+						mouth=mouth+1;
+					}
+					countNumber=getNextCountNumber(String.valueOf(year),
+							String.valueOf(mouth));
+				}
 				nextBatchNo = BatchNoEnum.SECOND;
 				nextYear = year;
 				nextMoth = mouth;
@@ -522,6 +533,19 @@ public class GiftsDetailsController {
 		try {
 			int countNumber = CommonUtil.getCountNumber();
 			BatchNoEnum batchNo = CommonUtil.getBatchNo();
+			int day = CommonUtil.getDay();
+			if(day==31){
+				int year = CommonUtil.getYearNumber();
+				int mouth = CommonUtil.getMounthNumber();
+				if(mouth == 12){
+					mouth=1;
+					year=year+1;
+				}else{
+					mouth=mouth+1;
+				}
+				countNumber=getNextCountNumber(String.valueOf(year),
+						String.valueOf(mouth));
+			}
 			List<SendGiftsDetails> giftsList = giftsDetailsService
 					.getGiftsDetailsList(countNumber, batchNo);
 			if (giftsList != null && giftsList.size() > 0) {
