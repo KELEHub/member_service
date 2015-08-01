@@ -1038,6 +1038,22 @@ function exportTiXian(sFormId){
     form.submit();   //表
 }
 
+function exportNotDealTiXian(sFormId){
+	var form = $("<form>");   //定义一个form表单
+    form.attr('style','display:none');   //在form表单中添加查询参数
+    form.attr('target','');
+    form.attr('method','post');
+    form.attr('action',"/member_service/withdrawals/exportNotDealRecords.do");
+    var input1 = $('<input>'); 
+    input1.attr('type','hidden'); 
+    input1.attr('name','number'); 
+    input1.attr('value',$("#"+sFormId).find("input[name='number']").val()); 
+   
+    $('body').append(form);  //将表单放置在web中
+    form.append(input1);   //将查询参数控件提交到表单上
+    form.submit();   //表
+}
+
 function exportChongZhi(sFormId){
 	var form = $("<form>");   //定义一个form表单
     form.attr('style','display:none');   //在form表单中添加查询参数

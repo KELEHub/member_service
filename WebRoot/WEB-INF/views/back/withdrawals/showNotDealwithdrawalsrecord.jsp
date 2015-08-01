@@ -98,6 +98,9 @@ $(function(){
 						<input type="submit" value="查询"
 							onclick="searchMembers()"
 							class="btn btn-success">
+							<input type="submit" value="导出未处理提现记录"
+							onclick="exportNotDealTiXian('searchWidhdrawalsxForm')"
+							class="btn btn-success">
 					</div>
 				</div>
 				<div class="widget-content nopadding">
