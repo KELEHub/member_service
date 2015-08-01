@@ -70,7 +70,7 @@ $(function(){
             });            
 });
 </script>
-<div  style="overflow:auto; height:740px">  
+<div  style="overflow-x:hidden; height:85%">  
 <div class="container-fluid" id="content-header">
 	<div class="row-fluid">
 		<div class="span12">
