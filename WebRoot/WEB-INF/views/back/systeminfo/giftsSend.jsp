@@ -48,7 +48,7 @@ $(function(){
             });            
 });
 </script>
-<div style="overflow:auto; height:800px">
+<div style="overflow-x:hidden; height:85%">
   <div id="content-header">
     <form action="/GiftsDetailsController/showSend.do" method="POST" id="initGiftsForm">
 	</form>
