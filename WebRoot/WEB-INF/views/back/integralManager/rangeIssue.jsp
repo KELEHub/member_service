@@ -13,6 +13,7 @@
 	</form>
   </div>
 <div id="content-header">
+    <br/>
 	<h1>
 		极差积分发放
 	</h1>
