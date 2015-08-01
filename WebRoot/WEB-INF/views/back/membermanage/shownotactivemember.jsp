@@ -55,7 +55,7 @@ $(function(){
             });            
 });
 </script>
-<div style="overflow:auto; height:740px">
+<div style="overflow-x:hidden; height:85%">
 <div id="content-header">
     <br/>
 	<h1>
