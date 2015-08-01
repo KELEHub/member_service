@@ -15,6 +15,7 @@ public interface WithdrawalsService {
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName);
 	public BaseResult<Void> disAgreewithdrawals(Integer id,String dealUserName,String refuseReason);
 	public InputStream getExportRecords(String memeberNumber) throws Exception;
+	public InputStream getNotDealExportRecords(String memeberNumber) throws Exception;
 	int countWithdrawalsRecordByMemberNumberData(String memeberNumber,
 			Integer currentUserId, String currentUserNm);
 	int countNotDealWithdrawalsRecordData(String memeberNumber);

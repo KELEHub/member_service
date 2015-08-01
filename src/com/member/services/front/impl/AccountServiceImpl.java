@@ -180,6 +180,7 @@ public class AccountServiceImpl implements AccountService{
 		}
 		
 
+		
 		/**提现手续费 */
 		BigDecimal goldTakeRate = syspar.getGoldTake();
 		BigDecimal goldTake = goldTakeRate.multiply(tradeAmt);
@@ -225,7 +226,7 @@ public class AccountServiceImpl implements AccountService{
 		insertWithdrawals.setRealGetAmt(tradeAmt.subtract(goldTake));
 		
 		/**余额 */
-//		insertWithdrawals.setBalanceAmt(new BigDecimal(0));
+		insertWithdrawals.setBalanceAmt(shoppingMoney);
 		
 		/**状态  0:未处理，1：已处理 */
 		insertWithdrawals.setStatus("0");

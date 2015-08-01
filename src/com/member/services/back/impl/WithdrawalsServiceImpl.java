@@ -312,12 +312,18 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			result.setMsg("提现申请数据异常.");
 			return result;
 		}
-		
-		//取得当前审核的提现记录项目.
 		Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
+		
+		// 取得客户账户信息
+		Information ifm = getActInfo(singleResult.getMemberId());
+
+		BigDecimal shoppingMoney = ifm.getShoppingMoney();// 普通积分
+		//取得当前审核的提现记录项目.
+	
 		singleResult.setUserName(dealUserName);
 		singleResult.setStatus("2");
 		singleResult.setRefuseReason(refuseReason);
+		singleResult.setBalanceAmt(shoppingMoney);
 		withdrawalsDao.update(singleResult);
 		
 		result.setSuccess(true);
@@ -340,6 +346,24 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		}
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
 		return withdrawalsResult;
+	}
+
+	public List<Withdrawals> getNotDealWithdrawalsExportRecord(String memeberNumber) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String withdrawalsQuery = "from Withdrawals s where status='0' ";
+		if(!"".equals(memeberNumber)){
+			withdrawalsQuery+="and s.number=:number";
+			arguments.put("number", memeberNumber);
+		}
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, arguments);
+		return withdrawalsResult;
+	}
+	
+	@Override
+	public InputStream getNotDealExportRecords(String memeberNumber)
+			throws Exception {
+		List<Withdrawals> list = getNotDealWithdrawalsExportRecord(memeberNumber);
+		return excelExportService.exportWithdrawals(list);
 	}
 
 }
