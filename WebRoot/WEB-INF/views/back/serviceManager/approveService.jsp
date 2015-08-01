@@ -61,7 +61,7 @@ $(function(){
             });            
 });
 </script>
-<div style="overflow:auto; height:800px">
+<div style="overflow-x:hidden; height:85%">
   <div id="content-header">
     <form action="/ServiceManagerController/showApplyServiceManager.do" method="POST" id="applyServiceManagerForm">
 	</form>
