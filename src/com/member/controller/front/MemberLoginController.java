@@ -198,7 +198,7 @@ public class MemberLoginController {
 			}
 		}
 		result.setMsg("二级密码不正确");
-		result.setSuccess(true);
+		result.setSuccess(false);
 		return result;
 		
 		
@@ -221,7 +221,7 @@ public class MemberLoginController {
 			}
 		}
 		result.setMsg("原二级密码不正确");
-		result.setSuccess(true);
+		result.setSuccess(false);
 		return result;
 		
 	}
