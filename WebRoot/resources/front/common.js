@@ -600,6 +600,14 @@ function initMemberInfoUpdateSelect(){
 function saveWithFormAndDoNothint(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	alert(result.msg);
+	if(result.success){
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+	
 }
 
 function saveMemberInfo(sFormId){
