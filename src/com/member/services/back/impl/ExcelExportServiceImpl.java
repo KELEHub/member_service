@@ -107,7 +107,7 @@ public class ExcelExportServiceImpl implements ExcelExportService {
 			// 收款户姓名
             row1.createCell(2).setCellValue(arr2.length > 1 ? arr2[1] : "");
 			// 转账金额
-            row1.createCell(3).setCellValue(t.getTradeAmt().toString());
+            row1.createCell(3).setCellValue(t.getRealGetAmt().toString());
 			// 备注
             row1.createCell(4).setCellValue("提现");
 			// 收款银行
@@ -216,7 +216,7 @@ public class ExcelExportServiceImpl implements ExcelExportService {
 			// 收款户姓名
             row1.createCell(2).setCellValue(arr2[1]);
 			// 转账金额
-            row1.createCell(3).setCellValue(t.getChageAmt().toString());
+            row1.createCell(3).setCellValue(t.getRealGetAmt().toString());
 			// 备注
             row1.createCell(4).setCellValue("充值");
 			// 收款银行
