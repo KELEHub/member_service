@@ -230,6 +230,9 @@ public class AccountDetailsController {
 		if("cost".equals(project)){
 			return ProjectEnum.cost;
 		}
+		if("banckPoints".equals(project)){
+			return ProjectEnum.banckPoints;
+		}
 		return null;
 	}
 	
@@ -263,6 +266,9 @@ public class AccountDetailsController {
 		}
 		if(project.equals(ProjectEnum.cost)){
 			return "扣费";
+		}
+		if(project.equals(ProjectEnum.banckPoints)){
+			return "积分提现返还";
 		}
 		return null;
 	}
