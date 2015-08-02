@@ -113,7 +113,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		}
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		
-		String withdrawalsQuery = "from Withdrawals s where (status='1' or status='2') ";
+		String withdrawalsQuery = "from Withdrawals s where 1=1 ";
 		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
@@ -297,7 +297,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	
 	public List<Withdrawals> getWithdrawalsExportRecord(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String withdrawalsQuery = "from Withdrawals s where (status='1' or status='2') ";
+		String withdrawalsQuery = "from Withdrawals s where (s.status='1' or s.status='2') ";
 		if(!"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
@@ -308,7 +308,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 
 	public List<Withdrawals> getNotDealWithdrawalsExportRecord(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String withdrawalsQuery = "from Withdrawals s where status='0' ";
+		String withdrawalsQuery = "from Withdrawals s where s.status='0' ";
 		if(!"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);
@@ -322,6 +322,27 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			throws Exception {
 		List<Withdrawals> list = getNotDealWithdrawalsExportRecord(memeberNumber);
 		return excelExportService.exportWithdrawals(list);
+	}
+
+	@Override
+	public BaseResult<Void> deletewithdrawals(Integer id) {
+
+		BaseResult<Void> result = new BaseResult<Void>();
+		
+		String withdrawalsQuery = "from Withdrawals s where s.id=?";
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
+		
+		if(withdrawalsResult==null || withdrawalsResult.size()==0){
+			result.setSuccess(false);
+			result.setMsg("提现申请数据异常.");
+			return result;
+		}
+		
+		Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
+		withdrawalsDao.delete(singleResult);
+		result.setSuccess(true);
+		result.setMsg("删除成功.");
+		return result;
 	}
 
 }

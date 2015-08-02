@@ -94,27 +94,30 @@ public class ExcelExportServiceImpl implements ExcelExportService {
             
             //银行地址
             String[] arr5 = arr1[3].split(":");
-            String[] arr6 = arr5[1].split(" ");
+            String[] arr6 = new String[0];
+            if(arr5.length>1){
+            	arr6 = arr5[1].split(" ");
+            }
             
             HSSFRow row1 = sheet.createRow(i+1);  
 			// 会员编号
             row1.createCell(0).setCellValue(t.getNumber());
 			// 收款账户
-            row1.createCell(1).setCellValue(arr4[1]);
+            row1.createCell(1).setCellValue(arr4.length > 1 ? arr4[1] : "");
 			// 收款户姓名
-            row1.createCell(2).setCellValue(arr2[1]);
+            row1.createCell(2).setCellValue(arr2.length > 1 ? arr2[1] : "");
 			// 转账金额
             row1.createCell(3).setCellValue(t.getTradeAmt().toString());
 			// 备注
             row1.createCell(4).setCellValue("提现");
 			// 收款银行
-            row1.createCell(5).setCellValue(arr3[1]);
+            row1.createCell(5).setCellValue(arr3.length > 1 ? arr3[1] : "");
 			// 收款银行支行
-            row1.createCell(6).setCellValue(arr6[3]);
+            row1.createCell(6).setCellValue(arr6.length > 3 ? arr6[3] : "");
 			// 收款省/直辖市
-            row1.createCell(7).setCellValue(arr6[0]);
+            row1.createCell(7).setCellValue(arr6.length > 1 ? arr6[0] : "");
 			// 收款市县
-            row1.createCell(8).setCellValue(arr6[1]);
+            row1.createCell(8).setCellValue(arr6.length > 1 ? arr6[1] : "");
 			// 余额
             row1.createCell(9).setCellValue(t.getBalanceAmt()!=null ? t.getBalanceAmt().toString() : new BigDecimal(0).toString());
         }  

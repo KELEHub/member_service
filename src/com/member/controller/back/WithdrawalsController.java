@@ -147,6 +147,13 @@ public class WithdrawalsController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/deletewithdrawals")
+	@ResponseBody
+	public BaseResult<Void> deletewithdrawals(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		BaseResult<Void> result = withdrawalsService.deletewithdrawals(form.getId());
+		return result;
+	}
+	
 	@RequestMapping(value = "/showdisagreeWithdrawals")
 	public String showdisagree(@RequestBody WithdrawalsCheckForm form, Model model) {
 		model.addAttribute("form", form);

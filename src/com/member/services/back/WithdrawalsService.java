@@ -13,6 +13,7 @@ public interface WithdrawalsService {
 			int pageSize,int pageNumber);
 	public Withdrawals getWithdrawalsDetailById(Integer id);
 	public BaseResult<Void> agreewithdrawals(Integer id,String dealUserName);
+	public BaseResult<Void> deletewithdrawals(Integer id);
 	public BaseResult<Void> disAgreewithdrawals(Integer id,String dealUserName,String refuseReason);
 	public InputStream getExportRecords(String memeberNumber) throws Exception;
 	public InputStream getNotDealExportRecords(String memeberNumber) throws Exception;
