@@ -138,6 +138,9 @@ public class IntegralManagerController {
 				for (RangeIssueForm rif : list){
 					//获取，更新information表
 					Information info = integralManagerService.getInformationById(rif.getUserId());
+					if (info==null){
+						continue;
+					}
 					info.setRepeatedMoney(info.getRepeatedMoney().add(rif.getAvailableInt()));
 					info.setRepeatedAccumulative(info.getRepeatedAccumulative().add(rif.getAvailableInt()));
 					info.setShoppingMoney(info.getShoppingMoney().add(rif.getAvailableInt()));
