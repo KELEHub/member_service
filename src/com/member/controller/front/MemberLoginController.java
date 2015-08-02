@@ -183,21 +183,44 @@ public class MemberLoginController {
 	}
 	@RequestMapping(value = "/change1password",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> change1password(@RequestBody MemberOperForm form,Model model){
+	public BaseResult<Void> change1password(@RequestBody MemberOperForm form,Model model,HttpSession sesison){
+		Object logonUserO = sesison.getAttribute("logonUser");
+		Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+		String userNaemO =(String) logonUserMap.get("username");
+		Information info =  informationService.getInformationByNumber(userNaemO);
 		BaseResult<Void> result = new BaseResult<Void>();
-		institutionService.update1Password(form);
-		result.setMsg("修改登录密码成功.");
+		if(info!=null){
+			if(info.getProtectPassword().equals(form.getSecond1Password())){
+				institutionService.update1Password(form);
+				result.setMsg("修改登录密码成功.");
+				result.setSuccess(true);
+				return result;
+			}
+		}
+		result.setMsg("二级密码不正确");
 		result.setSuccess(true);
 		return result;
+		
 		
 	}
 	
 	@RequestMapping(value = "/change2password",method = RequestMethod.POST)
 	@ResponseBody
-	public BaseResult<Void> change2password(@RequestBody MemberOperForm form,Model model){
+	public BaseResult<Void> change2password(@RequestBody MemberOperForm form,Model model,HttpSession sesison){
+		Object logonUserO = sesison.getAttribute("logonUser");
+		Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+		String userNaemO =(String) logonUserMap.get("username");
+		Information info =  informationService.getInformationByNumber(userNaemO);
 		BaseResult<Void> result = new BaseResult<Void>();
-		institutionService.update2Password(form);
-		result.setMsg("修改二级密码成功.");
+		if(info != null){
+			if(info.getProtectPassword().equals(form.getSecond2Password())){
+				institutionService.update2Password(form);
+				result.setMsg("修改二级密码成功.");
+				result.setSuccess(true);
+				return result;
+			}
+		}
+		result.setMsg("原二级密码不正确");
 		result.setSuccess(true);
 		return result;
 		
