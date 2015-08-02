@@ -22,5 +22,7 @@ public enum ProjectEnum {
 	/** 激活会员*/
 	activateMember,
 	/** 扣费*/
-	cost;
+	cost,
+	/** 积分提现拒绝后返还*/
+	banckPoints;
 }
