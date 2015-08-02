@@ -672,6 +672,23 @@ function agreewithdrawals(id){
 	}
 }
 
+function deletewithdrawals(id){
+	if (window.confirm('删除的数据将不能被恢复，您确定要删除么？')) {
+		var reqObj={};
+		reqObj["id"]=id;
+		var result = ajaxRequestForJsonGetJson("/withdrawals/deletewithdrawals.do", reqObj);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form[id='searchWidhdrawalsxForm']").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
 function agreecharge(id){
 	if (window.confirm('您确定充值么？')) {
 		var reqObj={};

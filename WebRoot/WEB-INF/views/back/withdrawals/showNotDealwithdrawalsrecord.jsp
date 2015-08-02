@@ -61,7 +61,8 @@ $(function(){
         				$('td:eq(6)', nRow).html("未处理");
         				$('td:eq(7)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreewithdrawals("+aData.id+")\">提现</button>"+
-						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>");
+						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>"+
+						"<button class=\"btn\" onclick=\"deletewithdrawals("+aData.id+")\">删除记录</button>");
         			}else if (aData.status==1){
         				$('td:eq(6)', nRow).html("已处理");
         			}
@@ -98,7 +99,7 @@ $(function(){
 						<input type="submit" value="查询"
 							onclick="searchMembers()"
 							class="btn btn-success">
-							<input type="submit" value="导出未处理提现记录"
+							<input type="submit" value="导出提现申请处理"
 							onclick="exportNotDealTiXian('searchWidhdrawalsxForm')"
 							class="btn btn-success">
 					</div>
@@ -114,7 +115,7 @@ $(function(){
 								<th>手续费</th>
 								<th>实际金额</th>
 								<th>状态</th>
-								<th style="width:150px">操作</th>
+								<th style="width:250px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
