@@ -35,6 +35,12 @@
 							<input type="password" placeholder="确认新登录密码" name="onelevelpasswordconfirm" value=""/>
 						</div>
 					</div>
+					<div class="control-group">
+						<label class="control-label">二级密码</label>
+						<div class="controls">
+							<input type="password" placeholder="输入二级密码" name="second1Password" value=""/>
+						</div>
+					</div>
 				</form>
 				<div class="modal-footer">
 						<button data-dismiss="modal" class="save" type="button"
@@ -66,6 +72,7 @@
 							<input type="password" placeholder="确认新二级密码" name="twolevelpasswordconfirm" value=""/>
 						</div>
 					</div>
+
 				</form>
 				<div class="modal-footer">
 						<button data-dismiss="modal" class="save" type="button"
