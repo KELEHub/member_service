@@ -24,5 +24,7 @@ public enum ProjectEnum {
 	/** 扣费*/
 	cost,
 	/** 积分提现拒绝后返还*/
-	banckPoints;
+	banckPoints,
+	/** 取消处理*/
+	cancelData;
 }
