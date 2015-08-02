@@ -200,8 +200,8 @@ public class AccountServiceImpl implements AccountService{
 		BigDecimal goldTakeRate = syspar.getGoldTake();
 		BigDecimal goldTake = goldTakeRate.multiply(tradeAmt);
 		
-		//提现实际需要积分.
-		BigDecimal realWithDrawalsAmt = tradeAmt.add(goldTake);
+/*		//提现实际需要积分.
+		BigDecimal realWithDrawalsAmt = tradeAmt.add(goldTake);*/
 		
 		//取得客户账户信息
 		Information ifm = getActInfo(form.getId());
@@ -212,7 +212,7 @@ public class AccountServiceImpl implements AccountService{
 		BigDecimal catdoMoeyBd = shoppingMoney;
 		
 		//判断积分是否够提现
-		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
+		if(catdoMoeyBd.compareTo(tradeAmt)==-1){//积分小于提现金额
 			result.setSuccess(false);
 			result.setMsg("提现积分不足.");
 			return result;
