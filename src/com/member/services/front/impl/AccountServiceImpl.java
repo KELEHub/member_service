@@ -1,6 +1,8 @@
 package com.member.services.front.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +13,14 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.member.beans.back.enumData.KindDataEnum;
+import com.member.beans.back.enumData.ProjectEnum;
+import com.member.dao.AccountDetailsDao;
 import com.member.dao.ChargeDao;
 import com.member.dao.InformationDao;
 import com.member.dao.ParameterDao;
 import com.member.dao.WithdrawalsDao;
+import com.member.entity.AccountDetails;
 import com.member.entity.Charge;
 import com.member.entity.Information;
 import com.member.entity.SystemParameter;
@@ -40,6 +46,9 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Resource(name = "ParameterDaoImpl")
 	private ParameterDao parameterDao;
+	
+	@Resource(name = "AccountDetailsDaoImpl")
+	private AccountDetailsDao accountDetailsDao;
 	
 	@Override
 	public List<Charge> getMemberChargeInfoByUserName(String userName) {
@@ -164,6 +173,14 @@ public class AccountServiceImpl implements AccountService{
 			return result;
 		}
 		
+		//判断会员是否有提现，如果有提现，则不允许再提交提现申请
+		Withdrawals singleWith = getWithdrawalsByNumber(form.getNumber());
+		if(singleWith!=null){
+			result.setSuccess(false);
+			result.setMsg("您还有未处理的提现申请，暂时不能提现，请联系管理员处理您以前的申请.");
+			return result;
+		}
+		
 		BigDecimal goldMax = syspar.getGoldMax();
 		BigDecimal goldMin = syspar.getGoldMin();
 
@@ -179,8 +196,6 @@ public class AccountServiceImpl implements AccountService{
 			return result;
 		}
 		
-
-		
 		/**提现手续费 */
 		BigDecimal goldTakeRate = syspar.getGoldTake();
 		BigDecimal goldTake = goldTakeRate.multiply(tradeAmt);
@@ -193,8 +208,9 @@ public class AccountServiceImpl implements AccountService{
 
 		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
 		
-		//可以提现的积分=积分-服务积分
+		//可以提现的积分=积分
 		BigDecimal catdoMoeyBd = shoppingMoney;
+		
 		//判断积分是否够提现
 		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
 			result.setSuccess(false);
@@ -226,7 +242,7 @@ public class AccountServiceImpl implements AccountService{
 		insertWithdrawals.setRealGetAmt(tradeAmt.subtract(goldTake));
 		
 		/**余额 */
-		insertWithdrawals.setBalanceAmt(shoppingMoney);
+		insertWithdrawals.setBalanceAmt(shoppingMoney.subtract(tradeAmt));
 		
 		/**状态  0:未处理，1：已处理 */
 		insertWithdrawals.setStatus("0");
@@ -237,6 +253,62 @@ public class AccountServiceImpl implements AccountService{
 		/**提现银行信息*/
 		insertWithdrawals.setWithdrawalsBackInfo(form.getWithdrawalsBackInfo());
 		withdrawalsDao.save(insertWithdrawals);
+		
+		//1.扣除会员账户金额
+		BigDecimal shoppingMoneyBd = shoppingMoney;
+		BigDecimal afterShopingMoney =  shoppingMoneyBd.subtract(tradeAmt);
+		ifm.setShoppingMoney(afterShopingMoney);//普通积分
+		informationDao.update(ifm);
+		
+		// 3.插入账户明细表
+		AccountDetails insertAccountDetails = new AccountDetails();
+		/** 种类 */
+		insertAccountDetails.setKindData(KindDataEnum.points);
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		String dateNumber = "";
+		if (day <= 10) {
+			dateNumber = "01";
+		} else if (day <= 20) {
+			dateNumber = "02";
+		} else if (day <= 30) {
+			dateNumber = "03";
+		}
+		if (day == 31) {
+			dateNumber = "01";
+		}
+		/** 流水号 */
+		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
+		/** 日期类别统计 */
+		insertAccountDetails.setDateNumber(nowDateStr.substring(0, 6)
+				+ dateNumber);
+		/** 项目 */
+		insertAccountDetails.setProject(ProjectEnum.pointcash);
+		/** 积分余额 */
+		insertAccountDetails.setPointbalance(afterShopingMoney);
+		/** 葛粮币余额 */
+		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
+		/** 收入 */
+		insertAccountDetails.setIncome(new BigDecimal(0));
+		/** 支出 */
+		insertAccountDetails.setPay(tradeAmt);
+		/** 备注 */
+		insertAccountDetails.setRedmin("提现金额:" + tradeAmt + "手续费:" + goldTake
+				+ "实际到账金额:" + tradeAmt.subtract(goldTake) + "申请时间: || "
+				+ nowDateStr);
+		/** 用户ID */
+		insertAccountDetails.setUserId(ifm.getId());
+		/** 用户登录ID */
+		insertAccountDetails.setUserNumber(ifm.getNumber());
+		/** createTime 创建时间 */
+		insertAccountDetails.setCreateTime(new Date());
+		
+		accountDetailsDao.save(insertAccountDetails);
+				
 		//充值申请成功的时候.
 		result.setMsg("提交提现申请成功，请耐性等待处理.");
 		result.setSuccess(true);
@@ -261,6 +333,16 @@ public class AccountServiceImpl implements AccountService{
 	public Withdrawals getWithdrawalsDetailById(Integer id) {
 		String withdrawalsQuery = "from Withdrawals s where s.id=?";
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
+		if(withdrawalsResult!=null && withdrawalsResult.size()>0){
+			return (Withdrawals) withdrawalsResult.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	public Withdrawals getWithdrawalsByNumber(String number) {
+		String withdrawalsQuery = "from Withdrawals s where s.number=? and s.status='0'";
+		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, number);
 		if(withdrawalsResult!=null && withdrawalsResult.size()>0){
 			return (Withdrawals) withdrawalsResult.get(0);
 		}else{

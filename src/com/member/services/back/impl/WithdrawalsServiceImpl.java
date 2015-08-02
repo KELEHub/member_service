@@ -177,93 +177,11 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		
 		//取得当前审核的提现记录项目.
 		Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
-		//提现金额
-		BigDecimal tradeAmt = singleResult.getTradeAmt();
-		
-		
-//		SystemParameter syspar = getSystemParameter();
-		
-		//手续费
-		BigDecimal goldTake = singleResult.getTradeFee();
-		
-//		//提现实际需要积分.
-//		BigDecimal realWithDrawalsAmt = tradeAmt.add(goldTake);
-		//取得客户账户信息
-		Information ifm = getActInfo(singleResult.getMemberId());
-		
-		BigDecimal shoppingMoney = ifm.getShoppingMoney();//普通积分
-//		BigDecimal repeatedMoey = ifm.getRepeatedMoney();//服务积分
-		
-		//可以提现的积分=积分-服务积分
-//		BigDecimal catdoMoeyBd = shoppingMoney.subtract(repeatedMoey);
-//		//判断积分是否够提现
-//		if(catdoMoeyBd.compareTo(realWithDrawalsAmt)==-1){//积分小于提现金额
-//			result.setSuccess(false);
-//			result.setMsg("提现积分不足.");
-//			return result;
-//		}
-		
-		//进行提现处理.
-		//1.扣除会员账户金额
-		BigDecimal shoppingMoneyBd = shoppingMoney;
-		BigDecimal afterShopingMoney =  shoppingMoneyBd.subtract(tradeAmt);
-		ifm.setShoppingMoney(afterShopingMoney);//普通积分
-		informationDao.update(ifm);
 		
 		//2.更新提现信息的手续费，状态和实际金额。
-//		singleResult.setTradeFee(goldTake);
-//		singleResult.setRealGetAmt(tradeAmt.subtract(goldTake));
 		singleResult.setUserName(dealUserName);
 		singleResult.setStatus("1");
-		singleResult.setBalanceAmt(afterShopingMoney);
 		withdrawalsDao.update(singleResult);
-		
-		//3.插入账户明细表
-		AccountDetails insertAccountDetails = new AccountDetails();
-		/**种类 */
-		insertAccountDetails.setKindData(KindDataEnum.points);
-		Calendar d1 = Calendar.getInstance();
-		Date nowDate = d1.getTime();
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		String nowDateStr = format.format(nowDate);
-		
-		int day = d1.get(Calendar.DAY_OF_MONTH);
-		String dateNumber="";
-		if(day<=10){
-			dateNumber="01";
-		}else if(day<=20){
-			dateNumber="02";
-		}else if(day<=30){
-			dateNumber="03";
-		}
-		if(day==31){
-			dateNumber="01";
-		}
-		/**流水号 */
-		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
-		/**日期类别统计 */
-		insertAccountDetails.setDateNumber(nowDateStr.substring(0,6)+dateNumber);
-		/**项目 */
-		insertAccountDetails.setProject(ProjectEnum.pointcash);
-		/**积分余额 */
-		insertAccountDetails.setPointbalance(afterShopingMoney);
-		/**葛粮币余额 */
-		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
-		/**收入 */
-		insertAccountDetails.setIncome(new BigDecimal(0));
-		/**支出 */
-		insertAccountDetails.setPay(tradeAmt);
-		/**备注 */
-		insertAccountDetails.setRedmin("提现金额:" + tradeAmt + "手续费:" + goldTake
-				+ "实际到账金额:" + tradeAmt.subtract(goldTake) + "处理时间: || "
-				+ nowDateStr);
-		/**用户ID */
-		insertAccountDetails.setUserId(ifm.getId());
-		/**用户登录ID */
-		insertAccountDetails.setUserNumber(ifm.getNumber());
-		/** createTime 创建时间 */
-		insertAccountDetails.setCreateTime(new Date());
-		accountDetailsDao.save(insertAccountDetails);
 		
 		result.setSuccess(true);
 		result.setMsg("提现操作成功.");
@@ -291,16 +209,6 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		}
 	}
 	
-	private SystemParameter getSystemParameter(){
-		String hqlQuery = " from SystemParameter s";
-		List result = parameterDao.queryByHql(hqlQuery);
-		if(result!=null){
-			return (SystemParameter) result.get(0);
-		}else{
-			return null;
-		}
-	}
-
 	@Override
 	public BaseResult<Void> disAgreewithdrawals(Integer id, String dealUserName,String refuseReason) {
 		BaseResult<Void> result = new BaseResult<Void>();
@@ -313,19 +221,69 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			return result;
 		}
 		Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
-		
+		BigDecimal tradeAmt = singleResult.getTradeAmt();
 		// 取得客户账户信息
 		Information ifm = getActInfo(singleResult.getMemberId());
-
 		BigDecimal shoppingMoney = ifm.getShoppingMoney();// 普通积分
+		BigDecimal refustBalance = shoppingMoney.add(tradeAmt);
+		ifm.setShoppingMoney(refustBalance);//普通积分
+		informationDao.update(ifm);
+		
 		//取得当前审核的提现记录项目.
 	
 		singleResult.setUserName(dealUserName);
 		singleResult.setStatus("2");
 		singleResult.setRefuseReason(refuseReason);
-		singleResult.setBalanceAmt(shoppingMoney);
+		singleResult.setBalanceAmt(refustBalance);
 		withdrawalsDao.update(singleResult);
 		
+		// 3.插入账户明细表
+		AccountDetails insertAccountDetails = new AccountDetails();
+		/** 种类 */
+		insertAccountDetails.setKindData(KindDataEnum.points);
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		String dateNumber = "";
+		if (day <= 10) {
+			dateNumber = "01";
+		} else if (day <= 20) {
+			dateNumber = "02";
+		} else if (day <= 30) {
+			dateNumber = "03";
+		}
+		if (day == 31) {
+			dateNumber = "01";
+		}
+		/** 流水号 */
+		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
+		/** 日期类别统计 */
+		insertAccountDetails.setDateNumber(nowDateStr.substring(0, 6)
+				+ dateNumber);
+		/** 项目 */
+		insertAccountDetails.setProject(ProjectEnum.banckPoints);
+		/** 积分余额 */
+		insertAccountDetails.setPointbalance(refustBalance);
+		/** 葛粮币余额 */
+		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
+		/** 收入 */
+		insertAccountDetails.setIncome(tradeAmt);
+		/** 支出 */
+		insertAccountDetails.setPay(new BigDecimal(0));
+		/** 备注 */
+		insertAccountDetails.setRedmin("提现金额:" + tradeAmt + "收入原因:提现拒绝，提现积分退回" + "处理时间: || "
+				+ nowDateStr);
+		/** 用户ID */
+		insertAccountDetails.setUserId(ifm.getId());
+		/** 用户登录ID */
+		insertAccountDetails.setUserNumber(ifm.getNumber());
+		/** createTime 创建时间 */
+		insertAccountDetails.setCreateTime(new Date());
+		accountDetailsDao.save(insertAccountDetails);
+				
 		result.setSuccess(true);
 		result.setMsg("拒绝提现成功.");
 		return result;
