@@ -175,6 +175,9 @@ public class BackAccountController {
 		if(project.equals(ProjectEnum.cost)){
 			return "扣费";
 		}
+		if(project.equals(ProjectEnum.banckPoints)){
+			return "积分提现返还";
+		}
 		return null;
 	}
 	
