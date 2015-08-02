@@ -5,7 +5,7 @@
 <div id="showAccChargeRefuseReason" class="modal hide" style="width: 800px;">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
-		<h3>充值拒绝理由.</h3>
+		<h3>拒绝理由.</h3>
 	</div>
 	<div class="modal-body">
 		<div class="widget-box">
