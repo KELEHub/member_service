@@ -2,12 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<div style="overflow-x:hidden; height:85%">
 <div id="content-header">
 	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
+		<form action="/MemberLoginController/changepassword.do" method="POST"
+					id="refreshpage">
+					</form>
 	</div>
+	<br/>
 	<h1>
 		修改密码
 	</h1>
@@ -24,6 +26,12 @@
 					id="update1password">
 					<input type="hidden" name="userId" value="${userid}"/>
 					<div class="control-group">
+						<label class="control-label">二级密码</label>
+						<div class="controls">
+							<input type="password" placeholder="输入二级密码" name="second1Password" value=""/>
+						</div>
+					</div>
+					<div class="control-group">
 						<label class="control-label">新密码</label>
 						<div class="controls">
 							<input type="password" placeholder="新登录密码" name="onelevelpassword" value=""/>
@@ -35,12 +43,7 @@
 							<input type="password" placeholder="确认新登录密码" name="onelevelpasswordconfirm" value=""/>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label">二级密码</label>
-						<div class="controls">
-							<input type="password" placeholder="输入二级密码" name="second1Password" value=""/>
-						</div>
-					</div>
+					
 				</form>
 				<div class="modal-footer">
 						<button data-dismiss="modal" class="save" type="button"
@@ -60,6 +63,12 @@
 				<form action="/MemberLoginController/change2password.do" method="POST"
 					id="update2password">
 					<input type="hidden" name="userId" value="${userid}"/>
+			        <div class="control-group">
+						<label class="control-label">原二级密码</label>
+						<div class="controls">
+							<input type="password" placeholder="输入原二级密码" name="second2Password" value=""/>
+						</div>
+					</div>
 					<div class="control-group">
 						<label class="control-label">新密码</label>
 						<div class="controls">
@@ -82,4 +91,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
