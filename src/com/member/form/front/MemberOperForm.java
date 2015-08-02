@@ -11,6 +11,10 @@ public class MemberOperForm {
 	private String twolevelpassword;
 	
 	private String twolevelpasswordconfirm;
+	
+	private String second1Password;
+	
+	private String second2Password;
 
 	public Integer getUserId() {
 		return userId;
@@ -51,4 +55,22 @@ public class MemberOperForm {
 	public void setTwolevelpasswordconfirm(String twolevelpasswordconfirm) {
 		this.twolevelpasswordconfirm = twolevelpasswordconfirm;
 	}
+
+	public String getSecond1Password() {
+		return second1Password;
+	}
+
+	public void setSecond1Password(String second1Password) {
+		this.second1Password = second1Password;
+	}
+
+	public String getSecond2Password() {
+		return second2Password;
+	}
+
+	public void setSecond2Password(String second2Password) {
+		this.second2Password = second2Password;
+	}
+	
+	
 }
