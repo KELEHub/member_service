@@ -61,9 +61,14 @@ $(function(){
         				$('td:eq(6)', nRow).html("未处理");
         				$('td:eq(7)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreecharge("+aData.id+")\">充值完成</button>"+
-						"<button class=\"btn\" onclick=\"disAgreeCharge("+aData.id+")\">拒绝充值</button>");
+						"<button class=\"btn\" onclick=\"disAgreeCharge("+aData.id+")\">拒绝充值</button>"+
+						"<button class=\"btn\" onclick=\"showChargeDetail("+aData.id+")\">会员备注</button>"
+						);
         			}else if (aData.status==1){
         				$('td:eq(6)', nRow).html("已处理");
+        				$('td:eq(7)', nRow).html(
+						"<button class=\"btn\" onclick=\"showChargeDetail("+aData.id+")\">会员备注</button>"
+						);
         			}
                    	return nRow;
                  }
