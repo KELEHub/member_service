@@ -141,7 +141,8 @@ public class MemberManageServiceImpl implements MemberManageService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void updateMemberPassword(Integer id) {
 		Information member = getMemberById(id);
-		member.setPassword("123");
+		member.setPassword("123456");
+		member.setProtectPassword("123456");
 		informationDao.update(member);
 	}
 
