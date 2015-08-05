@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<div style="overflow-x:hidden; height:85%">
 <div id="content-header">
 </div>
 <div class="container-fluid">
@@ -14,7 +15,7 @@
 						服务协议
 					</h5>
 				</div>
-				<div class="widget-content nopadding">
+				<div style="width: 800px;height:auto;position: relative;padding: 15px;overflow-y: auto;">
 					<div class="form-horizontal">
 						${result}
 					</div>
@@ -28,4 +29,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
