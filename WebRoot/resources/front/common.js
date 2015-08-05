@@ -700,6 +700,23 @@ function showAccWithdrawalsDetail(memberId){
 	showDynamicDialog("/acc/showAccWithdrawalsDetail.do", reqObj, "showAccWithdrawalsDetail");
 }
 
+function cancelWithdrawals(id){
+	if (window.confirm('您确定要取消提现申请么？')) {
+		var reqObj = {};
+		reqObj["id"] = id;
+		var result = ajaxRequestForJsonGetJson("/acc/cancelWithdrawals.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
 function editProduct(id){
 	var reqObj = {};
 	reqObj["id"] = id;

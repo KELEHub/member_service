@@ -65,10 +65,13 @@ $(function(){
         			}else if (aData.status==1){
         				$('td:eq(7)', nRow).html("已处理");
         				$('td:eq(8)', nRow).html(infoButton);
-        			}else {
+        			}else if (aData.status==2){
         				$('td:eq(7)', nRow).html("已拒绝");
         				var refuseReasonButton = "<button class=\"btn\" onclick=\"showWithDrawalsRefuseReason("+aData.id+")\">拒绝理由</button>";
         				$('td:eq(8)', nRow).html(infoButton+refuseReasonButton);
+        			}else if (aData.status==3){
+        				$('td:eq(7)', nRow).html("已取消");
+        				$('td:eq(8)', nRow).html(infoButton);
         			}
                    	return nRow;
                  }
