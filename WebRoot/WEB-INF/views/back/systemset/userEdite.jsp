@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<div style="overflow-x:hidden; height:85%">
   <div id="content-header">
     <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
-    <form action="/CreateUserController/show.do" method="POST" id="updateUserForm">
+    <form action="/userEditeController/show.do" method="POST" id="updateUserCountForm">
 	</form>
   </div>
 <div class="container-fluid">
@@ -98,4 +99,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
