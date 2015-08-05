@@ -20,6 +20,8 @@ public interface AccountService {
 	
 	public BaseResult<Void> doAccWithdrawals(MemberWithdrawalsApplyForm form);
 	
+	public BaseResult<Void> cancelWithdrawals(MemberWithdrawalsApplyForm form);
+	
 	public Withdrawals getWithdrawalsDetailById(Integer id);
 
 }

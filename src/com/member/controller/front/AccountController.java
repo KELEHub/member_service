@@ -110,5 +110,11 @@ public class AccountController {
 		return "front/memberinfo/showsrefusereason";
 	}
 	
+	@RequestMapping(value = "/cancelWithdrawals",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> cancelWithdrawals(@RequestBody MemberWithdrawalsApplyForm form,Model model){
+		BaseResult<Void> result = accountService.cancelWithdrawals(form);
+		return result;
+	}
 	
 }

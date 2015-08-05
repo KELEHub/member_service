@@ -73,8 +73,8 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 			}
 		}
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		
-		String withdrawalsQuery = "from Withdrawals s where (status='1' or status='2') ";
+//		(status='1' or status='2')
+		String withdrawalsQuery = "from Withdrawals s where s.status<>'0' ";
 		if(memeberNumber != null && !"".equals(memeberNumber)){
 			withdrawalsQuery+="and s.number=:number";
 			arguments.put("number", memeberNumber);

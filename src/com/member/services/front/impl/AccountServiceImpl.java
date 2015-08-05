@@ -369,4 +369,74 @@ public class AccountServiceImpl implements AccountService{
 			return null;
 		}
 	}
+
+	@Override
+	public BaseResult<Void> cancelWithdrawals(MemberWithdrawalsApplyForm form) {
+		BaseResult<Void> result = new BaseResult<Void>();
+	
+		Withdrawals singleResult = getWithdrawalsDetailById(form.getId());
+		BigDecimal tradeAmt = singleResult.getTradeAmt();
+		// 取得客户账户信息
+		Information ifm = getActInfo(singleResult.getMemberId());
+		BigDecimal shoppingMoney = ifm.getShoppingMoney();// 普通积分
+		BigDecimal refustBalance = shoppingMoney.add(tradeAmt);
+		ifm.setShoppingMoney(refustBalance);//普通积分
+		informationDao.update(ifm);
+		
+		//取得当前审核的提现记录项目.
+		singleResult.setStatus("3");
+		singleResult.setBalanceAmt(refustBalance);
+		withdrawalsDao.update(singleResult);
+		
+		// 3.插入账户明细表
+		AccountDetails insertAccountDetails = new AccountDetails();
+		/** 种类 */
+		insertAccountDetails.setKindData(KindDataEnum.points);
+		Calendar d1 = Calendar.getInstance();
+		Date nowDate = d1.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String nowDateStr = format.format(nowDate);
+
+		int day = d1.get(Calendar.DAY_OF_MONTH);
+		String dateNumber = "";
+		if (day <= 10) {
+			dateNumber = "01";
+		} else if (day <= 20) {
+			dateNumber = "02";
+		} else if (day <= 30) {
+			dateNumber = "03";
+		}
+		if (day == 31) {
+			dateNumber = "01";
+		}
+		/** 流水号 */
+		insertAccountDetails.setCountNumber(CommonUtil.getCountNumber());
+		/** 日期类别统计 */
+		insertAccountDetails.setDateNumber(nowDateStr.substring(0, 6)
+				+ dateNumber);
+		/** 项目 */
+		insertAccountDetails.setProject(ProjectEnum.cancelData);
+		/** 积分余额 */
+		insertAccountDetails.setPointbalance(refustBalance);
+		/** 葛粮币余额 */
+		insertAccountDetails.setGoldmoneybalance(ifm.getCrmMoney());
+		/** 收入 */
+		insertAccountDetails.setIncome(tradeAmt);
+		/** 支出 */
+		insertAccountDetails.setPay(new BigDecimal(0));
+		/** 备注 */
+		insertAccountDetails.setRedmin("提现金额:" + tradeAmt + "收入原因:用户取消提现申请，提现积分退回" + "处理时间: || "
+				+ nowDateStr);
+		/** 用户ID */
+		insertAccountDetails.setUserId(ifm.getId());
+		/** 用户登录ID */
+		insertAccountDetails.setUserNumber(ifm.getNumber());
+		/** createTime 创建时间 */
+		insertAccountDetails.setCreateTime(new Date());
+		accountDetailsDao.save(insertAccountDetails);
+				
+		result.setSuccess(true);
+		result.setMsg("取消提现成功.");
+		return result;
+	}
 }
