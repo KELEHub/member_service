@@ -265,8 +265,8 @@ public class InformationServiceImpl implements InformationService{
 			moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
 			moneyStatistics.setDeclarationId(info.getId());
 			moneyStatistics.setDeclarationNumber(info.getNumber());
-			moneyStatistics.setDeclarationBenefitId(selfInfo.getId());
-			moneyStatistics.setDeclarationBenefitNumber(selfInfo.getNumber());
+			moneyStatistics.setDeclarationBenefitId(selfInfo.getLeaderServiceId());
+			moneyStatistics.setDeclarationBenefitNumber(selfInfo.getLeaderServiceNumber());
 			moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
 			moneyStatistics.setState(0);
 			institutionDao.saveOrUpdate(moneyStatistics);
