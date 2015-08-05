@@ -2,19 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script type="text/javascript">
+	initMemberInfoUpdateSelect();
+</script>
+<div style="overflow-x:hidden; height:85%">
 <div id="content-header">
-	<div id="breadcrumb">
-		<a href="#" title="Go to Home" class="tip-bottom"><i
-			class="icon-home"></i> Home</a> <a href="#" class="current">Buttons
-			&amp; icons</a>
-	</div>
+    <br/>
 	<h1>
 		我的基本信息
 	</h1>
 </div>
-<script type="text/javascript">
-	initMemberInfoUpdateSelect();
-</script>
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -120,4 +117,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
