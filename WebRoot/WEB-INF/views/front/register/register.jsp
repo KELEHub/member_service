@@ -38,6 +38,16 @@
 						</div>	
 						<div class="control-group">
 							<label class="control-label">
+								初始密码：
+							</label>
+							<div class="controls">
+								<div class="input-append">
+									<input type="text" disabled="true" value="123456">
+								</div>
+							</div>
+						</div>	
+						<div class="control-group">
+							<label class="control-label">
 								推荐人:：
 							</label>
 							<div class="controls">
