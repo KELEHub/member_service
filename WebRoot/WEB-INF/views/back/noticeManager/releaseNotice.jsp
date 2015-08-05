@@ -7,7 +7,7 @@
 	ndPanel = new nicEditor({fullPanel : true}).panelInstance('releaseNotice_context');
 	ndinstance = ndPanel.nicInstances[0];
 </script>
-
+<div style="overflow-x:hidden; height:85%">
 <div class="container-fluid">
 <div class="row-fluid"  style="width: 850px;">
 	<div class="span6" style="width: 100%;">
@@ -72,4 +72,5 @@
 	<button type="submit" class="btn btn-success" onclick="saveNotice(document.getElementById('releaseNotice_title').value,document.getElementById('releaseNotice_category').value,ndinstance.getContent())">
 		确认发布
 	</button>
+</div>
 </div>
