@@ -340,6 +340,11 @@ public class RegisterController {
 				result.setSuccess(true);
 				return result;
 			}
+			if(ad.getIsActivate()==1){
+				result.setMsg("该会员已被激活，不能重复激活");
+				result.setSuccess(true);
+				return result;
+			}
 			//礼包生成和激活会员
 			boolean  flg = informationService.activate(ad, selfInfo, institution,recommendInfo);
 			if(flg){
