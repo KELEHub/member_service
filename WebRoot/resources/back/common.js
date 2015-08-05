@@ -672,6 +672,22 @@ function agreewithdrawals(id){
 	}
 }
 
+
+function agreewithdrawalswithnopoints(id){
+	var reqObj={};
+	reqObj["id"]=id;
+	var result = ajaxRequestForJsonGetJson("/withdrawals/agreewithdrawalswithnopoints.do", reqObj);
+	alert(result.msg);
+	if (result.success) {
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='searchWidhdrawalsxForm']").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+}
+
 function deletewithdrawals(id){
 	if (window.confirm('删除的数据将不能被恢复，您确定要删除么？')) {
 		var reqObj={};
@@ -710,6 +726,12 @@ function disAgreewithdrawals(id){
 	var reqObj = {};
 	reqObj["id"] = id;
 	showDynamicDialog("/withdrawals/showdisagreeWithdrawals.do", reqObj, "showdisagreewithdrawals");
+}
+
+function disAgreewithdrawalswithnopoints(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	showDynamicDialog("/withdrawals/showdisagreeWithdrawalsppp.do", reqObj, "showdisagreewithdrawalsppp");
 }
 
 function disAgreeCharge(id){
@@ -768,8 +790,8 @@ function editNoticeWin(arg_id) {
 		document.getElementById("noticeListId").value = result.elseExtend.id;
 		document.getElementById("editNotice_title").value = result.elseExtend.title;
 		document.getElementById("editNotice_category").value = result.elseExtend.category;
-		 document.getElementById("editNotice_content").value = arg_content;
-//		ndinstance1.setContent(result.elseExtend.content);
+		 document.getElementById("editNotice_content").value = result.elseExtend.content;
+		ndinstance1.setContent(result.elseExtend.content);
 	}
 }
 
