@@ -130,15 +130,16 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Information getInformationById(Integer id) {
+	public Information getInformationByNumber(String number) {
 		List<Information> result = (List<Information>) integralManagerDao.queryByHql(
-				HqlServiceManager.getServiceById, id);
+				HqlServiceManager.getServiceByNumber, number);
 		if(result!=null){
 			return (Information) result.get(0);
 		}else{
 			return null;
 		}
 	}
+	
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -153,12 +154,12 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void saveOrUpdateRelation(Information info,AccountDetails ad,Integer BenefitId,Integer serialNumber) {
+	public void saveOrUpdateRelation(Information info,AccountDetails ad,String BenefitNumber,Integer serialNumber) {
 		integralManagerDao.saveOrUpdate(info);
 		integralManagerDao.saveOrUpdate(ad);
-		String hql = "update RepeatedMoneyStatistics set state=1 where declarationBenefitId=? and serialNumber<?";
+		String hql = "update RepeatedMoneyStatistics set state=1 where declarationBenefitNumber=? and serialNumber<?";
 		List<Object> list = new ArrayList<Object>();
-		list.add(BenefitId);
+		list.add(BenefitNumber);
 		list.add(serialNumber);
 		integralManagerDao.executeHqlUpdate(hql, list);
 	}
