@@ -12,6 +12,7 @@
 		$(this).css('display','none'); 
 	});
 </script>
+<div style="overflow-x:hidden; height:85%">
 	<div class="modal-header">
 		<button data-dismiss="modal" class="close" type="button">×</button>
 		<h3>公告内容</h3>
@@ -36,4 +37,5 @@
 	<div id="hiddenDivContents" style="display: none;">
 	 ${result.content}
 	</div>
+</div>
 </div>
