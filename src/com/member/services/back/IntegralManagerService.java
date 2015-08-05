@@ -20,14 +20,14 @@ public interface IntegralManagerService {
 	
 	List<AccountDetails> getIntegralHistoryPointsByNumber(String number);
 
-	Information getInformationById(Integer id);
+	Information getInformationByNumber(String number);
 	
 	public List<AccountDetails> getFromgiftsHistoryPoints(int pageSize,int pageNumber);
 	
 	public int countFromgiftsHistoryPoints();
 
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
-			Integer BenefitId, Integer serialNumber);
+			String BenefitNumber, Integer serialNumber);
 
 	List<AccountDetails> getMemberBycountNumberAndUserNumber(
 			Integer countNumber, String userNumber);
