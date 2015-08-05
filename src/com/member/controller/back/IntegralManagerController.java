@@ -137,7 +137,7 @@ public class IntegralManagerController {
 			if(list!=null &&list.size()>0){
 				for (RangeIssueForm rif : list){
 					//获取，更新information表
-					Information info = integralManagerService.getInformationById(rif.getUserId());
+					Information info = integralManagerService.getInformationByNumber(rif.getUserNumber());
 					if (info==null){
 						continue;
 					}
@@ -148,7 +148,17 @@ public class IntegralManagerController {
 					
 					//更新在AccountDetails表中添加一条纪律
 					List<AccountDetails> member = integralManagerService.getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), info.getNumber());
-					if (member==null){
+					if (member!=null && member.size()>0){
+						AccountDetails memberInfo = member.get(0);
+						/**积分余额 */
+						memberInfo.setPointbalance(info.getRepeatedMoney());
+						/**葛粮币余额 */
+						memberInfo.setGoldmoneybalance(info.getCrmMoney());
+						/**收入 */
+						memberInfo.setIncome(memberInfo.getIncome().add(rif.getAvailableInt()));
+						integralManagerService.saveOrUpdateRelation(info, memberInfo, rif.getUserNumber(), serialNumber);
+						
+					}else{
 						AccountDetails accountDetail = new AccountDetails();
 						accountDetail.setKindData(KindDataEnum.points);
 						/**日期类别统计 */
@@ -175,16 +185,7 @@ public class IntegralManagerController {
 						
 						//更新RepeatedMoneyStatistics表
 						
-						integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserId(), serialNumber);
-					}else{
-						AccountDetails memberInfo = member.get(0);
-						/**积分余额 */
-						memberInfo.setPointbalance(info.getRepeatedMoney());
-						/**葛粮币余额 */
-						memberInfo.setGoldmoneybalance(info.getCrmMoney());
-						/**收入 */
-						memberInfo.setIncome(memberInfo.getIncome().add(rif.getAvailableInt()));
-						integralManagerService.saveOrUpdateRelation(info, memberInfo, rif.getUserId(), serialNumber);
+						integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserNumber(), serialNumber);
 					}
 				}
 			}
