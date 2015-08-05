@@ -178,6 +178,9 @@ public class BackAccountController {
 		if(project.equals(ProjectEnum.banckPoints)){
 			return "积分提现返还";
 		}
+		if(project.equals(ProjectEnum.cancelData)){
+			return "取消申请返还";
+		}
 		return null;
 	}
 	
