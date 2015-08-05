@@ -315,6 +315,11 @@ function saveParameter(sFormId){
 	var result = ajaxRequestForFormGetJson(sFormId);
 	if(result.success){
 		alert(result.msg);
+		$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+	});
 	}
 }
 
