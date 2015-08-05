@@ -72,4 +72,12 @@ public class NoticeManagerServiceImpl implements NoticeManagerService {
 				HqlNoticeManager.getNotice);
 		return protocolList.get(0);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Notice getProtocolList() {
+		List<Notice> protocolList = (List<Notice>)releaseNoticeDao.queryByHql(
+				HqlNoticeManager.getProtocolList);
+		return protocolList.get(0);
+	}
 }
