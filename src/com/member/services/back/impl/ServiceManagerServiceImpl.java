@@ -37,9 +37,9 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Information getServiceById(Integer id) {
+	public Information getServiceByNumber(String number) {
 		List<Information> result = (List<Information>) serviceManagerDao.queryByHql(
-				HqlServiceManager.getServiceById, id);
+				HqlServiceManager.getServiceByNumber, number);
 		if(result!=null){
 			return (Information) result.get(0);
 		}else{
@@ -133,5 +133,16 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveOrUpdate(Object obj) {
 		serviceManagerDao.saveOrUpdate(obj);
+	}
+
+	@Override
+	public Information getServiceById(Integer id) {
+		List<Information> result = (List<Information>) serviceManagerDao.queryByHql(
+				HqlServiceManager.getServiceById, id);
+		if(result!=null){
+			return (Information) result.get(0);
+		}else{
+			return null;
+		}
 	}
 }
