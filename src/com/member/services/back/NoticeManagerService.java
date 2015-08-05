@@ -18,5 +18,7 @@ public interface NoticeManagerService {
 	List<Notice> getNoticeInfo(NoticeForm form);
 
 	Notice getProtocol();
+	
+	public Notice getProtocolList();
 
 }
