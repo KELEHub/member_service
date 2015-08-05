@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<div style="overflow-x:hidden; height:85%">
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -35,4 +36,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
