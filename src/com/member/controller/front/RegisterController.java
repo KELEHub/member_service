@@ -55,7 +55,7 @@ public class RegisterController {
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
 	public String show(Model model, HttpSession sesison) {
 		try {
-			Notice protocol = noticeManagerService.getProtocol();
+			Notice protocol = noticeManagerService.getProtocolList();
 			model.addAttribute("result",protocol.getContent());
 			return "front/register/protocol";
 		} catch (Exception e) {
@@ -201,7 +201,7 @@ public class RegisterController {
 			newInfo.setActivateNumber(activateNumber.getNumber());
 			newInfo.setIdentity(form.getIdentity());
 			newInfo.setPhoneNumber(form.getPhoneNumber());
-			newInfo.setPassword("123");
+			newInfo.setPassword("123456");
 			newInfo.setBankName(form.getBankname());
 			newInfo.setBankProvince(form.getBankProvince());
 			newInfo.setBankCity(form.getBankCity());
@@ -224,7 +224,7 @@ public class RegisterController {
 			newInfo.setRepeatedAccumulative(new BigDecimal(0));
 			newInfo.setShoppingMoney(new BigDecimal(0));
 			newInfo.setShoppingAccumulative(new BigDecimal(0));
-			newInfo.setProtectPassword("123");
+			newInfo.setProtectPassword("123456");
 			institutionService.savaOrUpdate(newInfo);
 			result.setSuccess(true);
 			result.setMsg("注册成功");
