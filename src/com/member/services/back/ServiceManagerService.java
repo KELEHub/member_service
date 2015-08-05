@@ -2,6 +2,8 @@ package com.member.services.back;
 
 import java.util.List;
 
+import org.snmp4j.smi.Integer32;
+
 import com.member.entity.ApplyService;
 import com.member.entity.ForbidForm;
 import com.member.entity.Information;
@@ -15,6 +17,8 @@ public interface ServiceManagerService {
 	List<ApplyService> getApplyService(String customerPar,
 			int pageSize,int pageNumber);
 
+	Information getServiceByNumber(String number);
+	
 	Information getServiceById(Integer id);
 
 	void updateInfo(InformationForm msf);
