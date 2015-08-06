@@ -48,10 +48,9 @@ $(function(){
                 },
                 "aoColumns": [
                         { "mData": "userNumber" },
-                        { "mData": "project" },
-                        { "mData": "income" },
-                        { "mData": "pay" },
-                        { "mData": "pointbalance" },
+                        { "mData": "points" },
+                        { "mData": "serverpoints" },
+                        { "mData": "totalpoints" },
                         { "mData": "createTime" }
                     ]
             });            
@@ -102,10 +101,9 @@ $(function(){
 						<thead>
 							<tr>
 								<th>会员账号</th>
-								<th>项目</th>
-								<th>收入</th>
-								<th>支出</th>
-								<th>积分余额</th>
+								<th>积分</th>
+								<th>服务积分</th>
+								<th>合计</th>
 								<th>日期</th>
 							</tr>
 						</thead>
