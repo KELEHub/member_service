@@ -52,7 +52,7 @@ $(document).ready(function(){
 	});
 	
 	// === Resize window related === //
-	$(window).resize(function()
+	/*$(window).resize(function()
 	{
 		if($(window).width() > 479)
 		{
@@ -81,7 +81,7 @@ $(document).ready(function(){
 	{
 	   $('#content-header .btn-group').css({width:'auto'});
 		ul.css({'display':'block'});
-	}
+	}*/
 	
 	// === Tooltips === //
 	$('.tip').tooltip();	
