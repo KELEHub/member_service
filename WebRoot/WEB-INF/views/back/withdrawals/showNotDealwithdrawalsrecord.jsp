@@ -5,6 +5,8 @@
 <script type="text/javascript">
 var table = null;
 function searchMembers(){
+document.getElementById("number").value = document.getElementById("numberss").value;
+document.getElementById("numberss").value='';
    table.fnDraw();
 }
 $(function(){
@@ -90,7 +92,8 @@ $(function(){
 							<label class="control-label">会员账号:</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" id="number" name="number" value="${form.number}">
+									<input type="text" id="numberss" name="numberss" value="${form.number}">
+									<input type="hidden" id="number" name="number" value="${form.number}">
 								</div>
 							</div>
 						</div>
