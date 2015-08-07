@@ -5,6 +5,8 @@
 <script type="text/javascript">
 var table = null;
 function searchIntegral(){
+document.getElementById("userNumber").value = document.getElementById("userNumberss").value;
+document.getElementById("userNumberss").value='';
    table.fnDraw();
 }
 $(function(){
@@ -75,7 +77,9 @@ $(function(){
 							<label class="control-label">会员账号：</label>
 							<div class="controls">
 								<div class="input-append">
-									<input type="text" name="userNumber" id="userNumber"
+									<input type="text" name="userNumberss" id="userNumberss"
+										class="span11">
+										<input type="hidden" name="userNumber" id="userNumber"
 										class="span11">
 								</div>
 							</div>
