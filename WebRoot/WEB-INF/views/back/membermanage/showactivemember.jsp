@@ -5,6 +5,12 @@
 <script type="text/javascript">
 var table = null;
 function searchMembersFor(){
+document.getElementById("number").value = document.getElementById("numberss").value;
+document.getElementById("numberss").value='';
+document.getElementById("recommendNumber").value = document.getElementById("recommendNumberss").value;
+document.getElementById("recommendNumberss").value='';
+document.getElementById("serviceNumber").value = document.getElementById("serviceNumberss").value;
+document.getElementById("serviceNumberss").value='';
    table.fnDraw();
 }
 $(function(){
@@ -78,19 +84,23 @@ $(function(){
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">会员账号:</label>
 				<div class="controls">
-					<input type="text" id="number"  name="number" value="${form.number}">
+					<input type="text" id="numberss"  name="numberss" value="${form.number}">
+					<input type="hidden" id="number"  name="number" value="${form.number}">
 				</div>
 			</div>
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">推荐编号:</label>
 				<div class="controls">
-					<input type="text" id="recommendNumber" name="recommendNumber"  value="${form.recommendNumber }">
+					<input type="text" id="recommendNumberss" name="recommendNumberss"  value="${form.recommendNumber }">
+				    <input type="hidden" id="recommendNumber" name="recommendNumber"  value="${form.recommendNumber }">
+				    
 				</div>
 			</div>
 			<div class="control-group" style="float: left;margin-left: 10px;">
 				<label class="control-label">报单中心:</label>
 				<div class="controls">
-					<input type="text" id="serviceNumber" name="serviceNumber"   value="${form.serviceNumber }">
+					<input type="text" id="serviceNumberss" name="serviceNumberss"   value="${form.serviceNumber }">
+					<input type="hidden" id="serviceNumber" name="serviceNumber"   value="${form.serviceNumber }">
 				</div>
 			</div>
 		</div>
