@@ -61,8 +61,8 @@ $(function(){
         				$('td:eq(6)', nRow).html("未处理");
         				$('td:eq(7)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreewithdrawals("+aData.id+")\">提现</button>"+
-						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>"+
-						"<button class=\"btn\" onclick=\"deletewithdrawals("+aData.id+")\">删除记录</button>");
+						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>"
+						);
         			}else if (aData.status==1){
         				$('td:eq(6)', nRow).html("已处理");
         			}
