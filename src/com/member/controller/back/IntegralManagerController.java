@@ -55,29 +55,27 @@ public class IntegralManagerController {
 				pageNumber=1;
 			}
 		}
-		List<AccountDetails> list = integralManagerService.getIntegralHistoryPoints(number,Integer.parseInt(iDisplayLength),pageNumber);
-		List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
-		if(list!=null &&list.size()>0){
-			for(AccountDetails ad : list){
-				IntegralHistoryForm form =new IntegralHistoryForm();
-				form.setCreateTime(ad.getCreateTime().toString());
-				form.setIncome(ad.getIncome().toString());
-				form.setPay(ad.getPay().toString());
-				form.setPointbalance(ad.getPointbalance().toString());
-				form.setUserNumber(ad.getUserNumber());
-				if(ad.getProject().equals(ProjectEnum.servicepointsformuch)){
-					form.setProject("极差服务积分");
-				}else{
-					form.setProject("礼包释放积分");
-				}
-				result.add(form);
-			}
-		}
-		model.addAttribute("result", result);
+		List<IntegralHistoryForm> list = integralManagerService.getIntegralHistoryPoints(number,Integer.parseInt(iDisplayLength),pageNumber);
+		//if(list!=null &&list.size()>0){
+		//	for(AccountDetails ad : list){
+		//		IntegralHistoryForm form =new IntegralHistoryForm();
+		//		form.setCreateTime(ad.getCreateTime().toString());
+		//		form.setIncome(ad.getIncome().toString());
+		//		form.setPay(ad.getPay().toString());
+		//		form.setPointbalance(ad.getPointbalance().toString());
+		//		form.setUserNumber(ad.getUserNumber());
+		//		if(ad.getProject().equals(ProjectEnum.servicepointsformuch)){
+		//			form.setProject("极差服务积分");
+		//		}else{
+		//			form.setProject("礼包释放积分");
+		//		}
+		//		result.add(form);
+		//	}
+		//}
 		
-		model.addAttribute("result", result);
+		model.addAttribute("result", list);
 		Map map = new HashMap();
-		map.put("aaData", result);
+		map.put("aaData", list);
 		// 查出来总共有多少条记录
 		map.put("iTotalRecords", iTotalRecords);
 		map.put("iTotalDisplayRecords",iTotalRecords);
@@ -166,7 +164,7 @@ public class IntegralManagerController {
 						/**流水号 */
 						accountDetail.setCountNumber(CommonUtil.getCountNumber());
 						/**项目 */
-						accountDetail.setProject(ProjectEnum.servicepointsforone);
+						accountDetail.setProject(ProjectEnum.servicepointsformuch);
 						/**积分余额 */
 						accountDetail.setPointbalance(info.getRepeatedMoney());
 						/**葛粮币余额 */
