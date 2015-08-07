@@ -18,7 +18,9 @@ import com.member.dao.HqlServiceManager;
 import com.member.dao.IntegralManagerDao;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
+import com.member.form.back.IntegralHistoryForm;
 import com.member.form.back.RangeIssueForm;
+import com.member.form.back.StatisticsForm;
 import com.member.services.back.IntegralManagerService;
 
 @SuppressWarnings("unchecked")
@@ -62,38 +64,75 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		 return null;
 	}
 
-	@Override
+	
 	@Transactional(readOnly=true)
-	public List<AccountDetails> getIntegralHistoryPoints(String number,int pageSize,int pageNumber) {
-		String hql = "from AccountDetails t where (t.project=:project1 or t.project=:project2) ";
+	public List<IntegralHistoryForm> getIntegralHistoryPoints(String number,int pageSize,int pageNumber) {
+		String hql = "select new map(userNumber as userNumber,case when max(t.project)=:gifts then sum(income) end as points,case when max(t.project)=:servermuch then sum(income) end as serverpoints,sum(income) as totalpoints,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where (t.project=:gifts or t.project=:servermuch)  ";
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		arguments.put("project1", ProjectEnum.fromgifts);
-		arguments.put("project2", ProjectEnum.servicepointsformuch);
+		arguments.put("gifts", ProjectEnum.fromgifts);
+		arguments.put("servermuch", ProjectEnum.servicepointsformuch);
 		if(number != null && !"".equals(number)){
 			hql=hql+" and userNumber = :number";
 			arguments.put("number", number);
 		}
-		hql=hql+" order by createTime desc";
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
+		
+		hql=hql+" group by to_char(createtime, 'YYYY-MM-DD'),userNumber order by to_char(createtime, 'YYYY-MM-DD') desc";
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
 		if(result!=null && result.size()>0){
-			return result;
+			List<IntegralHistoryForm> formList = new ArrayList<IntegralHistoryForm>();
+			for (Object obj : result) {
+				IntegralHistoryForm rif = new IntegralHistoryForm();
+				String datetime = ((Map<String, String>) obj)
+						.get("datetime");
+				rif.setCreateTime(datetime);
+				String points = null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("points")!=null){
+					points = String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("points"));
+				}
+				
+				rif.setPoints(points);
+				String serverpoints = null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("serverpoints")!=null){
+					serverpoints= String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("serverpoints"));
+				}
+				rif.setServerpoints(serverpoints);
+				String totalpoints= null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("totalpoints")!=null){
+					totalpoints = String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("totalpoints"));
+				}
+				rif.setTotalpoints(totalpoints);
+				String usernumber=((Map<String, String>) obj)
+				.get("userNumber");
+				rif.setUserNumber(usernumber);
+				formList.add(rif);
+			}
+			
+			
+			return formList;
 		}
 		return null;
 	}
 	@Override
 	@Transactional(readOnly=true)
 	public int countIntegralHistoryPoints(String number){
-		String hql = "from AccountDetails t where (t.project=:project1 or t.project=:project2) ";
+		String hql = "select new map(userNumber,case when max(t.project)=:gifts then sum(income) end as points,case when max(t.project)=:servermuch then sum(income) end as serverpoints,sum(income) as totalpoints,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where (t.project=:gifts or t.project=:servermuch)  ";
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		arguments.put("project1", ProjectEnum.fromgifts);
-		arguments.put("project2", ProjectEnum.servicepointsformuch);
+		arguments.put("gifts", ProjectEnum.fromgifts);
+		arguments.put("servermuch", ProjectEnum.servicepointsformuch);
 		if(number != null && !"".equals(number)){
 			hql=hql+" and userNumber = :number";
 			arguments.put("number", number);
 		}
-		hql=hql+" order by createTime desc";
+		
+		hql=hql+" group by to_char(createtime, 'YYYY-MM-DD'),userNumber order by to_char(createtime, 'YYYY-MM-DD') desc";
 	
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,arguments);
 		if(result!=null && result.size()>0){
 			return result.size();
 		}
