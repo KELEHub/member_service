@@ -663,6 +663,7 @@ function saveAllocationAuth(){
 }
 
 function agreewithdrawals(id){
+	if (window.confirm('您确定要提现么？')) {
 	var reqObj={};
 	reqObj["id"]=id;
 	var result = ajaxRequestForJsonGetJson("/withdrawals/agreewithdrawals.do", reqObj);
@@ -674,6 +675,7 @@ function agreewithdrawals(id){
 			ajaxRequestForFormGetJsp(formid);
 			resetTable();
 		});
+	}
 	}
 }
 
