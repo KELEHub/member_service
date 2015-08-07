@@ -2,7 +2,8 @@
 	outline:none !important;
 	-moz-outline: none !important;
 }
-html, body{height:100%}
+html, body{height:100%;}
+body{  min-width: 900px; position: relative;}
 /* Main */
 
 /*Bootstrap-overlay*/
@@ -1273,7 +1274,7 @@ form {
 	position:relative;
 }
 /* Responsive design */
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {
 #header h1 {
 	top: 10px; left:5px;
 	margin: 3px auto;
@@ -1588,3 +1589,4 @@ div.dataTables_wrapper .ui-widget-header {
 }
 #sidebar .content{ display:none;}
 }
+*/

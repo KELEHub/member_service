@@ -1,9 +1,9 @@
 body {
-	background:#2E363F;
+	background:#339933;
 }
 
 #header {
-	background-color: #1f262d;
+	background-color: #006634;
    margin-top:10px;
 }
 #search input[type=text], #search button {
@@ -14,7 +14,7 @@ body {
 }
 #sidebar > ul{border-bottom: 1px solid #37414b}
 #sidebar > ul > li {
-	border-top: 1px solid #37414b; border-bottom: 1px solid #1f262d;
+	border-top: 1px solid #37414b; border-bottom: 1px solid #006634;
 }
 #sidebar > ul > li.active {
     background-color: #27a9e3; border-bottom: 1px solid #27a9e3;  border-top: 1px solid #27a9e3;
@@ -28,7 +28,7 @@ body {
 	background-color: #27a9e3; color:#fff;
 }
 #sidebar > ul li ul {
-	background-color: #1e242b;
+	background-color: #006634;
 }
 #sidebar > ul li ul li a{ 
 	color:#FFFFFF;
@@ -44,7 +44,7 @@ body {
 	background-color: #47515b; color: #fff; 
 }
 #search input[type=text]:focus {
-	color: #2e363f; color: #fff; box-shadow:none;
+	color: #339933; color: #fff; box-shadow:none;
 }
 .dropdown-menu li a:hover, .dropdown-menu .active a, .dropdown-menu .active a:hover {
     color: #eeeeee;
@@ -54,7 +54,7 @@ body {
 .top_message{ float:right; padding:20px 12px; position:relative; top:-13px; border-left:1px solid #3D3A37; font-size:14px; line-height:20px; *line-height:20px; color:#333; text-align:center;  vertical-align:middle; cursor:pointer; }
 .top_message:hover{ background:#000}
 .rightzero{ right:0px; display:none;}
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {
 	#sidebar > a {
 		background:#27a9e3;
 		
@@ -69,7 +69,7 @@ body {
 		border-right: 6px solid #222222;
     }
 	.quick-actions_homepage .quick-actions li{ min-width:47%;}
-}
+}*/
 div.tagsinput { border:1px solid #CCC; background: #FFF; padding:5px; width:300px; height:100px; overflow-y: auto;}
 div.tagsinput span.tag { border: 1px solid #a5d24a; -moz-border-radius:2px; -webkit-border-radius:2px; display: block; float: left; padding: 5px; text-decoration:none; background: #cde69c; color: #638421; margin-right: 5px; margin-bottom:5px;font-family: helvetica;  font-size:13px;}
 div.tagsinput span.tag a { font-weight: bold; color: #82ad2b; text-decoration:none; font-size: 11px;  } 
