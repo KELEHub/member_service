@@ -20,4 +20,7 @@ public interface WithdrawalsService {
 	int countWithdrawalsRecordByMemberNumberData(String memeberNumber,
 			Integer currentUserId, String currentUserNm);
 	int countNotDealWithdrawalsRecordData(String memeberNumber);
+	
+	public BaseResult<Void> agreewithdrawalswithnopoints(Integer id,String dealUserName); 
+	public BaseResult<Void> disAgreewithdrawalsppp(Integer id, String dealUserName,String refuseReason);
 }
