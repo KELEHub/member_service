@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
+import com.member.form.back.IntegralHistoryForm;
 import com.member.form.back.RangeIssueForm;
 
 public interface IntegralManagerService {
@@ -14,7 +15,7 @@ public interface IntegralManagerService {
 
 	List<RangeIssueForm> getAvailableRangeIntegral(int serialNumber);
 	
-	List<AccountDetails> getIntegralHistoryPoints(String number,int pageSize,int pageNumber);
+	List<IntegralHistoryForm> getIntegralHistoryPoints(String number,int pageSize,int pageNumber);
 	
 	public int countIntegralHistoryPoints(String number);
 	
