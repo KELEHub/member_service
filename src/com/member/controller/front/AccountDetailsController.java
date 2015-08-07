@@ -93,8 +93,16 @@ public class AccountDetailsController {
 					  arguments.add(toDate(yearFlg,monthFlg));
 				  }
 				  if(!"space".equals(projectFlg)  && projectFlg!=null){
+					  if(ProjectEnum.servicepointsforone.equals(getProjectEnum(projectFlg))){
+						  condition= condition + " and (project=? or project=?)";
+						  arguments.add(ProjectEnum.servicepointsformuch);
+						  arguments.add(ProjectEnum.servicepointsforone);
+					  }else{
 						  condition= condition + " and project=?";
 						  arguments.add(getProjectEnum(projectFlg));
+					  }
+						  
+						  
 				  }
 				
 				int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
@@ -256,6 +264,9 @@ public class AccountDetailsController {
 //			return "积分转葛粮币减少";
 //		}
 		if(project.equals(ProjectEnum.servicepointsforone)){
+			return "服务积分";
+		}
+		if(project.equals(ProjectEnum.servicepointsformuch)){
 			return "服务积分";
 		}
 		if(project.equals(ProjectEnum.pointcash)){
