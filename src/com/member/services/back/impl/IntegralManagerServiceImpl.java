@@ -78,8 +78,8 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		
 		hql=hql+" group by to_char(createtime, 'YYYY-MM-DD'),userNumber order by to_char(createtime, 'YYYY-MM-DD') desc";
 		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
+		List<IntegralHistoryForm> formList = new ArrayList<IntegralHistoryForm>();
 		if(result!=null && result.size()>0){
-			List<IntegralHistoryForm> formList = new ArrayList<IntegralHistoryForm>();
 			for (Object obj : result) {
 				IntegralHistoryForm rif = new IntegralHistoryForm();
 				String datetime = ((Map<String, String>) obj)
@@ -116,7 +116,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 			
 			return formList;
 		}
-		return null;
+		return formList;
 	}
 	@Override
 	@Transactional(readOnly=true)
