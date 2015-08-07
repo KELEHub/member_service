@@ -8,6 +8,11 @@ public class IntegralHistoryForm {
 	private String pay;
 	private String pointbalance;
 	private String createTime;
+	
+	private String points;
+	private String serverpoints;
+	private String totalpoints;
+	
 	public String getUserNumber() {
 		return userNumber;
 	}
@@ -43,6 +48,24 @@ public class IntegralHistoryForm {
 	}
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+	public String getPoints() {
+		return points;
+	}
+	public void setPoints(String points) {
+		this.points = points;
+	}
+	public String getServerpoints() {
+		return serverpoints;
+	}
+	public void setServerpoints(String serverpoints) {
+		this.serverpoints = serverpoints;
+	}
+	public String getTotalpoints() {
+		return totalpoints;
+	}
+	public void setTotalpoints(String totalpoints) {
+		this.totalpoints = totalpoints;
 	}
 	
 
