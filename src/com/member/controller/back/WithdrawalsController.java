@@ -160,6 +160,12 @@ public class WithdrawalsController {
 		return "back/withdrawals/disagreeWithdrawals";
 	}
 	
+	@RequestMapping(value = "/showdisagreeWithdrawalsppp")
+	public String showdisagreeWithdrawalsppp(@RequestBody WithdrawalsCheckForm form, Model model) {
+		model.addAttribute("form", form);
+		return "back/withdrawals/disagreeWithdrawalsppp";
+	}
+	
 	@RequestMapping(value = "/disagreewithdrawals")
 	@ResponseBody
 	public BaseResult<Void> disagreewithdrawals(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
@@ -171,6 +177,24 @@ public class WithdrawalsController {
 				form.getId(), (String) userName, form.getRefuseReason());
 		return result;
 	}
+	
+	
+	
+	@RequestMapping(value = "/disagreewithdrawalsppp")
+	@ResponseBody
+	public BaseResult<Void> disagreewithdrawalsppp(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		
+		BaseResult<Void> result = withdrawalsService.disAgreewithdrawalsppp(
+				form.getId(), (String) userName, form.getRefuseReason());
+		return result;
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/showWithDrawalsDetail",method = RequestMethod.POST)
 	public String showMemberDetails(@RequestBody MemberSearchForm form,Model model){
@@ -244,5 +268,19 @@ public class WithdrawalsController {
 				bos.close();
 		}
 		return null;
+	}
+	
+	
+	
+	@RequestMapping(value = "/agreewithdrawalswithnopoints")
+	@ResponseBody
+	public BaseResult<Void> agreewithdrawalswithnopoints(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		
+		BaseResult<Void> result = 
+		withdrawalsService.agreewithdrawalswithnopoints(form.getId(),(String)userName);
+		return result;
 	}
 }
