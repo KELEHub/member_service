@@ -166,6 +166,9 @@ public class BackAccountController {
 		if(project.equals(ProjectEnum.servicepointsforone)){
 			return "服务积分";
 		}
+		if(project.equals(ProjectEnum.servicepointsformuch)){
+			return "服务积分";
+		}
 		if(project.equals(ProjectEnum.fromgifts)){
 			return "礼包发放";
 		}
