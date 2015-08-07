@@ -40,7 +40,7 @@ $(function(){
                 "aoColumns": [
                         { "mData": "number" },
                         { "mData": "name" },
-                        { "mData": "shoppingMoney" },
+                        { "mData": "crmMoney" },
                         { "mData": "phoneNumber" },
                         { "mData": "bankName" },
                         { "mData": "postNumber" },
@@ -89,7 +89,7 @@ $(function(){
 							<tr>
 								<th>账号</th>
 								<th>姓名</th>
-								<th style="width:80px">积分余额</th>
+								<th style="width:80px">葛粮币余额</th>
 								<th>电话号码</th>
 								<th>开户银行</th>
 								<th>邮政编码</th>
