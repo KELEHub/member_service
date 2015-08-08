@@ -4,7 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.member.beans.back.ChargeDto;
 import com.member.entity.Charge;
 import com.member.form.ChargeOperForm;
 import com.member.form.back.MemberSearchForm;
@@ -95,15 +96,90 @@ public class ChargeController {
 		List<Charge> result = chargeService.getNoChargeList(number,
 				Integer.parseInt(iDisplayLength),pageNumber);
 
-		model.addAttribute("result", result);
+		model.addAttribute("result", refactCharge(result));
 		Map map = new HashMap();
-		map.put("aaData", result);
+		map.put("aaData", refactCharge(result));
 		// 查出来总共有多少条记录
 		map.put("iTotalRecords", iTotalRecords);
 		map.put("iTotalDisplayRecords",iTotalRecords);
 		return map;
 	}
 	
+	private List<ChargeDto> refactCharge(List<Charge> chargeList){
+		List<ChargeDto> result = new ArrayList<ChargeDto>();
+		for(Charge charge : chargeList){
+			ChargeDto dto = new ChargeDto();
+			String backInfo = charge.getChageBackInfo();
+			// 分开总的字符串
+			String[] arr1 = backInfo.split(" > ");
+			// 姓名
+			String[] arr2 = arr1[0].split(":");
+			// 银行名称
+			String[] arr3 = arr1[1].split(":");
+			// 银行账号
+			String[] arr4 = arr1[2].split(":");
+			// 银行地址
+			String[] arr5 = arr1[3].split(":");
+			//联系电话
+			String[] arr6 = arr1[4].split(":");
+			dto.setId(charge.getId());;
+			
+			/**会员登录ID */
+			dto.setNumber(charge.getNumber());
+			
+			/**交易流水号*/
+			dto.setTradeNo(charge.getTradeNo());
+			
+			/**充值类型*/
+			dto.setChargeType(charge.getChargeType());
+			
+			/**充值日期*/
+			dto.setChargeDate(charge.getChargeDate());
+			/**充值金额*/
+			dto.setChageAmt(charge.getChageAmt());
+			
+			/**实际得到金额*/
+			dto.setRealGetAmt(charge.getRealGetAmt());
+
+			/**充值手续费*/
+			dto.setChargesurplus(charge.getChargesurplus());
+			
+			/**充值状态 0：未处理，1：已处理*/
+			dto.setStatus(charge.getStatus());
+			
+			/**充值种类*/
+			dto.setChargeCategory(charge.getChargeCategory());
+			
+			/**充值银行信息*/
+			dto.setChageBackInfo(charge.getChageBackInfo());
+			
+			/**充值备注*/
+			dto.setChageMessage(charge.getChageMessage());
+
+			/**审核人*/
+			dto.setUserName(charge.getUserName());
+			
+			/**拒绝理由*/
+			dto.setRefuseReason(charge.getRefuseReason());
+			
+			/**会员姓名*/
+			dto.setNumberName(arr2.length > 1 ? arr2[1] : "");
+			
+			/**会员联系电话*/
+			dto.setNumberPhone(arr6.length > 1 ? arr6[1] : "");
+			
+			/**充值银行名称*/
+			dto.setBankName(arr3.length > 1 ? arr3[1] : "");
+			
+			/**充值银行地址*/
+			dto.setBankAddress(arr5.length > 1 ? arr5[1] : "");
+			
+			/**充值银行卡号*/
+			dto.setBankCardNo(arr4.length > 1 ? arr4[1] : "");
+			result.add(dto);
+		}
+		return result;
+	}
 	
 	
 	

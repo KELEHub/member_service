@@ -461,7 +461,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 	public BaseResult<Void> deletewithdrawals(Integer id) {
 
 		BaseResult<Void> result = new BaseResult<Void>();
-		
+				
 		String withdrawalsQuery = "from Withdrawals s where s.id=?";
 		List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, id);
 		

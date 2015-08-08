@@ -374,6 +374,14 @@ public class AccountServiceImpl implements AccountService{
 	public BaseResult<Void> cancelWithdrawals(MemberWithdrawalsApplyForm form) {
 		BaseResult<Void> result = new BaseResult<Void>();
 	
+		// 周杰修改
+		if (CommonUtil.getDay() != 2 && CommonUtil.getDay() != 22
+				&& CommonUtil.getDay() != 12) {
+			result.setSuccess(false);
+			result.setMsg("现在不是提现申请日,不能进行取消操作.");
+			return result;
+		}
+		
 		Withdrawals singleResult = getWithdrawalsDetailById(form.getId());
 		BigDecimal tradeAmt = singleResult.getTradeAmt();
 		// 取得客户账户信息
