@@ -705,8 +705,8 @@ function cancelWithdrawals(id){
 		var reqObj = {};
 		reqObj["id"] = id;
 		var result = ajaxRequestForJsonGetJson("/acc/cancelWithdrawals.do",reqObj);
+		alert(result.msg);
 		if (result.success) {
-			alert(result.msg);
 			$('#myModal').modal('hide');
 			$("#content-header").find("form").each(function() {
 				var formid = this.id;
