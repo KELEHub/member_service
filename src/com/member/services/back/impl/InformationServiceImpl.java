@@ -127,12 +127,17 @@ public class InformationServiceImpl implements InformationService{
 			institutionDao.saveOrUpdate(recommendInfo);
 			institutionDao.saveOrUpdate(acFrom);
 			//礼包生成信息
+			int day = CommonUtil.getDay();
 			GiftsDetails gf = new GiftsDetails();
 			gf.setUserId(recommendInfo.getId());
 			gf.setChildId(info.getId());
 			gf.setNumber(recommendInfo.getNumber());
 			gf.setGiftEnum(CommonUtil.getGiftEnum());
-			gf.setCountNumber(CommonUtil.getCountNumber());
+			if(day==31){
+				gf.setCountNumber(CommonUtil.getCountNumber()+1);
+			}else{
+				gf.setCountNumber(CommonUtil.getCountNumber());
+			}
 			gf.setDateNumber(CommonUtil.getDateNumber());
 			gf.setBatchNo(CommonUtil.getBatchNo());
 			gf.setPointNumber(1);
@@ -155,11 +160,30 @@ public class InformationServiceImpl implements InformationService{
 				sg.setGiftEnum(CommonUtil.getGiftEnum());
 				int countNumber = CommonUtil.getMounthNumber()+i-1;
 				int realNumber = 0;
-				if(countNumber>12){
-					realNumber=(CommonUtil.getYearNumber()+1)*100+(i-(13-CommonUtil.getMounthNumber()));
+				if(day==31){
+					int year = CommonUtil.getYearNumber();
+					int mouth = CommonUtil.getMounthNumber();
+					if(mouth+i > 12){
+						mouth=mouth+i-12;
+						year=year+1;
+					}else{
+						mouth=mouth+i;
+					}
+					String mouthStr="";
+					if(String.valueOf(mouth).length()==1){
+						mouthStr="0"+String.valueOf(mouth);
+					}else{
+						mouthStr=String.valueOf(mouth);
+					}
+					realNumber=Integer.valueOf(String.valueOf(year)+mouthStr);
 				}else{
-					realNumber=CommonUtil.getCountNumber()+i-1;
+					if(countNumber>12){
+						realNumber=(CommonUtil.getYearNumber()+1)*100+(i-(13-CommonUtil.getMounthNumber()));
+					}else{
+						realNumber=CommonUtil.getCountNumber()+i-1;
+					}
 				}
+				
 				sg.setCountNumber(realNumber);
 				sg.setDateNumber(CommonUtil.getDateNumber());
 				sg.setBatchNo(CommonUtil.getBatchNo());
