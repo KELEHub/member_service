@@ -70,7 +70,7 @@ public class CommonUtil {
 		if(dayStr.length()<2){
 			dayStr="0"+dayStr;
 		}
-		int dayNumber = Integer.valueOf(nowDateStr.substring(3,6)+dayStr);
+		int dayNumber = Integer.valueOf(nowDateStr.substring(4,6)+dayStr);
 		if(dayNumber>410){
 			return GiftEnum.TEN;
 		}else{
