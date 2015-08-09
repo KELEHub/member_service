@@ -1,5 +1,6 @@
 package com.member.controller.back;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.beans.back.enumData.BatchNoEnum;
 import com.member.beans.back.enumData.GiftEnum;
+import com.member.common.config.FrameConfig;
 import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
 import com.member.entity.AccountDetails;
@@ -346,128 +348,264 @@ public class GiftsDetailsController {
 	@RequestMapping(value = "/showSend", method = RequestMethod.POST)
 	public String showSend(Model model) {
 		try {
-
 			int countNumber = CommonUtil.getCountNumber();
 			BatchNoEnum batchNo = CommonUtil.getBatchNo();
-			String dayFrom = "";
-			String dayTo = "";
-			if (BatchNoEnum.FIRST.equals(batchNo)) {
-				dayFrom = "1(31)";
-				dayTo = "10";
-			} else if (BatchNoEnum.SECOND.equals(batchNo)) {
-				dayFrom = "11";
-				dayTo = "20";
-			} else if (BatchNoEnum.THREE.equals(batchNo)) {
-				dayFrom = "21";
-				dayTo = "30";
-			}
-			int year = CommonUtil.getYearNumber();
-			int mouth = CommonUtil.getMounthNumber();
-			int day = CommonUtil.getDay();
-			int nextMoth = 0;
-			int nextYear = 0;
-			String nextDayFrom = "";
-			String nextDayTo = "";
-			BatchNoEnum nextBatchNo = null;
-			int nextCountNumber = 0;
-
-			int threeMoth = 0;
-			int threeYear = 0;
-			String threeDayFrom = "";
-			String threeDayTo = "";
-			BatchNoEnum threeBatchNo = null;
-			int threeCountNumber = 0;
-
-			if (BatchNoEnum.FIRST.equals(batchNo)) {
-				if(day==31){
-					if(mouth==12){
-						mouth=1;
-						year=year+1;
+            //判断上一批次的处理是否结束
+			BatchNoEnum beforBatchNoEnum=getBeforBatchNoEnum(batchNo);
+			int beforDay = CommonUtil.getDay();
+			int beformouth=CommonUtil.getMounthNumber();
+			int beforYear= CommonUtil.getYearNumber();
+			int beforCountNumber=CommonUtil.getCountNumber();
+			if(BatchNoEnum.FIRST.equals(batchNo)){
+				if(beforDay!=31){
+					if(beformouth==1){
+						beformouth=12;
+						beforYear=beforYear-1;
 					}else{
-						mouth=mouth+1;
+						beformouth=beformouth-1;
 					}
-					countNumber=getNextCountNumber(String.valueOf(year),
-							String.valueOf(mouth));
 				}
-				nextBatchNo = BatchNoEnum.SECOND;
-				nextYear = year;
-				nextMoth = mouth;
-				nextDayFrom = "11";
-				nextDayTo = "20";
-
-				threeBatchNo = BatchNoEnum.THREE;
-				threeYear = year;
-				threeMoth = mouth;
-				threeDayFrom = "21";
-				threeDayTo = "30";
-			} else if (BatchNoEnum.SECOND.equals(batchNo)) {
-				nextBatchNo = BatchNoEnum.THREE;
-				nextYear = year;
-				nextMoth = mouth;
-				nextDayFrom = "21";
-				nextDayTo = "30";
-
-				threeBatchNo = BatchNoEnum.FIRST;
-				if (mouth == 12) {
-					threeYear = year + 1;
-					threeMoth = 1;
-				} else {
-					threeYear = year;
-					threeMoth = mouth + 1;
-				}
-				threeDayFrom = "1(31)";
-				threeDayTo = "10";
-
-			} else if (BatchNoEnum.THREE.equals(batchNo)) {
-				nextBatchNo = BatchNoEnum.FIRST;
-				if (mouth == 12) {
-					nextYear = year + 1;
-					nextMoth = 1;
-				} else {
-					nextYear = year;
-					nextMoth = mouth + 1;
-				}
-				nextDayFrom = "1(31)";
-				nextDayTo = "10";
-
-				threeBatchNo = BatchNoEnum.SECOND;
-				if (mouth == 12) {
-					threeYear = year + 1;
-					threeMoth = 1;
-				} else {
-					threeYear = year;
-					threeMoth = mouth + 1;
-				}
-				threeDayFrom = "11";
-				threeDayTo = "20";
 			}
-			nextCountNumber = getNextCountNumber(String.valueOf(nextYear),
-					String.valueOf(nextMoth));
-			threeCountNumber = getNextCountNumber(String.valueOf(threeYear),
-					String.valueOf(threeMoth));
+			beforCountNumber=getNextCountNumber(String.valueOf(beforYear),
+					String.valueOf(beformouth));
+			
+			String beforGold=giftsDetailsService.getCountGoldAll(beforCountNumber,
+					beforBatchNoEnum);
+			if(!"0".equals(beforGold)){
+				String dayFrom = "";
+				String dayTo = "";
+				if (BatchNoEnum.FIRST.equals(beforBatchNoEnum)) {
+					dayFrom = "1(31)";
+					dayTo = "10";
+				} else if (BatchNoEnum.SECOND.equals(beforBatchNoEnum)) {
+					dayFrom = "11";
+					dayTo = "20";
+				} else if (BatchNoEnum.THREE.equals(beforBatchNoEnum)) {
+					dayFrom = "21";
+					dayTo = "30";
+				}
+				int year = beforYear;
+				int mouth = beformouth;
+				int nextMoth = 0;
+				int nextYear = 0;
+				String nextDayFrom = "";
+				String nextDayTo = "";
+				BatchNoEnum nextBatchNo = null;
+				int nextCountNumber = 0;
 
-			// 当前积分发放总金额
-			String firstGold = String.valueOf(mouth) + "月" + dayFrom + "-"
-					+ dayTo + "应发放积分";
-			// 下批次积分发放总金额
-			String SecondGold = String.valueOf(nextMoth) + "月" + nextDayFrom
-					+ "-" + nextDayTo + "应发放积分";
-			;
-			// 下下批次积分发放总金额
-			String threeGold = String.valueOf(threeMoth) + "月" + threeDayFrom
-					+ "-" + threeDayTo + "应发放积分";
-			;
-			firstGold = firstGold
-					+ giftsDetailsService.getCountGoldAll(countNumber, batchNo);
-			SecondGold = SecondGold
-					+ giftsDetailsService.getCountGoldAll(nextCountNumber,
-							nextBatchNo);
-			threeGold = threeGold
-					+ giftsDetailsService.getCountGoldAll(threeCountNumber,
-							threeBatchNo);
-			model.addAttribute("firstGold", firstGold);
-			model.addAttribute("SecondGold", SecondGold);
-			model.addAttribute("threeGold", threeGold);
+				int threeMoth = 0;
+				int threeYear = 0;
+				String threeDayFrom = "";
+				String threeDayTo = "";
+				BatchNoEnum threeBatchNo = null;
+				int threeCountNumber = 0;
+
+				if (BatchNoEnum.FIRST.equals(beforBatchNoEnum)) {
+					nextBatchNo = BatchNoEnum.SECOND;
+					nextYear = year;
+					nextMoth = mouth;
+					nextDayFrom = "11";
+					nextDayTo = "20";
+
+					threeBatchNo = BatchNoEnum.THREE;
+					threeYear = year;
+					threeMoth = mouth;
+					threeDayFrom = "21";
+					threeDayTo = "30";
+				} else if (BatchNoEnum.SECOND.equals(beforBatchNoEnum)) {
+					nextBatchNo = BatchNoEnum.THREE;
+					nextYear = year;
+					nextMoth = mouth;
+					nextDayFrom = "21";
+					nextDayTo = "30";
+
+					threeBatchNo = BatchNoEnum.FIRST;
+					if (mouth == 12) {
+						threeYear = year + 1;
+						threeMoth = 1;
+					} else {
+						threeYear = year;
+						threeMoth = mouth + 1;
+					}
+					threeDayFrom = "1(31)";
+					threeDayTo = "10";
+
+				} else if (BatchNoEnum.THREE.equals(beforBatchNoEnum)) {
+					countNumber=getNextCountNumber(String.valueOf(beforYear),
+							String.valueOf(beformouth));
+					nextBatchNo = BatchNoEnum.FIRST;
+					if (mouth == 12) {
+						nextYear = year + 1;
+						nextMoth = 1;
+					} else {
+						nextYear = year;
+						nextMoth = mouth + 1;
+					}
+					nextDayFrom = "1(31)";
+					nextDayTo = "10";
+
+					threeBatchNo = BatchNoEnum.SECOND;
+					if (mouth == 12) {
+						threeYear = year + 1;
+						threeMoth = 1;
+					} else {
+						threeYear = year;
+						threeMoth = mouth + 1;
+					}
+					threeDayFrom = "11";
+					threeDayTo = "20";
+				}
+				nextCountNumber = getNextCountNumber(String.valueOf(nextYear),
+						String.valueOf(nextMoth));
+				threeCountNumber = getNextCountNumber(String.valueOf(threeYear),
+						String.valueOf(threeMoth));
+
+				// 当前积分发放总金额
+				String firstGold = String.valueOf(mouth) + "月" + dayFrom + "-"
+						+ dayTo + "应发放积分";
+				// 下批次积分发放总金额
+				String SecondGold = String.valueOf(nextMoth) + "月" + nextDayFrom
+						+ "-" + nextDayTo + "应发放积分";
+				;
+				// 下下批次积分发放总金额
+				String threeGold = String.valueOf(threeMoth) + "月" + threeDayFrom
+						+ "-" + threeDayTo + "应发放积分";
+				;
+				firstGold = firstGold
+						+ giftsDetailsService.getCountGoldAll(countNumber, beforBatchNoEnum);
+				SecondGold = SecondGold
+						+ giftsDetailsService.getCountGoldAll(nextCountNumber,
+								nextBatchNo);
+				threeGold = threeGold
+						+ giftsDetailsService.getCountGoldAll(threeCountNumber,
+								threeBatchNo);
+				model.addAttribute("firstGold", firstGold);
+				model.addAttribute("SecondGold", SecondGold);
+				model.addAttribute("threeGold", threeGold);
+				
+			}else{
+				String dayFrom = "";
+				String dayTo = "";
+				if (BatchNoEnum.FIRST.equals(batchNo)) {
+					dayFrom = "1(31)";
+					dayTo = "10";
+				} else if (BatchNoEnum.SECOND.equals(batchNo)) {
+					dayFrom = "11";
+					dayTo = "20";
+				} else if (BatchNoEnum.THREE.equals(batchNo)) {
+					dayFrom = "21";
+					dayTo = "30";
+				}
+				int year = CommonUtil.getYearNumber();
+				int mouth = CommonUtil.getMounthNumber();
+				int day = CommonUtil.getDay();
+				int nextMoth = 0;
+				int nextYear = 0;
+				String nextDayFrom = "";
+				String nextDayTo = "";
+				BatchNoEnum nextBatchNo = null;
+				int nextCountNumber = 0;
+
+				int threeMoth = 0;
+				int threeYear = 0;
+				String threeDayFrom = "";
+				String threeDayTo = "";
+				BatchNoEnum threeBatchNo = null;
+				int threeCountNumber = 0;
+
+				if (BatchNoEnum.FIRST.equals(batchNo)) {
+					if(day==31){
+						if(mouth==12){
+							mouth=1;
+							year=year+1;
+						}else{
+							mouth=mouth+1;
+						}
+						countNumber=getNextCountNumber(String.valueOf(year),
+								String.valueOf(mouth));
+					}
+					nextBatchNo = BatchNoEnum.SECOND;
+					nextYear = year;
+					nextMoth = mouth;
+					nextDayFrom = "11";
+					nextDayTo = "20";
+
+					threeBatchNo = BatchNoEnum.THREE;
+					threeYear = year;
+					threeMoth = mouth;
+					threeDayFrom = "21";
+					threeDayTo = "30";
+				} else if (BatchNoEnum.SECOND.equals(batchNo)) {
+					nextBatchNo = BatchNoEnum.THREE;
+					nextYear = year;
+					nextMoth = mouth;
+					nextDayFrom = "21";
+					nextDayTo = "30";
+
+					threeBatchNo = BatchNoEnum.FIRST;
+					if (mouth == 12) {
+						threeYear = year + 1;
+						threeMoth = 1;
+					} else {
+						threeYear = year;
+						threeMoth = mouth + 1;
+					}
+					threeDayFrom = "1(31)";
+					threeDayTo = "10";
+
+				} else if (BatchNoEnum.THREE.equals(batchNo)) {
+					nextBatchNo = BatchNoEnum.FIRST;
+					if (mouth == 12) {
+						nextYear = year + 1;
+						nextMoth = 1;
+					} else {
+						nextYear = year;
+						nextMoth = mouth + 1;
+					}
+					nextDayFrom = "1(31)";
+					nextDayTo = "10";
+
+					threeBatchNo = BatchNoEnum.SECOND;
+					if (mouth == 12) {
+						threeYear = year + 1;
+						threeMoth = 1;
+					} else {
+						threeYear = year;
+						threeMoth = mouth + 1;
+					}
+					threeDayFrom = "11";
+					threeDayTo = "20";
+				}
+				nextCountNumber = getNextCountNumber(String.valueOf(nextYear),
+						String.valueOf(nextMoth));
+				threeCountNumber = getNextCountNumber(String.valueOf(threeYear),
+						String.valueOf(threeMoth));
+
+				// 当前积分发放总金额
+				String firstGold = String.valueOf(mouth) + "月" + dayFrom + "-"
+						+ dayTo + "应发放积分";
+				// 下批次积分发放总金额
+				String SecondGold = String.valueOf(nextMoth) + "月" + nextDayFrom
+						+ "-" + nextDayTo + "应发放积分";
+				;
+				// 下下批次积分发放总金额
+				String threeGold = String.valueOf(threeMoth) + "月" + threeDayFrom
+						+ "-" + threeDayTo + "应发放积分";
+				;
+				firstGold = firstGold
+						+ giftsDetailsService.getCountGoldAll(countNumber, batchNo);
+				SecondGold = SecondGold
+						+ giftsDetailsService.getCountGoldAll(nextCountNumber,
+								nextBatchNo);
+				threeGold = threeGold
+						+ giftsDetailsService.getCountGoldAll(threeCountNumber,
+								threeBatchNo);
+				model.addAttribute("firstGold", firstGold);
+				model.addAttribute("SecondGold", SecondGold);
+				model.addAttribute("threeGold", threeGold);
+			}
+		
+			
 
 			
 
@@ -531,20 +669,63 @@ public class GiftsDetailsController {
 			HttpSession sesison) {
 		BaseResult<Void> result = new BaseResult<Void>();
 		try {
+			Object logonUserO = sesison.getAttribute("logonUser");
+			Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+			String userNaemO = (String) logonUserMap.get("userName");
+			if(userNaemO==null){
+				result.setMsg("账号登陆异常，请重新登陆");
+				result.setSuccess(true);
+				return result;
+			}
+			Date logonTime=(Date) logonUserMap.get(FrameConfig.userLastHeartbeatTime);
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			String logonDateStr = format.format(logonTime);
+			if(!String.valueOf(CommonUtil.getServerCountNumber()).equals(logonDateStr)){
+				result.setMsg("账号登陆异常，请重新登陆");
+				result.setSuccess(true);
+				return result;
+			}
 			int countNumber = CommonUtil.getCountNumber();
 			BatchNoEnum batchNo = CommonUtil.getBatchNo();
-			int day = CommonUtil.getDay();
-			if(day==31){
-				int year = CommonUtil.getYearNumber();
-				int mouth = CommonUtil.getMounthNumber();
-				if(mouth == 12){
-					mouth=1;
-					year=year+1;
-				}else{
-					mouth=mouth+1;
+			 //判断上一批次的处理是否结束
+			BatchNoEnum beforBatchNoEnum=getBeforBatchNoEnum(batchNo);
+			int beforDay = CommonUtil.getDay();
+			int beformouth=CommonUtil.getMounthNumber();
+			int beforYear= CommonUtil.getYearNumber();
+			int beforCountNumber=CommonUtil.getCountNumber();
+			if(BatchNoEnum.FIRST.equals(batchNo)){
+				if(beforDay!=31){
+					if(beformouth==1){
+						beformouth=12;
+						beforYear=beforYear-1;
+					}else{
+						beformouth=beformouth-1;
+					}
 				}
-				countNumber=getNextCountNumber(String.valueOf(year),
-						String.valueOf(mouth));
+			}
+			beforCountNumber=getNextCountNumber(String.valueOf(beforYear),
+					String.valueOf(beformouth));
+			
+			String beforGold=giftsDetailsService.getCountGoldAll(beforCountNumber,
+					beforBatchNoEnum);
+			
+			if(!"0".equals(beforGold)){
+				countNumber=beforCountNumber;
+				batchNo=beforBatchNoEnum;
+			}else{
+				int day = CommonUtil.getDay();
+				if(day==31){
+					int year = CommonUtil.getYearNumber();
+					int mouth = CommonUtil.getMounthNumber();
+					if(mouth == 12){
+						mouth=1;
+						year=year+1;
+					}else{
+						mouth=mouth+1;
+					}
+					countNumber=getNextCountNumber(String.valueOf(year),
+							String.valueOf(mouth));
+				}
 			}
 			List<SendGiftsDetails> giftsList = giftsDetailsService
 					.getGiftsDetailsList(countNumber, batchNo);
@@ -562,7 +743,7 @@ public class GiftsDetailsController {
 
 		} catch (Exception e) {
 			result.setSuccess(false);
-			result.setMsg("积分释放失败，请重新释放");
+			result.setMsg("积分释放失败，请重新登陆系统释放");
 		}
 		return result;
 	}
@@ -574,6 +755,18 @@ public class GiftsDetailsController {
 		int result = Integer.valueOf(year + month);
 		return result;
 
+	}
+	
+	
+	private BatchNoEnum getBeforBatchNoEnum(BatchNoEnum currentEnum){
+		if(BatchNoEnum.FIRST.equals(currentEnum)){
+			return BatchNoEnum.THREE;
+		}else if(BatchNoEnum.SECOND.equals(currentEnum)){
+			return BatchNoEnum.FIRST;
+		}else if(BatchNoEnum.THREE.equals(currentEnum)){
+			return BatchNoEnum.SECOND;
+		}
+		return null;
 	}
 
 }
