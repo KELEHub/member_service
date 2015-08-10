@@ -16,7 +16,8 @@ document.getElementById("serviceNumberss").value='';
 $(function(){
 	var bathPath=$("#basePath").val();
 	   table=$("#activeMemberTable").dataTable({
-                "sPaginationType": "full_numbers",   
+	            "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
         		"bPaginate" : true, //是否显示（应用）分页器  
         		"bAutoWidth" : true, //是否自适应宽度 
