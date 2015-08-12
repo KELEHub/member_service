@@ -90,7 +90,7 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 		shopingDetails.setCreateTime(new Date());
 		shopingDetails.setKindData(KindDataEnum.points);
 		/** 日期类别统计 */
-		shopingDetails.setDateNumber(ss.getDateNumber());
+		shopingDetails.setDateNumber(getDataNumber(ss.getCountNumber(),ss.getBatchNo()));
 		shopingDetails.setProject(ProjectEnum.fromgifts);
 		shopingDetails.setCountNumber(CommonUtil.getCountNumber());
 		/** 积分余额 */
@@ -179,5 +179,17 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 			return false;
 		}
 
+	}
+	
+	
+	private String getDataNumber(int countnumber,BatchNoEnum batchNo){
+		if(BatchNoEnum.FIRST.equals(batchNo)){
+			return String.valueOf(countnumber)+"01";
+		}else if(BatchNoEnum.SECOND.equals(batchNo)){
+			return String.valueOf(countnumber)+"02";
+		}else if(BatchNoEnum.THREE.equals(batchNo)){
+			return String.valueOf(countnumber)+"03";
+		}
+		return null;
 	}
 }
