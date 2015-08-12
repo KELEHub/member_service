@@ -117,4 +117,25 @@ public class AccountController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/deleteCharge",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteCharge(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			
+			Charge charge = accountService.getChargeDetailById(form.getId());
+			if(charge!=null){
+				charge.setStatus(3);
+			}
+			institutionService.savaOrUpdate(charge);
+			result.setMsg("删除成功");
+			result.setSuccess(true);
+		} catch (Exception e) {
+			result.setMsg("删除失败");
+			result.setSuccess(false);
+		}
+		
+		return result;
+	}
+	
 }
