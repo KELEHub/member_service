@@ -70,7 +70,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 			ProjectEnum servicepointsforone, ProjectEnum recharge,
 			ProjectEnum fromgifts, ProjectEnum togoldmoneycut) {
 
-		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =? then 1 else 0 end) as countBill, sum(case when t.project =? then t.income else 0 end) as countRecharge,sum(case when project =? then t.income else 0 end) as countFromgifts,sum(case when project =? then t.pay else 0 end) as countPointcash)from AccountDetails t group by t.dateNumber";
+		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =? then 1 else 0 end) as countBill, sum(case when t.project =? then t.income else 0 end) as countRecharge,sum(case when project =? then t.income else 0 end) as countFromgifts,sum(case when project =? then t.pay else 0 end) as countPointcash)from AccountDetails t group by t.dateNumber order by t.dateNumber desc";
 		String pql = "select new map(t.dateNumber as dateNumber,count(*) as countBill)from CountService t group by t.dateNumber";
 		List arguments = new ArrayList();
 		arguments.add(servicepointsforone);
