@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-  <div class="container-fluid" id="content-header">
+  <div id="content-header">
+     <form action="/ParameterController/show.do"  method="POST" id="initParameterForm"></form>
+  </div>
+  <div class="container-fluid" >
 	<div class="row-fluid">
 		<div class="span12">
             <div class="widget-box">
