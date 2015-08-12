@@ -35,6 +35,33 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+				returnData=data;
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+	return returnData;
+}
+
+function ajaxRequestForFormGetJson1(sFormId){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
 	if (typeof ndinstance1_replyTickling_replyContent != "undefined") {
 		if (ndinstance1_replyTickling_replyContent) {
 			reqObj["replyContent"] = ndinstance1_replyTickling_replyContent.getContent();
@@ -372,7 +399,7 @@ function editNotice(noticeId,title,category,content){
 }
 
 function saveTickling(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
+	var result = ajaxRequestForFormGetJson1(sFormId);
 	if(result.success){
 		alert(result.msg);
 		$('#myModal').modal('hide');

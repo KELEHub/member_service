@@ -146,6 +146,33 @@ function ajaxRequestForFormGetJson(sFormId){
 	var bathPath=$("#basePath").val();
 	var reqUrl = $("#"+sFormId).attr('action')
 	var reqObj = $('#' + sFormId).serializeJson();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'json',
+		success : function(data) {
+				returnData=data;
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+	return returnData;
+}
+
+function ajaxRequestForFormGetJson1(sFormId){
+	var bathPath=$("#basePath").val();
+	var reqUrl = $("#"+sFormId).attr('action')
+	var reqObj = $('#' + sFormId).serializeJson();
 	if(typeof ndinstance1_releaseTickling_content != "undefined"){
 		if(ndinstance1_releaseTickling_content){
 			reqObj["content"]=ndinstance1_releaseTickling_content.getContent();
@@ -928,7 +955,7 @@ function submitApply(applyId,applyNumber,submitReason,protectPassword){
 }
 
 function releaseTickling(sFormId){
-	var result = ajaxRequestForFormGetJson(sFormId);
+	var result = ajaxRequestForFormGetJson1(sFormId);
 	if(result.success){
 		alert(result.msg);
 		$('#myModal').modal('hide');
