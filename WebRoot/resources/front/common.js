@@ -688,6 +688,25 @@ function showAccChargeRefuseReason(memberId){
 	showDynamicDialog("/acc/showRefuseReason.do", reqObj, "showAccChargeRefuseReason");
 }
 
+function deleteAccCharge(memberId){
+	if (window.confirm('您确定要删除充值申请么？')) {
+		var reqObj = {};
+		reqObj["id"] = memberId;
+		var result = ajaxRequestForJsonGetJson("/acc/deleteCharge.do",reqObj);
+		alert(result.msg);
+		if (result.success) {
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+	
+}
+
+
 function showAccWithDrawalsRefuseReason(memberId){
 	var reqObj = {};
 	reqObj["id"] = memberId;
