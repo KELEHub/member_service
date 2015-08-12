@@ -69,7 +69,7 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 	public List<Charge> getChargeList(String memeberNumber,
 			int pageSize,int pageNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String roleQuery = "from Charge s where (status=1 or status=2)";
+		String roleQuery = "from Charge s where (status=1 or status=2 or status=3)";
 		if(memeberNumber!=null && !"".equals(memeberNumber)){
 			roleQuery+=" and s.number=:number ";
 			arguments.put("number", memeberNumber);
@@ -273,7 +273,7 @@ public class ChargeServiceImpl extends BaseDaoImpl implements  ChargeService{
 	@Override
 	public int countChargeList(String memeberNumber) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String roleQuery = "from Charge s where (status=1 or status=2)";
+		String roleQuery = "from Charge s where (status=1 or status=2 or status=3)";
 		if(memeberNumber!=null && !"".equals(memeberNumber)){
 			roleQuery+=" and s.number=:number ";
 			arguments.put("number", memeberNumber);
