@@ -284,16 +284,19 @@ public class InformationServiceImpl implements InformationService{
 			institutionDao.saveOrUpdate(count);
 			
 			//在RepeatedMoneyStatistics表中添加一条记录，用于发放极差积分
-			RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
-			moneyStatistics.setCreateTime(new Date());
-			moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
-			moneyStatistics.setDeclarationId(info.getId());
-			moneyStatistics.setDeclarationNumber(info.getNumber());
-			moneyStatistics.setDeclarationBenefitId(selfInfo.getLeaderServiceId());
-			moneyStatistics.setDeclarationBenefitNumber(selfInfo.getLeaderServiceNumber());
-			moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
-			moneyStatistics.setState(0);
-			institutionDao.saveOrUpdate(moneyStatistics);
+			if(!"company".equals(selfInfo.getLeaderServiceNumber().trim())){
+				RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
+				moneyStatistics.setCreateTime(new Date());
+				moneyStatistics.setDateNumber(CommonUtil.getDateNumber());
+				moneyStatistics.setDeclarationId(info.getId());
+				moneyStatistics.setDeclarationNumber(info.getNumber());
+				moneyStatistics.setDeclarationBenefitId(selfInfo.getLeaderServiceId());
+				moneyStatistics.setDeclarationBenefitNumber(selfInfo.getLeaderServiceNumber());
+				moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
+				moneyStatistics.setState(0);
+				institutionDao.saveOrUpdate(moneyStatistics);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
