@@ -1051,8 +1051,11 @@ function formatter(o, blur) {
 }
 
 function rangeIntegralIssue(sFormId){
-	var result = ajaxRequestForFormGetJsp(sFormId);
-	resetTable();
+	if (window.confirm('您确定要发送极差积分么？')){
+		var result = ajaxRequestForFormGetJsp(sFormId);
+	    resetTable();
+	}
+	
 }
 
 function deleteActiveMember(memberId,number,isService,recommendId,recommendNumber,activateId,activateNumber){
