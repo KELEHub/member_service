@@ -1,18 +1,20 @@
 //package com.member.controller.back;
-//
+
+//import java.text.SimpleDateFormat;
 //import java.util.ArrayList;
+//import java.util.Calendar;
 //import java.util.Date;
 //import java.util.List;
-//
+
 //import javax.annotation.Resource;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
-//
+
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.servlet.ModelAndView;
-//
+
 //import com.member.beans.back.enumData.BatchNoEnum;
 //import com.member.beans.back.enumData.GiftEnum;
 //import com.member.dao.NmsUserDao;
@@ -22,28 +24,60 @@
 //import com.member.entity.Institution;
 //import com.member.entity.OldInformation;
 //import com.member.entity.Participation;
+//import com.member.entity.RepeatedMoneyStatistics;
 //import com.member.entity.SendGiftsDetails;
 //import com.member.services.back.InformationService;
 //import com.member.services.back.InstitutionService;
 //import com.member.util.CommonUtil;
-//
+
 //@Controller
 //@RequestMapping(value = "/ExportController")
 //@SuppressWarnings("unchecked") 
 //public class ExportController {
-//	
-//	
+	
+	
 //	@Resource(name = "NmsUserDaoImpl")
-//	private NmsUserDao nmsUserDao;
-//	
-//	@Resource(name = "InstitutionServiceImpl")
-//    InstitutionService institutionService;
-//	
+	//private NmsUserDao nmsUserDao;
+	
+	//@Resource(name = "InstitutionServiceImpl")
+    //InstitutionService institutionService;
+	
 //	@Resource(name = "InformationServiceImpl")
-//    InformationService informationService;
-//	
-//	
-//	
+  //  InformationService informationService;
+	
+	//@RequestMapping(value = "/baodan")
+	//public ModelAndView baodan(HttpServletRequest request,
+		//	HttpServletResponse response,Model model){
+		//String sql = "from Information where to_char(activeDate, 'YYYY-MM')='2015-07'";
+		//List<?> applyList = nmsUserDao.queryByHql(sql);
+		//if(applyList!=null && applyList.size()>0){
+		//	List<Information> serviceIPList = (List<Information>)applyList;
+		//	for(Information info : serviceIPList){
+	///			Information selfInfo = informationService.getInformationByNumber(info.getActivateNumber().trim());
+		//		if(selfInfo!=null){
+			///		if(!"company".equals(selfInfo.getLeaderServiceNumber().trim())){
+				///		RepeatedMoneyStatistics moneyStatistics = new RepeatedMoneyStatistics();
+					//	moneyStatistics.setCreateTime(info.getActiveDate());
+						//moneyStatistics.setDateNumber(getDateNumber(info.getActiveDate()));
+						//moneyStatistics.setDeclarationId(info.getId());
+					//	moneyStatistics.setDeclarationNumber(info.getNumber());
+			//			moneyStatistics.setDeclarationBenefitId(selfInfo.getLeaderServiceId());
+				//		moneyStatistics.setDeclarationBenefitNumber(selfInfo.getLeaderServiceNumber().trim());
+					//	moneyStatistics.setSerialNumber(201507);
+						//moneyStatistics.setState(0);
+					//	nmsUserDao.saveOrUpdate(moneyStatistics);
+					//}
+				//}else{
+					//System.out.println("未找到的号码："+info.getNumber());
+				//}
+				
+			//}
+			
+		//}
+		
+		//return null;
+	//}
+	
 //	@RequestMapping(value = "/export")
 //	public ModelAndView export(HttpServletRequest request,
 //			HttpServletResponse response,Model model)
@@ -218,4 +252,24 @@
 //		}
 //		return 1000;
 //	}
+	
+//	private String getDateNumber(Date date){
+	//	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+	//	String nowDateStr = format.format(date);
+	//	int day =Integer.valueOf(nowDateStr.substring(6,8));
+	//	String dateNumber="";
+	//	if(day<=10){
+	//		dateNumber="01";
+	//	}else if(day<=20){
+	//		dateNumber="02";
+	//	}else if(day<=30){
+	//		dateNumber="03";
+	//	}
+	//	if(day==31){
+	//		dateNumber="01";
+	//	}
+	//	return nowDateStr.substring(0,6)+dateNumber;
+		
+	//}
+	
 //}
