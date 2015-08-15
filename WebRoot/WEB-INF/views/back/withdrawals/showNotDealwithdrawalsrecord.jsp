@@ -56,25 +56,29 @@ $(function(){
                         { "mData": "tradeAmt" },
                         { "mData": "tradeFee" },
                         { "mData": "realGetAmt" },
+                        { "mData": "numberName" },
+                        { "mData": "numberPhone" },
+                        { "mData": "bankName" },
+                        { "mData": "bankCardNo" },
                         { "sDefaultContent" : ""},
-                         { "sDefaultContent" : ""}
+                        { "sDefaultContent" : ""}
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
         			if (aData.status==0){
-        				$('td:eq(6)', nRow).html("未处理");
-        				$('td:eq(7)', nRow).html(
+        				$('td:eq(10)', nRow).html("未处理");
+        				$('td:eq(11)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreewithdrawals("+aData.id+")\">提现</button>"+
 						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>"
 						);
         			}else if (aData.status==1){
-        				$('td:eq(6)', nRow).html("已处理");
+        				$('td:eq(10)', nRow).html("已处理");
         			}
                    	return nRow;
                  }
             });            
 });
 </script>
-<div  style="overflow-x:hidden; height:85%">  
+<div  style="overflow-x:auto; height:85%">  
 <div class="container-fluid" id="content-header">
 	<div class="row-fluid">
 		<div class="span12">
@@ -114,12 +118,16 @@ $(function(){
 							<tr>
 								<th>会员账号</th>
 								<th>流水号</th>
-								<th style="width:160px">日期</th>
+								<th style="width:150px">日期</th>
 								<th>提现金额</th>
 								<th>手续费</th>
 								<th>实际金额</th>
+								<th style="width:6%">会员姓名</th>
+								<th style="width:6%">电话</th>
+								<th style="width:10%">银行</th>
+								<th style="width:10%">卡号</th>
 								<th>状态</th>
-								<th style="width:250px">操作</th>
+								<th style="width:200px">操作</th>
 							</tr>
 						</thead>
 						<tbody>
