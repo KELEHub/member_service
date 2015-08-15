@@ -56,33 +56,26 @@ $(function(){
                         { "mData": "chageAmt" },
                         { "mData": "chargesurplus" },
                         { "mData": "realGetAmt" },
-                        { "mData": "numberName" },
-                        { "mData": "numberPhone" },
-                        { "mData": "bankName" },
-                        { "mData": "bankCardNo" },
+                        { "mData": "chageMessage" },
                         { "sDefaultContent" : ""},
                         { "sDefaultContent" : ""}
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
         			if (aData.status==0){
-        				$('td:eq(10)', nRow).html("未处理");
-        				$('td:eq(11)', nRow).html(
+        				$('td:eq(7)', nRow).html("未处理");
+        				$('td:eq(8)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreecharge("+aData.id+")\">充值完成</button>"+
-						"<button class=\"btn\" onclick=\"disAgreeCharge("+aData.id+")\">拒绝充值</button>"+
-						"<button class=\"btn\" onclick=\"showChargeDetail("+aData.id+")\">会员备注</button>"
+						"<button class=\"btn\" onclick=\"disAgreeCharge("+aData.id+")\">拒绝充值</button>"
 						);
         			}else if (aData.status==1){
-        				$('td:eq(10)', nRow).html("已处理");
-        				$('td:eq(11)', nRow).html(
-						"<button class=\"btn\" onclick=\"showChargeDetail("+aData.id+")\">会员备注</button>"
-						);
+        				$('td:eq(7)', nRow).html("已处理");
         			}
                    	return nRow;
                  }
             });            
 });
 </script>
-<div style="overflow-x:hidden; height:85%"> 
+<div style="overflow-x:auto; height:85%"> 
 <div class="container-fluid" id="content-header" >
 	<div class="row-fluid">
 		<div class="span12">
@@ -118,18 +111,15 @@ $(function(){
 					<table id="dealchargeRecordTable" class="table table-bordered data-table">
 						<thead>
 							<tr>
-								<th style="width:6%">会员账号</th>
-								<th style="width:6%">流水号</th>
+								<th >会员账号</th>
+								<th >流水号</th>
 								<th style="width:15%">日期</th>
-								<th style="width:6%">充值金额</th>
-								<th style="width:6%">手续费</th>
-								<th style="width:6%">实际金额</th>
-								<th style="width:6%">会员姓名</th>
-								<th style="width:6%">电话</th>
-								<th style="width:10%">银行</th>
-								<th style="width:10%">卡号</th>
-								<th style="width:6%">状态</th>
-								<th>操作</th>
+								<th >充值金额</th>
+								<th >手续费</th>
+								<th >实际金额</th>
+								<th >备注信息</th>
+								<th >状态</th>
+								<th style="width:20%">操作</th>
 							</tr>
 						</thead>
 						<tbody>
