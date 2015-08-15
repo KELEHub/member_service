@@ -1,6 +1,5 @@
 package com.member.controller.back;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,16 +78,24 @@ public class ServiceManagerController {
 		String customerPar = request.getParameter("customerPar");
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		String iDisplayStart = request.getParameter("iDisplayStart");
+		String number = request.getParameter("number");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = serviceManagerService.countServiceManagerData(customerPar,1,number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
 		List<Information> result = serviceManagerService.getServiceByIsService(1,customerPar,
 				Integer.parseInt(iDisplayLength),
-				pageNumber);
+				pageNumber,number);
 		if(result!=null && result.size()>0){
 			for(Information info : result){
 				info.setServiceCount(accountDetailsService.getCountServerPointByNumber(info.getNumber(),String.valueOf(CommonUtil.getCountNumber())));
 			}
 		}
-		int iTotalRecords = serviceManagerService.countServiceManagerData(customerPar,1);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
