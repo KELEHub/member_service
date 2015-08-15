@@ -36,6 +36,20 @@ public class RoleManageServiceImpl implements RoleManageService {
 		List result = manageRoleDao.queryByHql(hql);
 		return result;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<ManageRole> getRoleByItemID(Integer id) {
+		String hql="select mr from ManageRole mr where mr.id=? ";
+		List arguments = new ArrayList();
+		arguments.add(id);
+		List result = manageRoleDao.queryByHql(hql,arguments);
+		return result;
+	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -65,5 +79,21 @@ public class RoleManageServiceImpl implements RoleManageService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean editeRole(RoleForm form) {
+		String hql="select mr from ManageRole mr where mr.id=? ";
+		List arguments = new ArrayList();
+		arguments.add(form.getId());
+		List result = manageRoleDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			ManageRole role = (ManageRole)result.get(0);
+			role.setRoleDes(form.getRoleDsc());
+			role.setRoleNm(form.getRoleNm());
+			manageRoleDao.saveOrUpdate(role);
+			return true;
+		}
+		return false;
 	}
 }
