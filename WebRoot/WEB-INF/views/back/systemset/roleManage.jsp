@@ -3,7 +3,7 @@
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Buttons &amp; icons</a></div>
+    <br/>
     <h1><a href="#roleaddmyModal" data-toggle="modal" class="btn btn-large">添加新角色</a></h1>
     <form action="/rolemanage/showRoleManage.do" method="POST" id="searchRoleForm">
 	</form>
@@ -20,7 +20,6 @@
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
 							<tr>
-								<th>角色编号</th>
 								<th>角色名称</th>
 								<th>角色描述</th>
 								<th>操作</th>
@@ -29,11 +28,12 @@
 						<tbody>
 							<c:forEach var="item" items="${result }">
 								<tr class="gradeX">
-									<td>${item.id }</td>
 									<td>${item.roleNm }</td>
 									<td>${item.roleDes }</td>
 									<td>
 									<button class="btn btn-large" onclick="allocationAuth('${item.id}','${item.roleDes }')">分配菜单</button>
+									<button class="btn btn-large" onclick="editeAuth('${item.id}')">修改</button>
+									<button class="btn btn-large" onclick="deleteAuth('${item.id}')">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
