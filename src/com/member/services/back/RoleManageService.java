@@ -13,4 +13,6 @@ public interface RoleManageService {
 	public ManageUserRoleHub getManageUserRoleHubById(Integer userId);
 	public List<ManageRole> getRoleByItemID(Integer id);
 	public boolean editeRole(RoleForm form);
+	public boolean deleteData(ManageRole role);
+	
 }
