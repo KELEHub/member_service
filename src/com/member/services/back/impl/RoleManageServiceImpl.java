@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.member.dao.ManageRoleDao;
@@ -95,5 +96,26 @@ public class RoleManageServiceImpl implements RoleManageService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean deleteData(ManageRole role) {
+		try {
+			String hql="select mr from ManageUserRoleHub mr where mr.roleId=? ";
+			List arguments = new ArrayList();
+			arguments.add(role.getId());
+			List result = manageRoleDao.queryByHql(hql,arguments);
+			if(result!=null && result.size()>0){
+				List<ManageUserRoleHub> roleHubList=(List<ManageUserRoleHub>)result;
+				for(ManageUserRoleHub hub : roleHubList){
+					manageRoleDao.delete(hub);
+				}
+			}
+			manageRoleDao.delete(role);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
