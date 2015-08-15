@@ -124,4 +124,20 @@ public class RoleManageController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/deleteData",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteData(@RequestBody RoleForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		List<ManageRole> list = roleManageService.getRoleByItemID(form.getId());
+		boolean flg = roleManageService.deleteData(list.get(0));
+		if(flg){
+			result.setMsg("删除角色成功.");
+		}else{
+			result.setMsg("删除角色失败.");
+		}
+		result.setSuccess(true);
+		return result;
+	}
+	
+	
 }
