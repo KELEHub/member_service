@@ -3,9 +3,15 @@
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script type="text/javascript">
+var table = null;
+function searchserviceMembers(){
+document.getElementById("number").value = document.getElementById("numberss").value;
+document.getElementById("numberss").value='';
+   table.fnDraw();
+}
 $(function(){
 	var bathPath=$("#basePath").val();
-		$("#serviceInfoTable").dataTable({
+		table=$("#serviceInfoTable").dataTable({
 		        "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
                 "sPaginationType": "bootstrap",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
@@ -38,6 +44,11 @@ $(function(){
         	        }  
         		},
                 "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "number", "value": $("#number").val() }
+                        );
+                },
                 "aoColumns": [
                         { "mData": "number" },
                         { "mData": "name" },
@@ -83,6 +94,28 @@ $(function(){
 							onclick="permitForm()"
 							class="btn btn-success">
 				</c:if>
+				</div>
+				<div class="widget-content nopadding">
+					<form 
+						action="/charge/dealChargeRecord.do" method="POST"
+						id="searchChargeForm">
+						</form>
+						<div class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label">会员账号:</label>
+							<div class="controls">
+								<div class="input-append">
+									<input type="text" name="numberss" id="numberss" value="${form.number}">
+									<input type="hidden" name="number" id="number" value="${form.number}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" value="查询"
+							onclick="searchserviceMembers()"
+							class="btn btn-success">
+					</div>
 				</div>
 				<div class="widget-content nopadding">
 					<table id="serviceInfoTable" class="table table-bordered data-table">
