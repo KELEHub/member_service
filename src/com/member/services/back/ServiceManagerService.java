@@ -12,7 +12,7 @@ import com.member.form.back.InformationForm;
 public interface ServiceManagerService {
 
 	List<Information> getServiceByIsService(Integer isService,String customerPar,
-			int pageSize,int pageNumber);
+			int pageSize,int pageNumber,String number);
 
 	List<ApplyService> getApplyService(String customerPar,
 			int pageSize,int pageNumber);
@@ -35,6 +35,6 @@ public interface ServiceManagerService {
 
 	int countApproveServiceData(String customerPar);
 
-	int countServiceManagerData(String customerPar, Integer isService);
+	int countServiceManagerData(String customerPar, Integer isService,String number);
 
 }
