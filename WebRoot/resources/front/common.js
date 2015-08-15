@@ -415,6 +415,8 @@ function showDynamicDialog(reqUrl,reqObj,dialogId){
 
 function resetTable(){
 	$('#testexample1').dataTable({
+		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",   
 		"bLengthChange": false,
 		"bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示  
 		"bJQueryUI" : true, //是否使用 jQury的UI theme  
@@ -422,7 +424,6 @@ function resetTable(){
 		"bAutoWidth" : true, //是否自适应宽度 
 		"bScrollCollapse" : true,
 		"bSort": false,  
-		"sPaginationType":"full_numbers",
 		"bInfo": true,//页脚信息
 		"bFilter" : false,//是否启动过滤、搜索功能
 		"oLanguage": { //国际化配置  
