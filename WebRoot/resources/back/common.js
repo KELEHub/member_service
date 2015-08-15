@@ -489,8 +489,33 @@ function editeDetail(giftsId){
 	showDynamicDialog("/GiftsDetailsController/showDialog.do", reqObj, "editeGiftsDetails");
 }
 
+function editeAuth(roleId){
+	var reqObj = {};
+	reqObj["id"] = roleId;
+	showDynamicDialog("/rolemanage/showDialog.do", reqObj, "roleDetails");
+}
+
+
+
 function saveGiftsDetail(sFormId) {
 	if(window.confirm('您确定要修改么，修改后的数据不可恢复？')){
+	  var result = ajaxRequestForFormGetJson(sFormId);
+	  if (result.success) {
+		alert(result.msg);
+		$('#myModal').modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}else{
+		alert(result.msg);
+	}
+	}
+}
+
+function saveRoleContentDetail(sFormId) {
+	if(window.confirm('您确定要修改么？')){
 	  var result = ajaxRequestForFormGetJson(sFormId);
 	  if (result.success) {
 		alert(result.msg);
@@ -555,6 +580,8 @@ function showDynamicDialog(reqUrl,reqObj,dialogId){
 
 function resetTable(){
 	$('#testexample1').dataTable({
+		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap", 
 		"bLengthChange": false,
 		"bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示  
 		"bJQueryUI" : true, //是否使用 jQury的UI theme  
@@ -562,7 +589,6 @@ function resetTable(){
 		"bAutoWidth" : true, //是否自适应宽度 
 		"bScrollCollapse" : true,
 		"bSort": false,  
-		"sPaginationType":"full_numbers",
 		"bInfo": true,//页脚信息
 		"bFilter" : false,//是否启动过滤、搜索功能
 		"oLanguage": { //国际化配置  
