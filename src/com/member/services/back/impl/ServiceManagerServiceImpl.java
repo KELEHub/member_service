@@ -30,9 +30,17 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Override
 	@Transactional(readOnly=true)
 	public List<Information> getServiceByIsService(Integer isService,String customerPar,
-			int pageSize,int pageNumber) {
+			int pageSize,int pageNumber,String number) {
+		
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String hql = "from Information where isService=1 ";
+		if (number != null && !"".equals(number)) {
+			hql+=" and number=:number";
+			arguments.put("number", number);
+		}
+		hql = hql + " order by activeDate desc";
 		return (List<Information>) serviceManagerDao.queryByHql(
-				HqlServiceManager.getService,pageNumber,pageSize, isService);
+				hql,pageNumber,pageSize, arguments);
 	}
 	
 	@Override
@@ -77,8 +85,16 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	}
 	
 	@Override
-	public int countServiceManagerData(String customerPar,Integer isService) {
-		List result = serviceManagerDao.queryByHql(HqlServiceManager.getService,isService);
+	public int countServiceManagerData(String customerPar,Integer isService,String number) {
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		String hql = "from Information where isService=1 ";
+		if (number != null && !"".equals(number)) {
+			hql+=" and number=:number";
+			arguments.put("number", number);
+		}
+		hql = hql + " order by activeDate desc";
+		
+		List result = serviceManagerDao.queryByHql(hql,arguments);
 		if(result!=null){
 			return result.size();
 		}
