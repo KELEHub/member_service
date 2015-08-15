@@ -63,8 +63,10 @@ public class CreateUserController {
 					form.setUsername(user.getUserName());
 					ManageRole role = roleManageService.getRoleById(user
 							.getId());
-					form.setRoleNm(role.getRoleNm());
-					form.setRoleDes(role.getRoleDes());
+					if(role!=null){
+						form.setRoleNm(role.getRoleNm());
+						form.setRoleDes(role.getRoleDes());
+					}
 					result.add(form);
 				}
 				model.addAttribute("result", result);
@@ -137,12 +139,14 @@ public class CreateUserController {
 						.getManageUserRoleHubById(deUser.getId());
 				ManageRole role = roleManageService.getRoleById(deUser
 						.getId());
-				if(role.getSuperAdmin()!=null&&role.getSuperAdmin()==1){
+				if(role!=null && role.getSuperAdmin()!=null&&role.getSuperAdmin()==1){
 					result.setMsg("超级管理员不能被删除");
 					result.setSuccess(true);
 					return result;
 				}
-				limitDeclarationService.deleteData(mb);
+				if(mb!=null){
+					limitDeclarationService.deleteData(mb);
+				}
 				limitDeclarationService.deleteData(deUser);
 			}
 			result.setMsg("删除用户成功");
