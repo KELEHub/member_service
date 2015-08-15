@@ -495,7 +495,22 @@ function editeAuth(roleId){
 	showDynamicDialog("/rolemanage/showDialog.do", reqObj, "roleDetails");
 }
 
+function deleteAuth(roleId){
+	var reqObj = {};
+	reqObj["id"] = roleId;
+	var result = ajaxRequestForJsonGetJson("/rolemanage/deleteData.do", reqObj);
+	 if (result.success) {
+		alert(result.msg);
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}else{
+		alert(result.msg);
+	}
 
+}
 
 function saveGiftsDetail(sFormId) {
 	if(window.confirm('您确定要修改么，修改后的数据不可恢复？')){
