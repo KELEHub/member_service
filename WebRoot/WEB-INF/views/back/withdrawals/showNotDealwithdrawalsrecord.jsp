@@ -50,6 +50,7 @@ $(function(){
                         );
                 },
                 "aoColumns": [
+                        { "sDefaultContent" : ""},
                         { "mData": "number" },
                         { "mData": "tradeNo" },
                         { "mData": "tradeDate" },
@@ -65,13 +66,14 @@ $(function(){
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
         			if (aData.status==0){
-        				$('td:eq(10)', nRow).html("未处理");
-        				$('td:eq(11)', nRow).html(
+        			    $('td:eq(11)', nRow).html("未处理");
+        				$('td:eq(0)', nRow).html("<input  style=\"width:30px; height:20px\"  name=\"checkone\"  type=\"checkbox\" id=\"tt_"+aData.id+"\"></input>");
+        				$('td:eq(12)', nRow).html(
 						"<button class=\"btn\" onclick=\"agreewithdrawals("+aData.id+")\">提现</button>"+
 						"<button class=\"btn\" onclick=\"disAgreewithdrawals("+aData.id+")\">拒绝提现</button>"
 						);
         			}else if (aData.status==1){
-        				$('td:eq(10)', nRow).html("已处理");
+        				$('td:eq(11)', nRow).html("已处理");
         			}
                    	return nRow;
                  }
@@ -112,10 +114,17 @@ $(function(){
 							class="btn btn-success">
 					</div>
 				</div>
+				<div>
+				  <input type="submit" value="批量提现"
+							onclick="batchDealWW()"
+							class="btn btn-success">
+				</div>
+				
 				<div class="widget-content nopadding">
 					<table id="showNotDealWithDrawalsRecordTable" class="table table-bordered data-table">
 						<thead>
 							<tr>
+							    <th><input  style="width:30px; height:20px" id="allcheck" type="checkbox" onclick="checkall()"></th>
 								<th>会员账号</th>
 								<th>流水号</th>
 								<th style="width:150px">日期</th>
