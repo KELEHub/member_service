@@ -1171,6 +1171,7 @@ function exportNotDealTiXian(sFormId){
     form.submit();   //表
 }
 
+
 function exportChongZhi(sFormId){
 	var form = $("<form>");   //定义一个form表单
     form.attr('style','display:none');   //在form表单中添加查询参数
@@ -1186,3 +1187,49 @@ function exportChongZhi(sFormId){
     form.append(input1);   //将查询参数控件提交到表单上
     form.submit();   //表
 }
+
+
+function checkall(){
+	var t =document.getElementById("allcheck").checked;
+	if(t){
+		$("input[name='checkone']").each(function() { 
+           $(this).attr("checked", true); 
+       }); 
+	}else{
+		$("input[name='checkone']").each(function() { 
+           $(this).attr("checked", false); 
+       }); 
+	}
+	
+}
+
+function batchDealWW(){
+	if(window.confirm('您确定要进行批量提现么？')){
+	var v = "" ;  
+	var cbs = $("input[name='checkone']:checked");
+	for(var i = 0; cbs && i < cbs.length; i++) {  
+        v += $(cbs[i]).attr("id")+",";
+    }
+	if(v!=""){
+		var reqObj = {};
+	    reqObj["idArr"] = v;
+	    var result = ajaxRequestForJsonGetJson("/withdrawals/batchagreewithdrawals.do",reqObj);
+	    alert(result.msg);
+	   if (result.success) {
+		$('#myModal').modal('hide');
+		$("#content-header").find("form[id='searchWidhdrawalsxForm']").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+	    
+	}else{
+		alert("请勾选数据");
+	}
+	
+  }
+	
+}
+
+
