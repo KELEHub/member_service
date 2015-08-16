@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
@@ -476,6 +478,28 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
 		result.setSuccess(true);
 		result.setMsg("删除成功.");
 		return result;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Boolean batchAgreewithdrawals(String[] ids, String dealUserName) {
+		try {
+			for(int i=0;i<ids.length;i++){
+				String withdrawalsQuery = "from Withdrawals s where status='0' and s.id=?";
+				List withdrawalsResult = withdrawalsDao.queryByHql(withdrawalsQuery, Integer.valueOf(ids[i].replace("tt_", "")));
+				//取得当前审核的提现记录项目.
+				Withdrawals singleResult = (Withdrawals) withdrawalsResult.get(0);
+				
+				//2.更新提现信息的手续费，状态和实际金额。
+				singleResult.setUserName(dealUserName);
+				singleResult.setStatus("1");
+				withdrawalsDao.update(singleResult);
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
 	}
 
 }
