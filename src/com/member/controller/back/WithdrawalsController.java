@@ -360,4 +360,23 @@ public class WithdrawalsController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/batchagreewithdrawals")
+	@ResponseBody
+	public BaseResult<Void> batchagreewithdrawals(@RequestBody WithdrawalsCheckForm form,HttpServletRequest request, Model model) {
+		BaseResult<Void> result = new BaseResult<Void>();
+		Object logonUserO = request.getSession().getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		Object userName = logonUserMap.get("userName");
+		String idArr = form.getIdArr();
+		String[] ids = idArr.split(",");
+		Boolean flg = withdrawalsService.batchAgreewithdrawals(ids,(String)userName);
+		if(flg){
+			result.setMsg("批量提现成功.");
+		}else{
+			result.setMsg("批量提现失败.");
+		}
+		result.setSuccess(true);
+		return result;
+	}
 }
