@@ -23,4 +23,5 @@ public interface WithdrawalsService {
 	
 	public BaseResult<Void> agreewithdrawalswithnopoints(Integer id,String dealUserName); 
 	public BaseResult<Void> disAgreewithdrawalsppp(Integer id, String dealUserName,String refuseReason);
+	public Boolean batchAgreewithdrawals(String[] ids,String dealUserName);
 }
