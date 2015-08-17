@@ -259,7 +259,7 @@ public class MemberManageController {
 			serviceAD.setDateNumber(CommonUtil.getDateNumber());
 			serviceAD.setCountNumber(CommonUtil.getCountNumber());
 			serviceAD.setProject(ProjectEnum.cost);
-			serviceAD.setPointbalance(memberInfo.get(0).getShoppingMoney());
+			serviceAD.setPointbalance(memberInfo.get(0).getShoppingMoney().subtract(new BigDecimal(50)));
 			serviceAD.setGoldmoneybalance(memberInfo.get(0).getCrmMoney());
 			serviceAD.setIncome(new BigDecimal(0));
 			serviceAD.setPay(new BigDecimal(50));
@@ -294,7 +294,7 @@ public class MemberManageController {
 //				repeatedMoneySurplus = memberInfo.get(0).getRepeatedMoney().subtract(sum);
 //			}
 		}
-		memberManageService.deleteActiveMember(form.getId(),form.getNumber(), form.getIsService(), form.getRecommendId(), form.getActivateId(),serviceAD,memberAD,sum,shoppingMoneySurplus,repeatedMoneySurplus);
+		memberManageService.deleteActiveMember(form.getId(),form.getNumber(), form.getIsService(), form.getRecommendId(), form.getActivateNumber(),serviceAD,memberAD,sum,shoppingMoneySurplus,repeatedMoneySurplus);
 		result.setMsg("删除会员成功.");
 		result.setSuccess(true);
 		return result;
