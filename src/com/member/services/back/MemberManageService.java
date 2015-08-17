@@ -31,7 +31,7 @@ public interface MemberManageService {
 			ProjectEnum project,Integer childId);
 
 	void deleteActiveMember(Integer id, String number, Integer isService, Integer recommendId,
-			Integer leaderServiceId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
+			String activateNumber,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus);
 
 	List<Information> getMemberInfoByNumber(String number);
