@@ -1,6 +1,7 @@
 package com.member.services.front.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,13 +71,14 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 			ProjectEnum servicepointsforone, ProjectEnum recharge,
 			ProjectEnum fromgifts, ProjectEnum togoldmoneycut) {
 
-		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =? then 1 else 0 end) as countBill, sum(case when t.project =? then t.income else 0 end) as countRecharge,sum(case when project =? then t.income else 0 end) as countFromgifts,sum(case when project =? then t.pay else 0 end) as countPointcash)from AccountDetails t group by t.dateNumber order by t.dateNumber desc";
+		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts then t.income  when project =:servicepointsformuch then t.income else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash)from AccountDetails t group by t.dateNumber order by t.dateNumber desc";
 		String pql = "select new map(t.dateNumber as dateNumber,count(*) as countBill)from CountService t group by t.dateNumber";
-		List arguments = new ArrayList();
-		arguments.add(servicepointsforone);
-		arguments.add(recharge);
-		arguments.add(fromgifts);
-		arguments.add(togoldmoneycut);
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("servicepointsforone", servicepointsforone);
+		arguments.put("recharge",recharge);
+		arguments.put("fromgifts",fromgifts);
+		arguments.put("togoldmoneycut",togoldmoneycut);
+		arguments.put("servicepointsformuch", ProjectEnum.servicepointsformuch);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
 		List<Object> serviceList = (List<Object>) parameterDao.queryByHql(pql);
@@ -120,12 +122,13 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 			ProjectEnum recharge, ProjectEnum fromgifts,
 			ProjectEnum togoldmoneycut) {
 
-		String hql = "select new map(sum(case when t.project =? then 1 else 0 end) as countBill, sum(case when t.project =? then t.income else 0 end) as countRecharge,sum(case when project =? then t.income else 0 end) as countFromgifts,sum(case when project =? then t.pay else 0 end) as countPointcash)from AccountDetails t";
-		List arguments = new ArrayList();
-		arguments.add(servicepointsforone);
-		arguments.add(recharge);
-		arguments.add(fromgifts);
-		arguments.add(togoldmoneycut);
+		String hql = "select new map(sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts then t.income  when project =:servicepointsformuch then t.income  else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash)from AccountDetails t";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("servicepointsforone", servicepointsforone);
+		arguments.put("recharge",recharge);
+		arguments.put("fromgifts",fromgifts);
+		arguments.put("togoldmoneycut",togoldmoneycut);
+		arguments.put("servicepointsformuch", ProjectEnum.servicepointsformuch);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
 		if (list != null && list.size() > 0) {
