@@ -237,7 +237,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void deleteActiveMember(Integer id,String number,Integer isService,Integer recommendId,Integer activateId,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
+	public void deleteActiveMember(Integer id,String number,Integer isService,Integer recommendId,String activateNumber,AccountDetails serviceAD,AccountDetails memberAD,BigDecimal sum,
 			BigDecimal shoppingMoneySurplus,BigDecimal repeatedMoneySurplus) {
 		//删除以所删除会员为上级报单中心的信息（报单中心）
 		String hql1 = "update Information set leaderServiceId=null,leaderServiceNumber=null where leaderServiceNumber=?";
@@ -247,8 +247,8 @@ public class MemberManageServiceImpl implements MemberManageService {
 		informationDao.executeHqlUpdate(hql2, number);
 //		if (isService==1 && leaderServiceId!=null){
 			//删除该会员的激活人的积分和服务积分各50
-			String hql3 = "update Information set shoppingMoney=shoppingMoney-50,repeatedMoney=repeatedMoney-50 where id=?";
-			informationDao.executeHqlUpdate(hql3, activateId);
+			String hql3 = "update Information set shoppingMoney=shoppingMoney-50,repeatedMoney=repeatedMoney-50 where number=?";
+			informationDao.executeHqlUpdate(hql3, activateNumber);
 			//在账户明细表里记录
 			informationDao.saveOrUpdate(serviceAD);
 //		}
