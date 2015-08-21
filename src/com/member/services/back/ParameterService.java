@@ -21,7 +21,7 @@ public interface ParameterService {
 	
 	public List<GiftsHistory> getGiftsHistoryByOperationId(Integer id);
 	
-	public void saveOrUpdate(GiftsDetails gd,GiftsHistory gh,Integer pointNumber);
+	public void saveOrUpdate(GiftsDetails gd,GiftsHistory gh,Integer pointNumber,Boolean flag);
 	
 	public int  countGiftsDetails(String number);
 	
