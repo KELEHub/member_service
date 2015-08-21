@@ -160,7 +160,7 @@ public class ParameterServiceImpl implements ParameterService{
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void saveOrUpdate(GiftsDetails gd, GiftsHistory gh,Integer pointNumber) {
+	public void saveOrUpdate(GiftsDetails gd, GiftsHistory gh,Integer pointNumber,Boolean flg) {
 		String hql=
 			"from SendGiftsDetails t where t.giftsDetailsId=? and t.pointNumber<?";
 		List arguments = new ArrayList();
@@ -172,6 +172,21 @@ public class ParameterServiceImpl implements ParameterService{
 				ss.setStauts(1);
 				parameterDao.saveOrUpdate(ss);
 			}
+		}
+		if(flg){
+			String sdql=
+				"from SendGiftsDetails t where t.giftsDetailsId=? ";
+			List arguments2 = new ArrayList();
+			arguments2.add(gd.getId());
+			List<SendGiftsDetails> updateNumberCodes=(List<SendGiftsDetails>) parameterDao.queryByHql(sdql,arguments2);
+			if(updateNumberCodes!=null && updateNumberCodes.size()>0){
+				for(SendGiftsDetails dss : updateNumberCodes){
+					dss.setNumber(gd.getNumber());
+					dss.setUserId(gd.getUserId());
+					parameterDao.saveOrUpdate(dss);
+				}
+			}
+			
 		}
 		parameterDao.saveOrUpdate(gd);
 		parameterDao.saveOrUpdate(gh);
