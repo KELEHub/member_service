@@ -15,7 +15,7 @@
 				<table class="table table-bordered table-striped">
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">会员账号:</td>
-						<td>${bean.number}</td>
+						<td><input type="text" name="number" value="${bean.number}"></td>
 					</tr>
 					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">礼包类型：</td>
