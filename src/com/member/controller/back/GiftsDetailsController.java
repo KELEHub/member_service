@@ -235,6 +235,12 @@ public class GiftsDetailsController {
 			NmsUser user = users.get(0);
 			GiftsDetails giftsDetails = parameterService
 					.getGiftsDetailsById(Integer.valueOf(form.getId()));
+			Information infoEdite = informationService.getInformationByNumber(form.getNumber());
+			if(infoEdite==null){
+				result.setSuccess(false);
+				result.setMsg("会员不存在");
+				return result;
+			}
 			if (Integer.valueOf(form.getPointNumber()) == 0) {
 				result.setSuccess(false);
 				result.setMsg("期次号不能等于0");
@@ -260,7 +266,7 @@ public class GiftsDetailsController {
 				return result;
 			}
 			if (Integer.valueOf(form.getPointNumber()) == giftsDetails
-					.getPointNumber()) {
+					.getPointNumber()&& giftsDetails.getNumber().equals(form.getNumber())) {
 				result.setSuccess(false);
 				result.setMsg("期次号未修改");
 				return result;
@@ -272,9 +278,15 @@ public class GiftsDetailsController {
 			    info = informationService.getInformationById(giftsDetails
 						.getChildId());
 			}
-			String remaind = "修改前的期次：" + giftsDetails.getPointNumber() + ";"
-					+ "修改后的期次：" + form.getPointNumber();
+			String remaind = "修改前的账号："+giftsDetails.getNumber()+",期次：" + giftsDetails.getPointNumber() + ";"
+					+ "修改后的账号："+form.getNumber()+",期次：" + form.getPointNumber();
 			giftsDetails.setPointNumber(Integer.valueOf(form.getPointNumber()));
+            Boolean fig = false;
+			if(!giftsDetails.getNumber().equals(form.getNumber())){
+				fig=true;
+            	giftsDetails.setNumber(form.getNumber());
+            	giftsDetails.setUserId(infoEdite.getId());
+            }
 			GiftsHistory giftsHistory = new GiftsHistory();
 			giftsHistory.setCreateTime(new Date());
 			giftsHistory.setNumeber(giftsDetails.getNumber());
@@ -291,7 +303,7 @@ public class GiftsDetailsController {
 				form.setName("礼包_"+info.getNumber());
 			}
 			parameterService.saveOrUpdate(giftsDetails, giftsHistory, Integer
-					.valueOf(form.getPointNumber()));
+					.valueOf(form.getPointNumber()),fig);
 			result.setMsg("修改会员详细信息成功.");
 			result.setSuccess(true);
 
