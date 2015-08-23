@@ -71,6 +71,24 @@ public class InstitutionServiceImpl implements InstitutionService {
 				.queryByHql(hql, arguments);
 		return result;
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<EditeHistory> getNumberEditeHistoryListByUserId(String number,Integer userId) {
+		String hql = "";
+		List arguments = new ArrayList();
+		if(number!=null && !"".equals(number)){
+			hql = "select mr from EditeHistory mr where mr.userId=? and mr.numeber=? ";
+			arguments.add(userId);
+			arguments.add(number);
+		}else{
+			hql = "select mr from EditeHistory mr where mr.userId=?";
+			arguments.add(userId);
+		}
+		List<EditeHistory> result = (List<EditeHistory>) institutionDao
+				.queryByHql(hql, arguments);
+		return result;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -78,6 +96,22 @@ public class InstitutionServiceImpl implements InstitutionService {
 		String hql = "select mr from EditeHistory mr";
 		List<EditeHistory> result = (List<EditeHistory>) institutionDao
 				.queryByHql(hql);
+		return result;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<EditeHistory> getNumberEditeHistoryList(String number){
+		String hql = "";
+		List arguments = new ArrayList();
+		if(number!=null && !"".equals(number)){
+			hql = "select mr from EditeHistory mr where mr.numeber=?";
+			arguments.add(number);
+		}else{
+			hql = "select mr from EditeHistory mr";
+		}
+		List<EditeHistory> result = (List<EditeHistory>) institutionDao
+				.queryByHql(hql,arguments);
 		return result;
 	}
 
