@@ -18,7 +18,11 @@ public interface InstitutionService {
 	
 	public List<EditeHistory> getEditeHistoryList();
 	
+	public List<EditeHistory> getNumberEditeHistoryList(String number);
+	
 	public List<EditeHistory> getEditeHistoryListByUserId(Integer userId);
+	
+	public List<EditeHistory> getNumberEditeHistoryListByUserId(String number,Integer userId);
 	
 	public Information getNnmuserByName(String number);
 	
