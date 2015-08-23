@@ -243,5 +243,47 @@ public class UserEditeController {
 		return "back/systemset/editeHistory";
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/searchHistory", method = RequestMethod.POST)
+	public String searchHistory(Model model, HttpSession sesison,@RequestBody UserEditeForm userEditeForm) {
+
+		Object logonUserO = sesison.getAttribute("logonUser");
+		Map<String, Object> logonUserMap = (Map<String, Object>) logonUserO;
+		String userNaemO = (String) logonUserMap.get("userName");
+		List<NmsUser> users = (List<NmsUser>) nmsUserDao.queryByHql(
+				HqlUserRole.getUserByName, userNaemO);
+		NmsUser user = new NmsUser();
+		if (users != null && users.size() > 0) {
+			user = users.get(0);
+			ManageRole role = roleManageService.getRoleById(user.getId());
+			List<EditeHistory> list = new ArrayList<EditeHistory>();
+			List<EditeHistoryForm> formList = new ArrayList<EditeHistoryForm>();
+			if (role.getSuperAdmin() != null && role.getSuperAdmin() == 1) {
+				list = institutionService.getNumberEditeHistoryList(userEditeForm.getUserNumber());
+			} else {
+				list = institutionService.getNumberEditeHistoryListByUserId(userEditeForm.getUserNumber(),user
+						.getId());
+			}
+			if (list!= null && list.size() > 0) {
+				for (EditeHistory eh : list) {
+					List<NmsUser> oprations = (List<NmsUser>) nmsUserDao.queryByHql(
+							HqlUserRole.getUserById, eh.getUserId());
+					NmsUser opration = oprations.get(0);
+					EditeHistoryForm form = new EditeHistoryForm();
+					form.setCreateDate(String.valueOf(eh.getCreateTime()));
+					form.setNumeber(eh.getNumeber());
+					form.setOprationMan(opration.getUserName());
+					form.setRemaind(eh.getRemaind());
+					formList.add(form);
+				}
+			}
+			model.addAttribute("result", formList);
+
+		}
+		return "back/systemset/editeHistory";
+
+	}
 
 }
