@@ -6,6 +6,25 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
+		<div class="widget-content nopadding">
+					<form class="form-horizontal"  action="/userEditeController/searchHistory.do" method="POST"
+						id="searchHistoryForm">
+						<div class="control-group">
+							<label class="control-label">会员账号：</label>
+							<div class="controls">
+								<div class="input-append">
+										<input type="text" name="userNumber" id="userNumber"
+										class="span11">
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="form-actions">
+						<input type="submit" value="检索"
+							onclick="searchUserHistory('searchHistoryForm')"
+							class="btn btn-success">
+					</div>
+				</div>
 			<div class="widget-box">
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
