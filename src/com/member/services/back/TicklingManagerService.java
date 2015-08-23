@@ -16,5 +16,7 @@ public interface TicklingManagerService {
 	void updateTickling(TickForm form);
 
 	List<Tickling> getTicklingById(Integer id);
+	
+	public List<Tickling> getTicklingByNumberState(Integer state,String usernumber);
 
 }
