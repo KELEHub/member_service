@@ -1231,5 +1231,9 @@ function batchDealWW(){
   }
 	
 }
-
+function searchUserHistory(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+	
+}
 
