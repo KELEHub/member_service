@@ -295,8 +295,7 @@ public class RegisterController {
 			}
 			Information ad = informationService.getInformationByNumber(form.getNumber());
 			if(ad!=null){
-				ad.setIsActivate(2);
-				informationService.saveOrUpfate(ad);
+				informationService.deleteData(ad);
 			}
 			result.setMsg("删除成功");
 			result.setSuccess(true);
