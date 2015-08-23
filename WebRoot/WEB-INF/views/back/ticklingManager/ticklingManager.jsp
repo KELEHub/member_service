@@ -18,6 +18,25 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
+		<div class="widget-content nopadding">
+					<form class="form-horizontal"  action="/TicklingManagerController/searchDoneTicklingManager.do" method="POST"
+						id="searchTickForm">
+						<div class="control-group">
+							<label class="control-label">会员账号：</label>
+							<div class="controls">
+								<div class="input-append">
+										<input type="text" name="memberNumber" id="memberNumber"
+										class="span11">
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="form-actions">
+						<input type="submit" value="检索"
+							onclick="searchUserHistory('searchTickForm')"
+							class="btn btn-success">
+					</div>
+				</div>
 			<div class="widget-box">
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
