@@ -36,6 +36,15 @@ public class TicklingManagerController {
 		model.addAttribute("result", result);
 		return "back/ticklingManager/ticklingManager";
 	}
+	
+	
+	@RequestMapping(value = "/searchDoneTicklingManager",method = RequestMethod.POST)
+	public String searchDoneTicklingManager(Model model,@RequestBody TickForm form){
+		List<Tickling> result = ticklingManagerService.getTicklingByNumberState(1,form.getMemberNumber());
+		model.addAttribute("result", result);
+		return "back/ticklingManager/ticklingManager";
+	}
+	
 
 	@RequestMapping(value = "/replyTickling",method = RequestMethod.POST)
 	@ResponseBody
