@@ -32,6 +32,21 @@ public class TicklingManagerServiceImpl implements TicklingManagerService {
 	
 	@Override
 	@Transactional(readOnly=true)
+	public List<Tickling> getTicklingByNumberState(Integer state,String usernumber) {
+		List arguments = new ArrayList();
+		arguments.add(state);
+		String hql = "";
+		if(usernumber!=null && !"".equals(usernumber)){
+			hql = "from Tickling where state=? and memberNumber=?";
+			arguments.add(usernumber);
+		}else{
+			hql = "from Tickling where state=?";
+		}
+		return (List<Tickling>) ticklingManagerDao.queryByHql(hql, arguments);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
 	public List<Tickling> getTicklingById(Integer id) {
 		return (List<Tickling>) ticklingManagerDao.queryByHql(
 				HqlTicklingManager.getTicklingById, id);
