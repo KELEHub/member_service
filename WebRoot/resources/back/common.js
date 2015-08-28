@@ -283,11 +283,7 @@ function saveMemberDetail(sFormId) {
 	if (result.success) {
 		alert(result.msg);
 		$('#myModal').modal('hide');
-		$("#content-header").find("form").each(function() {
-			var formid = this.id;
-			ajaxRequestForFormGetJsp(formid);
-			resetTable();
-		});
+		
 	}
 }
 
