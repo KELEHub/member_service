@@ -281,7 +281,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 		informationDao.executeHqlUpdate(hql9, number);
 		
 		//删除information表记录
-		String hql10="delete Information where number=?";
+		String hql10="update Information set isActivate=2 where number=?";
 		informationDao.executeHqlUpdate(hql10,number);
 	}
 }
