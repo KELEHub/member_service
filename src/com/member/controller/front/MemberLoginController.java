@@ -91,6 +91,12 @@ public class MemberLoginController {
 				   mv.setViewName("redirect:/member_login.jsp");
 				return mv;
 			}
+           if (info.getIsActivate() == 2) {
+				
+				request.getSession().setAttribute("loginReturnWarnMsg", "该账户已被删除");
+				   mv.setViewName("redirect:/member_login.jsp");
+				return mv;
+			}
             if (info.getIsLock() == 1) {
 				
 				request.getSession().setAttribute("loginReturnWarnMsg", "该账户已被锁定");
