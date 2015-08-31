@@ -237,6 +237,11 @@ public class MemberLoginController {
 	public BaseResult<Void> updateMemberInfo(@RequestBody MemberUpdateForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
 		Information info = informationService.getInformationByNumber(form.getNumber());
+		if(form.getBankCard()==null || "".equals(form.getBankCard())){
+			result.setMsg("银行卡号不能为空");
+			result.setSuccess(true);
+			return result;
+		}
 		if(!form.getBankCard().equals(info.getBankCard())){
 			if(informationService.countBankCard(form.getBankCard())>=2){
 				result.setMsg("系统已存在两张相同的银行卡，请换卡");
