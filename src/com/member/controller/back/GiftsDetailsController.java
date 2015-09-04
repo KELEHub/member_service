@@ -655,7 +655,7 @@ public class GiftsDetailsController {
 		         form.setCreateTime(ad.getCreateTime().toString());
 		         form.setIncome(ad.getIncome().toString());
 		         form.setPay("0");
-		         form.setPointbalance(ad.getIncome().toString());
+		         form.setPointbalance(ad.getPointbalance().toString());
 		         form.setUserNumber(ad.getUserNumber());
 		         form.setProject("礼包释放积分");
 		         result.add(form);
