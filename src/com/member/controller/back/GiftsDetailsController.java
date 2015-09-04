@@ -646,22 +646,22 @@ public class GiftsDetailsController {
 		String iDisplayLength = request.getParameter("iDisplayLength");	
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
-		List<AccountDetails> list = integralManagerService
-		.getFromgiftsHistoryPoints(Integer.parseInt(iDisplayLength),pageNumber);
+		List<IntegralHistoryForm> list = integralManagerService
+		.getFromgiftsHistoryPoints(Integer.parseInt(iDisplayLength),pageNumber,number);
         List<IntegralHistoryForm> result = new ArrayList<IntegralHistoryForm>();
         if (list != null && list.size() > 0) {
-	        for (AccountDetails ad : list) {
+	        for (IntegralHistoryForm ad : list) {
 		         IntegralHistoryForm form = new IntegralHistoryForm();
 		         form.setCreateTime(ad.getCreateTime().toString());
 		         form.setIncome(ad.getIncome().toString());
-		         form.setPay(ad.getPay().toString());
-		         form.setPointbalance(ad.getPointbalance().toString());
+		         form.setPay("0");
+		         form.setPointbalance(ad.getIncome().toString());
 		         form.setUserNumber(ad.getUserNumber());
 		         form.setProject("礼包释放积分");
 		         result.add(form);
 	}
 }
-		int iTotalRecords = integralManagerService.countFromgiftsHistoryPoints();
+		int iTotalRecords = integralManagerService.countFromgiftsHistoryPoints(number);
 		model.addAttribute("result", result);
 		Map map = new HashMap();
 		map.put("aaData", result);
