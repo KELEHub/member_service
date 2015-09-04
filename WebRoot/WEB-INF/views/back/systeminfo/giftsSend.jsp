@@ -3,9 +3,16 @@
 <%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script type="text/javascript">
+var table = null;
+function searchGiftsCurrent(){
+document.getElementById("number").value = document.getElementById("numberss").value;
+document.getElementById("numberss").value='';
+   table.fnDraw();
+}
+
 $(function(){
 	var bathPath=$("#basePath").val();
-		$("#sendGiftsDetailsTable").dataTable({
+		table=$("#sendGiftsDetailsTable").dataTable({
 		        "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
                 "sPaginationType": "bootstrap",   
         		"bJQueryUI" : true, //是否使用 jQury的UI theme  
@@ -38,6 +45,11 @@ $(function(){
         	        }  
         		},
                 "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {  //查询条件
+                    aoData.push(
+                        { "name": "number", "value": $("#number").val() }
+                        );
+                },
                 "aoColumns": [
                         { "mData": "userNumber" },
                         { "mData": "project" },
@@ -107,6 +119,27 @@ $(function(){
 		
 		
 	</div>
+	
+	<div class="widget-content nopadding">
+						<div class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label">会员账号:</label>
+							<div class="controls">
+								<div class="input-append">
+									<input type="text" name="numberss" id="numberss" >
+									<input type="hidden" name="number" id="number" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" value="查询"
+							onclick="searchGiftsCurrent()"
+							class="btn btn-success">
+					</div>
+				</div>
+	
+	
 				<div class="widget-content nopadding">
 					<table id="sendGiftsDetailsTable" class="table table-bordered data-table">
 						<thead>
