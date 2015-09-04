@@ -141,15 +141,38 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<AccountDetails> getFromgiftsHistoryPoints(int pageSize,int pageNumber) {
-		String hql = "from AccountDetails t where t.project=?  order by createTime desc";
-		List arguments = new ArrayList();
-		arguments.add(ProjectEnum.fromgifts);
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
-		if(result!=null && result.size()>0){
-			return result;
+	public List<IntegralHistoryForm> getFromgiftsHistoryPoints(int pageSize,int pageNumber,String number) {
+		String hql = "select new map(userNumber as userNumber,sum(income) as income,to_char(createtime, 'YYYY-MM-DD') as datetime)from AccountDetails t where t.project=:gifts  ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		if(number!=null && !"".equals(number)){
+			hql=hql + " and userNumber=:usernumber";
+			arguments.put("usernumber", number);
 		}
-		return null;
+		hql = hql +" group by to_char(createtime, 'YYYY-MM-DD'),userNumber  order by to_char(createtime, 'YYYY-MM-DD') desc";
+		arguments.put("gifts", ProjectEnum.fromgifts);
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
+		List<IntegralHistoryForm> formList = new ArrayList<IntegralHistoryForm>();
+		if(result!=null && result.size()>0){
+			for (Object obj : result){
+				IntegralHistoryForm ad = new IntegralHistoryForm();
+				String datetime = ((Map<String, String>) obj)
+				.get("datetime");
+				String points =null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("income")!=null){
+					points = String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("income"));
+				}
+				String usernumber=((Map<String, String>) obj)
+				.get("userNumber");
+				ad.setIncome(points);
+				ad.setCreateTime(datetime);
+				ad.setUserNumber(usernumber);
+				formList.add(ad);
+			}
+			
+		}
+		return formList;
 	}
 
 	@Override
@@ -204,11 +227,16 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	}
 
 	@Override
-	public int countFromgiftsHistoryPoints() {
-		String hql = "from AccountDetails t where t.project=? ";
-		List arguments = new ArrayList();
-		arguments.add(ProjectEnum.fromgifts);
-		List<AccountDetails> result = (List<AccountDetails>)integralManagerDao.queryByHql(hql,arguments);
+	public int countFromgiftsHistoryPoints(String number) {
+		String hql = "select new map(userNumber as userNumber,sum(income) as income,to_char(createtime, 'YYYY-MM-DD') as datetime)from AccountDetails t where t.project=:gifts  ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		if(number!=null && !"".equals(number)){
+			hql=hql + " and userNumber=:usernumber";
+			arguments.put("usernumber", number);
+		}
+		hql = hql +" group by to_char(createtime, 'YYYY-MM-DD'),userNumber  order by to_char(createtime, 'YYYY-MM-DD') desc";
+		arguments.put("gifts", ProjectEnum.fromgifts);
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,arguments);
 		if(result!=null && result.size()>0){
 			return result.size();
 		}
