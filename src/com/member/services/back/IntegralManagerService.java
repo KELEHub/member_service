@@ -23,9 +23,9 @@ public interface IntegralManagerService {
 
 	Information getInformationByNumber(String number);
 	
-	public List<AccountDetails> getFromgiftsHistoryPoints(int pageSize,int pageNumber);
+	public List<IntegralHistoryForm> getFromgiftsHistoryPoints(int pageSize,int pageNumber,String number);
 	
-	public int countFromgiftsHistoryPoints();
+	public int countFromgiftsHistoryPoints(String number);
 
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
 			String BenefitNumber, Integer serialNumber);
