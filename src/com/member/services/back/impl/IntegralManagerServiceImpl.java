@@ -142,7 +142,7 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<IntegralHistoryForm> getFromgiftsHistoryPoints(int pageSize,int pageNumber,String number) {
-		String hql = "select new map(userNumber as userNumber,sum(income) as income,to_char(createtime, 'YYYY-MM-DD') as datetime)from AccountDetails t where t.project=:gifts  ";
+		String hql = "select new map(userNumber as userNumber,sum(income) as income,max(pointbalance) as pointbalance,to_char(createtime, 'YYYY-MM-DD') as datetime)from AccountDetails t where t.project=:gifts  ";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		if(number!=null && !"".equals(number)){
 			hql=hql + " and userNumber=:usernumber";
@@ -163,9 +163,16 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 					points = String.valueOf(((Map<String, BigDecimal>) obj)
 							.get("income"));
 				}
+				String balance=null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("pointbalance")!=null){
+					balance = String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("pointbalance"));
+				}
 				String usernumber=((Map<String, String>) obj)
 				.get("userNumber");
 				ad.setIncome(points);
+				ad.setPointbalance(balance);
 				ad.setCreateTime(datetime);
 				ad.setUserNumber(usernumber);
 				formList.add(ad);
