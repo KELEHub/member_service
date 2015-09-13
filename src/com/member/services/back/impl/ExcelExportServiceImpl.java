@@ -179,6 +179,14 @@ public class ExcelExportServiceImpl implements ExcelExportService {
         cell8.setCellValue("充值银行市县 ");
         cell8.setCellStyle(style); 
         
+        HSSFCell cell9 = row.createCell(9); 
+        cell9.setCellValue("日期");
+        cell9.setCellStyle(style); 
+        
+        HSSFCell cell10 = row.createCell(10); 
+        cell10.setCellValue("充值备注");
+        cell10.setCellStyle(style); 
+        
 //        HSSFCell cell9 = row.createCell(9); 
 //        cell9.setCellValue("余额"); 
 //        cell9.setCellStyle(style); 
@@ -227,6 +235,10 @@ public class ExcelExportServiceImpl implements ExcelExportService {
             row1.createCell(7).setCellValue(arr6[0]);
 			// 收款市县
             row1.createCell(8).setCellValue(arr6[1]);
+            // 日期
+            row1.createCell(9).setCellValue(t.getChargeDate().toString());
+            // 备注
+            row1.createCell(10).setCellValue(t.getChageMessage());
         }  
         // 第六步，将文件存到指定位置  
         ByteArrayOutputStream os = new ByteArrayOutputStream();
