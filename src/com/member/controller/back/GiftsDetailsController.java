@@ -23,7 +23,6 @@ import com.member.beans.back.enumData.GiftEnum;
 import com.member.common.config.FrameConfig;
 import com.member.dao.HqlUserRole;
 import com.member.dao.NmsUserDao;
-import com.member.entity.AccountDetails;
 import com.member.entity.GiftsDetails;
 import com.member.entity.GiftsHistory;
 import com.member.entity.Information;
@@ -474,23 +473,34 @@ public class GiftsDetailsController {
 
 				// 当前积分发放总金额
 				String firstGold = String.valueOf(mouth) + "月" + dayFrom + "-"
-						+ dayTo + "应发放积分";
+						+ dayTo + "应发放积分:";
 				// 下批次积分发放总金额
 				String SecondGold = String.valueOf(nextMoth) + "月" + nextDayFrom
-						+ "-" + nextDayTo + "应发放积分";
+						+ "-" + nextDayTo + "应发放积分:";
 				;
 				// 下下批次积分发放总金额
 				String threeGold = String.valueOf(threeMoth) + "月" + threeDayFrom
-						+ "-" + threeDayTo + "应发放积分";
-				;
+						+ "-" + threeDayTo + "应发放积分:";
+				
 				firstGold = firstGold
 						+ giftsDetailsService.getCountGoldAll(countNumber, beforBatchNoEnum);
+				
 				SecondGold = SecondGold
 						+ giftsDetailsService.getCountGoldAll(nextCountNumber,
 								nextBatchNo);
+				
 				threeGold = threeGold
 						+ giftsDetailsService.getCountGoldAll(threeCountNumber,
 								threeBatchNo);
+				
+				
+				//消费卷发放统计
+				firstGold=firstGold+"，应发放消费卷：";
+				SecondGold=SecondGold+"，应发放消费卷：";
+				threeGold=threeGold+"，应发放消费卷：";
+				firstGold = firstGold+ giftsDetailsService.getCountCouponAll(countNumber, beforBatchNoEnum);
+				SecondGold = SecondGold+ giftsDetailsService.getCountCouponAll(nextCountNumber, nextBatchNo);
+				threeGold = threeGold+ giftsDetailsService.getCountCouponAll(threeCountNumber, threeBatchNo);
 				model.addAttribute("firstGold", firstGold);
 				model.addAttribute("SecondGold", SecondGold);
 				model.addAttribute("threeGold", threeGold);
@@ -595,14 +605,14 @@ public class GiftsDetailsController {
 
 				// 当前积分发放总金额
 				String firstGold = String.valueOf(mouth) + "月" + dayFrom + "-"
-						+ dayTo + "应发放积分";
+						+ dayTo + "应发放积分:";
 				// 下批次积分发放总金额
 				String SecondGold = String.valueOf(nextMoth) + "月" + nextDayFrom
-						+ "-" + nextDayTo + "应发放积分";
+						+ "-" + nextDayTo + "应发放积分:";
 				;
 				// 下下批次积分发放总金额
 				String threeGold = String.valueOf(threeMoth) + "月" + threeDayFrom
-						+ "-" + threeDayTo + "应发放积分";
+						+ "-" + threeDayTo + "应发放积分:";
 				;
 				firstGold = firstGold
 						+ giftsDetailsService.getCountGoldAll(countNumber, batchNo);
@@ -612,6 +622,16 @@ public class GiftsDetailsController {
 				threeGold = threeGold
 						+ giftsDetailsService.getCountGoldAll(threeCountNumber,
 								threeBatchNo);
+				
+				//消费卷发放统计
+				firstGold=firstGold+"，应发放消费卷：";
+				SecondGold=SecondGold+"，应发放消费卷：";
+				threeGold=threeGold+"，应发放消费卷：";
+				firstGold = firstGold+ giftsDetailsService.getCountCouponAll(countNumber, batchNo);
+				SecondGold = SecondGold+ giftsDetailsService.getCountCouponAll(nextCountNumber, nextBatchNo);
+				threeGold = threeGold+ giftsDetailsService.getCountCouponAll(threeCountNumber, threeBatchNo);
+				
+				
 				model.addAttribute("firstGold", firstGold);
 				model.addAttribute("SecondGold", SecondGold);
 				model.addAttribute("threeGold", threeGold);
