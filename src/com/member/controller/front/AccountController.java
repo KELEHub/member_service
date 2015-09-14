@@ -125,9 +125,8 @@ public class AccountController {
 			
 			Charge charge = accountService.getChargeDetailById(form.getId());
 			if(charge!=null){
-				charge.setStatus(3);
+				institutionService.deleteData(charge);
 			}
-			institutionService.savaOrUpdate(charge);
 			result.setMsg("删除成功");
 			result.setSuccess(true);
 		} catch (Exception e) {
