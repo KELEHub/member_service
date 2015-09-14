@@ -30,6 +30,8 @@ import com.member.util.CommonUtil;
 @Service("InformationServiceImpl")
 public class InformationServiceImpl implements InformationService{
 	
+	@Resource(name = "InformationServiceImpl")
+	public InformationService informationService;
 	
 	@Resource(name = "InstitutionDaoImpl")
     InstitutionDao institutionDao;
@@ -146,7 +148,7 @@ public class InformationServiceImpl implements InformationService{
 			institutionDao.saveOrUpdate(gf);
 			//详细礼包信息
 			int countGifts = 0;
-			if(CommonUtil.getGiftEnum().equals(GiftEnum.TEN)){
+			if(CommonUtil.getGiftEnum().equals(GiftEnum.TEN)|| CommonUtil.getGiftEnum().equals(GiftEnum.TEN)){
 				countGifts = 10;
 			}else{
 				countGifts = 5;
@@ -193,6 +195,9 @@ public class InformationServiceImpl implements InformationService{
 				sg.setPointNumber(i);
 				sg.setGoldMoney(getGoldMoney(inst,i,CommonUtil.getGiftEnum()));
 				sg.setGiftsDetailsId(gf.getId());
+				if(CommonUtil.getGiftEnum().equals(GiftEnum.TEN)){
+					sg.setCoupon(160);
+				}
 				sg.setCreateTime(new Date());
 				institutionDao.saveOrUpdate(sg);
 			}
@@ -294,6 +299,12 @@ public class InformationServiceImpl implements InformationService{
 				moneyStatistics.setDeclarationBenefitNumber(selfInfo.getLeaderServiceNumber());
 				moneyStatistics.setSerialNumber(CommonUtil.getCountNumber());
 				moneyStatistics.setState(0);
+				Information leadInfo = informationService.getInformationByNumber(selfInfo.getLeaderServiceNumber());
+				if(leadInfo.getBdUse()!= null && leadInfo.getBdUse()==1){
+					moneyStatistics.setDbUse(1);
+				}else{
+					moneyStatistics.setDbUse(0);
+				}
 				institutionDao.saveOrUpdate(moneyStatistics);
 			}
 			
@@ -327,9 +338,9 @@ public class InformationServiceImpl implements InformationService{
 				return inst.getPreaFive();
 			}
 		}else{
-			return 1000;
+			return 840;
 		}
-		return 1000;
+		return 840;
 	}
 
 
