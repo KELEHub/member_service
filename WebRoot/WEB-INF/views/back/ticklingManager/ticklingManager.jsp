@@ -57,7 +57,7 @@
 								<tr class="gradeX">
 									<td>${item.memberNumber}</td>
 									<td>${item.title}</td>
-									<td>${item.ticklingDate}</td>
+									<td>${item.replyDate}</td>
 									<td>
 									<a href="#myModal" data-toggle="modal" class="btn" onclick="checkTickling('${item.id}')">查看</a>
 									<button class="btn" onclick="deleteDoneTickling('${item.id}')">删除</button>
