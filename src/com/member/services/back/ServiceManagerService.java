@@ -24,6 +24,8 @@ public interface ServiceManagerService {
 	void updateInfo(InformationForm msf);
 
 	void forbiddenService(Integer isService, Integer id);
+	
+	void openbiddenService(Integer isService, Integer id);
 
 	void updateApplyState(Integer state, Integer id, String failureCause);
 
