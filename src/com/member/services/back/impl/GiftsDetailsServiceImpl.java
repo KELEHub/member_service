@@ -69,6 +69,27 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 
 		return "0";
 	}
+	
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	public String getCountCouponAll(Integer countNumber, BatchNoEnum batchNo) {
+		String sql = "select SUM(mr.coupon) from SendGiftsDetails mr where mr.countNumber<? and  mr.batchNo=? and mr.stauts=0";
+		List arguments = new ArrayList();
+		arguments.add(countNumber);
+		arguments.add(batchNo);
+		List<?> result = giftsDao.queryByHql(sql, arguments);
+		if (result != null && result.size() > 0) {
+			if(result.get(0) != null){
+				return result.get(0).toString();
+			}
+		}
+
+		return "0";
+	}
+	
+	
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -85,6 +106,13 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 		giftsDetails.setPointNumber(giftsDetails.getPointNumber() + 1);
 		information.setShoppingMoney(shoppingMoney);
 		information.setShoppingAccumulative(shoppingAccumulative);
+		//消费卷
+		if(ss.getCoupon()!=null && !"".equals(ss.getCoupon())&& ss.getCoupon()!=0){
+			
+			BigDecimal coupon = information.getCoupon().add(
+					new BigDecimal(ss.getCoupon()));
+			information.setCoupon(coupon);
+		}
 		AccountDetails shopingDetails = new AccountDetails();
 		shopingDetails.setUserNumber(ss.getNumber());
 		shopingDetails.setCreateTime(new Date());
@@ -98,13 +126,25 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 		/** 葛粮币余额 */
 		shopingDetails.setGoldmoneybalance(information.getCrmMoney());
 		/** 收入 */
-		shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()));
+		if(ss.getCoupon()!=null && !"".equals(ss.getCoupon())&& ss.getCoupon()!=0){
+			shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()).add(new BigDecimal(ss.getCoupon())));
+		}else{
+			shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()));
+		}
+	
 		/** 支出 */
 		shopingDetails.setPay(new BigDecimal(0));
 
 		/** 备注 */
-		shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
-				+ "期次礼包释放");
+		if(ss.getCoupon()!=null && !"".equals(ss.getCoupon())&& ss.getCoupon()!=0){
+			shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
+					+ "期次礼包释放,释放"+ss.getGoldMoney()+"积分，"+ss.getCoupon()+"消费卷");
+			
+		}else{
+			shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
+					+ "期次礼包释放");
+		}
+	
 		shopingDetails.setChildId(ss.getChildId());
 		/** 用户ID */
 		shopingDetails.setUserId(information.getId());
