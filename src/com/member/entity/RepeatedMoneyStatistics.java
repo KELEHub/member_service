@@ -54,6 +54,10 @@ public class RepeatedMoneyStatistics {
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
 	private Date createTime;
+	
+	/**状态，0为正常，1为禁用*/
+	@Column(name="dbUse",columnDefinition="INT default 0")
+	private Integer dbUse;
 
 	public Integer getId() {
 		return id;
@@ -125,6 +129,14 @@ public class RepeatedMoneyStatistics {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public Integer getDbUse() {
+		return dbUse;
+	}
+
+	public void setDbUse(Integer dbUse) {
+		this.dbUse = dbUse;
 	}
 	
 }
