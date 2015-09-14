@@ -177,11 +177,45 @@ public class ServiceManagerController {
 	@ResponseBody
 	public BaseResult<Void> forbiddenService(@RequestBody MemberSearchForm form,Model model){
 		BaseResult<Void> result = new BaseResult<Void>();
+		Information info= informationService.getInformationById(form.getId());
+		if(info==null){
+			result.setMsg("该用户不存在.");
+			result.setSuccess(true);
+			return result;
+		}
+		if(info.getIsService()==0){
+			result.setMsg("该用户已被禁用.");
+			result.setSuccess(true);
+			return result;
+		}
 		serviceManagerService.forbiddenService(0,form.getId());
 		result.setMsg("禁用成功.");
 		result.setSuccess(true);
 		return result;
 	}
+	
+	@RequestMapping(value = "/openbiddenService",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> openbiddenService(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		Information info= informationService.getInformationById(form.getId());
+		if(info==null){
+			result.setMsg("该用户不存在.");
+			result.setSuccess(true);
+			return result;
+		}
+		if(info.getIsService()==1){
+			result.setMsg("该用户已被解禁.");
+			result.setSuccess(true);
+			return result;
+		}
+		serviceManagerService.openbiddenService(1,form.getId());
+		result.setMsg("解禁成功.");
+		result.setSuccess(true);
+		return result;
+	}
+	
+	
 	
 	@RequestMapping(value = "/applyCheckFailure",method = RequestMethod.POST)
 	@ResponseBody
