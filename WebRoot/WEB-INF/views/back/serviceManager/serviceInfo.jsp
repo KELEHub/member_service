@@ -62,10 +62,18 @@ $(function(){
                         { "sDefaultContent" : ""}
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
-        			$('td:eq(9)', nRow).html(
+               if(aData.bdUse==1){
+               $('td:eq(9)', nRow).html(
+                       	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
+                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"openbiddenService("+aData.id+")\">解禁</button>");
+                   	return nRow;
+               }else{
+               $('td:eq(9)', nRow).html(
                        	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
                        	"<button class=\"btn\" onclick=\"forbiddenService("+aData.id+")\">禁用</button>");
                    	return nRow;
+               }
+        			
                  }
             });            
 });
