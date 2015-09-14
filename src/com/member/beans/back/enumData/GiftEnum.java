@@ -6,6 +6,8 @@ public enum GiftEnum {
 	FIVE,
 	/** 10期*/
 	TEN;
+	/** 消费卷*/
+	//TENNEW;
 
 
 }
