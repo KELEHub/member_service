@@ -1013,6 +1013,24 @@ function forbiddenService(serviceId){
 	}
 }
 
+function openbiddenService(serviceId){
+	if (window.confirm('您确定要解禁该报单中心？')) {
+		var reqObj = {};
+		reqObj["id"] = serviceId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/openbiddenService.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
+
 function forbidForm(){
 	if (window.confirm('您确定要禁止报单？')) {
 		var reqObj = {};
