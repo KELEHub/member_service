@@ -70,6 +70,10 @@ public class SendGiftsDetails {
 	@Column(name="giftsDetailsId")
 	private Integer giftsDetailsId;
 	
+	/**消费卷*/
+	@Column(name="coupon")
+	private Integer coupon;
+	
 	
 	/** createTime 创建时间 */
 	@Column(name="createTime",nullable=true,unique=false,length=32)
@@ -189,6 +193,14 @@ public class SendGiftsDetails {
 
 	public void setGiftsDetailsId(Integer giftsDetailsId) {
 		this.giftsDetailsId = giftsDetailsId;
+	}
+
+	public Integer getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Integer coupon) {
+		this.coupon = coupon;
 	}
 	
 	
