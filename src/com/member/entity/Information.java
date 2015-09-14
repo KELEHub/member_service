@@ -212,6 +212,15 @@ public class Information {
 	@Column(name="serviceSum")
 	private Integer serviceSum;
 	
+	/**消费卷*/
+	@Column(name="coupon",columnDefinition="NUMERIC(20,2) default 0")
+	private BigDecimal coupon;
+	
+	/**报单禁用 */
+	@Column(name="bdUse")
+	private Integer bdUse;
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -595,5 +604,23 @@ public class Information {
 	public void setActivateNumber(String activateNumber) {
 		this.activateNumber = activateNumber;
 	}
+
+	public BigDecimal getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(BigDecimal coupon) {
+		this.coupon = coupon;
+	}
+
+	public Integer getBdUse() {
+		return bdUse;
+	}
+
+	public void setBdUse(Integer bdUse) {
+		this.bdUse = bdUse;
+	}
+
+	
 	
 }
