@@ -26,8 +26,13 @@ public class TicklingManagerServiceImpl implements TicklingManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<Tickling> getTicklingByState(Integer state) {
-		return (List<Tickling>) ticklingManagerDao.queryByHql(
-				HqlTicklingManager.getTickling, state);
+		String hql= "";
+		if(state ==0){
+			hql="from Tickling where state=? order by ticklingDate DESC";
+		}else{
+			hql="from Tickling where state=? order by replyDate DESC";
+		}
+		return (List<Tickling>) ticklingManagerDao.queryByHql(hql, state);
 	}
 	
 	@Override
