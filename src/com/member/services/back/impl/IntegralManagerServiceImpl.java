@@ -18,9 +18,9 @@ import com.member.dao.HqlServiceManager;
 import com.member.dao.IntegralManagerDao;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
+import com.member.entity.RepeatedMoneyStatistics;
 import com.member.form.back.IntegralHistoryForm;
 import com.member.form.back.RangeIssueForm;
-import com.member.form.back.StatisticsForm;
 import com.member.services.back.IntegralManagerService;
 
 @SuppressWarnings("unchecked")
@@ -226,11 +226,16 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	public void saveOrUpdateRelation(Information info,AccountDetails ad,String BenefitNumber,Integer serialNumber) {
 		integralManagerDao.saveOrUpdate(info);
 		integralManagerDao.saveOrUpdate(ad);
-		String hql = "update RepeatedMoneyStatistics set state=1 where declarationBenefitNumber=? and serialNumber<?";
+		String hql = "from RepeatedMoneyStatistics  where dbUse !=1 and declarationBenefitNumber=? and serialNumber<?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(BenefitNumber);
 		list.add(serialNumber);
-		integralManagerDao.executeHqlUpdate(hql, list);
+		List<RepeatedMoneyStatistics> results = (List<RepeatedMoneyStatistics>)integralManagerDao.queryByHql(hql, list);
+		if(results!=null && results.size()>0){
+			for(RepeatedMoneyStatistics s : results){
+				integralManagerDao.delete(s);
+			}
+		}
 	}
 
 	@Override
