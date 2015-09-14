@@ -33,7 +33,7 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 			int pageSize,int pageNumber,String number) {
 		
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String hql = "from Information where isService=1 ";
+		String hql = "from Information where (isService=1 OR (isService=0 AND bdUse=1)) ";
 		if (number != null && !"".equals(number)) {
 			hql+=" and number=:number";
 			arguments.put("number", number);
@@ -87,7 +87,7 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Override
 	public int countServiceManagerData(String customerPar,Integer isService,String number) {
 		Map<String, Object> arguments = new HashMap<String, Object>();
-		String hql = "from Information where isService=1 ";
+		String hql = "from Information where (isService=1 OR (isService=0 AND bdUse=1)) ";
 		if (number != null && !"".equals(number)) {
 			hql+=" and number=:number";
 			arguments.put("number", number);
@@ -118,9 +118,10 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void forbiddenService(Integer isService,Integer id) {
-		String hql = "update Information set isService=? where id=?";
+		String hql = "update Information set isService=?,bdUse=? where id=?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(isService);
+		list.add(1);
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
 	}
@@ -160,5 +161,16 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 		}else{
 			return null;
 		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void openbiddenService(Integer isService, Integer id) {
+		String hql = "update Information set isService=?,bdUse=? where id=?";
+		List<Object> list = new ArrayList<Object>();
+		list.add(isService);
+		list.add(0);
+		list.add(id);
+		serviceManagerDao.executeHqlUpdate(hql, list);
 	}
 }
