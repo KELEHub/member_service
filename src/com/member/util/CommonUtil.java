@@ -73,6 +73,7 @@ public class CommonUtil {
 		int dayNumber = Integer.valueOf(nowDateStr.substring(4,6)+dayStr);
 		if(dayNumber>410){
 			return GiftEnum.TEN;
+		//	return GiftEnum.TENNEW;
 		}else{
 			return GiftEnum.FIVE;
 		}
