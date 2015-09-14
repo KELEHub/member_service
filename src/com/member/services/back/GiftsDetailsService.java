@@ -15,5 +15,7 @@ public interface GiftsDetailsService {
 	
 	public Boolean DeleteGifts(String number);
 	
+	public String getCountCouponAll(Integer countNumber, BatchNoEnum batchNo);
+	
 
 }
