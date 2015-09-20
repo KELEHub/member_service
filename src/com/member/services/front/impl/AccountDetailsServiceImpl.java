@@ -42,10 +42,36 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<AccountDetails> getAccountDetailsByNoservicepoints(
-			String condition, List argumenrs,int pagesize,int pageNumber) {
+			String condition, List argumenrs,int pagesize,int pageNumber,String number) {
 		String hql = "from AccountDetails where " + condition;
 		List<AccountDetails> list = (List<AccountDetails>) parameterDao
 				.queryByHql(hql, pageNumber,pagesize,argumenrs);
+		
+		if (list != null && list.size() > 0) {
+			for (AccountDetails st : list) {
+				if (st.getProject().equals(ProjectEnum.servicepointsforone)) {
+					String sql="from AccountDetails where project = ? and userNumber=? and countNumber=? ";
+					List argumentss = new ArrayList();
+					argumentss.add(ProjectEnum.servicepointsformuch);
+					argumentss.add(number);
+					argumentss.add(st.getCountNumber());
+					List<AccountDetails> list2 = (List<AccountDetails>) parameterDao
+					.queryByHql(sql,argumentss);
+					if(list2!=null && list2.size()>0){
+						AccountDetails ads = list2.get(0);
+						st.setIncome(st.getIncome().add(ads.getIncome()));
+						int a = st.getCreateTime().compareTo(ads.getCreateTime());
+						if(a<0){
+							st.setPointbalance(ads.getPointbalance());
+							st.setGoldmoneybalance(ads.getGoldmoneybalance());
+							st.setCreateTime(ads.getCreateTime());
+						}
+					}
+			
+				}
+
+			}
+		}
 		return list;
 	}
 
