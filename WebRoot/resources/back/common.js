@@ -1107,8 +1107,16 @@ function formatter(o, blur) {
 
 function rangeIntegralIssue(sFormId){
 	if (window.confirm('您确定要发送极差积分么？')){
-		var result = ajaxRequestForFormGetJsp(sFormId);
-	    resetTable();
+		var result = ajaxRequestForFormGetJson(sFormId);
+		if (result.success) {
+			alert(result.msg);
+			$('#myModal').modal('hide');
+			$("#content-header").find("form").each(function() {
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
 	}
 	
 }
