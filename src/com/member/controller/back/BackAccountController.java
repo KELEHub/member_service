@@ -62,6 +62,8 @@ public class BackAccountController {
 			  String sigleCodition="";
 			  List arguments = new ArrayList();
 			  arguments.add(number);
+			  condition = condition+ " and project !=? ";
+			  arguments.add(ProjectEnum.servicepointsformuch);
 				String iDisplayLength = request.getParameter("iDisplayLength");	
 				String iDisplayStart = request.getParameter("iDisplayStart");
 				int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
@@ -76,7 +78,7 @@ public class BackAccountController {
 			
 			  condition = condition+"  order by createTime desc";
 				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments,Integer.parseInt(iDisplayLength),
-							pageNumber);
+							pageNumber,number);
 				  for(AccountDetails ad : accountList){
 					  AccountBean bean= new AccountBean();
 					  bean.setKindData(getKindDataName(ad.getKindData()));
