@@ -11,7 +11,7 @@ public interface AccountDetailsService {
 
 	public  List<AccountDetails> getAccountDetailsByUserNumber(String userNumber);
 
-	public List<AccountDetails>  getAccountDetailsByNoservicepoints(String condition,List argumenrs,int pagesize,int pageNumber);
+	public List<AccountDetails>  getAccountDetailsByNoservicepoints(String condition,List argumenrs,int pagesize,int pageNumber,String number);
 	
 	public int couontDetails(String condition,List argumenrs);
 	
