@@ -94,8 +94,7 @@ public class AccountDetailsController {
 				  }
 				  if(!"space".equals(projectFlg)  && projectFlg!=null){
 					  if(ProjectEnum.servicepointsforone.equals(getProjectEnum(projectFlg))){
-						  condition= condition + " and (project=? or project=?)";
-						  arguments.add(ProjectEnum.servicepointsformuch);
+						  condition= condition + " and (project=? )";
 						  arguments.add(ProjectEnum.servicepointsforone);
 					  }else{
 						  condition= condition + " and project=?";
@@ -103,6 +102,9 @@ public class AccountDetailsController {
 					  }
 						  
 						  
+				  }else{
+					  condition= condition + " and project!=? ";
+					  arguments.add(ProjectEnum.servicepointsformuch);
 				  }
 				
 				int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
@@ -116,7 +118,7 @@ public class AccountDetailsController {
 				}
 			  condition = condition+"  order by createTime desc";
 				 List<AccountDetails> accountList = accountDetailsService.getAccountDetailsByNoservicepoints(condition,arguments,Integer.parseInt(iDisplayLength),
-							pageNumber);
+							pageNumber,userNaemO);
 				  for(AccountDetails ad : accountList){
 					  AccountBean bean= new AccountBean();
 					  bean.setKindData(getKindDataName(ad.getKindData()));
