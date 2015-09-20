@@ -23,6 +23,7 @@ import com.member.entity.AccountDetails;
 import com.member.entity.Information;
 import com.member.form.back.IntegralHistoryForm;
 import com.member.form.back.RangeIssueForm;
+import com.member.helper.BaseResult;
 import com.member.services.back.IntegralManagerService;
 import com.member.util.CommonUtil;
 
@@ -121,7 +122,9 @@ public class IntegralManagerController {
 	}
 	
 	@RequestMapping(value = "/doRangeIssue", method = RequestMethod.POST)
-	public String doRangeIssue(@RequestBody RangeIssueForm form, Model model) {
+	@ResponseBody
+	public BaseResult<Void> doRangeIssue(@RequestBody RangeIssueForm form, Model model) {
+		BaseResult<Void> result = new BaseResult<Void>();
 		try {
 			String year = form.getYear();
 			String month = form.getMonth();
@@ -130,6 +133,11 @@ public class IntegralManagerController {
 				serialNumber = Integer.parseInt(year+"0"+month);
 			}else{
 				serialNumber = Integer.parseInt(year+month);
+			}
+			if(serialNumber>CommonUtil.getCountNumber()){
+				result.setMsg("选择月份超过当前月份");
+				result.setSuccess(true);
+				return result;
 			}
 			List<RangeIssueForm> list = integralManagerService.getAvailableRangeIntegral(serialNumber);
 			if(list!=null &&list.size()>0){
@@ -145,24 +153,24 @@ public class IntegralManagerController {
 					info.setShoppingAccumulative(info.getShoppingAccumulative().add(rif.getAvailableInt()));
 					
 					//更新在AccountDetails表中添加一条纪律
-					List<AccountDetails> member = integralManagerService.getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), info.getNumber());
-					if (member!=null && member.size()>0){
-						AccountDetails memberInfo = member.get(0);
-						/**积分余额 */
-						memberInfo.setPointbalance(info.getRepeatedMoney());
-						/**葛粮币余额 */
-						memberInfo.setGoldmoneybalance(info.getCrmMoney());
-						/**收入 */
-						memberInfo.setIncome(memberInfo.getIncome().add(rif.getAvailableInt()));
-						integralManagerService.saveOrUpdateRelation(info, memberInfo, rif.getUserNumber(), serialNumber);
+//					List<AccountDetails> member = integralManagerService.getMemberBycountNumberAndUserNumber(CommonUtil.getServerCountNumber(), info.getNumber());
+//					if (member!=null && member.size()>0){
+//						AccountDetails memberInfo = member.get(0);
+//						/**积分余额 */
+//						memberInfo.setPointbalance(info.getRepeatedMoney());
+//						/**葛粮币余额 */
+//						memberInfo.setGoldmoneybalance(info.getCrmMoney());
+//						/**收入 */
+//						memberInfo.setIncome(memberInfo.getIncome().add(rif.getAvailableInt()));
+//						integralManagerService.saveOrUpdateRelation(info, memberInfo, rif.getUserNumber(), serialNumber);
 						
-					}else{
+//					}else{
 						AccountDetails accountDetail = new AccountDetails();
 						accountDetail.setKindData(KindDataEnum.points);
 						/**日期类别统计 */
 						accountDetail.setDateNumber(CommonUtil.getDateNumber());
 						/**流水号 */
-						accountDetail.setCountNumber(CommonUtil.getCountNumber());
+						accountDetail.setCountNumber(CommonUtil.getServerCountNumber());
 						/**项目 */
 						accountDetail.setProject(ProjectEnum.servicepointsformuch);
 						/**积分余额 */
@@ -184,13 +192,19 @@ public class IntegralManagerController {
 						//更新RepeatedMoneyStatistics表
 						
 						integralManagerService.saveOrUpdateRelation(info, accountDetail, rif.getUserNumber(), serialNumber);
-					}
+//					}
 				}
+				result.setMsg("积分发送成功");
+			}else{
+				result.setMsg("没有积分可以发送");
 			}
-			return "back/integralManager/rangeIssue";
+			result.setSuccess(true);
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "back/integralManager/rangeIssue";
+			result.setMsg("积分发送失败");
+			result.setSuccess(true);
+			return result;
 		}
 	}
 	
