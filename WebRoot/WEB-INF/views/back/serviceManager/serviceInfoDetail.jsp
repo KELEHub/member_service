@@ -121,6 +121,12 @@
 						<td class="center">${member.recommendCount }</td>
 					</tr>
 					<tr class="odd gradeX">
+						<td width="120" style="text-align: right;">消费卷:</td>
+						<td>${member.coupon }</td>
+						<td style="text-align: right;">消费卷累计:</td>
+						<td class="center">${member.couponAccumulative }</td>
+					</tr>
+					<tr class="odd gradeX">
 						<td width="120" style="text-align: right;">是否报单中心:</td>
 						<td><c:if test="${member.isService eq 0}">普通会员</c:if> <c:if
 								test="${member.isService eq 1}">报单中心</c:if></td>
