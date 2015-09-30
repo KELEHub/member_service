@@ -40,6 +40,7 @@ public class StatisticsController {
 			model.addAttribute("countRecharge", countAll.get("countRecharge"));
 			model.addAttribute("countFromgifts", countAll.get("countFromgifts"));
 			model.addAttribute("countPointcash", countAll.get("countPointcash"));
+			model.addAttribute("countXfMoney", countAll.get("countXfMoney"));
 			model.addAttribute("result", list);
 			return "back/systeminfo/statistics";
 
