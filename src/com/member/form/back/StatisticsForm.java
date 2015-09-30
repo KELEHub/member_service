@@ -7,6 +7,7 @@ public class StatisticsForm {
 	private String countRecharge;
 	private String countFromgifts;
 	private String countPointcash;
+	private String countXfMoney;
 	
 	public String getDateNumber() {
 		return dateNumber;
@@ -37,6 +38,12 @@ public class StatisticsForm {
 	}
 	public void setCountPointcash(String countPointcash) {
 		this.countPointcash = countPointcash;
+	}
+	public String getCountXfMoney() {
+		return countXfMoney;
+	}
+	public void setCountXfMoney(String countXfMoney) {
+		this.countXfMoney = countXfMoney;
 	}
 	
 	
