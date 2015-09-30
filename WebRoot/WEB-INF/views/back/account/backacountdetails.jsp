@@ -119,6 +119,16 @@ $(function(){
 				</div>
 			</div>
 		</div>
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				消费卷：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="txmoney" id="txmoney" disabled="true" value="${txmoney}">
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	
