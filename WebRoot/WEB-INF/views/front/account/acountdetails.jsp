@@ -77,6 +77,7 @@ $(function(){
 						<option value="space" <c:if test='${goldFlg == "space"}'>  selected='selected'  </c:if>></option>
 						<option value="crmMoney" <c:if test='${goldFlg == "crmMoney"}'>  selected='selected'  </c:if>>葛粮币</option>
 						<option value="shoppingMoney" <c:if test='${goldFlg == "shoppingMoney"}'>  selected='selected'  </c:if>>积分</option>
+						<option value="castMoney" <c:if test='${goldFlg == "castMoney"}'>  selected='selected'  </c:if>>消费卷</option>
 					</select>
 				</div>
 			</div>
@@ -185,6 +186,16 @@ $(function(){
 			<div class="controls">
 				<div class="input-append">
 					<input type="text" name="serverbalance" id="serverbalance" disabled="true" value="${serverbalance}">
+				</div>
+			</div>
+		</div>
+		<div class="control-group"  style="float: left; margin-left: 10px;">
+			<label class="control-label">
+				消费卷：
+			</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="txmoney" id="txmoney" disabled="true" value="${txmoney}">
 				</div>
 			</div>
 		</div>
