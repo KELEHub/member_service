@@ -8,6 +8,7 @@ public class AccountBean {
 	private String pay;
 	private String pointbalance;
 	private String goldmoneybalance;
+	private String xfmoneybalance;
 	private String redmin;
 	
 	public String getKindData() {
@@ -58,6 +59,12 @@ public class AccountBean {
 	}
 	public void setRedmin(String redmin) {
 		this.redmin = redmin;
+	}
+	public String getXfmoneybalance() {
+		return xfmoneybalance;
+	}
+	public void setXfmoneybalance(String xfmoneybalance) {
+		this.xfmoneybalance = xfmoneybalance;
 	}
 	
 	
