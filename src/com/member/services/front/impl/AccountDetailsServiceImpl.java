@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.ParameterDao;
 import com.member.entity.AccountDetails;
@@ -97,13 +98,15 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 			ProjectEnum servicepointsforone, ProjectEnum recharge,
 			ProjectEnum fromgifts, ProjectEnum togoldmoneycut) {
 
-		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts then t.income  when project =:servicepointsformuch then t.income else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash)from AccountDetails t group by t.dateNumber order by t.dateNumber desc";
+		String hql = "select new map(t.dateNumber as dateNumber,sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts and kindData =:pointdata then t.income  when project =:servicepointsformuch then t.income else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash,sum(case when kindData =:kinddata and project =:fromgifts then t.income else 0 end) as countXfMoney)from AccountDetails t group by t.dateNumber order by t.dateNumber desc";
 		String pql = "select new map(t.dateNumber as dateNumber,count(*) as countBill)from CountService t group by t.dateNumber";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put("servicepointsforone", servicepointsforone);
 		arguments.put("recharge",recharge);
 		arguments.put("fromgifts",fromgifts);
 		arguments.put("togoldmoneycut",togoldmoneycut);
+		arguments.put("pointdata",KindDataEnum.points);
+		arguments.put("kinddata",KindDataEnum.xfpp);
 		arguments.put("servicepointsformuch", ProjectEnum.servicepointsformuch);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
@@ -134,6 +137,8 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 				rif.setCountRecharge(String
 						.valueOf(((Map<String, Integer>) obj)
 								.get("countRecharge")));
+			   rif.setCountXfMoney(String.valueOf(((Map<String, Integer>) obj)
+												.get("countXfMoney")));
 				rangeList.add(rif);
 			}
 			return rangeList;
@@ -148,12 +153,14 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 			ProjectEnum recharge, ProjectEnum fromgifts,
 			ProjectEnum togoldmoneycut) {
 
-		String hql = "select new map(sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts then t.income  when project =:servicepointsformuch then t.income  else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash)from AccountDetails t";
+		String hql = "select new map(sum(case when t.project =:servicepointsforone then 1 else 0 end) as countBill, sum(case when t.project =:recharge then t.income else 0 end) as countRecharge,sum(case when project =:fromgifts and kindData=:pointdata then t.income  when project =:servicepointsformuch then t.income  else 0 end) as countFromgifts,sum(case when project =:togoldmoneycut then t.pay else 0 end) as countPointcash,sum(case when kindData =:kinddata and project =:fromgifts then t.income else 0 end) as countXfMoney) from AccountDetails t";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put("servicepointsforone", servicepointsforone);
 		arguments.put("recharge",recharge);
 		arguments.put("fromgifts",fromgifts);
 		arguments.put("togoldmoneycut",togoldmoneycut);
+		arguments.put("pointdata",KindDataEnum.points);
+		arguments.put("kinddata",KindDataEnum.xfpp);
 		arguments.put("servicepointsformuch", ProjectEnum.servicepointsformuch);
 		List<Object> list = (List<Object>) parameterDao.queryByHql(hql,
 				arguments);
