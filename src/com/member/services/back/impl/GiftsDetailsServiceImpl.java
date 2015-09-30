@@ -111,7 +111,10 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 			
 			BigDecimal coupon = information.getCoupon().add(
 					new BigDecimal(ss.getCoupon()));
+			BigDecimal couponAccumulative = information.getCouponAccumulative().add(
+					new BigDecimal(ss.getCoupon()));
 			information.setCoupon(coupon);
+			information.setCouponAccumulative(couponAccumulative);
 		}
 		AccountDetails shopingDetails = new AccountDetails();
 		shopingDetails.setUserNumber(ss.getNumber());
