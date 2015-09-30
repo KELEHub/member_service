@@ -26,6 +26,10 @@ public interface IntegralManagerService {
 	public List<IntegralHistoryForm> getFromgiftsHistoryPoints(int pageSize,int pageNumber,String number);
 	
 	public int countFromgiftsHistoryPoints(String number);
+	
+	public int countXfMoneyHistory(String number);
+	
+	public List<IntegralHistoryForm> getXfMoneyHistory(String number,int pageSize,int pageNumber);
 
 	void saveOrUpdateRelation(Information info, AccountDetails ad,
 			String BenefitNumber, Integer serialNumber);
