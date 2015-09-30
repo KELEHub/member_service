@@ -24,7 +24,6 @@ import com.member.beans.back.enumData.ProjectEnum;
 import com.member.beans.front.AccountBean;
 import com.member.entity.AccountDetails;
 import com.member.entity.Information;
-import com.member.form.back.MemberSearchForm;
 import com.member.form.front.SearchPointsForm;
 import com.member.services.back.InformationService;
 import com.member.services.front.AccountDetailsService;
@@ -51,6 +50,7 @@ public class AccountDetailsController {
 			 model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
 			 model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
 			 model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
+			 model.addAttribute("txmoney",CommonUtil.insertComma(info.getCoupon().toString(),2));
 			return "front/account/acountdetails";
 
 		} catch (Exception e) {
@@ -183,6 +183,7 @@ public class AccountDetailsController {
 			  model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
 			  model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
 			  model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
+			  model.addAttribute("txmoney",CommonUtil.insertComma(info.getCoupon().toString(),2));
 			  return "front/account/acountdetails";
 
 		} catch (Exception e) {
@@ -196,16 +197,20 @@ public class AccountDetailsController {
 	private KindDataEnum getKindDataEnum(String kind){
 		if("crmMoney".equals(kind)){
 			return KindDataEnum.goldmoney;
-		}else{
+		}else if("shoppingMoney".equals(kind)){
 			return KindDataEnum.points;
+		}else{
+			return KindDataEnum.xfpp;
 		}
 	}
 	
 	private String getKindDataName(KindDataEnum kind){
 		if(kind.equals(KindDataEnum.goldmoney)){
 			return "葛粮币";
-		}else{
+		}else if(kind.equals(KindDataEnum.points)){
 			return "积分";
+		}else{
+			return "消费券";
 		}
 	}
 	
