@@ -41,17 +41,26 @@ public class CommonUtil {
 		
 		int day = d1.get(Calendar.DAY_OF_MONTH);
 		String dateNumber="";
+		String yearMoth="";
 		if(day<=10){
 			dateNumber="01";
+			yearMoth=nowDateStr.substring(0,6);
 		}else if(day<=20){
 			dateNumber="02";
+			yearMoth=nowDateStr.substring(0,6);
 		}else if(day<=30){
 			dateNumber="03";
+			yearMoth=nowDateStr.substring(0,6);
 		}
 		if(day==31){
 			dateNumber="01";
+			if(Integer.valueOf(nowDateStr.substring(4,6))<12){
+				yearMoth=String.valueOf(Integer.valueOf(nowDateStr.substring(0,6))+1);
+			}else{
+				yearMoth=String.valueOf(nowDateStr.substring(0,3)+1)+"01";
+			}
 		}
-		return nowDateStr.substring(0,6)+dateNumber;
+		return yearMoth+dateNumber;
 	}
 	
 	
