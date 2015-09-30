@@ -44,6 +44,14 @@
 								</div>
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label">累计消费卷：</label>
+							<div class="controls">
+								<div class="input-append">
+										<label>${countXfMoney}</label>
+								</div>
+							</div>
+						</div>
 					</div>
 					<table id="testexample1" class="table table-bordered data-table">
 						<thead>
@@ -53,6 +61,7 @@
 								<th>新增充值</th>
 								<th>新增结算</th>
 								<th>新增提现</th>
+								<th>新增消费卷</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -63,6 +72,7 @@
 									<td>${item.countRecharge }</td>
 									<td>${item.countFromgifts }</td>
 									<td>${item.countPointcash }</td>
+									<td>${item.countXfMoney }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
