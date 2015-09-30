@@ -779,6 +779,56 @@ public class GiftsDetailsController {
 		}
 		return result;
 	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getXfMoneyPage")
+	@ResponseBody
+	public Map getXfMoneyPage(HttpServletRequest request,Model model) {
+		String number = request.getParameter("number");
+		String iDisplayLength = request.getParameter("iDisplayLength");	
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = integralManagerService.countXfMoneyHistory(number);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
+		List<IntegralHistoryForm> list = integralManagerService.getXfMoneyHistory(number,Integer.parseInt(iDisplayLength),pageNumber);
+		//if(list!=null &&list.size()>0){
+		//	for(AccountDetails ad : list){
+		//		IntegralHistoryForm form =new IntegralHistoryForm();
+		//		form.setCreateTime(ad.getCreateTime().toString());
+		//		form.setIncome(ad.getIncome().toString());
+		//		form.setPay(ad.getPay().toString());
+		//		form.setPointbalance(ad.getPointbalance().toString());
+		//		form.setUserNumber(ad.getUserNumber());
+		//		if(ad.getProject().equals(ProjectEnum.servicepointsformuch)){
+		//			form.setProject("极差服务积分");
+		//		}else{
+		//			form.setProject("礼包释放积分");
+		//		}
+		//		result.add(form);
+		//	}
+		//}
+		
+		model.addAttribute("result", list);
+		Map map = new HashMap();
+		map.put("aaData", list);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
+	@RequestMapping(value = "/XfMoneyShow",method = RequestMethod.POST)
+	public String XfMoneyShow(Model model) {
+		return "back/systeminfo/XfMoneyPage";
+	}
 
 	private int getNextCountNumber(String year, String month) {
 		if (month.length() < 2) {
