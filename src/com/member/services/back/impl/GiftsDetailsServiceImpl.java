@@ -127,23 +127,37 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 		shopingDetails.setGoldmoneybalance(information.getCrmMoney());
 		/** 收入 */
 		if(ss.getCoupon()!=null && !"".equals(ss.getCoupon())&& ss.getCoupon()!=0){
-			shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()).add(new BigDecimal(ss.getCoupon())));
-		}else{
-			shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()));
+			AccountDetails couponDetails = new AccountDetails();
+			couponDetails.setIncome(new BigDecimal(ss.getCoupon()));
+			couponDetails.setUserNumber(ss.getNumber());
+			couponDetails.setCreateTime(new Date());
+			couponDetails.setKindData(KindDataEnum.xfpp);
+			/** 日期类别统计 */
+			couponDetails.setDateNumber(getDataNumber(ss.getCountNumber(),ss.getBatchNo()));
+			couponDetails.setProject(ProjectEnum.fromgifts);
+			couponDetails.setCountNumber(CommonUtil.getCountNumber());
+			/** 积分余额 */
+			couponDetails.setPointbalance(shoppingMoney);
+			/** 葛粮币余额 */
+			couponDetails.setGoldmoneybalance(information.getCrmMoney());
+			/** 支出 */
+			couponDetails.setPay(new BigDecimal(0));
+			/** 备注 */
+			couponDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
+					+ "期次礼包释放,释放"+ss.getCoupon()+"消费卷");
+			couponDetails.setChildId(ss.getChildId());
+			/** 用户ID */
+			couponDetails.setUserId(information.getId());
+			giftsDao.saveOrUpdate(couponDetails);
 		}
+		shopingDetails.setIncome(new BigDecimal(ss.getGoldMoney()));
 	
 		/** 支出 */
 		shopingDetails.setPay(new BigDecimal(0));
 
 		/** 备注 */
-		if(ss.getCoupon()!=null && !"".equals(ss.getCoupon())&& ss.getCoupon()!=0){
-			shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
-					+ "期次礼包释放,释放"+ss.getGoldMoney()+"积分，"+ss.getCoupon()+"消费卷");
-			
-		}else{
-			shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
+		shopingDetails.setRedmin(ss.getName() + "的第" + ss.getPointNumber()
 					+ "期次礼包释放");
-		}
 	
 		shopingDetails.setChildId(ss.getChildId());
 		/** 用户ID */
