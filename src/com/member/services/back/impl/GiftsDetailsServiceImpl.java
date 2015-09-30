@@ -140,6 +140,8 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 			couponDetails.setPointbalance(shoppingMoney);
 			/** 葛粮币余额 */
 			couponDetails.setGoldmoneybalance(information.getCrmMoney());
+			/** 消费卷余额 */
+			couponDetails.setXfmoneybalance(information.getCoupon());
 			/** 支出 */
 			couponDetails.setPay(new BigDecimal(0));
 			/** 备注 */
@@ -160,6 +162,8 @@ public class GiftsDetailsServiceImpl implements GiftsDetailsService {
 					+ "期次礼包释放");
 	
 		shopingDetails.setChildId(ss.getChildId());
+		/** 消费卷余额 */
+		shopingDetails.setXfmoneybalance(information.getCoupon());
 		/** 用户ID */
 		shopingDetails.setUserId(information.getId());
 		giftsDao.saveOrUpdate(information);

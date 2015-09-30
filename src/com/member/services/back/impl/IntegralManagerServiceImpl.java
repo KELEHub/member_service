@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.member.beans.back.enumData.KindDataEnum;
 import com.member.beans.back.enumData.ProjectEnum;
 import com.member.dao.HqlIntegralManager;
 import com.member.dao.HqlServiceManager;
@@ -138,6 +139,69 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 		}
 		return 0;
 	}
+	
+	
+	@Override
+	@Transactional(readOnly=true)
+	public int countXfMoneyHistory(String number){
+		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata  ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("kinddata", KindDataEnum.xfpp);
+		if(number != null && !"".equals(number)){
+			hql=hql+" and userNumber = :number ";
+			arguments.put("number", number);
+		}
+		
+		hql=hql+" group by to_char(createtime, 'YYYY-MM-DD'),userNumber order by to_char(createtime, 'YYYY-MM-DD') desc";
+	
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,arguments);
+		if(result!=null && result.size()>0){
+			return result.size();
+		}
+		return 0;
+	}
+	
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<IntegralHistoryForm> getXfMoneyHistory(String number,int pageSize,int pageNumber){
+		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata  ";
+		Map<String, Object> arguments = new HashMap<String, Object>();
+		arguments.put("kinddata", KindDataEnum.xfpp);
+		if(number != null && !"".equals(number)){
+			hql=hql+" and userNumber = :number ";
+			arguments.put("number", number);
+		}
+		
+		hql=hql+" group by to_char(createtime, 'YYYY-MM-DD'),userNumber order by to_char(createtime, 'YYYY-MM-DD') desc";
+	
+		List<Object> result = (List<Object>)integralManagerDao.queryByHql(hql,pageNumber,pageSize,arguments);
+		List<IntegralHistoryForm> formList = new ArrayList<IntegralHistoryForm>();
+		if(result!=null && result.size()>0){
+			for (Object obj : result) {
+				IntegralHistoryForm rif = new IntegralHistoryForm();
+				String datetime = ((Map<String, String>) obj)
+						.get("datetime");
+				rif.setCreateTime(datetime);
+				String points = null;
+				if(((Map<String, BigDecimal>) obj)
+						.get("points")!=null){
+					points = String.valueOf(((Map<String, BigDecimal>) obj)
+							.get("points"));
+				}
+				
+				rif.setPoints(points);
+				String usernumber=((Map<String, String>) obj)
+				.get("userNumber");
+				rif.setUserNumber(usernumber);
+				formList.add(rif);
+			}
+		}
+		return formList;
+	}
+	
+	
+	
 	
 	@Override
 	@Transactional(readOnly=true)
