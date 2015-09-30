@@ -54,6 +54,7 @@ $(function(){
                         { "mData": "pay" },
                         { "mData": "pointbalance" },
                         { "mData": "goldmoneybalance" },
+                        { "mData": "xfmoneybalance" },
                         { "mData": "redmin"}
                     ]
             });            
@@ -218,6 +219,7 @@ $(function(){
 								<th>支出</th>
 								<th>积分余额</th>
 								<th>葛粮币余额</th>
+								<th>消费卷余额</th>
 								<th>备注</th>
 							</tr>
 						</thead>
