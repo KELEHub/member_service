@@ -81,6 +81,10 @@ public class AccountDetails {
 	@Column(name="createTime",nullable=true,unique=false,length=32)
 	private Date createTime;
 	
+	/**消费卷余额 */
+	@Column(name="xfmoneybalance")
+	private BigDecimal xfmoneybalance;
+	
 	public AccountDetails(BigDecimal income, BigDecimal pay,Integer countNumber) {
 		super();
 		this.income = income;
@@ -203,6 +207,14 @@ public class AccountDetails {
 
 	public void setChildId(Integer childId) {
 		this.childId = childId;
+	}
+
+	public BigDecimal getXfmoneybalance() {
+		return xfmoneybalance;
+	}
+
+	public void setXfmoneybalance(BigDecimal xfmoneybalance) {
+		this.xfmoneybalance = xfmoneybalance;
 	}
 
 
