@@ -127,7 +127,7 @@ public class BackAccountController {
 			  model.addAttribute("goldmoneybalance",CommonUtil.insertComma(info.getCrmMoney().toString(),2));
 			  model.addAttribute("pointsbalance",CommonUtil.insertComma(info.getShoppingMoney().toString(),2));
 			  model.addAttribute("serverbalance",CommonUtil.insertComma(info.getRepeatedMoney().toString(),2));
-
+			  model.addAttribute("txmoney",CommonUtil.insertComma(info.getCoupon().toString(),2));
 			  return "back/account/backacountdetails";
 
 		} catch (Exception e) {
@@ -141,8 +141,10 @@ public class BackAccountController {
 	private String getKindDataName(KindDataEnum kind){
 		if(kind.equals(KindDataEnum.goldmoney)){
 			return "葛粮币";
-		}else{
+		}else if(kind.equals(KindDataEnum.points)){
 			return "积分";
+		}else{
+			return "消费券";
 		}
 	}
 	
