@@ -89,6 +89,9 @@ public class BackAccountController {
 					  bean.setGoldmoneybalance(ad.getGoldmoneybalance().toString());
 					  bean.setRedmin(ad.getRedmin());
 					  bean.setProject(getProjectName(ad.getProject()));
+					  if(ad.getXfmoneybalance()!=null){
+						  bean.setXfmoneybalance(ad.getXfmoneybalance().toString());
+					  }
 					  result.add(bean);
 				  }
 
