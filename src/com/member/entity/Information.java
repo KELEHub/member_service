@@ -216,6 +216,10 @@ public class Information {
 	@Column(name="coupon",columnDefinition="NUMERIC(20,2) default 0")
 	private BigDecimal coupon;
 	
+	/**消费卷累计*/
+	@Column(name="couponAccumulative",columnDefinition="NUMERIC(20,2) default 0")
+	private BigDecimal couponAccumulative;
+	
 	/**报单禁用 */
 	@Column(name="bdUse")
 	private Integer bdUse;
@@ -619,6 +623,14 @@ public class Information {
 
 	public void setBdUse(Integer bdUse) {
 		this.bdUse = bdUse;
+	}
+
+	public BigDecimal getCouponAccumulative() {
+		return couponAccumulative;
+	}
+
+	public void setCouponAccumulative(BigDecimal couponAccumulative) {
+		this.couponAccumulative = couponAccumulative;
 	}
 
 	
