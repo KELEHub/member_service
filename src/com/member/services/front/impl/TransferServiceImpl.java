@@ -138,10 +138,50 @@ public class TransferServiceImpl implements TransferService{
 		parameterDao.saveOrUpdate(acFrom);
 		parameterDao.saveOrUpdate(info);
 	}
+	
+	
 
 	
 	private BigDecimal getValue(String s){
 	 	BigDecimal b = new BigDecimal(s); 
 	 	return b.setScale(2, BigDecimal.ROUND_DOWN);
 }
+
+	@Override
+	public void convertXfMoneyManager(Information info, BigDecimal goldValue,
+			SystemParameter parameter) {
+		BigDecimal xm = info.getShoppingMoney().subtract(goldValue);
+	//	BigDecimal cm = goldValue.subtract(goldValue.multiply(parameter.getGlbTake()));
+		BigDecimal midCrm = info.getCoupon();
+	    BigDecimal addcermoney = goldValue.add(midCrm);
+		BigDecimal history = info.getCouponAccumulative().add(goldValue);
+		info.setShoppingMoney(xm);
+		info.setCouponAccumulative(history);
+		info.setCoupon(addcermoney);
+		AccountDetails acFrom = new AccountDetails();
+		acFrom.setUserNumber(info.getNumber());
+		acFrom.setCreateTime(new Date());
+		acFrom.setKindData(KindDataEnum.xfpp);
+		acFrom.setCountNumber(CommonUtil.getCountNumber());
+		
+		/**日期类别统计 */
+		acFrom.setDateNumber(CommonUtil.getDateNumber());
+		acFrom.setProject(ProjectEnum.frompointsxfMoney);
+		/**积分余额 */
+		acFrom.setPointbalance(xm);
+		/**葛粮币余额 */
+		acFrom.setGoldmoneybalance(info.getCrmMoney());
+		/**消费卷余额 */
+		acFrom.setXfmoneybalance(addcermoney);
+		/**收入 */
+		acFrom.setIncome(new BigDecimal(0));
+		/**支出 */
+		acFrom.setPay(goldValue);
+		/**备注 */
+		acFrom.setRedmin("积分转换成消费卷[转换"+goldValue.toString()+"]");
+		/**用户ID */
+		acFrom.setUserId(info.getId());
+		parameterDao.saveOrUpdate(acFrom);
+		parameterDao.saveOrUpdate(info);
+	}
 }
