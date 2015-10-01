@@ -191,6 +191,9 @@ public class BackAccountController {
 		if(project.equals(ProjectEnum.cancelData)){
 			return "取消申请返还";
 		}
+		if(project.equals(ProjectEnum.frompointsxfMoney)){
+			return "积分转换消费卷";
+		}
 		return null;
 	}
 	
