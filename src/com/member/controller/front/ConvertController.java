@@ -59,6 +59,78 @@ public class ConvertController {
 	}
 	
 	
+	@RequestMapping(value = "/showxfc", method = RequestMethod.POST)
+	public String showxfc(Model model,HttpSession sesison) {
+		try {
+			  Object logonUserO = sesison.getAttribute("logonUser");
+			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+			  String userNaemO =(String) logonUserMap.get("username");
+			  Information ad = informationService.getInformationByNumber(userNaemO);
+			  if(ad.getCrmMoney()==null || "".equals(ad.getCrmMoney())){
+				  model.addAttribute("shoppingMoney","0.00");
+			  }else{
+				  model.addAttribute("shoppingMoney",CommonUtil.insertComma(ad.getShoppingMoney().toString(), 2));
+			  }
+			  return "front/convert/convertXfMoney";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "front/convert/convertXfMoney";
+		}
+
+	}
+	
+	
+	
+	@RequestMapping(value = "/convertXfMoney", method = RequestMethod.POST)
+	@ResponseBody
+	public  BaseResult<Void> convertXfMoney(@RequestBody ConvertForm form,Model model,HttpSession sesison) {
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			  result.setSuccess(true);
+			  Object logonUserO = sesison.getAttribute("logonUser");
+			  Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+			  String userNaemO =(String) logonUserMap.get("username");
+			  SystemParameter parameter = parameterService
+				.getSystemParameter();
+			  Information ad = informationService.getInformationByNumber(userNaemO);
+			  if(form.getToCmrMoney()==null || new BigDecimal(0).compareTo(getValue(form.getToCmrMoney().replace(",", "")))==0){
+				  result.setMsg("转换金额不能为空");
+				  return result;
+			  }
+			  BigDecimal  mid = ad.getShoppingMoney();
+//			  if(ad.getRepeatedMoney() != null){
+//				   mid = ad.getShoppingMoney().subtract(ad.getRepeatedMoney());
+//			  }else{
+//				  mid = ad.getShoppingMoney();
+//			  }
+			  if(mid.compareTo(getValue(form.getToCmrMoney().replace(",", "")))==-1){
+				  //.add(getValue(form.getToCmrMoney().replace(",", "")).multiply(parameter.getGlbTake())))
+				  result.setMsg("可装换的积分余额不足");
+				  return result;
+			  }
+			  //			  if(getValue(form.getToCmrMoney().replace(",", "")).compareTo(parameter.getGlbMin())==-1){
+			  //  result.setMsg("转换金额不能低于最低转换金额");
+			  //  return result;
+			  //}
+			  if(!form.getPayPassword().equals(ad.getProtectPassword())){
+				  result.setMsg("二级密码不正确");
+				  return result;
+			  }
+			  transferService.convertXfMoneyManager(ad,getValue(form.getToCmrMoney().replace(",", "")),parameter);
+			  result.setMsg("转换成功");
+			  result.setMsgCode(CommonUtil.insertComma(ad.getShoppingMoney().toString(), 2));
+			  return result;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.setMsg("转换失败，请重试");
+			return result;
+		}
+
+	}
+	
+	
 	@RequestMapping(value = "/convertData", method = RequestMethod.POST)
 	@ResponseBody
 	public  BaseResult<Void> transferData(@RequestBody ConvertForm form,Model model,HttpSession sesison) {
