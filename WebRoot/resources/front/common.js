@@ -367,17 +367,28 @@ function saveconvert(){
 			resetTable();
 		});
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+		}
+}
+
+function saveconvertxfmoney(){
+	var reqObj = {};
+		var toUserNumber=$("#shoppingMoney").attr("value");
+		var toGoldMoney=$("#toCmrMoney").attr("value");
+		var payPassword=$("#payPassword").attr("value");
+		reqObj["shoppingMoney"] = toUserNumber;
+		reqObj["toCmrMoney"]= toGoldMoney;
+		reqObj["payPassword"]= payPassword;
+		var result = ajaxRequestForJsonGetJson("/ConvertController/convertXfMoney.do",
+				reqObj);
+		if(result.success){
+			var name = result.msg;
+			alert(name);
+			$('#myModal').modal('hide');
+		    $("#content-header").find("form[id='toConvertxfForm']").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
 			
 		}
 }
