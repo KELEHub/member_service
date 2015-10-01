@@ -144,9 +144,10 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public int countXfMoneyHistory(String number){
-		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata  ";
+		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata and project =:gifts ";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put("kinddata", KindDataEnum.xfpp);
+		arguments.put("gifts", ProjectEnum.fromgifts);
 		if(number != null && !"".equals(number)){
 			hql=hql+" and userNumber = :number ";
 			arguments.put("number", number);
@@ -165,9 +166,10 @@ public class IntegralManagerServiceImpl implements IntegralManagerService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<IntegralHistoryForm> getXfMoneyHistory(String number,int pageSize,int pageNumber){
-		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata  ";
+		String hql = "select new map(userNumber as userNumber,sum(income) as points,to_char(createtime, 'YYYY-MM-DD') as datetime) from AccountDetails t where t.kindData=:kinddata and project =:gifts";
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put("kinddata", KindDataEnum.xfpp);
+		arguments.put("gifts", ProjectEnum.fromgifts);
 		if(number != null && !"".equals(number)){
 			hql=hql+" and userNumber = :number ";
 			arguments.put("number", number);
