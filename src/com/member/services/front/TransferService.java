@@ -10,5 +10,7 @@ public interface TransferService {
 	public void transferManager(Information from,Information to,BigDecimal goldValue,SystemParameter parameter);
 	
 	public void convertManager(Information info,BigDecimal goldValue,SystemParameter parameter);
+	
+	public void convertXfMoneyManager(Information info,BigDecimal goldValue,SystemParameter parameter);
 
 }
