@@ -26,5 +26,7 @@ public enum ProjectEnum {
 	/** 积分提现拒绝后返还*/
 	banckPoints,
 	/** 取消处理*/
-	cancelData;
+	cancelData,
+	/** 积分转消费卷*/
+	frompointsxfMoney;
 }
