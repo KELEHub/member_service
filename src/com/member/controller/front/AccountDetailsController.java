@@ -254,6 +254,9 @@ public class AccountDetailsController {
 		if("cancelData".equals(project)){
 			return ProjectEnum.cancelData;
 		}
+		if("turnXfMoney".equals(project)){
+			return ProjectEnum.frompointsxfMoney;
+		}
 		return null;
 	}
 	
@@ -296,6 +299,9 @@ public class AccountDetailsController {
 		}
 		if(project.equals(ProjectEnum.cancelData)){
 			return "取消申请返还";
+		}
+		if(project.equals(ProjectEnum.frompointsxfMoney)){
+			return "积分转换消费卷";
 		}
 		return null;
 	}
