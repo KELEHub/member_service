@@ -20,23 +20,52 @@
 				<form action="/product/updateProduct.do" method="POST"
 					id="updateProductForm">
 					<input type="hidden" name="id" value="${result.id }"/>
-					<div class="control-group">
-						<label class="control-label">套餐名称</label>
-						<div class="controls">
-							<input type="text" placeholder="套餐名称" name="productName" value="${result.productName }"/>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">套餐介绍</label>
-						<div class="controls">
-						<textarea rows="12" cols="24" name="productIntroduction" >
-						    ${result.productIntroduction }
-						</textarea>
-						</div>
-					</div>
+					<div class="controls controls-row">
+					   <div class="control-group" style="float: left;margin-left: 10px;">
+						   <label class="control-label">商品名称</label>
+						   <div class="controls">
+							     <input type="text" name="productName" value="${result.productName }"/>
+						   </div>
+					   </div>
+					   <div class="control-group" style="float: left;margin-left: 10px;">
+						   <label class="control-label">商品编号</label>
+						   <div class="controls">
+							   <input type="text"  name="productNumber" value="${result.productNumber }"/>
+						  </div>
+					  </div>
+					  <div class="control-group" style="float: left;margin-left: 10px;">
+						   <label class="control-label">商品规格</label>
+						   <div class="controls">
+							   <input type="text"  name="productModel" value="${result.productModel }"/>
+						   </div>
+					 </div>
+					   
+				   </div>
+				   <div class="controls controls-row">
+				       <div class="control-group" style="float: left;margin-left: 10px;">
+						    <label class="control-label">商品价格</label>
+						    <div class="controls">
+							     <input type="text"  name="productPrice" value="${result.productPrice }"/>
+						    </div>
+					   </div>
+				       <div class="control-group" style="float: left;margin-left: 10px;">
+						    <label class="control-label">总库存</label>
+						    <div class="controls">
+						        <input type="text" name="productAllKC" value="${result.productAllKC }"/>
+						    </div>
+				   	  </div>
+				   
+				   </div>
+					   <div class="control-group">
+						    <label class="control-label">商品介绍</label>
+						    <div class="controls">
+						        <textarea rows="6" cols="24" name="productIntroduction" >${result.productIntroduction }</textarea>
+					        </div>
+					  </div>
 					<div class="control-group">
 						<label class="control-label">图片</label>
 						<div class="controls">
+						<input type="hidden" name="productTarget" value="${result.productTarget }" />
 						<input
 									type="file" para="{relativelyPath:'product'}" name="files"
 									multiple data-url='<%=basePath%>/upload/uploadFile.do'
@@ -47,15 +76,6 @@
 							  <img src="${result.productTarget }"
 									width="100px">		
 							</a>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label">套餐类型</label>
-						<div class="controls">
-						<select name="productCategory" >
-								<option value="1" <c:if test="${result.productCategory eq 1}">selected</c:if> >注册赠送</option>
-								<option value="2" <c:if test="${result.productCategory eq 2}">selected</c:if>>复消赠送</option>
-							</select>
 						</div>
 					</div>
 				</form>
