@@ -257,6 +257,9 @@ public class AccountDetailsController {
 		if("turnXfMoney".equals(project)){
 			return ProjectEnum.frompointsxfMoney;
 		}
+		if("buyshop".equals(project)){
+			return ProjectEnum.shopping;
+		}
 		return null;
 	}
 	
@@ -302,6 +305,9 @@ public class AccountDetailsController {
 		}
 		if(project.equals(ProjectEnum.frompointsxfMoney)){
 			return "积分转换消费卷";
+		}
+		if(project.equals(ProjectEnum.shopping)){
+			return "购物";
 		}
 		return null;
 	}
