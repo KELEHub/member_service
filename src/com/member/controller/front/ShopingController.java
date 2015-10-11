@@ -395,5 +395,21 @@ public class ShopingController {
 		model.addAttribute("list", list);
 		return "front/buy/showOrderDetails";
 	}
+	
+	
+	@RequestMapping(value = "/deleteShopCart",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> deleteShopCart(@RequestBody ShopCartForm form,Model model, HttpSession sesison){
+		BaseResult<Void> result = new BaseResult<Void>();
+		String hql = " from ShopingCart where id =?";
+		List<ShopingCart> shop = (List<ShopingCart>)productDao.queryByHql(hql,Integer.valueOf(form.getId()));
+		if(shop!=null && shop.size()>0){
+			productDao.delete(shop.get(0));
+			result.setSuccess(true);
+			result.setMsg("删除商品成功！");
+			return result;
+		}
+		return result;
+	}
 
 }
