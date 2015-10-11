@@ -142,6 +142,32 @@ function ajaxRequestForFormGetJsp(sFormId){
 	});
 }
 
+
+function ajaxRequestForFormGetJspByParamter(reqUrl,reqObj){
+	var bathPath=$("#basePath").val();
+	var reqData={};
+	if(reqObj!=null){
+		reqData = JSON.stringify(reqObj);
+	}
+	var returnData={};
+	$.ajax({
+		url : bathPath+reqUrl,
+		type : 'POST',
+		cache : false,
+		async : false,//同步 or 异步
+		data :  reqData,
+		contentType: "application/json",
+		dataType : 'text',
+		success : function(data) {
+				$("#content").empty();
+				$("#content").html(data);
+		},
+		error : function (msg) {
+			alert(msg);
+       }
+	});
+}
+
 $.fn.serializeJson=function(){  
     var serializeObj={};  
     var disabled = $(this).find(':disabled');
@@ -824,6 +850,34 @@ function saveWithFormAddRefeshTable(sFormId,dialogId){
 	}
 }
 
+function saveProduct(content,sFormId,dialogId){
+	var reqObj = {};
+	var productName =document.getElementById("productNamett").value;
+	var productNumber =document.getElementById("productNumbertt").value;
+	var productModel =document.getElementById("productModel").value;
+	var productPrice =document.getElementById("productPrice").value;
+	var allfirm =document.getElementById("allfirm").value;
+	var productIntroduction =content;
+	var productTarget =document.getElementById("productTarget").value;
+	reqObj["productName"] = productName;
+	reqObj["productNumber"] = productNumber;
+	reqObj["productModel"] = productModel;
+	reqObj["productPrice"] = productPrice;
+	reqObj["allfirm"] = allfirm;
+	reqObj["productIntroduction"] = productIntroduction;
+	reqObj["productTarget"] = productTarget;
+	var result = ajaxRequestForJsonGetJson("/product/saveProduct.do",reqObj);
+	alert(result.msg);
+	if(result.success){
+		$('#'+dialogId).modal('hide');
+		$("#content-header").find("form").each(function() {
+			var formid = this.id;
+			ajaxRequestForFormGetJsp(formid);
+			resetTable();
+		});
+	}
+}
+
 function editProduct(id){
 	var reqObj = {};
 	reqObj["id"] = id;
@@ -1259,3 +1313,84 @@ function searchUserHistory(sFormId){
 	
 }
 
+
+function changeCompentFirm(chageId){
+	var t =document.getElementById(chageId).value;
+	var toldvalue =document.getElementById(chageId).oldvalue;
+	var CompentFirm = document.getElementById('compentFirm').value;
+	var ff = CompentFirm+toldvalue;
+	var zz = ff-t;
+	document.getElementById('compentFirm').value=zz;
+	document.getElementById(chageId).oldvalue=t;
+}
+
+function confirmDisbute(){
+	var v = "" ; 
+	var rv = "" ; 
+	var cbs = $("input[name='serverFirm']");
+	for(var i = 0; cbs && i < cbs.length; i++) {  
+        v += $(cbs[i]).attr("id")+",";
+        if($(cbs[i]).attr("value")==""){
+        	 alert("分配数量不能为空");
+        	return;
+        }
+        rv += $(cbs[i]).attr("value")+",";
+    }
+	if(v!=""){
+		var reqObj = {};
+		var toldvalue =document.getElementById("productNumberss").value;
+	    reqObj["idArr"] = v;
+	    reqObj["valueArr"] = rv;
+	    reqObj["productNumber"] = toldvalue;
+	    var result = ajaxRequestForJsonGetJson("/ServerToProduct/setProductFirm.do",reqObj);
+	    alert(result.msg);
+	   if (result.success) {
+		$('#myModal').modal('hide');
+		var ttObj = {};
+		ttObj["productNumber"] = toldvalue;
+		var fresult = ajaxRequestForFormGetJspByParamter("/ServerToProduct/getStockList.do",ttObj);
+		resetTable();
+	}
+	}
+}
+
+
+function searchFirm(sFormId){
+	var result = ajaxRequestForFormGetJsp(sFormId);
+	resetTable();
+}
+
+function closeFirmService(serverId){
+	if (window.confirm('您确定关闭该服务站？')) {
+		var reqObj = {};
+		reqObj["id"] = serverId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/closeFirmService.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}
+
+
+function openFirmService(serverId){
+	if (window.confirm('您确定开启该服务站？')) {
+		var reqObj = {};
+		reqObj["id"] = serverId;
+		var result = ajaxRequestForJsonGetJson("/ServiceManagerController/openFirmService.do",reqObj);
+		if (result.success) {
+			alert(result.msg);
+			//$('#myModal').modal('hide');
+			$("#content-header").find("form[id='serviceManagerForm']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+			});
+		}
+	}
+}

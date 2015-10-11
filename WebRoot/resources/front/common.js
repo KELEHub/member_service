@@ -612,6 +612,8 @@ function saveWithFormAddRefeshTable(sFormId,dialogId){
 	}
 }
 
+
+
 function change1Password(sFormId){
 	var sPassword = $("input[name='onelevelpassword']").val();
 	var sPasswordconfirm = $("input[name='onelevelpasswordconfirm']").val();
@@ -1012,3 +1014,130 @@ function checkProtocol(result){
 	findJqueryFileUpload("content");
 	resetTable();
 }
+
+
+function shopingDetails(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	ajaxRequestForFormGetJspByParamter("/shoping/showDetails.do", reqObj);
+	resetTable();
+	
+}
+
+function changeServer(){
+	var reqObj = {};
+	var number = document.getElementById("serverNumber").value;
+	var productNumber = document.getElementById("productNumber").value;
+	reqObj["number"] = number;
+	reqObj["productNumber"] = productNumber;
+	result=ajaxRequestForJsonGetJson("/shoping/serverChange.do", reqObj);
+	if(result.success){
+		document.getElementById("firm").value=result.firm;
+		document.getElementById("phone").value=result.phone;
+		document.getElementById("address").value=result.address;
+	}else{
+		document.getElementById("firm").value="";
+		document.getElementById("phone").value="";
+		document.getElementById("address").value="";
+	}
+	
+	
+}
+
+
+function addshoping(){
+	var reqObj = {};
+	var number = document.getElementById("serverNumber").value;
+	var productNumber = document.getElementById("productNumber").value;
+	reqObj["number"] = number;
+	reqObj["productNumber"] = productNumber;
+	result=ajaxRequestForJsonGetJson("/shoping/addshoping.do", reqObj);
+	alert(result.msg);
+	if(result.success){
+		$("#content-header").find("form[id='tocartform']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable2();
+		});
+	}
+}
+
+
+function changeShopCount(id){
+	var count = document.getElementById(id).value;
+	var price = document.getElementById("price"+id).value;
+	if(count=="" || Number(count)==0){
+		document.getElementById(id).value=1;
+		count=1;
+	}
+	if(isNaN(count)){
+		 alert("数量请输入数字");
+		 return;
+	}
+	var c = count*price;
+	 document.getElementById("priceall"+id).value=c;
+	 var cbs = $("input[name='priceall']");
+	 var allconut=0;
+	for(var i = 0; cbs && i < cbs.length; i++) {  
+		var tx = $(cbs[i]).attr("value");
+		if(tx==""){
+			tx=0;
+		}
+       allconut= Number(allconut)+Number(tx);
+    }
+	document.getElementById("shoprice").value=allconut;
+	
+}
+
+
+function resetTable2(){
+	$('#testexample2').dataTable({
+		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",   
+		"bLengthChange": false,
+		"bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示  
+		"bJQueryUI" : true, //是否使用 jQury的UI theme  
+		"bPaginate" : false, //是否显示（应用）分页器  
+		"bAutoWidth" : true, //是否自适应宽度 
+		"bScrollCollapse" : true,
+		"bSort": false,  
+		"bInfo": true,//页脚信息
+		"bFilter" : false,//是否启动过滤、搜索功能
+	});
+}
+
+function confimPay(){
+	 var cbs = $("input[name='shopId']");
+	 var counts = $("input[name='shopCount']");
+	 var allPrice = document.getElementById("shoprice").value;
+	 var v = "" ; 
+	var cu = "" ;
+	for(var i = 0; cbs && i < cbs.length; i++) {  
+        v += $(cbs[i]).attr("value")+",";
+        cu += $(counts[i]).attr("value")+",";
+    }
+	if(v!=""){
+		var reqObj = {};
+	    reqObj["idArr"] = v;
+	    reqObj["countArr"] = cu;
+	    reqObj["allPrice"] = allPrice;
+	    var result = ajaxRequestForJsonGetJson("/shoping/shopOrder.do",reqObj);
+	    alert(result.msg);
+	    if(result.success){
+		$("#content-header").find("form[id='showcartform']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable2();
+		});
+	}
+	}
+}
+
+
+function editeOderDetail(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	ajaxRequestForFormGetJspByParamter("/shoping/shopDetailsOrder.do",reqObj);
+	resetTable();
+}
+
