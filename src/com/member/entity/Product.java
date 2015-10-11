@@ -1,5 +1,6 @@
 package com.member.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -35,6 +36,18 @@ public class Product {
 	@Column(name="productTarget")
 	private String productTarget;
 	
+	/**产品编号 */
+	@Column(name="productNumber")
+	private String productNumber;
+	
+	/**商品规格 */
+	@Column(name="productModel")
+	private String productModel;
+	
+	/**商品价格 */
+	@Column(name="productPrice",columnDefinition="NUMERIC(20,2) default 0")
+	private BigDecimal productPrice;
+	
 	/**操作时间 */
 	@Column(name="operDate")
 	private Date operDate;
@@ -46,6 +59,14 @@ public class Product {
 	/**产品类型 */
 	@Column(name="productCategory")
 	private String productCategory;
+	
+	/**产品总库存*/
+	@Column(name="productAllKC")
+	private Integer productAllKC;
+	
+	/**公司库存 */
+	@Column(name="firmStock")
+	private Integer firmStock;
 
 	public Integer getId() {
 		return id;
@@ -102,4 +123,46 @@ public class Product {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
+
+	public Integer getProductAllKC() {
+		return productAllKC;
+	}
+
+	public void setProductAllKC(Integer productAllKC) {
+		this.productAllKC = productAllKC;
+	}
+
+	public Integer getFirmStock() {
+		return firmStock;
+	}
+
+	public void setFirmStock(Integer firmStock) {
+		this.firmStock = firmStock;
+	}
+
+	public String getProductNumber() {
+		return productNumber;
+	}
+
+	public void setProductNumber(String productNumber) {
+		this.productNumber = productNumber;
+	}
+
+	public String getProductModel() {
+		return productModel;
+	}
+
+	public void setProductModel(String productModel) {
+		this.productModel = productModel;
+	}
+
+	public BigDecimal getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(BigDecimal productPrice) {
+		this.productPrice = productPrice;
+	}
+	
+	
 }

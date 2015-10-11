@@ -224,6 +224,10 @@ public class Information {
 	@Column(name="bdUse")
 	private Integer bdUse;
 	
+	/**服务站 */
+	@Column(name="isFrim")
+	private Integer isFrim;
+	
 	
 	public Integer getId() {
 		return id;
@@ -631,6 +635,14 @@ public class Information {
 
 	public void setCouponAccumulative(BigDecimal couponAccumulative) {
 		this.couponAccumulative = couponAccumulative;
+	}
+
+	public Integer getIsFrim() {
+		return isFrim;
+	}
+
+	public void setIsFrim(Integer isFrim) {
+		this.isFrim = isFrim;
 	}
 
 	
