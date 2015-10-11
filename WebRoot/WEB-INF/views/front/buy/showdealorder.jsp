@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 var table = null;
-function searchOrderNumberTable(){
+function searchDealOrderNumberTable(){
 document.getElementById("tnumber").value = document.getElementById("tnumberss").value;
 document.getElementById("tnumberss").value='';
    table.fnDraw();
@@ -25,7 +25,7 @@ $(function(){
         		"bFilter" : false,//是否启动过滤、搜索功能
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": bathPath+"/shoping/showOrderDetails.do",
+                "sAjaxSource": bathPath+"/shoping/showDealOrderDetails.do",
                 "oLanguage": { //国际化配置  
         	        "sProcessing" : "正在获取数据，请稍后...",    
         	        "sLengthMenu" : "显示 _MENU_ 条",    
@@ -57,7 +57,7 @@ $(function(){
                         
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {  
-                       	$('td:eq(3)', nRow).html("<button class=\"btn\" onclick=\"editeOderDetail("+aData.id+")\">查看详细</button>");
+                       	$('td:eq(3)', nRow).html("<button class=\"btn\" onclick=\"editeDealOderDetail("+aData.id+")\">查看详细</button>");
                         return nRow;
                     }
             });            
@@ -74,7 +74,7 @@ $(function(){
 							id="searchGiftsForm">
 		<div class="controls controls-row">
 			<div class="control-group" style="float: left;margin-left: 10px;">
-				<label class="control-label">未取货订单编号:</label>
+				<label class="control-label">已完成订单编号:</label>
 				<div class="controls">
 				    <input type="text" name="tnumberss" id="tnumberss" >
 					<input type="hidden" name="tnumber" id="tnumber" >
@@ -83,7 +83,7 @@ $(function(){
 		</div>
 	</form>
 	<div class="form-actions">
-		<input type="submit" value="查询" onclick="searchOrderNumberTable()"
+		<input type="submit" value="查询" onclick="searchDealOrderNumberTable()"
 			class="btn btn-success">
 	</div>
 </div>

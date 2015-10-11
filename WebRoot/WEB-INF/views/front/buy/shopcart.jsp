@@ -96,7 +96,7 @@
 												style="width: 80px; height: 40px">
 										</td>
 										<td>
-											<button class="btn">
+											<button class="btn"  onclick="deleteShopCart('${item.id}')">
 												删除
 											</button>
 										</td>
