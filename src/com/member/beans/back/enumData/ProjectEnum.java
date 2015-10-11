@@ -28,5 +28,7 @@ public enum ProjectEnum {
 	/** 取消处理*/
 	cancelData,
 	/** 积分转消费卷*/
-	frompointsxfMoney;
+	frompointsxfMoney,
+	/** 购物*/
+	shopping;
 }
