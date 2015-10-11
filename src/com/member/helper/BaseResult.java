@@ -11,6 +11,9 @@ public class BaseResult<T> {
 	private String codeName;
 	private String extension;
 	private Object elseExtend;
+	private String firm;
+	private String phone;
+	private String address;
 	
 	private static final String CODE_SUCCESS = "global_success";
 
@@ -84,6 +87,31 @@ public class BaseResult<T> {
 
 	public void setElseExtend(Object elseExtend) {
 		this.elseExtend = elseExtend;
+	}
+	
+
+	public String getFirm() {
+		return firm;
+	}
+
+	public void setFirm(String firm) {
+		this.firm = firm;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public BaseResult<T> formatMessage(MessageSource msgSource) {
