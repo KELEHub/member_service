@@ -137,8 +137,22 @@ public class ShopingController {
 		arguments.add(form.getProductNumber());
 		arguments.add(userNaemO);
 		List stList = productDao.queryByHql(hql,arguments);
+		if("".equals(form.getNumber()) || form.getNumber() == null){
+			result.setMsg("请选择服务站");
+			 result.setSuccess(false);
+			 return result;
+		}
 		if(stList != null && stList.size()>0){
 			 result.setMsg("购物车已经存在此商品");
+			 result.setSuccess(false);
+			 return result;
+		}
+		String hqll = "from ShopingCart where number=?";
+		List argumentss = new ArrayList();
+		argumentss.add(userNaemO);
+		List stLists = productDao.queryByHql(hqll,argumentss);
+		if(stLists!=null && stLists.size()>=10){
+			 result.setMsg("超过购物车上限（商品数不能超过10）");
 			 result.setSuccess(false);
 			 return result;
 		}
@@ -309,6 +323,73 @@ public class ShopingController {
 			scf.setAddress(serverInfo.getLinkProvince()+serverInfo.getLinkCounty()+serverInfo.getLinkCity()+serverInfo.getLinkAddress());
 			scf.setPhone(serverInfo.getPhoneNumber());
 			scf.setStauts("未取货");
+			list.add(scf);
+		}
+		model.addAttribute("list", list);
+		return "front/buy/showOrderDetails";
+	}
+	
+	
+	
+	@RequestMapping(value = "/showdealOrder",method = RequestMethod.POST)
+	public String showdealOrder(HttpServletRequest request,Model model, HttpSession sesison){
+		
+		return "front/buy/showdealorder";
+	}
+	
+	
+	@RequestMapping(value = "/showDealOrderDetails")
+	@ResponseBody
+	public Map showDealOrderDetails(HttpServletRequest request,Model model,HttpSession sesison) {
+		String tnumber = request.getParameter("tnumber");
+		String iDisplayLength = request.getParameter("iDisplayLength");	
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		Object logonUserO = sesison.getAttribute("logonUser");
+		Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+		String userNaemO =(String) logonUserMap.get("username");
+		int pageNumber = Integer.parseInt(iDisplayStart)/Integer.parseInt(iDisplayLength)+1;
+		int iTotalRecords = productService.countOrderNumberListByNumber(userNaemO, tnumber, 2);
+		if(iTotalRecords!=0){
+			float  t = (float)iTotalRecords/10;
+			int cc = (int)Math.ceil(t);
+			if(pageNumber>cc){
+				pageNumber=1;
+			}
+		}
+		List<OrderNumber> result = productService.getOrderNumberListByNumber(userNaemO,tnumber,2,Integer.parseInt(iDisplayLength),
+				pageNumber);
+		model.addAttribute("result", result);
+		Map map = new HashMap();
+		map.put("aaData", result);
+		// 查出来总共有多少条记录
+		map.put("iTotalRecords", iTotalRecords);
+		map.put("iTotalDisplayRecords",iTotalRecords);
+		return map;
+	}
+	
+	@RequestMapping(value = "/shopDealDetailsOrder",method = RequestMethod.POST)
+	public String shopDealDetailsOrder(@RequestBody ShopingForm form,Model model, HttpSession sesison){
+		Object logonUserO = sesison.getAttribute("logonUser");
+		Map<String,Object> logonUserMap = (Map<String,Object>) logonUserO;
+		String userNaemO =(String) logonUserMap.get("username");
+		OrderNumber order = productService.getOrderNumberById(Integer.valueOf(form.getId()));
+		List<OrderDetails> result = productService.getOrderDetailsListByNumber(userNaemO,order.getTnumber(),2);
+		List<ShopCartForm> list = new ArrayList<ShopCartForm>();
+		for(OrderDetails sc : result){
+			ShopCartForm scf = new ShopCartForm();
+			scf.setNumber(sc.getNumber());
+			scf.setId(sc.getId().toString());
+			scf.setProductName(sc.getProductName());
+			scf.setServerNumber(sc.getServerNumber());
+			scf.setShopPrice(sc.getShopPrice().toString());
+			scf.setProductNumber(sc.getProductNumber());
+			scf.setProductTarget(sc.getProductTarget());
+			scf.setShopCount(sc.getShopCount().toString());
+			scf.setPriceall(sc.getAllPrice().toString());
+			Information serverInfo = informationService.getInformationByNumber(sc.getServerNumber());
+			scf.setAddress(serverInfo.getLinkProvince()+serverInfo.getLinkCounty()+serverInfo.getLinkCity()+serverInfo.getLinkAddress());
+			scf.setPhone(serverInfo.getPhoneNumber());
+			scf.setStauts("已完成取货");
 			list.add(scf);
 		}
 		model.addAttribute("list", list);
