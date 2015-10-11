@@ -104,6 +104,7 @@ $(function(){
                          <option value="banckPoints" <c:if test='${projectFlg == "banckPoints"}'>  selected='selected'  </c:if>>积分提现返还</option>
                           <option value="cancelData" <c:if test='${projectFlg == "cancelData"}'>  selected='selected'  </c:if>>取消申请返还</option>
                           <option value="turnXfMoney" <c:if test='${projectFlg == "turnXfMoney"}'>  selected='selected'  </c:if>>积分转换消费卷</option>
+                           <option value="buyshop" <c:if test='${projectFlg == "buyshop"}'>  selected='selected'  </c:if>>购物</option>
                    </select>
 				</div>
 			</div>
