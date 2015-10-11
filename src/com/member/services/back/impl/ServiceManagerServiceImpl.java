@@ -1,6 +1,7 @@
 package com.member.services.back.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,11 @@ import com.member.dao.ServiceManagerDao;
 import com.member.entity.ApplyService;
 import com.member.entity.ForbidForm;
 import com.member.entity.Information;
+import com.member.entity.Product;
+import com.member.entity.StockDistribute;
 import com.member.form.back.InformationForm;
 import com.member.form.back.MemberSearchForm;
+import com.member.services.back.ProductService;
 import com.member.services.back.ServiceManagerService;
 
 @SuppressWarnings("unchecked")
@@ -26,6 +30,9 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 
 	@Resource(name = "ServiceManagerDaoImpl")
     ServiceManagerDao serviceManagerDao;
+	
+	@Resource(name = "ProductServiceImpl")
+	private ProductService productService;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -118,12 +125,15 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void forbiddenService(Integer isService,Integer id) {
-		String hql = "update Information set isService=?,bdUse=? where id=?";
+		String hql = "update Information set isService=?,bdUse=?,isFrim=? where id=?";
 		List<Object> list = new ArrayList<Object>();
 		list.add(isService);
 		list.add(1);
+		list.add(0);
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
+		//关闭相关服务站信息
+		closeFirmService(id);
 	}
 	
 	@Override
@@ -172,5 +182,56 @@ public class ServiceManagerServiceImpl implements ServiceManagerService{
 		list.add(0);
 		list.add(id);
 		serviceManagerDao.executeHqlUpdate(hql, list);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void closeFirmService(Integer id) {
+		String hql = "from Information where id=?";
+		List<Information> result = (List<Information>) serviceManagerDao.queryByHql(hql, id);
+		if(result!=null && result.size()>0){
+			Information info = result.get(0);
+			info.setIsFrim(0);
+			serviceManagerDao.saveOrUpdate(info);
+			List<StockDistribute> list = productService.getStockDistributeByServerNumber(info.getNumber());
+			if(list!=null && list.size()>0){
+				for(StockDistribute st : list){
+					Product pt = productService.getProductInfoByProductNumber(st.getProductNumber());
+					pt.setFirmStock(pt.getFirmStock()+st.getServerFirm());
+					serviceManagerDao.saveOrUpdate(pt);
+					serviceManagerDao.delete(st);
+				}
+			}
+			
+		}
+		
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void openFirmService(Integer id) {
+		String hql = "from Information where id=?";
+		List<Information> result = (List<Information>) serviceManagerDao.queryByHql(hql, id);
+		if(result!=null && result.size()>0){
+			Information info = result.get(0);
+			info.setIsFrim(1);
+			serviceManagerDao.saveOrUpdate(info);
+			List<Product> list = productService.getAllProductList();
+			if(list!=null && list.size()>0){
+				for(Product product : list){
+					StockDistribute sb = new StockDistribute();
+					sb.setProductId(product.getId());
+					sb.setProductNumber(product.getProductNumber());
+					sb.setProductName(product.getProductName());
+					sb.setServerId(info.getId());
+					sb.setServerNumber(info.getNumber());
+					sb.setOperDate(new Date());
+					sb.setServerFirm(0);
+					serviceManagerDao.saveOrUpdate(sb);
+				}
+			}
+			
+		}
+		
 	}
 }
