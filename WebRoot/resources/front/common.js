@@ -1048,6 +1048,15 @@ function changeServer(){
 function addshoping(){
 	var reqObj = {};
 	var number = document.getElementById("serverNumber").value;
+	if("space"==number){
+		alert("请选择服务站！");
+		return;
+	}
+	var kucun = document.getElementById("firm").value;
+	if(Number(kucun)<=0){
+		alert("该服务站库存不足，请更换服务站！");
+		return;
+	}
 	var productNumber = document.getElementById("productNumber").value;
 	reqObj["number"] = number;
 	reqObj["productNumber"] = productNumber;
@@ -1057,7 +1066,7 @@ function addshoping(){
 		$("#content-header").find("form[id='tocartform']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
-				resetTable2();
+				resetTable();
 		});
 	}
 }
@@ -1127,7 +1136,7 @@ function confimPay(){
 		$("#content-header").find("form[id='showcartform']").each(function(){
 				var formid = this.id;
 				ajaxRequestForFormGetJsp(formid);
-				resetTable2();
+				resetTable();
 		});
 	}
 	}
@@ -1140,4 +1149,26 @@ function editeOderDetail(id){
 	ajaxRequestForFormGetJspByParamter("/shoping/shopDetailsOrder.do",reqObj);
 	resetTable();
 }
+
+function editeDealOderDetail(id){
+	var reqObj = {};
+	reqObj["id"] = id;
+	ajaxRequestForFormGetJspByParamter("/shoping/shopDealDetailsOrder.do",reqObj);
+	resetTable();
+}
+
+function  deleteShopCart(id){
+	var reqObj = {};
+	    reqObj["id"] = id;
+	    var result = ajaxRequestForJsonGetJson("/shoping/deleteShopCart.do",reqObj);
+	    alert(result.msg);
+	    if(result.success){
+		$("#content-header").find("form[id='showcartform']").each(function(){
+				var formid = this.id;
+				ajaxRequestForFormGetJsp(formid);
+				resetTable();
+		});
+	}
+}
+
 
