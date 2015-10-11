@@ -215,6 +215,67 @@ public class ServiceManagerController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/closeFirmService",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> closeFirmService(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			Information info= informationService.getInformationById(form.getId());
+			if(info==null){
+				result.setMsg("该用户不存在.");
+				result.setSuccess(true);
+				return result;
+			}
+			if(info.getIsFrim()==0){
+				result.setMsg("该用户已被关闭服务站.");
+				result.setSuccess(true);
+				return result;
+			}
+			serviceManagerService.closeFirmService(form.getId());
+			result.setMsg("关闭服务站成功.");
+			result.setSuccess(true);
+			return result;
+		} catch (Exception e) {
+			result.setMsg("关闭服务站失败.");
+			result.setSuccess(true);
+			return result;
+		}
+		
+	}
+	
+	@RequestMapping(value = "/openFirmService",method = RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Void> openFirmService(@RequestBody MemberSearchForm form,Model model){
+		BaseResult<Void> result = new BaseResult<Void>();
+		try {
+			Information info= informationService.getInformationById(form.getId());
+			if(info==null){
+				result.setMsg("该用户不存在.");
+				result.setSuccess(true);
+				return result;
+			}
+			if(info.getIsFrim()==1){
+				result.setMsg("该用户已被开启服务站.");
+				result.setSuccess(true);
+				return result;
+			}
+			if(info.getIsService()!=1){
+				result.setMsg("该用户不是报单中心或者已被禁用.");
+				result.setSuccess(true);
+				return result;
+			}
+			serviceManagerService.openFirmService(form.getId());
+			result.setMsg("开启服务站成功.");
+			result.setSuccess(true);
+			return result;
+		} catch (Exception e) {
+			result.setMsg("开启服务站失败.");
+			result.setSuccess(true);
+			return result;
+		}
+		
+	}
+	
 	
 	
 	@RequestMapping(value = "/applyCheckFailure",method = RequestMethod.POST)
