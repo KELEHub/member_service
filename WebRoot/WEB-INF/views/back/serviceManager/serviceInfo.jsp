@@ -63,15 +63,36 @@ $(function(){
                     ],
                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
                if(aData.bdUse==1){
-               $('td:eq(9)', nRow).html(
+                  if(aData.isFrim==1){
+                  $('td:eq(9)', nRow).html(
                        	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
-                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"openbiddenService("+aData.id+")\">解禁</button>");
+                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"openbiddenService("+aData.id+")\">启用报单中心</button>"+
+                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"closeFirmService("+aData.id+")\">关闭服务站</button>");
                    	return nRow;
                }else{
-               $('td:eq(9)', nRow).html(
+                     $('td:eq(9)', nRow).html(
                        	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
-                       	"<button class=\"btn\" onclick=\"forbiddenService("+aData.id+")\">禁用</button>");
+                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"openbiddenService("+aData.id+")\">启用报单中心</button>"+
+                       	"<button class=\"btn\" onclick=\"openFirmService("+aData.id+")\">启用服务站</button>");
                    	return nRow;
+               }
+                  }
+               else{
+               if(aData.isFrim==1){
+                $('td:eq(9)', nRow).html(
+                       	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
+                       	"<button class=\"btn\" onclick=\"forbiddenService("+aData.id+")\">禁用报单中心</button>"+
+                       	"<button class=\"btn\" style=\"color:#FF0000\" onclick=\"closeFirmService("+aData.id+")\">关闭服务站</button>");
+                   	return nRow;
+               }else{
+                   $('td:eq(9)', nRow).html(
+                       	"<button class=\"btn\" onclick=\"serviceInfoDetail("+aData.id+")\">详细信息</button>"+
+                       	"<button class=\"btn\" onclick=\"forbiddenService("+aData.id+")\">禁用报单中心</button>"+
+                        "<button class=\"btn\" onclick=\"openFirmService("+aData.id+")\">启用服务站</button>");
+                   	return nRow;
+                
+               }
+              
                }
         			
                  }
