@@ -26,6 +26,10 @@ public interface ServiceManagerService {
 	void forbiddenService(Integer isService, Integer id);
 	
 	void openbiddenService(Integer isService, Integer id);
+	
+	void closeFirmService( Integer id);
+	
+	void openFirmService( Integer id);
 
 	void updateApplyState(Integer state, Integer id, String failureCause);
 
