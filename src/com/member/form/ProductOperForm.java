@@ -12,6 +12,21 @@ public class ProductOperForm {
 	/**产品介绍ID */
 	private String productIntroduction;
 	
+	/**产品编号 */
+	private String productNumber;
+	
+	/**商品规格 */
+	private String productModel;
+	
+	/**商品价格 */
+	private String productPrice;
+	
+	/**总库存 */
+	private String allfirm;
+	
+	/**总库存修改 */
+	private String productAllKC;
+	
 	/**产品图片路径 */
 	private String productTarget;
 	
@@ -79,4 +94,46 @@ public class ProductOperForm {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
+
+	public String getProductNumber() {
+		return productNumber;
+	}
+
+	public void setProductNumber(String productNumber) {
+		this.productNumber = productNumber;
+	}
+
+	public String getProductModel() {
+		return productModel;
+	}
+
+	public void setProductModel(String productModel) {
+		this.productModel = productModel;
+	}
+
+	public String getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(String productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public String getAllfirm() {
+		return allfirm;
+	}
+
+	public void setAllfirm(String allfirm) {
+		this.allfirm = allfirm;
+	}
+
+	public String getProductAllKC() {
+		return productAllKC;
+	}
+
+	public void setProductAllKC(String productAllKC) {
+		this.productAllKC = productAllKC;
+	}
+	
+	
 }
